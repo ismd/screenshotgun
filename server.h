@@ -10,11 +10,9 @@ class Server : public QObject
 
 public:
     explicit Server(QObject *parent = 0);
-    void upload(const QString &filename);
 
 public slots:
-    void error(QNetworkReply::NetworkError code);
-    void uploaded();
+    void upload(const QString &filename);
 };
 
 #endif // SERVER_H

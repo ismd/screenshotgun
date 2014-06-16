@@ -32,7 +32,7 @@ void Server::upload(const QString &filename)
 
     multiPart->append(imagePart);
 
-    QUrl url("http://192.168.1.144/screen/upload");
+    QUrl url("http://localhost:7998/screen/upload");
     QNetworkRequest request;
     request.setUrl(url);
 
@@ -41,17 +41,4 @@ void Server::upload(const QString &filename)
     request.setRawHeader("User-Agent", "MyOwnBrowser 1.0");
     QNetworkReply *reply = manager->post(request, multiPart);
     multiPart->setParent(reply); // delete the multiPart with the reply
-
-    connect(reply, SIGNAL(finished()), this, SLOT(uploaded()));
-    connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(error(QNetworkReply::NetworkError)));
-}
-
-void Server::error(QNetworkReply::NetworkError code)
-{
-    qDebug() << "Error while uploading";
-}
-
-void Server::uploaded()
-{
-    qDebug() << "Uploaded";
 }

@@ -17,10 +17,6 @@ public:
 private:
     const QPixmap &screenshot;
     QString filename;
-
-public slots:
-    QString save();
-    void upload();
 };
 
 #endif // CANVAS_H

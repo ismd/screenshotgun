@@ -10,11 +10,11 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    // Делаем скриншот
+    // Making screenshot
     QScreen *screen = QGuiApplication::primaryScreen();
     QPixmap screenshot = screen->grabWindow(QApplication::desktop()->winId());
 
-    // Отображаем canvas
+    // Showing canvas
     Canvas viewer(screenshot);
     viewer.showFullScreen();
 
