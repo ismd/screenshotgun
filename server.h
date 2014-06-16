@@ -12,7 +12,7 @@ public:
     explicit Server(QObject *parent = 0);
 
 public slots:
-    void upload(const QString &filename);
+    void upload();
 
 private slots:
     void uploadSuccess();

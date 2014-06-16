@@ -14,6 +14,12 @@ Canvas::Canvas(const QPixmap &pixmap) : screenshot(pixmap)
     engine()->addImageProvider(QLatin1String("canvas"), new CanvasProvider(pixmap));
 
     setSource(QUrl("qrc:/canvas.qml"));
+
+    // Saving image
+    QFile file("/home/ismd/Загрузки/tmp.png");
+    file.open(QIODevice::WriteOnly);
+    pixmap.save(&file, "PNG");
+    file.close();
 }
 
 Canvas::~Canvas()

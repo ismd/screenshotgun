@@ -7,13 +7,17 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "canvas.h"
+
 Server::Server(QObject *parent) :
     QObject(parent)
 {
 }
 
-void Server::upload(const QString &filename)
+void Server::upload()
 {
+    QString filename = "/home/ismd/Загрузки/tmp.png";
+
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
     QHttpPart imagePart;
@@ -41,6 +45,18 @@ void Server::upload(const QString &filename)
     connect(reply, SIGNAL(finished()),
             this,  SLOT(uploadSuccess()));
 }
+
+/*void Server::upload(const QObject *image)
+{
+    QPixmap *pixmap = qobject_cast<QPixmap*>(image);
+
+    QFile file("/home/ismd/Загрузки/tmp.png");
+    file.open(QIODevice::WriteOnly);
+    pixmap->save(&file, "PNG");
+    file.close();
+
+    //this->upload("/home/ismd/Загрузки/tmp.png");
+}*/
 
 void Server::uploadSuccess()
 {
