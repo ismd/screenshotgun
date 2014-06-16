@@ -4,6 +4,8 @@
 #include <QHttpMultiPart>
 #include <QFile>
 #include <QNetworkAccessManager>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 Server::Server(QObject *parent) :
     QObject(parent)
@@ -13,12 +15,6 @@ Server::Server(QObject *parent) :
 void Server::upload(const QString &filename)
 {
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
-
-    /*QHttpPart metaPart;
-    metaPart.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    metaPart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"metadata\""));
-    metaPart.setBody(meta.toJson());
-    multiPart->append(metaPart);*/
 
     QHttpPart imagePart;
     imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/png"));
@@ -39,6 +35,21 @@ void Server::upload(const QString &filename)
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
 
     request.setRawHeader("User-Agent", "MyOwnBrowser 1.0");
-    QNetworkReply *reply = manager->post(request, multiPart);
+    reply = manager->post(request, multiPart);
     multiPart->setParent(reply); // delete the multiPart with the reply
+
+    connect(reply, SIGNAL(finished()),
+            this,  SLOT(uploadSuccess()));
+}
+
+void Server::uploadSuccess()
+{
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
+    reply->close();
+
+    QJsonObject jsonObject = jsonResponse.object();
+
+    if (0 == jsonObject["status"].toString().compare("ok")) {
+        qDebug() << jsonObject["url"].toString();
+    }
 }

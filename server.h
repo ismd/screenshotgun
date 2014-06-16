@@ -13,6 +13,12 @@ public:
 
 public slots:
     void upload(const QString &filename);
+
+private slots:
+    void uploadSuccess();
+
+private:
+    QNetworkReply *reply;
 };
 
 #endif // SERVER_H
