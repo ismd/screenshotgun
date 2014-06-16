@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>canvas.qml</file>
+    </qresource>
+</RCC>
