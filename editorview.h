@@ -11,6 +11,7 @@
 #include <QGraphicsRectItem>
 
 #include "visiblearea.h"
+#include "editorform.h"
 
 class EditorView : public QGraphicsView
 {
@@ -20,6 +21,7 @@ public:
 protected:
     void mousePressEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
 
 private:
     QPixmap screenshot;

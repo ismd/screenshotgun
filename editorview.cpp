@@ -52,3 +52,10 @@ void EditorView::mouseMoveEvent(QMouseEvent *e)
 
     visibleArea->set(x, y, width, height);
 }
+
+void EditorView::mouseReleaseEvent(QMouseEvent *e)
+{
+    EditorForm *form = new EditorForm(this);
+    form->setGeometry(visibleArea->getX(), visibleArea->getY() + visibleArea->getHeight() + 5, form->width(), form->height());
+    form->show();
+}
