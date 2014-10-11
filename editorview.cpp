@@ -1,6 +1,6 @@
 #include "editorview.h"
 
-EditorView::EditorView() : QGraphicsView()
+EditorView::EditorView() : QGraphicsView(), editorForm(NULL), mode(NULL)
 {
     this->setFrameShape(QFrame::NoFrame);
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -16,46 +16,49 @@ EditorView::EditorView() : QGraphicsView()
     scene->addPixmap(screenshot);
 
     this->setScene(scene);
-
     visibleArea = new VisibleArea(scene);
+
+    mode = new VisibleAreaMode(visibleArea);
 }
 
 void EditorView::mousePressEvent(QMouseEvent *e)
 {
-    visibleArea->set(e->x(), e->y(), 0, 0);
+    if (NULL != editorForm) {
+        delete editorForm;
+    }
+
+    mode->mousePress(e);
 }
 
 void EditorView::mouseMoveEvent(QMouseEvent *e)
 {
-    int x = visibleArea->getX();
-    int y = visibleArea->getY();
-
-    int width = visibleArea->getWidth();
-    int height = visibleArea->getHeight();
-
-    int curX = e->x();
-    int curY = e->y();
-
-    if (curX > x && qAbs(x + width - curX) <= qAbs(x - curX)) {
-        width = curX - x;
-    } else {
-        width = width + x - curX;
-        x = curX;
-    }
-
-    if (curY > y && qAbs(y + height - curY) <= qAbs(y - curY)) {
-        height = curY - y;
-    } else {
-        height = height + y - curY;
-        y = curY;
-    }
-
-    visibleArea->set(x, y, width, height);
+    mode->mouseMove(e);
 }
 
 void EditorView::mouseReleaseEvent(QMouseEvent *e)
 {
-    EditorForm *form = new EditorForm(this);
-    form->setGeometry(visibleArea->getX(), visibleArea->getY() + visibleArea->getHeight() + 5, form->width(), form->height());
-    form->show();
+    mode->mouseRelease(e);
+
+    editorForm = new EditorForm(this, mode, visibleArea);
+    editorForm->setGeometry(visibleArea->getX(), visibleArea->getY() + visibleArea->getHeight() + 5, editorForm->width(), editorForm->height());
+    editorForm->show();
+}
+
+AbstractMode* EditorView::getMode()
+{
+    return mode;
+}
+
+void EditorView::setMode(AbstractMode *mode)
+{
+    if (NULL != mode) {
+        delete mode;
+    }
+
+    this->mode = mode;
+}
+
+VisibleArea* EditorView::getVisibleArea()
+{
+    return visibleArea;
 }

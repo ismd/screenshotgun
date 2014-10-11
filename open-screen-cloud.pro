@@ -5,13 +5,19 @@ SOURCES += \
     server.cpp \
     editorview.cpp \
     visiblearea.cpp \
-    editorform.cpp
+    editorform.cpp \
+    modes/visibleareamode.cpp \
+    modes/abstractmode.cpp \
+    modes/linemode.cpp
 
 HEADERS += \
     server.h \
     editorview.h \
     visiblearea.h \
-    editorform.h
+    editorform.h \
+    modes/visibleareamode.h \
+    modes/abstractmode.h \
+    modes/linemode.h
 
 OTHER_FILES +=
 
