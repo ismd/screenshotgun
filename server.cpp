@@ -7,8 +7,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include "canvas.h"
-
 Server::Server(QObject *parent) :
     QObject(parent)
 {

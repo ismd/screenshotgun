@@ -2,17 +2,15 @@ QT += widgets declarative quick
 
 SOURCES += \
     main.cpp\
-    canvas.cpp \
-    canvasprovider.cpp \
-    server.cpp
+    server.cpp \
+    editorview.cpp \
+    visiblearea.cpp
 
 HEADERS += \
-    canvas.h \
-    canvasprovider.h \
-    server.h
+    server.h \
+    editorview.h \
+    visiblearea.h
 
-OTHER_FILES += \
-    canvas.qml
+OTHER_FILES +=
 
-RESOURCES += \
-    res.qrc
+RESOURCES +=
