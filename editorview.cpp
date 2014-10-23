@@ -1,64 +1,44 @@
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QScreen>
+
 #include "editorview.h"
 
-EditorView::EditorView() : QGraphicsView(), editorForm(NULL), mode(NULL)
+EditorView::EditorView() : QGraphicsView()
 {
-    this->setFrameShape(QFrame::NoFrame);
-    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setFrameShape(QFrame::NoFrame);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     // Making screenshot
     screenshot = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
-    this->setGeometry(0, 0, screenshot.width(), screenshot.height());
+    setGeometry(0, 0, screenshot.width(), screenshot.height());
 
     scene = new QGraphicsScene(this);
 
     // Background screenshot
     scene->addPixmap(screenshot);
 
-    this->setScene(scene);
-    visibleArea = new VisibleArea(scene);
+    setScene(scene);
+    editorForm = new EditorForm(this, scene);
+}
 
-    mode = new VisibleAreaMode(visibleArea);
+EditorView::~EditorView()
+{
+    delete scene;
 }
 
 void EditorView::mousePressEvent(QMouseEvent *e)
 {
-    if (NULL != editorForm) {
-        delete editorForm;
-    }
-
-    mode->mousePress(e);
+    editorForm->getMode()->init(e->x(), e->y());
 }
 
 void EditorView::mouseMoveEvent(QMouseEvent *e)
 {
-    mode->mouseMove(e);
+    editorForm->getMode()->move(e->x(), e->y());
 }
 
 void EditorView::mouseReleaseEvent(QMouseEvent *e)
 {
-    mode->mouseRelease(e);
-
-    editorForm = new EditorForm(this, mode, visibleArea);
-    editorForm->setGeometry(visibleArea->getX(), visibleArea->getY() + visibleArea->getHeight() + 5, editorForm->width(), editorForm->height());
-    editorForm->show();
-}
-
-AbstractMode* EditorView::getMode()
-{
-    return mode;
-}
-
-void EditorView::setMode(AbstractMode *mode)
-{
-    if (NULL != mode) {
-        delete mode;
-    }
-
-    this->mode = mode;
-}
-
-VisibleArea* EditorView::getVisibleArea()
-{
-    return visibleArea;
+    editorForm->getMode()->stop(e->x(), e->y());
 }

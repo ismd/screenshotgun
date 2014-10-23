@@ -4,7 +4,6 @@ SOURCES += \
     main.cpp\
     server.cpp \
     editorview.cpp \
-    visiblearea.cpp \
     editorform.cpp \
     modes/visibleareamode.cpp \
     modes/abstractmode.cpp \
@@ -13,7 +12,6 @@ SOURCES += \
 HEADERS += \
     server.h \
     editorview.h \
-    visiblearea.h \
     editorform.h \
     modes/visibleareamode.h \
     modes/abstractmode.h \

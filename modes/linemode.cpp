@@ -1,17 +1,17 @@
 #include "linemode.h"
 
-LineMode::LineMode(VisibleArea *area) : AbstractMode(area)
+LineMode::LineMode(QGraphicsScene *scene) : AbstractMode(scene)
 {
 }
 
-void LineMode::mousePress(QMouseEvent *e)
+void LineMode::init(int x, int y)
 {
 }
 
-void LineMode::mouseMove(QMouseEvent *e)
+void LineMode::move(int x, int y)
 {
 }
 
-void LineMode::mouseRelease(QMouseEvent *e)
+void LineMode::stop(int x, int y)
 {
 }

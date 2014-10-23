@@ -4,8 +4,6 @@
 #include <QWidget>
 
 #include "modes/abstractmode.h"
-#include "modes/linemode.h"
-#include "visiblearea.h"
 
 class EditorView;
 
@@ -18,16 +16,18 @@ class EditorForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit EditorForm(QWidget *parent = 0, AbstractMode* mode = NULL, VisibleArea* area = NULL);
+    explicit EditorForm(QWidget *parent, QGraphicsScene*);
     ~EditorForm();
+    AbstractMode* getMode();
 
 private slots:
+    void on_visibleAreaButton_clicked();
     void on_lineButton_clicked();
 
 private:
     Ui::EditorForm *ui;
+    QGraphicsScene *scene;
     AbstractMode *mode;
-    VisibleArea *visibleArea;
 };
 
 #endif // EDITORFORM_H

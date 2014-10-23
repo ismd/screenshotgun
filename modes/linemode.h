@@ -6,10 +6,10 @@
 class LineMode : public AbstractMode
 {
 public:
-    LineMode(VisibleArea *area);
-    void mousePress(QMouseEvent *e);
-    void mouseMove(QMouseEvent *e);
-    void mouseRelease(QMouseEvent *e);
+    LineMode(QGraphicsScene*);
+    void init(int x, int y);
+    void move(int x, int y);
+    void stop(int x, int y);
 };
 
 #endif // LINEMODE_H

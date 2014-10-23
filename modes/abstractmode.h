@@ -1,21 +1,20 @@
 #ifndef ABSTRACTMODE_H
 #define ABSTRACTMODE_H
 
-#include <QMouseEvent>
-
-#include "../visiblearea.h"
+#include <QGraphicsScene>
 
 class AbstractMode
 {
 public:
-    AbstractMode(VisibleArea *area);
+    AbstractMode(QGraphicsScene*);
     virtual ~AbstractMode();
-    virtual void mousePress(QMouseEvent *e) = 0;
-    virtual void mouseMove(QMouseEvent *e) = 0;
-    virtual void mouseRelease(QMouseEvent *e) = 0;
+
+    virtual void init(int x, int y) = 0;
+    virtual void move(int x, int y) = 0;
+    virtual void stop(int x, int y) = 0;
 
 protected:
-    VisibleArea *visibleArea;
+    QGraphicsScene *scene;
 };
 
 #endif // ABSTRACTMODE_H

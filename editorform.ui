@@ -22,7 +22,7 @@
   <property name="autoFillBackground">
    <bool>true</bool>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>6</x>
@@ -39,6 +39,19 @@
      <enum>QLayout::SetDefaultConstraint</enum>
     </property>
     <item>
+     <widget class="QPushButton" name="visibleAreaButton">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Видимая область</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="lineButton">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -48,19 +61,6 @@
       </property>
       <property name="text">
        <string>Линия</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Прямоугольник</string>
       </property>
      </widget>
     </item>

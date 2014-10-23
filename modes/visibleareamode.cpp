@@ -1,42 +1,81 @@
 #include "../modes/visibleareamode.h"
 
-VisibleAreaMode::VisibleAreaMode(VisibleArea *area) : AbstractMode(area)
+VisibleAreaMode::VisibleAreaMode(QGraphicsScene *scene, QWidget *form) : AbstractMode(scene), form(form)
 {
+    QPen pen(Qt::NoPen);
+    QBrush brush(Qt::black);
+
+    // Black background (top, bottom, left, right)
+    rectTop    = new QGraphicsRectItem;
+    rectBottom = new QGraphicsRectItem;
+    rectLeft   = new QGraphicsRectItem;
+    rectRight  = new QGraphicsRectItem;
+
+    rectTop->setOpacity(.5);
+    rectBottom->setOpacity(.5);
+    rectLeft->setOpacity(.5);
+    rectRight->setOpacity(.5);
+
+    rectTop->setPen(pen);
+    rectBottom->setPen(pen);
+    rectLeft->setPen(pen);
+    rectRight->setPen(pen);
+
+    rectTop->setBrush(brush);
+    rectBottom->setBrush(brush);
+    rectLeft->setBrush(brush);
+    rectRight->setBrush(brush);
+
+    // First rectangle fullscreen
+    rectTop->setRect(0, 0, scene->width(), scene->height());
+
+    scene->addItem(rectTop);
+    scene->addItem(rectBottom);
+    scene->addItem(rectLeft);
+    scene->addItem(rectRight);
 }
 
-void VisibleAreaMode::mousePress(QMouseEvent *e)
+void VisibleAreaMode::init(int x, int y)
 {
-    visibleArea->set(e->x(), e->y(), 0, 0);
+    form->hide();
+
+    area.x = x;
+    area.y = y;
+    area.width = 0;
+    area.height = 0;
+
+    set(x, y, 0, 0);
 }
 
-void VisibleAreaMode::mouseMove(QMouseEvent *e)
+void VisibleAreaMode::move(int x, int y)
 {
-    int x = visibleArea->getX();
-    int y = visibleArea->getY();
-
-    int width = visibleArea->getWidth();
-    int height = visibleArea->getHeight();
-
-    int curX = e->x();
-    int curY = e->y();
-
-    if (curX > x && qAbs(x + width - curX) <= qAbs(x - curX)) {
-        width = curX - x;
+    if (x > area.x && qAbs(area.x + area.width - x) <= qAbs(area.x - x)) {
+        area.width = x - area.x;
     } else {
-        width = width + x - curX;
-        x = curX;
+        area.width = area.width + area.x - x;
+        area.x = x;
     }
 
-    if (curY > y && qAbs(y + height - curY) <= qAbs(y - curY)) {
-        height = curY - y;
+    if (y > area.y && qAbs(area.y + area.height - y) <= qAbs(area.y - y)) {
+        area.height = y - area.y;
     } else {
-        height = height + y - curY;
-        y = curY;
+        area.height = area.height + area.y - y;
+        area.y = y;
     }
 
-    visibleArea->set(x, y, width, height);
+    set(area.x, area.y, area.width, area.height);
 }
 
-void VisibleAreaMode::mouseRelease(QMouseEvent *e)
+void VisibleAreaMode::stop(int x, int y)
 {
+    form->setGeometry(area.x, area.y + area.height + 5, form->width(), form->height());
+    form->show();
+}
+
+void VisibleAreaMode::set(int x, int y, int width, int height)
+{
+    rectTop->setRect(0, 0, scene->width(), y);
+    rectBottom->setRect(0, y + height, scene->width(), scene->height() - y - height);
+    rectLeft->setRect(0, y, x, height);
+    rectRight->setRect(x + width, y, scene->width() - x - width, height);
 }
