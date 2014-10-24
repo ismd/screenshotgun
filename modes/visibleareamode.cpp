@@ -26,6 +26,11 @@ VisibleAreaMode::VisibleAreaMode(QGraphicsScene *scene, QWidget *form) : Abstrac
     rectLeft->setBrush(brush);
     rectRight->setBrush(brush);
 
+    rectTop->setZValue(1);
+    rectBottom->setZValue(1);
+    rectLeft->setZValue(1);
+    rectRight->setZValue(1);
+
     // First rectangle fullscreen
     rectTop->setRect(0, 0, scene->width(), scene->height());
 

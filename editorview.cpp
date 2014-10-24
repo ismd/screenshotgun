@@ -9,6 +9,7 @@ EditorView::EditorView() : QGraphicsView()
     setFrameShape(QFrame::NoFrame);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
     // Making screenshot
     screenshot = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
