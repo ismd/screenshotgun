@@ -24,6 +24,7 @@ public:
 private slots:
     void on_visibleAreaButton_clicked();
     void on_lineButton_clicked();
+    void on_rectButton_clicked();
 
 private:
     void newVisibleArea();

@@ -65,7 +65,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="rectButton">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -73,7 +73,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>PushButton</string>
+       <string>Прямоугольник</string>
       </property>
      </widget>
     </item>

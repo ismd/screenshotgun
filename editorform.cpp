@@ -2,6 +2,7 @@
 #include "ui_editorform.h"
 #include "modes/visibleareamode.h"
 #include "modes/linemode.h"
+#include "modes/rectmode.h"
 
 EditorForm::EditorForm(QWidget *parent, QGraphicsScene *scene) :
     QWidget(parent),
@@ -41,6 +42,11 @@ void EditorForm::on_visibleAreaButton_clicked()
 void EditorForm::on_lineButton_clicked()
 {
     mode = new LineMode(scene);
+}
+
+void EditorForm::on_rectButton_clicked()
+{
+    mode = new RectMode(scene);
 }
 
 void EditorForm::newVisibleArea()
