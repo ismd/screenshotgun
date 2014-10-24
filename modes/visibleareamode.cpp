@@ -1,7 +1,11 @@
 #include "../modes/visibleareamode.h"
+#include "../editorform.h"
 
-VisibleAreaMode::VisibleAreaMode(QGraphicsScene *scene, QWidget *form) : AbstractMode(scene), form(form)
+VisibleAreaMode::VisibleAreaMode(QGraphicsScene *scene, EditorForm *form)
+    : AbstractMode(scene), form(form)
 {
+    oldMode = form->getVisibleArea();
+
     QPen pen(Qt::NoPen);
     QBrush brush(Qt::black);
 
@@ -34,14 +38,22 @@ VisibleAreaMode::VisibleAreaMode(QGraphicsScene *scene, QWidget *form) : Abstrac
     // First rectangle fullscreen
     rectTop->setRect(0, 0, scene->width(), scene->height());
 
-    scene->addItem(rectTop);
-    scene->addItem(rectBottom);
-    scene->addItem(rectLeft);
-    scene->addItem(rectRight);
+    if (NULL == oldMode) {
+        addToScene();
+    }
 }
 
 void VisibleAreaMode::init(int x, int y)
 {
+    // Checking if we need to replace old VisibleAreaMode with current
+    if (NULL != oldMode && this != oldMode) {
+        oldMode->clear();
+        delete oldMode;
+        oldMode = NULL;
+
+        addToScene();
+    }
+
     form->hide();
 
     area.x = x;
@@ -75,6 +87,22 @@ void VisibleAreaMode::stop(int x, int y)
 {
     form->setGeometry(area.x, area.y + area.height + 5, form->width(), form->height());
     form->show();
+}
+
+void VisibleAreaMode::clear()
+{
+    scene->removeItem(rectTop);
+    scene->removeItem(rectBottom);
+    scene->removeItem(rectLeft);
+    scene->removeItem(rectRight);
+}
+
+void VisibleAreaMode::addToScene()
+{
+    scene->addItem(rectTop);
+    scene->addItem(rectBottom);
+    scene->addItem(rectLeft);
+    scene->addItem(rectRight);
 }
 
 void VisibleAreaMode::set(int x, int y, int width, int height)

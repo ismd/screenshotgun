@@ -6,15 +6,19 @@
 
 #include "abstractmode.h"
 
+class EditorForm;
+
 class VisibleAreaMode : public AbstractMode
 {
 public:
-    VisibleAreaMode(QGraphicsScene*, QWidget*);
+    VisibleAreaMode(QGraphicsScene*, EditorForm*);
     void init(int x, int y);
     void move(int x, int y);
     void stop(int x, int y);
+    void clear();
 
 private:
+    void addToScene();
     void set(int x, int y, int width, int height);
 
     QGraphicsRectItem *rectTop;
@@ -29,8 +33,8 @@ private:
         int height;
     } area;
 
-private:
-    QWidget *form;
+    EditorForm *form;
+    VisibleAreaMode *oldMode;
 };
 
 #endif // VISIBLEAREAMODE_H

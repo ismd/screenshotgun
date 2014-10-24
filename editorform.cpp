@@ -6,18 +6,21 @@
 EditorForm::EditorForm(QWidget *parent, QGraphicsScene *scene) :
     QWidget(parent),
     ui(new Ui::EditorForm),
-    scene(scene)
+    scene(scene),
+    visibleArea(NULL)
 {
     hide();
     ui->setupUi(this);
 
     // Setting default mode
-    mode = new VisibleAreaMode(scene, this);
+    setVisibleArea(new VisibleAreaMode(scene, static_cast<EditorForm*>(this)));
 }
 
 EditorForm::~EditorForm()
 {
     delete ui;
+    delete mode;
+    delete visibleArea;
 }
 
 AbstractMode* EditorForm::getMode()
@@ -25,12 +28,23 @@ AbstractMode* EditorForm::getMode()
     return mode;
 }
 
+VisibleAreaMode* EditorForm::getVisibleArea()
+{
+    return visibleArea;
+}
+
 void EditorForm::on_visibleAreaButton_clicked()
 {
-    mode = new VisibleAreaMode(scene, this);
+    setVisibleArea(new VisibleAreaMode(scene, static_cast<EditorForm*>(this)));
 }
 
 void EditorForm::on_lineButton_clicked()
 {
     mode = new LineMode(scene);
+}
+
+void EditorForm::setVisibleArea(VisibleAreaMode *area)
+{
+    visibleArea = area;
+    mode = visibleArea;
 }
