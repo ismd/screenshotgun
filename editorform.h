@@ -26,7 +26,7 @@ private slots:
     void on_lineButton_clicked();
 
 private:
-    void setVisibleArea(VisibleAreaMode*);
+    void newVisibleArea();
     Ui::EditorForm *ui;
     QGraphicsScene *scene;
     AbstractMode *mode;

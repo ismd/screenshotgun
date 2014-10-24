@@ -13,7 +13,7 @@ EditorForm::EditorForm(QWidget *parent, QGraphicsScene *scene) :
     ui->setupUi(this);
 
     // Setting default mode
-    setVisibleArea(new VisibleAreaMode(scene, static_cast<EditorForm*>(this)));
+    newVisibleArea();
 }
 
 EditorForm::~EditorForm()
@@ -35,7 +35,7 @@ VisibleAreaMode* EditorForm::getVisibleArea()
 
 void EditorForm::on_visibleAreaButton_clicked()
 {
-    setVisibleArea(new VisibleAreaMode(scene, static_cast<EditorForm*>(this)));
+    newVisibleArea();
 }
 
 void EditorForm::on_lineButton_clicked()
@@ -43,8 +43,8 @@ void EditorForm::on_lineButton_clicked()
     mode = new LineMode(scene);
 }
 
-void EditorForm::setVisibleArea(VisibleAreaMode *area)
+void EditorForm::newVisibleArea()
 {
-    visibleArea = area;
+    visibleArea = new VisibleAreaMode(scene, static_cast<EditorForm*>(this));
     mode = visibleArea;
 }

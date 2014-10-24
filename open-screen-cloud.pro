@@ -1,4 +1,4 @@
-QT += widgets declarative quick
+QT += widgets quick
 
 SOURCES += \
     main.cpp\
