@@ -1,34 +1,33 @@
 #include <QGraphicsRectItem>
 #include "rectmode.h"
 
-RectMode::RectMode(QGraphicsScene *scene) : AbstractMode(scene)
-{
-}
-
-void RectMode::init(int x, int y)
+RectMode::RectMode(QGraphicsScene *scene) : AbstractMode(scene), rect(NULL)
 {
     QPen pen(Qt::red);
+    pen.setWidth(5);
     QBrush brush(Qt::NoBrush);
 
-    rect = new QGraphicsRectItem(x, y, 0, 0);
+    rect = new QGraphicsRectItem;
     rect->setPen(pen);
     rect->setBrush(brush);
 
     scene->addItem(rect);
 }
 
+void RectMode::init(int x, int y)
+{
+    coords.x = x;
+    coords.y = y;
+}
+
 void RectMode::move(int x, int y)
 {
-    QRectF r = rect->rect();
-    int curX = rect->x();
-    int curY = rect->y();
+    int minX = qMin(x, coords.x);
+    int minY = qMin(y, coords.y);
+    int maxX = qMax(x, coords.x);
+    int maxY = qMax(y, coords.y);
 
-    r.setTopLeft(QPointF(qMin(x, curX), qMin(y, curY)));
-    r.setTopRight(QPointF(qMax(x, curX), qMin(y, curY)));
-    r.setBottomLeft(QPointF(qMin(x, curX), qMax(y, curY)));
-    r.setBottomRight(QPointF(qMax(x, curX), qMax(y, curY)));
-
-    rect->setRect(r);
+    rect->setRect(minX, minY, maxX - minX, maxY - minY);
 }
 
 void RectMode::stop(int x, int y)

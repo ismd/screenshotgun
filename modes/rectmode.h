@@ -13,6 +13,11 @@ public:
 
 private:
     QGraphicsRectItem *rect;
+
+    struct {
+        int x;
+        int y;
+    } coords;
 };
 
 #endif // RECTMODE_H
