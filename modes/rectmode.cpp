@@ -1,7 +1,7 @@
 #include <QGraphicsRectItem>
 #include "rectmode.h"
 
-RectMode::RectMode(QGraphicsScene *scene) : AbstractMode(scene), rect(NULL)
+RectMode::RectMode(QGraphicsScene *scene) : AbstractMode(scene)
 {
 }
 
@@ -10,12 +10,10 @@ void RectMode::init(int x, int y)
     coords.x = x;
     coords.y = y;
 
-    QPen pen(Qt::red);
-    pen.setWidth(5);
     QBrush brush(Qt::NoBrush);
 
     rect = new QGraphicsRectItem;
-    rect->setPen(pen);
+    rect->setPen(*_pen);
     rect->setBrush(brush);
 
     scene->addItem(rect);
@@ -33,4 +31,5 @@ void RectMode::move(int x, int y)
 
 void RectMode::stop(int x, int y)
 {
+    move(x, y);
 }

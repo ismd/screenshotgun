@@ -6,11 +6,8 @@ LineMode::LineMode(QGraphicsScene *scene) : AbstractMode(scene)
 
 void LineMode::init(int x, int y)
 {
-    QPen pen(Qt::red);
-    pen.setWidth(5);
-
     line = new QGraphicsLineItem(x, y, x, y);
-    line->setPen(pen);
+    line->setPen(*_pen);
 
     scene->addItem(line);
 }
@@ -24,4 +21,5 @@ void LineMode::move(int x, int y)
 
 void LineMode::stop(int x, int y)
 {
+    move(x, y);
 }

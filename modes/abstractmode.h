@@ -15,6 +15,7 @@ public:
 
 protected:
     QGraphicsScene *scene;
+    QPen* _pen;
 };
 
 #endif // ABSTRACTMODE_H
