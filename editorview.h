@@ -3,7 +3,6 @@
 
 #include <QGraphicsView>
 #include <QMouseEvent>
-
 #include "editorform.h"
 
 class EditorView : public QGraphicsView
@@ -11,6 +10,7 @@ class EditorView : public QGraphicsView
 public:
     EditorView();
     ~EditorView();
+    QGraphicsScene* scene();
 
 protected:
     void mousePressEvent(QMouseEvent *e);
@@ -18,9 +18,9 @@ protected:
     void mouseReleaseEvent(QMouseEvent *e);
 
 private:
-    QPixmap screenshot;
-    QGraphicsScene *scene;
-    EditorForm *editorForm;
+    QPixmap _screenshot;
+    QGraphicsScene* _scene;
+    EditorForm* _editorForm;
 };
 
 #endif // EDITORVIEW_H

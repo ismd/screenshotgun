@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QGraphicsRectItem>
-
 #include "abstractmode.h"
 
 class EditorForm;
@@ -15,10 +14,8 @@ public:
     void init(int x, int y);
     void move(int x, int y);
     void stop(int x, int y);
-    void clear();
 
 private:
-    void addToScene();
     void set(int x, int y, int width, int height);
 
     QGraphicsRectItem *rectTop;
@@ -33,8 +30,7 @@ private:
         int height;
     } area;
 
-    EditorForm *form;
-    VisibleAreaMode *oldMode;
+    EditorForm* _form;
 };
 
 #endif // VISIBLEAREAMODE_H

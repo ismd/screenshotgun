@@ -1,56 +1,48 @@
 #include "editorform.h"
 #include "ui_editorform.h"
-#include "modes/visibleareamode.h"
-#include "modes/linemode.h"
-#include "modes/rectmode.h"
+#include "editorview.h"
 
-EditorForm::EditorForm(QWidget *parent, QGraphicsScene *scene) :
+EditorForm::EditorForm(EditorView *parent) :
     QWidget(parent),
     ui(new Ui::EditorForm),
-    scene(scene),
-    visibleArea(NULL)
+    _editorView(parent)
 {
     hide();
     ui->setupUi(this);
 
+    QGraphicsScene *scene = parent->scene();
+
     // Setting default mode
-    newVisibleArea();
+    modes.visibleArea = new VisibleAreaMode(scene, static_cast<EditorForm*>(this));
+    modes.line = new LineMode(scene);
+    modes.rect = new RectMode(scene);
+
+    _mode = modes.visibleArea;
 }
 
 EditorForm::~EditorForm()
 {
-    delete ui;
-    delete mode;
-    delete visibleArea;
+    delete modes.visibleArea;
+    delete modes.line;
+    delete modes.rect;
 }
 
-AbstractMode* EditorForm::getMode()
+AbstractMode* EditorForm::mode()
 {
-    return mode;
-}
-
-VisibleAreaMode* EditorForm::getVisibleArea()
-{
-    return visibleArea;
+    return _mode;
 }
 
 void EditorForm::on_visibleAreaButton_clicked()
 {
-    newVisibleArea();
+    _mode = modes.visibleArea;
 }
 
 void EditorForm::on_lineButton_clicked()
 {
-    mode = new LineMode(scene);
+    _mode = modes.line;
 }
 
 void EditorForm::on_rectButton_clicked()
 {
-    mode = new RectMode(scene);
-}
-
-void EditorForm::newVisibleArea()
-{
-    visibleArea = new VisibleAreaMode(scene, static_cast<EditorForm*>(this));
-    mode = visibleArea;
+    _mode = modes.rect;
 }

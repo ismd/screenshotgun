@@ -1,7 +1,6 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QScreen>
-
 #include "editorview.h"
 
 EditorView::EditorView() : QGraphicsView()
@@ -12,34 +11,39 @@ EditorView::EditorView() : QGraphicsView()
     setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
     // Making screenshot
-    screenshot = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
-    setGeometry(0, 0, screenshot.width(), screenshot.height());
+    _screenshot = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
+    setGeometry(0, 0, _screenshot.width(), _screenshot.height());
 
-    scene = new QGraphicsScene(this);
+    _scene = new QGraphicsScene(this);
 
     // Background screenshot
-    scene->addPixmap(screenshot);
+    _scene->addPixmap(_screenshot);
 
-    setScene(scene);
-    editorForm = new EditorForm(this, scene);
+    setScene(_scene);
+    _editorForm = new EditorForm(this);
 }
 
 EditorView::~EditorView()
 {
-    delete scene;
+    delete _scene;
+}
+
+QGraphicsScene* EditorView::scene()
+{
+    return _scene;
 }
 
 void EditorView::mousePressEvent(QMouseEvent *e)
 {
-    editorForm->getMode()->init(e->x(), e->y());
+    _editorForm->mode()->init(e->x(), e->y());
 }
 
 void EditorView::mouseMoveEvent(QMouseEvent *e)
 {
-    editorForm->getMode()->move(e->x(), e->y());
+    _editorForm->mode()->move(e->x(), e->y());
 }
 
 void EditorView::mouseReleaseEvent(QMouseEvent *e)
 {
-    editorForm->getMode()->stop(e->x(), e->y());
+    _editorForm->mode()->stop(e->x(), e->y());
 }

@@ -3,6 +3,13 @@
 
 RectMode::RectMode(QGraphicsScene *scene) : AbstractMode(scene), rect(NULL)
 {
+}
+
+void RectMode::init(int x, int y)
+{
+    coords.x = x;
+    coords.y = y;
+
     QPen pen(Qt::red);
     pen.setWidth(5);
     QBrush brush(Qt::NoBrush);
@@ -12,12 +19,6 @@ RectMode::RectMode(QGraphicsScene *scene) : AbstractMode(scene), rect(NULL)
     rect->setBrush(brush);
 
     scene->addItem(rect);
-}
-
-void RectMode::init(int x, int y)
-{
-    coords.x = x;
-    coords.y = y;
 }
 
 void RectMode::move(int x, int y)

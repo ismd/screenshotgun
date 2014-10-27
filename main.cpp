@@ -1,5 +1,4 @@
 #include <QApplication>
-
 #include "editorview.h"
 
 int main(int argc, char *argv[])

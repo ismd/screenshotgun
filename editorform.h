@@ -2,13 +2,14 @@
 #define EDITORFORM_H
 
 #include <QWidget>
-
 #include "modes/visibleareamode.h"
+#include "modes/linemode.h"
+#include "modes/rectmode.h"
 
 class EditorView;
 
 namespace Ui {
-class EditorForm;
+    class EditorForm;
 }
 
 class EditorForm : public QWidget
@@ -16,10 +17,15 @@ class EditorForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit EditorForm(QWidget *parent, QGraphicsScene*);
+    explicit EditorForm(EditorView*);
     ~EditorForm();
-    AbstractMode* getMode();
-    VisibleAreaMode* getVisibleArea();
+    AbstractMode* mode();
+
+    struct {
+        VisibleAreaMode *visibleArea;
+        LineMode *line;
+        RectMode *rect;
+    } modes;
 
 private slots:
     void on_visibleAreaButton_clicked();
@@ -27,11 +33,9 @@ private slots:
     void on_rectButton_clicked();
 
 private:
-    void newVisibleArea();
     Ui::EditorForm *ui;
-    QGraphicsScene *scene;
-    AbstractMode *mode;
-    VisibleAreaMode *visibleArea;
+    EditorView* _editorView;
+    AbstractMode* _mode;
 };
 
 #endif // EDITORFORM_H
