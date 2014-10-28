@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include "server.h"
 #include <QDebug>
+#include <QPixmap>
 
 Server::Server(QObject *parent) : QObject(parent)
 {
@@ -15,22 +16,20 @@ Server::Server(QObject *parent) : QObject(parent)
             this, SLOT(finished(QNetworkReply*)));
 }
 
-void Server::upload()
+Server::~Server()
 {
-    QString filename = "/home/ismd/Загрузки/tmp.png";
+    delete _manager;
+}
 
+void Server::upload(QByteArray bytes)
+{
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
     QHttpPart imagePart;
     imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/png"));
     imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"image\"; filename=\"screen.png\""));
 
-    QFile *buffer = new QFile(filename);
-    buffer->open(QIODevice::ReadOnly);
-
-    imagePart.setBodyDevice(buffer);
-    buffer->setParent(multiPart); // we cannot delete the file now, so delete it with the multiPart
-
+    imagePart.setBody(bytes);
     multiPart->append(imagePart);
 
     QUrl url("http://localhost:7998/screen/upload");

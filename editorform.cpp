@@ -52,5 +52,26 @@ void EditorForm::on_rectButton_clicked()
 void EditorForm::on_okButton_clicked()
 {
     _editorView->hide();
-    _server->upload();
+
+    QGraphicsScene *scene = _editorView->scene();
+
+    scene->clearSelection();
+    scene->setSceneRect(modes.visibleArea->area.x,
+                        modes.visibleArea->area.y,
+                        modes.visibleArea->area.width,
+                        modes.visibleArea->area.height);
+
+    QImage image(scene->sceneRect().size().toSize(), QImage::Format_ARGB32);
+    image.fill(Qt::transparent);
+
+    QPainter painter(&image);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    scene->render(&painter);
+
+    QByteArray bytes;
+    QBuffer buffer(&bytes);
+    buffer.open(QIODevice::WriteOnly);
+    image.save(&buffer, "PNG");
+
+    _server->upload(bytes);
 }

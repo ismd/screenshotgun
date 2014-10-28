@@ -15,6 +15,13 @@ public:
     void move(int x, int y);
     void stop(int x, int y);
 
+    struct {
+        int x;
+        int y;
+        int width;
+        int height;
+    } area;
+
 private:
     void set(int x, int y, int width, int height);
 
@@ -22,13 +29,6 @@ private:
     QGraphicsRectItem *rectBottom;
     QGraphicsRectItem *rectLeft;
     QGraphicsRectItem *rectRight;
-
-    struct {
-        int x;
-        int y;
-        int width;
-        int height;
-    } area;
 
     EditorForm* _form;
 };
