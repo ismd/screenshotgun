@@ -1,15 +1,18 @@
-#include "server.h"
-
 #include <QNetworkRequest>
 #include <QHttpMultiPart>
 #include <QFile>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include "server.h"
+#include <QDebug>
 
-Server::Server(QObject *parent) :
-    QObject(parent)
+Server::Server(QObject *parent) : QObject(parent)
 {
+    _manager = new QNetworkAccessManager(this);
+
+    connect(_manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(finished(QNetworkReply*)));
 }
 
 void Server::upload()
@@ -32,31 +35,15 @@ void Server::upload()
 
     QUrl url("http://localhost:7998/screen/upload");
     QNetworkRequest request;
+
     request.setUrl(url);
+    request.setRawHeader("User-Agent", "OpenScreenCloud client");
 
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-
-    request.setRawHeader("User-Agent", "MyOwnBrowser 1.0");
-    reply = manager->post(request, multiPart);
-    multiPart->setParent(reply); // delete the multiPart with the reply
-
-    connect(reply, SIGNAL(finished()),
-            this,  SLOT(uploadSuccess()));
+    _reply = _manager->post(request, multiPart);
+    multiPart->setParent(_reply); // delete the multiPart with the reply
 }
 
-/*void Server::upload(const QObject *image)
-{
-    QPixmap *pixmap = qobject_cast<QPixmap*>(image);
-
-    QFile file("/home/ismd/Загрузки/tmp.png");
-    file.open(QIODevice::WriteOnly);
-    pixmap->save(&file, "PNG");
-    file.close();
-
-    //this->upload("/home/ismd/Загрузки/tmp.png");
-}*/
-
-void Server::uploadSuccess()
+void Server::finished(QNetworkReply *reply)
 {
     QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
     reply->close();

@@ -1,8 +1,7 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include <QPixmap>
-#include <QNetworkReply>
+#include <QtNetwork>
 
 class Server : public QObject
 {
@@ -10,15 +9,14 @@ class Server : public QObject
 
 public:
     explicit Server(QObject *parent = 0);
-
-public slots:
     void upload();
 
 private slots:
-    void uploadSuccess();
+    void finished(QNetworkReply*);
 
 private:
-    QNetworkReply *reply;
+    QNetworkAccessManager* _manager;
+    QNetworkReply* _reply;
 };
 
 #endif // SERVER_H

@@ -1,4 +1,4 @@
-QT += widgets quick
+QT += widgets network
 
 SOURCES += \
     main.cpp\

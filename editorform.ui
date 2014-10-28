@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>600</width>
     <height>60</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
     <rect>
      <x>6</x>
      <y>3</y>
-     <width>491</width>
+     <width>591</width>
      <height>51</height>
     </rect>
    </property>
@@ -40,6 +40,9 @@
     </property>
     <item>
      <widget class="QPushButton" name="visibleAreaButton">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -74,6 +77,19 @@
       </property>
       <property name="text">
        <string>Прямоугольник</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="okButton">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>OK</string>
       </property>
      </widget>
     </item>

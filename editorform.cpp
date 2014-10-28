@@ -5,7 +5,8 @@
 EditorForm::EditorForm(EditorView *parent) :
     QWidget(parent),
     ui(new Ui::EditorForm),
-    _editorView(parent)
+    _editorView(parent),
+    _server(new Server(this))
 {
     hide();
     ui->setupUi(this);
@@ -25,6 +26,7 @@ EditorForm::~EditorForm()
     delete modes.visibleArea;
     delete modes.line;
     delete modes.rect;
+    delete _server;
 }
 
 AbstractMode* EditorForm::mode()
@@ -45,4 +47,10 @@ void EditorForm::on_lineButton_clicked()
 void EditorForm::on_rectButton_clicked()
 {
     _mode = modes.rect;
+}
+
+void EditorForm::on_okButton_clicked()
+{
+    _editorView->hide();
+    _server->upload();
 }
