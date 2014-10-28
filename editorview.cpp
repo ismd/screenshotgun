@@ -1,7 +1,6 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QScreen>
-#include <QMessageBox>
 #include "editorview.h"
 
 EditorView::EditorView()
