@@ -10,7 +10,7 @@ class Server : public QObject
 public:
     explicit Server(QObject *parent = 0);
     ~Server();
-    void upload(QByteArray);
+    void upload(QString url, QByteArray);
 
 private slots:
     void finished(QNetworkReply*);

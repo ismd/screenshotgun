@@ -21,7 +21,7 @@ Server::~Server()
     delete _manager;
 }
 
-void Server::upload(QByteArray bytes)
+void Server::upload(QString url, QByteArray bytes)
 {
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
@@ -32,10 +32,8 @@ void Server::upload(QByteArray bytes)
     imagePart.setBody(bytes);
     multiPart->append(imagePart);
 
-    QUrl url("http://localhost:7998/screen/upload");
     QNetworkRequest request;
-
-    request.setUrl(url);
+    request.setUrl(QUrl("http://" + url + "/screen/upload"));
     request.setRawHeader("User-Agent", "OpenScreenCloud client");
 
     _reply = _manager->post(request, multiPart);

@@ -11,7 +11,7 @@ EditorForm::EditorForm(EditorView *parent) :
     hide();
     ui->setupUi(this);
 
-    QGraphicsScene *scene = parent->scene();
+    QGraphicsScene *scene = _editorView->scene();
 
     // Setting default mode
     modes.visibleArea = new VisibleAreaMode(scene, static_cast<EditorForm*>(this));
@@ -73,5 +73,5 @@ void EditorForm::on_okButton_clicked()
     buffer.open(QIODevice::WriteOnly);
     image.save(&buffer, "PNG");
 
-    _server->upload(bytes);
+    _server->upload(_editorView->settings()->value("server/url").toString(), bytes);
 }

@@ -14,6 +14,7 @@ public:
     EditorView();
     ~EditorView();
     QGraphicsScene* scene();
+    QSettings* settings();
 
 protected:
     void mousePressEvent(QMouseEvent *e);
@@ -28,6 +29,7 @@ private:
     QGraphicsScene* _scene;
     EditorForm* _editorForm;
     QSystemTrayIcon* _trayIcon;
+    QSettings* _settings;
 };
 
 #endif // EDITORVIEW_H

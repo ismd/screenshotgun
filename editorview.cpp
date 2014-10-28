@@ -1,9 +1,11 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QScreen>
+#include <QMessageBox>
 #include "editorview.h"
 
-EditorView::EditorView() : QGraphicsView(), _trayIcon(new QSystemTrayIcon(this)), _scene(NULL), _editorForm(NULL)
+EditorView::EditorView()
+    : QGraphicsView(), _trayIcon(new QSystemTrayIcon(this)), _settings(new QSettings("openscreencloud")), _scene(NULL), _editorForm(NULL)
 {
     setFrameShape(QFrame::NoFrame);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -17,12 +19,16 @@ EditorView::EditorView() : QGraphicsView(), _trayIcon(new QSystemTrayIcon(this))
 
 EditorView::~EditorView()
 {
-    delete _scene;
 }
 
 QGraphicsScene* EditorView::scene()
 {
     return _scene;
+}
+
+QSettings* EditorView::settings()
+{
+    return _settings;
 }
 
 void EditorView::mousePressEvent(QMouseEvent *e)
@@ -42,7 +48,6 @@ void EditorView::mouseReleaseEvent(QMouseEvent *e)
 
 void EditorView::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    // FIXME: need editor form or server signal
     if (NULL != _scene) {
         delete _scene;
     }
