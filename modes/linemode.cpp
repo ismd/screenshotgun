@@ -9,7 +9,7 @@ void LineMode::init(int x, int y)
     line = new QGraphicsLineItem(x, y, x, y);
     line->setPen(*_pen);
 
-    scene->addItem(line);
+    _scene->addItem(line);
 }
 
 void LineMode::move(int x, int y)

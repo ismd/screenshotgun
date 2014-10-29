@@ -52,6 +52,7 @@ void EditorForm::on_rectButton_clicked()
 void EditorForm::on_okButton_clicked()
 {
     _editorView->hide();
+    hide();
 
     QGraphicsScene *scene = _editorView->scene();
 

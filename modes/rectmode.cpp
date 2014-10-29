@@ -16,7 +16,7 @@ void RectMode::init(int x, int y)
     rect->setPen(*_pen);
     rect->setBrush(brush);
 
-    scene->addItem(rect);
+    _scene->addItem(rect);
 }
 
 void RectMode::move(int x, int y)

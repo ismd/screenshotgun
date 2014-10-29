@@ -13,10 +13,10 @@ VisibleAreaMode::VisibleAreaMode(QGraphicsScene *scene, EditorForm *form)
     rectLeft   = new QGraphicsRectItem;
     rectRight  = new QGraphicsRectItem;
 
-    rectTop->setOpacity(.5);
-    rectBottom->setOpacity(.5);
-    rectLeft->setOpacity(.5);
-    rectRight->setOpacity(.5);
+    rectTop->setOpacity(.65);
+    rectBottom->setOpacity(.65);
+    rectLeft->setOpacity(.65);
+    rectRight->setOpacity(.65);
 
     rectTop->setPen(pen);
     rectBottom->setPen(pen);
@@ -34,12 +34,12 @@ VisibleAreaMode::VisibleAreaMode(QGraphicsScene *scene, EditorForm *form)
     rectRight->setZValue(1);
 
     // First rectangle fullscreen
-    rectTop->setRect(0, 0, scene->width(), scene->height());
+    rectTop->setRect(0, 0, _scene->width(), _scene->height());
 
-    scene->addItem(rectTop);
-    scene->addItem(rectBottom);
-    scene->addItem(rectLeft);
-    scene->addItem(rectRight);
+    _scene->addItem(rectTop);
+    _scene->addItem(rectBottom);
+    _scene->addItem(rectLeft);
+    _scene->addItem(rectRight);
 }
 
 void VisibleAreaMode::init(int x, int y)
@@ -81,8 +81,11 @@ void VisibleAreaMode::stop(int x, int y)
 
 void VisibleAreaMode::set(int x, int y, int width, int height)
 {
-    rectTop->setRect(0, 0, scene->width(), y);
-    rectBottom->setRect(0, y + height, scene->width(), scene->height() - y - height);
+    int sceneWidth = _scene->width(),
+        sceneHeight = _scene->height();
+
+    rectTop->setRect(0, 0, sceneWidth, y);
+    rectBottom->setRect(0, y + height, sceneWidth, sceneHeight - y - height);
     rectLeft->setRect(0, y, x, height);
-    rectRight->setRect(x + width, y, scene->width() - x - width, height);
+    rectRight->setRect(x + width, y, sceneWidth - x - width, height);
 }

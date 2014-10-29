@@ -14,7 +14,7 @@ public:
     virtual void stop(int x, int y) = 0;
 
 protected:
-    QGraphicsScene *scene;
+    QGraphicsScene* _scene;
     QPen* _pen;
 };
 
