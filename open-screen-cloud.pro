@@ -8,7 +8,8 @@ SOURCES += \
     modes/visibleareamode.cpp \
     modes/abstractmode.cpp \
     modes/linemode.cpp \
-    modes/rectmode.cpp
+    modes/rectmode.cpp \
+    settings.cpp
 
 HEADERS += \
     server.h \
@@ -17,11 +18,13 @@ HEADERS += \
     modes/visibleareamode.h \
     modes/abstractmode.h \
     modes/linemode.h \
-    modes/rectmode.h
+    modes/rectmode.h \
+    settings.h
 
 OTHER_FILES +=
 
 RESOURCES +=
 
 FORMS += \
-    editorform.ui
+    editorform.ui \
+    settings.ui

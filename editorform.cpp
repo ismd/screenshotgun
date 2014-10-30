@@ -74,5 +74,5 @@ void EditorForm::on_okButton_clicked()
     buffer.open(QIODevice::WriteOnly);
     image.save(&buffer, "PNG");
 
-    _server->upload(_editorView->settings()->value("server/url").toString(), bytes);
+    _server->upload(_editorView->settings()->getServer(), bytes);
 }

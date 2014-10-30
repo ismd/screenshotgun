@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include <QSystemTrayIcon>
 #include "editorform.h"
+#include "settings.h"
 
 class EditorView : public QGraphicsView
 {
@@ -14,7 +15,7 @@ public:
     EditorView();
     ~EditorView();
     QGraphicsScene* scene();
-    QSettings* settings();
+    Settings* settings();
 
 protected:
     void mousePressEvent(QMouseEvent *e);
@@ -22,6 +23,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *e);
 
 private slots:
+    void init(bool);
     void iconActivated(QSystemTrayIcon::ActivationReason);
 
 private:
@@ -29,7 +31,8 @@ private:
     QGraphicsScene* _scene;
     EditorForm* _editorForm;
     QSystemTrayIcon* _trayIcon;
-    QSettings* _settings;
+    Settings* _settings;
+    bool _initialized;
 };
 
 #endif // EDITORVIEW_H

@@ -4,9 +4,35 @@
 #include <QWindow>
 #include "editorview.h"
 
-EditorView::EditorView()
-    : QGraphicsView(), _scene(new QGraphicsScene(this)), _editorForm(NULL), _trayIcon(new QSystemTrayIcon(this)), _settings(new QSettings("openscreencloud"))
+EditorView::EditorView() :
+    QGraphicsView(),
+    _scene(new QGraphicsScene(this)),
+    _editorForm(NULL),
+    _trayIcon(new QSystemTrayIcon(this)),
+    _settings(new Settings(this)),
+    _initialized(false)
 {
+    connect(_settings, SIGNAL(valid(bool)),
+            this, SLOT(init(bool)));
+
+    // isValid will send signal `valid'
+    if (!_settings->isValid()) {
+        _settings->show();
+    }
+}
+
+EditorView::~EditorView()
+{
+}
+
+void EditorView::init(bool settingsOk)
+{
+    if (_initialized || !settingsOk) {
+        return;
+    }
+
+    _initialized = true;
+
     setFrameShape(QFrame::NoFrame);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -19,16 +45,12 @@ EditorView::EditorView()
             this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 }
 
-EditorView::~EditorView()
-{
-}
-
 QGraphicsScene* EditorView::scene()
 {
     return _scene;
 }
 
-QSettings* EditorView::settings()
+Settings* EditorView::settings()
 {
     return _settings;
 }
