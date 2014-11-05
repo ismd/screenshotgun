@@ -26,5 +26,5 @@ OTHER_FILES +=
 RESOURCES +=
 
 FORMS += \
-    editorform.ui \
-    settings.ui
+    settings.ui \
+    editorform.ui

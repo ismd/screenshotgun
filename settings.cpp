@@ -19,10 +19,12 @@ Settings::~Settings()
 
 bool Settings::isValid()
 {
-    QVariant value = _settings->value("server/url");
-    bool isValid = value.isValid() && value.toString().length() > 0;
+    bool isValid = getServer().length() > 0;
 
-    emit(valid(isValid));
+    if (isValid) {
+        emit(valid());
+    }
+
     return isValid;
 }
 
@@ -33,6 +35,7 @@ QString Settings::getServer()
 
 void Settings::accept()
 {
+    _settings->setValue("server/checked", ui->serverRadioButton->isChecked());
     _settings->setValue("server/url", ui->serverEdit->text());
 
     if (!isValid()) {
@@ -40,5 +43,4 @@ void Settings::accept()
     }
 
     hide();
-
 }

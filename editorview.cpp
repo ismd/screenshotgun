@@ -9,11 +9,10 @@ EditorView::EditorView() :
     _scene(new QGraphicsScene(this)),
     _editorForm(NULL),
     _trayIcon(new QSystemTrayIcon(this)),
-    _settings(new Settings(this)),
-    _initialized(false)
+    _settings(new Settings(this))
 {
-    connect(_settings, SIGNAL(valid(bool)),
-            this, SLOT(init(bool)));
+    connect(_settings, SIGNAL(valid()),
+            this, SLOT(init()));
 
     // isValid will send signal `valid'
     if (!_settings->isValid()) {
@@ -25,13 +24,10 @@ EditorView::~EditorView()
 {
 }
 
-void EditorView::init(bool settingsOk)
+void EditorView::init()
 {
-    if (_initialized || !settingsOk) {
-        return;
-    }
-
-    _initialized = true;
+    disconnect(_settings, SIGNAL(valid()),
+               this, SLOT(init()));
 
     setFrameShape(QFrame::NoFrame);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

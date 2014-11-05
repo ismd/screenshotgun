@@ -23,7 +23,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *e);
 
 private slots:
-    void init(bool);
+    void init();
     void iconActivated(QSystemTrayIcon::ActivationReason);
 
 private:
@@ -32,7 +32,6 @@ private:
     EditorForm* _editorForm;
     QSystemTrayIcon* _trayIcon;
     Settings* _settings;
-    bool _initialized;
 };
 
 #endif // EDITORVIEW_H

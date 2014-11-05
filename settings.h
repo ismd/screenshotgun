@@ -20,7 +20,7 @@ public:
     QString getServer();
 
 signals:
-    void valid(bool);
+    void valid();
 
 private slots:
     void accept();
