@@ -24,7 +24,7 @@ protected:
 
 private slots:
     void init();
-    void iconActivated(QSystemTrayIcon::ActivationReason);
+    void iconActivated();
 
 private:
     QPixmap _screenshot;

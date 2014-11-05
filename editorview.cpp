@@ -38,7 +38,7 @@ void EditorView::init()
 
     _trayIcon->show();
     connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-            this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+            this, SLOT(iconActivated()));
 }
 
 QGraphicsScene* EditorView::scene()
@@ -66,12 +66,14 @@ void EditorView::mouseReleaseEvent(QMouseEvent *e)
     _editorForm->mode()->stop(e->x(), e->y());
 }
 
-void EditorView::iconActivated(QSystemTrayIcon::ActivationReason reason)
+void EditorView::iconActivated()
 {
     // Making screenshot
-    //_screenshot = QGuiApplication::focusWindow()->screen()->grabWindow(QGuiApplication::focusWindow()->winId());;
-    //_screenshot = QGuiApplication::primaryScreen()->grabWindow(QGuiApplication::focusWindow()->winId());
-    _screenshot = QGuiApplication::primaryScreen()->grabWindow(QApplication::desktop()->winId());
+    QDesktopWidget *desktop = QApplication::desktop();
+    QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
+
+    _screenshot = QGuiApplication::primaryScreen()->grabWindow(
+                desktop->winId(), geo.left(), geo.top(), geo.width(), geo.height());
 
     int width = _screenshot.width(),
         height = _screenshot.height();
