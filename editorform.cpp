@@ -6,7 +6,7 @@ EditorForm::EditorForm(EditorView *parent) :
     QWidget(parent),
     ui(new Ui::EditorForm),
     _editorView(parent),
-    _server(new Server(this))
+    _server(new Server(_editorView->settings()->getServer(), this))
 {
     hide();
     ui->setupUi(this);
@@ -74,5 +74,5 @@ void EditorForm::on_okButton_clicked()
     buffer.open(QIODevice::WriteOnly);
     image.save(&buffer, "PNG");
 
-    _server->upload(_editorView->settings()->getServer(), bytes);
+    _server->upload(bytes);
 }

@@ -24,7 +24,7 @@ protected:
 
 private slots:
     void init();
-    void iconActivated();
+    void run();
 
 private:
     QPixmap _screenshot;

@@ -19,7 +19,8 @@ Settings::~Settings()
 
 bool Settings::isValid()
 {
-    bool isValid = getServer().length() > 0;
+    QString serverUrl = getServer();
+    bool isValid = serverUrl.length() > 0;
 
     if (isValid) {
         emit(valid());

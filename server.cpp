@@ -5,23 +5,19 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include "server.h"
-#include <QDebug>
-#include <QPixmap>
 
-Server::Server(QObject *parent) : QObject(parent)
+Server::Server(QString url, QObject *parent) :
+    _url(url),
+    QObject(parent),
+    _manager(new QNetworkAccessManager(this))
 {
-    _manager = new QNetworkAccessManager(this);
-
-    connect(_manager, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(finished(QNetworkReply*)));
 }
 
 Server::~Server()
 {
-    delete _manager;
 }
 
-void Server::upload(QString url, QByteArray bytes)
+void Server::upload(QByteArray bytes)
 {
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
@@ -33,15 +29,21 @@ void Server::upload(QString url, QByteArray bytes)
     multiPart->append(imagePart);
 
     QNetworkRequest request;
-    request.setUrl(QUrl("http://" + url + "/screen/upload"));
+    request.setUrl(QUrl("http://" + _url + "/screen/upload"));
     request.setRawHeader("User-Agent", "OpenScreenCloud client");
+
+    connect(_manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(uploaded(QNetworkReply*)));
 
     _reply = _manager->post(request, multiPart);
     multiPart->setParent(_reply); // delete the multiPart with the reply
 }
 
-void Server::finished(QNetworkReply *reply)
+void Server::uploaded(QNetworkReply *reply)
 {
+    disconnect(_manager, SIGNAL(finished(QNetworkReply*)),
+               this, SLOT(uploaded(QNetworkReply*)));
+
     QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
     reply->close();
 

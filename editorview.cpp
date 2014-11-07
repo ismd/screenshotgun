@@ -38,7 +38,7 @@ void EditorView::init()
 
     _trayIcon->show();
     connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-            this, SLOT(iconActivated()));
+            this, SLOT(run()));
 }
 
 QGraphicsScene* EditorView::scene()
@@ -66,7 +66,7 @@ void EditorView::mouseReleaseEvent(QMouseEvent *e)
     _editorForm->mode()->stop(e->x(), e->y());
 }
 
-void EditorView::iconActivated()
+void EditorView::run()
 {
     // Making screenshot
     QDesktopWidget *desktop = QApplication::desktop();
