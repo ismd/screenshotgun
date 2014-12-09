@@ -3,6 +3,7 @@
 #include <QScreen>
 #include <QWindow>
 #include "editorview.h"
+#include "const.h"
 
 EditorView::EditorView() :
     QGraphicsView(),
@@ -105,6 +106,11 @@ void EditorView::checkVersion()
 
 void EditorView::serverVersion(QString version)
 {
+    if (VERSION != version) {
+        _settings->show();
+        return;
+    }
+
     _settings->hide();
     init();
 }

@@ -19,7 +19,8 @@ HEADERS += \
     modes/abstractmode.h \
     modes/linemode.h \
     modes/rectmode.h \
-    settings.h
+    settings.h \
+    const.h
 
 OTHER_FILES +=
 

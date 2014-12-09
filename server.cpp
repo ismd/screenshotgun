@@ -81,5 +81,5 @@ void Server::version()
 
 void Server::versionFromServer(QNetworkReply *reply)
 {
-    emit(serverVersion(QString(reply->readAll())));
+    emit(serverVersion(QString(reply->readAll().simplified())));
 }
