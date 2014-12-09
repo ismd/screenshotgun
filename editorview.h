@@ -6,6 +6,7 @@
 #include <QSystemTrayIcon>
 #include "editorform.h"
 #include "settings.h"
+#include "server.h"
 
 class EditorView : public QGraphicsView
 {
@@ -23,15 +24,18 @@ protected:
     void mouseReleaseEvent(QMouseEvent *e);
 
 private slots:
-    void init();
     void run();
+    void checkVersion();
+    void serverVersion(QString);
 
 private:
+    void init();
     QPixmap _screenshot;
     QGraphicsScene* _scene;
     EditorForm* _editorForm;
     QSystemTrayIcon* _trayIcon;
     Settings* _settings;
+    Server* _server;
 };
 
 #endif // EDITORVIEW_H

@@ -17,7 +17,7 @@ public:
     explicit Settings(QWidget *parent = 0);
     ~Settings();
     bool isValid();
-    QString getServer();
+    QString server();
 
 signals:
     void valid();

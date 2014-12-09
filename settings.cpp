@@ -8,8 +8,8 @@ Settings::Settings(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->submitButtons, SIGNAL(accepted()),
-            this, SLOT(accept()));
+    ui->serverRadioButton->setChecked(_settings->value("server/checked").toBool());
+    ui->serverEdit->setText(_settings->value("server/url").toString());
 }
 
 Settings::~Settings()
@@ -19,29 +19,28 @@ Settings::~Settings()
 
 bool Settings::isValid()
 {
-    QString serverUrl = getServer();
-    bool isValid = serverUrl.length() > 0;
+    bool isValid = ui->serverEdit->text().length() > 0;
 
     if (isValid) {
+        _settings->setValue("server/checked", ui->serverRadioButton->isChecked());
+        _settings->setValue("server/url", ui->serverEdit->text());
+
         emit(valid());
     }
 
     return isValid;
 }
 
-QString Settings::getServer()
+QString Settings::server()
 {
     return _settings->value("server/url").toString();
 }
 
 void Settings::accept()
 {
-    _settings->setValue("server/checked", ui->serverRadioButton->isChecked());
-    _settings->setValue("server/url", ui->serverEdit->text());
+    ui->submitButtons->setEnabled(false);
 
     if (!isValid()) {
-        return;
+        ui->submitButtons->setEnabled(true);
     }
-
-    hide();
 }

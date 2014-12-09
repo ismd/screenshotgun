@@ -9,10 +9,11 @@ EditorView::EditorView() :
     _scene(new QGraphicsScene(this)),
     _editorForm(NULL),
     _trayIcon(new QSystemTrayIcon(this)),
-    _settings(new Settings(this))
+    _settings(new Settings(this)),
+    _server(new Server(this))
 {
     connect(_settings, SIGNAL(valid()),
-            this, SLOT(init()));
+            this, SLOT(checkVersion()));
 
     // isValid will send signal `valid'
     if (!_settings->isValid()) {
@@ -27,7 +28,7 @@ EditorView::~EditorView()
 void EditorView::init()
 {
     disconnect(_settings, SIGNAL(valid()),
-               this, SLOT(init()));
+               this, SLOT(checkVersion()));
 
     setFrameShape(QFrame::NoFrame);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -91,4 +92,19 @@ void EditorView::run()
 
     _editorForm = new EditorForm(this);
     showFullScreen();
+}
+
+void EditorView::checkVersion()
+{
+    _server->setUrl(_settings->server());
+    connect(_server, SIGNAL(serverVersion(QString)),
+            this, SLOT(serverVersion(QString)));
+
+    _server->version();
+}
+
+void EditorView::serverVersion(QString version)
+{
+    _settings->hide();
+    init();
 }

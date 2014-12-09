@@ -6,7 +6,7 @@ EditorForm::EditorForm(EditorView *parent) :
     QWidget(parent),
     ui(new Ui::EditorForm),
     _editorView(parent),
-    _server(new Server(_editorView->settings()->getServer(), this))
+    _server(new Server(_editorView->settings()->server(), this))
 {
     hide();
     ui->setupUi(this);

@@ -29,7 +29,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>21</x>
@@ -53,6 +53,9 @@
       </item>
       <item>
        <widget class="QRadioButton" name="serverRadioButton_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Dropbox</string>
         </property>
@@ -60,6 +63,9 @@
       </item>
       <item>
        <widget class="QRadioButton" name="serverRadioButton_3">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Яндекс.Диск</string>
         </property>
@@ -67,6 +73,9 @@
       </item>
       <item>
        <widget class="QRadioButton" name="serverRadioButton_4">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>Google Drive</string>
         </property>
@@ -90,6 +99,9 @@
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QLineEdit" name="lineEdit">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="placeholderText">
            <string>Логин</string>
           </property>
@@ -97,6 +109,9 @@
         </item>
         <item>
          <widget class="QLineEdit" name="lineEdit_2">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="placeholderText">
            <string>Пароль</string>
           </property>
@@ -108,6 +123,9 @@
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
          <widget class="QLineEdit" name="lineEdit_3">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="placeholderText">
            <string>Логин</string>
           </property>
@@ -115,6 +133,9 @@
         </item>
         <item>
          <widget class="QLineEdit" name="lineEdit_4">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="placeholderText">
            <string>Пароль</string>
           </property>
@@ -126,6 +147,9 @@
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QLineEdit" name="lineEdit_5">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="placeholderText">
            <string>Логин</string>
           </property>
@@ -133,6 +157,9 @@
         </item>
         <item>
          <widget class="QLineEdit" name="lineEdit_6">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="placeholderText">
            <string>Пароль</string>
           </property>

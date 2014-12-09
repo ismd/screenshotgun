@@ -6,6 +6,12 @@
 #include <QJsonObject>
 #include "server.h"
 
+Server::Server(QObject *parent) :
+    QObject(parent),
+    _manager(new QNetworkAccessManager(this))
+{
+}
+
 Server::Server(QString url, QObject *parent) :
     _url(url),
     QObject(parent),
@@ -15,6 +21,11 @@ Server::Server(QString url, QObject *parent) :
 
 Server::~Server()
 {
+}
+
+void Server::setUrl(QString url)
+{
+    _url = url;
 }
 
 void Server::upload(QByteArray bytes)
@@ -36,6 +47,8 @@ void Server::upload(QByteArray bytes)
             this, SLOT(uploaded(QNetworkReply*)));
 
     _reply = _manager->post(request, multiPart);
+
+    _reply->setParent(_manager);
     multiPart->setParent(_reply); // delete the multiPart with the reply
 }
 
@@ -52,4 +65,21 @@ void Server::uploaded(QNetworkReply *reply)
     if (0 == jsonObject["status"].toString().compare("ok")) {
         qDebug() << jsonObject["url"].toString();
     }
+}
+
+void Server::version()
+{
+    QNetworkRequest request;
+    request.setUrl(QUrl("http://" + _url + "/version"));
+    request.setRawHeader("User-Agent", "OpenScreenCloud client");
+
+    _manager->get(request);
+
+    connect(_manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(versionFromServer(QNetworkReply*)));
+}
+
+void Server::versionFromServer(QNetworkReply *reply)
+{
+    emit(serverVersion(QString(reply->readAll())));
 }

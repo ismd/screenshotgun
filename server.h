@@ -8,13 +8,19 @@ class Server : public QObject
     Q_OBJECT
 
 public:
-    explicit Server(QString url, QObject *parent = 0);
+    Server(QObject *parent = 0);
+    Server(QString url, QObject *parent = 0);
     ~Server();
+    void setUrl(QString);
     void upload(QByteArray);
+    void version();
+
+signals:
+    void serverVersion(QString);
 
 private slots:
     void uploaded(QNetworkReply*);
-    void clientVersion(QNetworkReply*);
+    void versionFromServer(QNetworkReply*);
 
 private:
     QString _url;
