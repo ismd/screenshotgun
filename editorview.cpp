@@ -20,6 +20,12 @@ EditorView::EditorView() :
     if (!_settings->isValid()) {
         _settings->show();
     }
+
+    connect(_server, SIGNAL(serverVersion(QString)),
+            this, SLOT(serverVersion(QString)));
+
+    connect(_server, SIGNAL(connectionError()),
+            this, SLOT(connectionError()));
 }
 
 EditorView::~EditorView()
@@ -98,19 +104,21 @@ void EditorView::run()
 void EditorView::checkVersion()
 {
     _server->setUrl(_settings->server());
-    connect(_server, SIGNAL(serverVersion(QString)),
-            this, SLOT(serverVersion(QString)));
-
     _server->version();
 }
 
 void EditorView::serverVersion(QString version)
 {
     if (VERSION != version) {
-        _settings->show();
+        qDebug() << "Versions unmatch";
         return;
     }
 
-    _settings->hide();
+    _settings->setError("")->hide();
     init();
+}
+
+void EditorView::connectionError()
+{
+    _settings->setError(QString("Can't connect to server"))->show();
 }

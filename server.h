@@ -17,6 +17,7 @@ public:
 
 signals:
     void serverVersion(QString);
+    void connectionError();
 
 private slots:
     void uploaded(QNetworkReply*);

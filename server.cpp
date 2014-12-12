@@ -81,5 +81,10 @@ void Server::version()
 
 void Server::versionFromServer(QNetworkReply *reply)
 {
+    if (QNetworkReply::NoError != reply->error()) {
+        emit(connectionError());
+        return;
+    }
+
     emit(serverVersion(QString(reply->readAll().simplified())));
 }

@@ -10,6 +10,7 @@ Settings::Settings(QWidget *parent) :
 
     ui->serverRadioButton->setChecked(_settings->value("server/checked").toBool());
     ui->serverEdit->setText(_settings->value("server/url").toString());
+    ui->errorLabel->setVisible(false);
 }
 
 Settings::~Settings()
@@ -43,4 +44,16 @@ void Settings::accept()
     if (!isValid()) {
         ui->submitButtons->setEnabled(true);
     }
+}
+
+Settings* Settings::setError(QString message)
+{
+    ui->errorLabel->setText(message);
+    ui->errorLabel->setVisible("" == message ? false : true);
+
+    if ("" != message) {
+        ui->submitButtons->setEnabled(true);
+    }
+
+    return this;
 }

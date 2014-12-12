@@ -18,6 +18,7 @@ public:
     ~Settings();
     bool isValid();
     QString server();
+    Settings* setError(QString);
 
 signals:
     void valid();

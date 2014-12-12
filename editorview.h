@@ -27,6 +27,7 @@ private slots:
     void run();
     void checkVersion();
     void serverVersion(QString);
+    void connectionError();
 
 private:
     void init();
