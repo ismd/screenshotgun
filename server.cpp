@@ -25,7 +25,11 @@ Server::~Server()
 
 void Server::setUrl(QString url)
 {
-    _url = url;
+    if ("http://" == url.left(7) || "https://" == url.left(8)) {
+        _url = url;
+    } else {
+        _url = "http://" + url;
+    }
 }
 
 void Server::upload(QByteArray bytes)
@@ -40,7 +44,7 @@ void Server::upload(QByteArray bytes)
     multiPart->append(imagePart);
 
     QNetworkRequest request;
-    request.setUrl(QUrl("http://" + _url + "/screen/upload"));
+    request.setUrl(QUrl(_url + "/screen/upload"));
     request.setRawHeader("User-Agent", "OpenScreenCloud client");
 
     connect(_manager, SIGNAL(finished(QNetworkReply*)),
@@ -70,7 +74,7 @@ void Server::uploaded(QNetworkReply *reply)
 void Server::version()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("http://" + _url + "/dist/version"));
+    request.setUrl(QUrl(_url + "/dist/version"));
     request.setRawHeader("User-Agent", "OpenScreenCloud client");
 
     _manager->get(request);
@@ -81,10 +85,30 @@ void Server::version()
 
 void Server::versionFromServer(QNetworkReply *reply)
 {
+    disconnect(_manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(versionFromServer(QNetworkReply*)));
+
     if (QNetworkReply::NoError != reply->error()) {
         emit(connectionError());
         return;
     }
 
     emit(serverVersion(QString(reply->readAll().simplified())));
+}
+
+void Server::downloadNewVersion()
+{
+    QNetworkRequest request;
+    request.setUrl(_url + "/dist/open-screen-cloud");
+    request.setRawHeader("User-Agent", "OpenScreenCloud client");
+
+    _manager->get(request);
+
+    connect(_manager, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(fileDownloaded(QNetworkReply*)));
+}
+
+void Server::fileDownloaded(QNetworkReply *reply)
+{
+    emit newVersionDownloaded(reply->readAll());
 }

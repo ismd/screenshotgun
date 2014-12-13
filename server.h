@@ -14,14 +14,17 @@ public:
     void setUrl(QString);
     void upload(QByteArray);
     void version();
+    void downloadNewVersion();
 
 signals:
     void serverVersion(QString);
     void connectionError();
+    void newVersionDownloaded(QByteArray);
 
 private slots:
     void uploaded(QNetworkReply*);
     void versionFromServer(QNetworkReply*);
+    void fileDownloaded(QNetworkReply*);
 
 private:
     QString _url;

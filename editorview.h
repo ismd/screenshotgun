@@ -28,6 +28,7 @@ private slots:
     void checkVersion();
     void serverVersion(QString);
     void connectionError();
+    void newVersionDownloaded(QByteArray);
 
 private:
     void init();

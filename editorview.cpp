@@ -16,16 +16,19 @@ EditorView::EditorView() :
     connect(_settings, SIGNAL(valid()),
             this, SLOT(checkVersion()));
 
-    // isValid will send signal `valid'
-    if (!_settings->isValid()) {
-        _settings->show();
-    }
-
     connect(_server, SIGNAL(serverVersion(QString)),
             this, SLOT(serverVersion(QString)));
 
     connect(_server, SIGNAL(connectionError()),
             this, SLOT(connectionError()));
+
+    connect(_server, SIGNAL(newVersionDownloaded(QByteArray)),
+            this, SLOT(newVersionDownloaded(QByteArray)));
+
+    // isValid will send signal `valid'
+    if (!_settings->isValid()) {
+        _settings->show();
+    }
 }
 
 EditorView::~EditorView()
@@ -110,7 +113,7 @@ void EditorView::checkVersion()
 void EditorView::serverVersion(QString version)
 {
     if (VERSION != version) {
-        qDebug() << "Versions unmatch";
+        _server->downloadNewVersion();
         return;
     }
 
@@ -121,4 +124,20 @@ void EditorView::serverVersion(QString version)
 void EditorView::connectionError()
 {
     _settings->setError(QString("Can't connect to server"))->show();
+}
+
+void EditorView::newVersionDownloaded(QByteArray file)
+{
+    QString path = QApplication::applicationDirPath();
+    QString filePath = path + "/open-screen-cloud-new";
+
+    QFile newFile(filePath);
+    newFile.open(QIODevice::WriteOnly);
+
+    newFile.write(file);
+    newFile.setPermissions(QFile::ReadOwner|QFile::WriteOwner|QFile::ExeOwner|QFile::ReadGroup|QFile::ExeGroup|QFile::ReadOther|QFile::ExeOther);
+    newFile.close();
+
+    QProcess::startDetached(path + "/updater.sh");
+    exit(12);
 }
