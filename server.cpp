@@ -70,7 +70,7 @@ void Server::uploaded(QNetworkReply *reply)
 void Server::version()
 {
     QNetworkRequest request;
-    request.setUrl(QUrl("http://" + _url + "/version"));
+    request.setUrl(QUrl("http://" + _url + "/dist/version"));
     request.setRawHeader("User-Agent", "OpenScreenCloud client");
 
     _manager->get(request);
