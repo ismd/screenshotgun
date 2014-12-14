@@ -9,7 +9,8 @@ SOURCES += \
     modes/abstractmode.cpp \
     modes/linemode.cpp \
     modes/rectmode.cpp \
-    settings.cpp
+    settings.cpp \
+    newversion.cpp
 
 HEADERS += \
     server.h \
@@ -20,7 +21,8 @@ HEADERS += \
     modes/linemode.h \
     modes/rectmode.h \
     settings.h \
-    const.h
+    const.h \
+    newversion.h
 
 OTHER_FILES +=
 
@@ -28,4 +30,5 @@ RESOURCES +=
 
 FORMS += \
     settings.ui \
-    editorform.ui
+    editorform.ui \
+    newversion.ui

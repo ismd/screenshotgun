@@ -4,6 +4,7 @@
 #include <QWindow>
 #include "editorview.h"
 #include "const.h"
+#include "newversion.h"
 
 EditorView::EditorView() :
     QGraphicsView(),
@@ -21,9 +22,6 @@ EditorView::EditorView() :
 
     connect(_server, SIGNAL(connectionError()),
             this, SLOT(connectionError()));
-
-    connect(_server, SIGNAL(newVersionDownloaded(QByteArray)),
-            this, SLOT(newVersionDownloaded(QByteArray)));
 
     // isValid will send signal `valid'
     if (!_settings->isValid()) {
@@ -112,32 +110,18 @@ void EditorView::checkVersion()
 
 void EditorView::serverVersion(QString version)
 {
+    _settings->setError("")->hide();
+
     if (VERSION != version) {
-        _server->downloadNewVersion();
+        _newVersion = new NewVersion(this, _server);
+        _newVersion->show();
         return;
     }
 
-    _settings->setError("")->hide();
     init();
 }
 
 void EditorView::connectionError()
 {
     _settings->setError(QString("Can't connect to server"))->show();
-}
-
-void EditorView::newVersionDownloaded(QByteArray file)
-{
-    QString path = QApplication::applicationDirPath();
-
-    QString newFilename = path + "/open-screen-cloud-new";
-    QFile newFile(newFilename);
-
-    newFile.open(QIODevice::WriteOnly);
-    newFile.write(file);
-    newFile.setPermissions(QFile::ReadOwner|QFile::WriteOwner|QFile::ExeOwner|QFile::ReadGroup|QFile::ExeGroup|QFile::ReadOther|QFile::ExeOther);
-    newFile.close();
-
-    QProcess::startDetached(newFilename);
-    exit(12);
 }

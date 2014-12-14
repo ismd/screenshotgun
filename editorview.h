@@ -7,6 +7,7 @@
 #include "editorform.h"
 #include "settings.h"
 #include "server.h"
+#include "newversion.h"
 
 class EditorView : public QGraphicsView
 {
@@ -28,7 +29,6 @@ private slots:
     void checkVersion();
     void serverVersion(QString);
     void connectionError();
-    void newVersionDownloaded(QByteArray);
 
 private:
     void init();
@@ -38,6 +38,7 @@ private:
     QSystemTrayIcon* _trayIcon;
     Settings* _settings;
     Server* _server;
+    NewVersion* _newVersion;
 };
 
 #endif // EDITORVIEW_H

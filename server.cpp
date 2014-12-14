@@ -13,10 +13,10 @@ Server::Server(QObject *parent) :
 }
 
 Server::Server(QString url, QObject *parent) :
-    _url(url),
     QObject(parent),
     _manager(new QNetworkAccessManager(this))
 {
+    setUrl(url);
 }
 
 Server::~Server()
