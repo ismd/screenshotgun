@@ -129,15 +129,15 @@ void EditorView::connectionError()
 void EditorView::newVersionDownloaded(QByteArray file)
 {
     QString path = QApplication::applicationDirPath();
-    QString filePath = path + "/open-screen-cloud-new";
 
-    QFile newFile(filePath);
+    QString newFilename = path + "/open-screen-cloud-new";
+    QFile newFile(newFilename);
+
     newFile.open(QIODevice::WriteOnly);
-
     newFile.write(file);
     newFile.setPermissions(QFile::ReadOwner|QFile::WriteOwner|QFile::ExeOwner|QFile::ReadGroup|QFile::ExeGroup|QFile::ReadOther|QFile::ExeOther);
     newFile.close();
 
-    QProcess::startDetached(path + "/updater.sh");
+    QProcess::startDetached(newFilename);
     exit(12);
 }
