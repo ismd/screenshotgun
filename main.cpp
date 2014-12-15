@@ -8,10 +8,28 @@ int main(int argc, char *argv[])
 
     // Check for a new version
     QString dir = app.applicationDirPath();
-    QFile file(dir + "/open-screen-cloud-new");
 
-    if ("open-screen-cloud-new" == app.applicationName()) {
+    #ifdef Q_OS_WIN32
+    QFile file(dir + "/open-screen-cloud-new.exe");
+    #endif
+    #ifndef Q_OS_WIN32
+    QFile file(dir + "/open-screen-cloud-new");
+    #endif
+
+    QString filename = QFileInfo(app.applicationFilePath()).fileName();
+
+    #ifdef Q_OS_WIN32
+    if ("open-screen-cloud-new.exe" == filename) {
+    #endif
+    #ifndef Q_OS_WIN32
+    if ("open-screen-cloud-new" == filename) {
+    #endif
+        #ifdef Q_OS_WIN32
+        QString origFilename = dir + "/open-screen-cloud.exe";
+        #endif
+        #ifndef Q_OS_WIN32
         QString origFilename = dir + "/open-screen-cloud";
+        #endif
 
         QFile origFile(origFilename);
         origFile.remove();

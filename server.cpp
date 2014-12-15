@@ -99,7 +99,14 @@ void Server::versionFromServer(QNetworkReply *reply)
 void Server::downloadNewVersion()
 {
     QNetworkRequest request;
+
+    #ifdef Q_OS_WIN32
+    request.setUrl(_url + "/dist/open-screen-cloud.exe");
+    #endif
+    #ifndef Q_OS_WIN32
     request.setUrl(_url + "/dist/open-screen-cloud");
+    #endif
+
     request.setRawHeader("User-Agent", "OpenScreenCloud client");
 
     _manager->get(request);

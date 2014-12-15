@@ -27,7 +27,13 @@ void NewVersion::newVersionDownloaded(QByteArray file)
 {
     QString path = QApplication::applicationDirPath();
 
+    #ifdef Q_OS_WIN32
+    QString newFilename = path + "/open-screen-cloud-new.exe";
+    #endif
+    #ifndef Q_OS_WIN32
     QString newFilename = path + "/open-screen-cloud-new";
+    #endif
+
     QFile newFile(newFilename);
 
     newFile.open(QIODevice::WriteOnly);
