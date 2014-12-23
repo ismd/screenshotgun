@@ -20,6 +20,7 @@ signals:
     void serverVersion(QString);
     void connectionError();
     void newVersionDownloaded(QByteArray);
+    void screenshotUrl(QString);
 
 private slots:
     void uploaded(QNetworkReply*);

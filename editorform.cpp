@@ -5,8 +5,7 @@
 EditorForm::EditorForm(EditorView *parent) :
     QWidget(parent),
     ui(new Ui::EditorForm),
-    _editorView(parent),
-    _server(new Server(_editorView->settings()->server(), this))
+    _editorView(parent)
 {
     hide();
     ui->setupUi(this);
@@ -26,7 +25,6 @@ EditorForm::~EditorForm()
     delete modes.visibleArea;
     delete modes.line;
     delete modes.rect;
-    delete _server;
 }
 
 AbstractMode* EditorForm::mode()
@@ -74,5 +72,5 @@ void EditorForm::on_okButton_clicked()
     buffer.open(QIODevice::WriteOnly);
     image.save(&buffer, "PNG");
 
-    _server->upload(bytes);
+    _editorView->server()->upload(bytes);
 }

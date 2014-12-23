@@ -2,6 +2,7 @@
 #include <QDesktopWidget>
 #include <QScreen>
 #include <QWindow>
+#include <QClipboard>
 #include "editorview.h"
 #include "const.h"
 #include "newversion.h"
@@ -22,6 +23,9 @@ EditorView::EditorView() :
 
     connect(_server, SIGNAL(connectionError()),
             this, SLOT(connectionError()));
+
+    connect(_server, SIGNAL(screenshotUrl(QString)),
+            this, SLOT(uploaded(QString)));
 
     // isValid will send signal `valid'
     if (!_settings->isValid()) {
@@ -58,6 +62,11 @@ QGraphicsScene* EditorView::scene()
 Settings* EditorView::settings()
 {
     return _settings;
+}
+
+Server* EditorView::server()
+{
+    return _server;
 }
 
 void EditorView::mousePressEvent(QMouseEvent *e)
@@ -124,4 +133,11 @@ void EditorView::serverVersion(QString version)
 void EditorView::connectionError()
 {
     _settings->setError(QString("Can't connect to server"))->show();
+}
+
+void EditorView::uploaded(QString url)
+{
+    qDebug() << url;
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setText(url);
 }

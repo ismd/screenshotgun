@@ -38,7 +38,6 @@ private:
     Ui::EditorForm *ui;
     EditorView* _editorView;
     AbstractMode* _mode;
-    Server* _server;
 };
 
 #endif // EDITORFORM_H

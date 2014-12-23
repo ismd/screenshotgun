@@ -67,7 +67,7 @@ void Server::uploaded(QNetworkReply *reply)
     QJsonObject jsonObject = jsonResponse.object();
 
     if (0 == jsonObject["status"].toString().compare("ok")) {
-        qDebug() << jsonObject["url"].toString();
+        emit(screenshotUrl(jsonObject["url"].toString()));
     }
 }
 

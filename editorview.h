@@ -18,6 +18,7 @@ public:
     ~EditorView();
     QGraphicsScene* scene();
     Settings* settings();
+    Server* server();
 
 protected:
     void mousePressEvent(QMouseEvent *e);
@@ -29,6 +30,7 @@ private slots:
     void checkVersion();
     void serverVersion(QString);
     void connectionError();
+    void uploaded(QString);
 
 private:
     void init();
