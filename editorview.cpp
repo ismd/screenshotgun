@@ -137,7 +137,10 @@ void EditorView::connectionError()
 
 void EditorView::uploaded(QString url)
 {
-    qDebug() << url;
     QClipboard *clipboard = QApplication::clipboard();
     clipboard->setText(url);
+
+    _trayIcon->showMessage("Link copied to clipboard",
+                           "",
+                           QSystemTrayIcon::Information);
 }
