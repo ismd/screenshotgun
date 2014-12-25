@@ -141,6 +141,6 @@ void EditorView::uploaded(QString url)
     clipboard->setText(url);
 
     _trayIcon->showMessage("Link copied to clipboard",
-                           "",
+                           url,
                            QSystemTrayIcon::Information);
 }
