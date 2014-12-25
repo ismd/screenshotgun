@@ -109,13 +109,21 @@ void Server::downloadNewVersion()
 
     request.setRawHeader("User-Agent", "OpenScreenCloud client");
 
-    _manager->get(request);
+    _reply = _manager->get(request);
 
     connect(_manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(fileDownloaded(QNetworkReply*)));
+
+    connect(_reply, SIGNAL(downloadProgress(qint64, qint64)),
+            this, SLOT(downloadProgressSlot(qint64, qint64)));
 }
 
 void Server::fileDownloaded(QNetworkReply *reply)
 {
     emit newVersionDownloaded(reply->readAll());
+}
+
+void Server::downloadProgressSlot(qint64 read, qint64 total)
+{
+    emit(downloadProgress(read, total));
 }

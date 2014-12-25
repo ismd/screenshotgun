@@ -11,6 +11,7 @@ NewVersion::NewVersion(QWidget *parent, Server *server) :
             this, SLOT(newVersionDownloaded(QByteArray)));
 
     ui->setupUi(this);
+    ui->progressBar->hide();
 }
 
 NewVersion::~NewVersion()
@@ -20,7 +21,12 @@ NewVersion::~NewVersion()
 
 void NewVersion::accept()
 {
+    ui->buttonBox->setDisabled(true);
+    ui->progressBar->show();
     _server->downloadNewVersion();
+
+    connect(_server, SIGNAL(downloadProgress(qint64, qint64)),
+            this, SLOT(downloadProgress(qint64, qint64)));
 }
 
 void NewVersion::newVersionDownloaded(QByteArray file)
@@ -43,4 +49,10 @@ void NewVersion::newVersionDownloaded(QByteArray file)
 
     QProcess::startDetached(newFilename);
     exit(12);
+}
+
+void NewVersion::downloadProgress(qint64 read, qint64 total)
+{
+    ui->progressBar->setMaximum(total);
+    ui->progressBar->setValue(read);
 }

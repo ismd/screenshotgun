@@ -19,6 +19,7 @@ public:
 private slots:
     void accept();
     void newVersionDownloaded(QByteArray);
+    void downloadProgress(qint64, qint64);
 
 private:
     Ui::NewVersion *ui;

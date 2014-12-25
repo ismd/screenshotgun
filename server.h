@@ -21,11 +21,13 @@ signals:
     void connectionError();
     void newVersionDownloaded(QByteArray);
     void screenshotUrl(QString);
+    void downloadProgress(qint64, qint64);
 
 private slots:
     void uploaded(QNetworkReply*);
     void versionFromServer(QNetworkReply*);
     void fileDownloaded(QNetworkReply*);
+    void downloadProgressSlot(qint64, qint64);
 
 private:
     QString _url;
