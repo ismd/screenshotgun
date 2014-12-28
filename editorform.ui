@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>60</height>
+    <width>50</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,80 +20,126 @@
    <string>Form</string>
   </property>
   <property name="autoFillBackground">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
-  <widget class="QWidget" name="layoutWidget">
+  <property name="styleSheet">
+   <string notr="true">background: transparent;</string>
+  </property>
+  <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
-     <x>6</x>
-     <y>3</y>
-     <width>591</width>
-     <height>51</height>
+     <x>0</x>
+     <y>0</y>
+     <width>50</width>
+     <height>300</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <property name="spacing">
-     <number>6</number>
+   <property name="styleSheet">
+    <string notr="true">background: #0e0e0e;
+border-radius: 25px;</string>
+   </property>
+   <widget class="QPushButton" name="visibleAreaButton">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>2</y>
+      <width>46</width>
+      <height>46</height>
+     </rect>
     </property>
-    <property name="sizeConstraint">
-     <enum>QLayout::SetDefaultConstraint</enum>
+    <property name="styleSheet">
+     <string notr="true">background: #df631d;
+border-radius: 23px;</string>
     </property>
-    <item>
-     <widget class="QPushButton" name="visibleAreaButton">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Видимая область</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="lineButton">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Линия</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="rectButton">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>Прямоугольник</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="okButton">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="text">
-       <string>OK</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+    <property name="text">
+     <string>ВО</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="lineButton">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>52</y>
+      <width>46</width>
+      <height>46</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: #df631d;
+border-radius: 23px;</string>
+    </property>
+    <property name="text">
+     <string>Линия</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="rectButton">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>102</y>
+      <width>46</width>
+      <height>46</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: #df631d;
+border-radius: 23px;</string>
+    </property>
+    <property name="text">
+     <string>Пр.</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>152</y>
+      <width>46</width>
+      <height>46</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: #df631d;
+border-radius: 23px;</string>
+    </property>
+    <property name="text">
+     <string>Круг</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>202</y>
+      <width>46</width>
+      <height>46</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: #df631d;
+border-radius: 23px;</string>
+    </property>
+    <property name="text">
+     <string>Круг</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="okButton">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>252</y>
+      <width>46</width>
+      <height>46</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: #df631d;
+border-radius: 23px;</string>
+    </property>
+    <property name="text">
+     <string>OK</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

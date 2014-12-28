@@ -1,3 +1,5 @@
+#include <QApplication>
+#include <QDesktopWidget>
 #include "../modes/visibleareamode.h"
 #include "../editorform.h"
 
@@ -75,7 +77,32 @@ void VisibleAreaMode::move(int x, int y)
 
 void VisibleAreaMode::stop(int x, int y)
 {
-    _form->setGeometry(area.x, area.y + area.height + 5, _form->width(), _form->height());
+    const int padding = 10;
+
+    QDesktopWidget *desktop = QApplication::desktop();
+    QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
+
+    // Width
+    int formX       = area.x + area.width + 28;
+    int screenWidth = geo.width();
+    int formWidth   = _form->width();
+
+    if (formX + formWidth + padding > screenWidth) {
+        formX = screenWidth - formWidth - padding;
+    }
+
+    // Height
+    int formHeight   = _form->height();
+    int formY        = area.y + area.height / 2 - formHeight / 2;
+    int screenHeight = geo.height();
+
+    if (formY < padding) {
+        formY = padding;
+    } else if (formY + formHeight + padding > screenHeight) {
+        formY = screenHeight - formHeight - padding;
+    }
+
+    _form->setGeometry(formX, formY, formWidth, formHeight);
     _form->show();
 }
 
