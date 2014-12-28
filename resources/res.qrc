@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/editorform/rectangle.png</file>
+        <file>images/editorform/arrow.png</file>
+        <file>images/editorform/circle.png</file>
+        <file>images/editorform/ok.png</file>
+        <file>images/editorform/text.png</file>
+        <file>images/editorform/visiblearea.png</file>
+    </qresource>
+</RCC>

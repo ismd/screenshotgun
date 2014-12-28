@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>50</width>
-    <height>300</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -31,7 +31,7 @@
      <x>0</x>
      <y>0</y>
      <width>50</width>
-     <height>300</height>
+     <height>350</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -52,7 +52,17 @@ border-radius: 25px;</string>
 border-radius: 23px;</string>
     </property>
     <property name="text">
-     <string>ВО</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/res.qrc">
+      <normaloff>:/images/editorform/visiblearea.png</normaloff>:/images/editorform/visiblearea.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>21</width>
+      <height>21</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="lineButton">
@@ -69,7 +79,7 @@ border-radius: 23px;</string>
 border-radius: 23px;</string>
     </property>
     <property name="text">
-     <string>Линия</string>
+     <string>Line</string>
     </property>
    </widget>
    <widget class="QPushButton" name="rectButton">
@@ -86,10 +96,20 @@ border-radius: 23px;</string>
 border-radius: 23px;</string>
     </property>
     <property name="text">
-     <string>Пр.</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/res.qrc">
+      <normaloff>:/images/editorform/rectangle.png</normaloff>:/images/editorform/rectangle.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>19</width>
+      <height>19</height>
+     </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="circleButton">
     <property name="geometry">
      <rect>
       <x>2</x>
@@ -103,10 +123,20 @@ border-radius: 23px;</string>
 border-radius: 23px;</string>
     </property>
     <property name="text">
-     <string>Круг</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/res.qrc">
+      <normaloff>:/images/editorform/circle.png</normaloff>:/images/editorform/circle.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>17</width>
+      <height>17</height>
+     </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="textButton">
     <property name="geometry">
      <rect>
       <x>2</x>
@@ -120,10 +150,47 @@ border-radius: 23px;</string>
 border-radius: 23px;</string>
     </property>
     <property name="text">
-     <string>Круг</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/res.qrc">
+      <normaloff>:/images/editorform/text.png</normaloff>:/images/editorform/text.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>14</width>
+      <height>17</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="okButton">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>302</y>
+      <width>46</width>
+      <height>46</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: #fb0;
+border-radius: 23px;XS</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/res.qrc">
+      <normaloff>:/images/editorform/ok.png</normaloff>:/images/editorform/ok.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>29</width>
+      <height>17</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="arrowButton">
     <property name="geometry">
      <rect>
       <x>2</x>
@@ -137,11 +204,23 @@ border-radius: 23px;</string>
 border-radius: 23px;</string>
     </property>
     <property name="text">
-     <string>OK</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/res.qrc">
+      <normaloff>:/images/editorform/arrow.png</normaloff>:/images/editorform/arrow.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>17</width>
+      <height>17</height>
+     </size>
     </property>
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources/res.qrc"/>
+ </resources>
  <connections/>
 </ui>

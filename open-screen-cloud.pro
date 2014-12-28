@@ -26,7 +26,8 @@ HEADERS += \
 
 OTHER_FILES +=
 
-RESOURCES +=
+RESOURCES += \
+    resources/res.qrc
 
 FORMS += \
     ui/settings.ui \
