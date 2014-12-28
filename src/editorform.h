@@ -21,6 +21,7 @@ public:
     explicit EditorForm(EditorView*);
     ~EditorForm();
     AbstractMode* mode();
+    EditorView* view();
 
     struct {
         VisibleAreaMode *visibleArea;

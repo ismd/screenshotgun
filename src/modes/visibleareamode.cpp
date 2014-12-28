@@ -1,47 +1,83 @@
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QPainter>
 #include "../modes/visibleareamode.h"
 #include "../editorform.h"
+#include "../editorview.h"
 
-VisibleAreaMode::VisibleAreaMode(QGraphicsScene *scene, EditorForm *form)
-    : AbstractMode(scene), _form(form)
+VisibleAreaMode::VisibleAreaMode(QGraphicsScene *scene, EditorForm *form) :
+    AbstractMode(scene),
+    _form(form),
+    _rectTop(new QGraphicsRectItem),
+    _rectBottom(new QGraphicsRectItem),
+    _rectLeft(new QGraphicsRectItem),
+    _rectRight(new QGraphicsRectItem),
+    _lineTop(new QGraphicsLineItem),
+    _lineBottom(new QGraphicsLineItem),
+    _lineLeft(new QGraphicsLineItem),
+    _lineRight(new QGraphicsLineItem)
 {
     QPen pen(Qt::NoPen);
     QBrush brush(Qt::black);
 
-    // Black background (top, bottom, left, right)
-    rectTop    = new QGraphicsRectItem;
-    rectBottom = new QGraphicsRectItem;
-    rectLeft   = new QGraphicsRectItem;
-    rectRight  = new QGraphicsRectItem;
+    _rectTop->setOpacity(.65);
+    _rectBottom->setOpacity(.65);
+    _rectLeft->setOpacity(.65);
+    _rectRight->setOpacity(.65);
 
-    rectTop->setOpacity(.65);
-    rectBottom->setOpacity(.65);
-    rectLeft->setOpacity(.65);
-    rectRight->setOpacity(.65);
+    _rectTop->setPen(pen);
+    _rectBottom->setPen(pen);
+    _rectLeft->setPen(pen);
+    _rectRight->setPen(pen);
 
-    rectTop->setPen(pen);
-    rectBottom->setPen(pen);
-    rectLeft->setPen(pen);
-    rectRight->setPen(pen);
+    _rectTop->setBrush(brush);
+    _rectBottom->setBrush(brush);
+    _rectLeft->setBrush(brush);
+    _rectRight->setBrush(brush);
 
-    rectTop->setBrush(brush);
-    rectBottom->setBrush(brush);
-    rectLeft->setBrush(brush);
-    rectRight->setBrush(brush);
-
-    rectTop->setZValue(1);
-    rectBottom->setZValue(1);
-    rectLeft->setZValue(1);
-    rectRight->setZValue(1);
+    _rectTop->setZValue(1);
+    _rectBottom->setZValue(1);
+    _rectLeft->setZValue(1);
+    _rectRight->setZValue(1);
 
     // First rectangle fullscreen
-    rectTop->setRect(0, 0, _scene->width(), _scene->height());
+    _rectTop->setRect(0, 0, _scene->width(), _scene->height());
 
-    _scene->addItem(rectTop);
-    _scene->addItem(rectBottom);
-    _scene->addItem(rectLeft);
-    _scene->addItem(rectRight);
+    _scene->addItem(_rectTop);
+    _scene->addItem(_rectBottom);
+    _scene->addItem(_rectLeft);
+    _scene->addItem(_rectRight);
+
+    QPen linePen;
+    linePen.setWidthF(.2);
+    linePen.setColor(QColor(230, 230, 230));
+
+    _lineTop->setPen(linePen);
+    _lineBottom->setPen(linePen);
+    _lineLeft->setPen(linePen);
+    _lineRight->setPen(linePen);
+
+    _lineTop->setZValue(1);
+    _lineBottom->setZValue(1);
+    _lineLeft->setZValue(1);
+    _lineRight->setZValue(1);
+
+    _scene->addItem(_lineTop);
+    _scene->addItem(_lineBottom);
+    _scene->addItem(_lineLeft);
+    _scene->addItem(_lineRight);
+}
+
+VisibleAreaMode::~VisibleAreaMode()
+{
+    delete _rectTop;
+    delete _rectBottom;
+    delete _rectLeft;
+    delete _rectRight;
+    delete _lineTop;
+    delete _lineBottom;
+    delete _lineLeft;
+    delete _lineRight;
 }
 
 void VisibleAreaMode::init(int x, int y)
@@ -77,23 +113,24 @@ void VisibleAreaMode::move(int x, int y)
 
 void VisibleAreaMode::stop(int x, int y)
 {
+    move(x, y);
     const int padding = 10;
 
     QDesktopWidget *desktop = QApplication::desktop();
     QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
 
     // Width
-    int formX       = area.x + area.width + 28;
+    int formX = area.x + area.width + 28;
     int screenWidth = geo.width();
-    int formWidth   = _form->width();
+    int formWidth = _form->width();
 
     if (formX + formWidth + padding > screenWidth) {
         formX = screenWidth - formWidth - padding;
     }
 
     // Height
-    int formHeight   = _form->height();
-    int formY        = area.y + area.height / 2 - formHeight / 2;
+    int formHeight = _form->height();
+    int formY = area.y + area.height / 2 - formHeight / 2;
     int screenHeight = geo.height();
 
     if (formY < padding) {
@@ -111,8 +148,20 @@ void VisibleAreaMode::set(int x, int y, int width, int height)
     int sceneWidth = _scene->width(),
         sceneHeight = _scene->height();
 
-    rectTop->setRect(0, 0, sceneWidth, y);
-    rectBottom->setRect(0, y + height, sceneWidth, sceneHeight - y - height);
-    rectLeft->setRect(0, y, x, height);
-    rectRight->setRect(x + width, y, sceneWidth - x - width, height);
+    _rectTop->setRect(0, 0, sceneWidth, y);
+    _rectBottom->setRect(0, y + height, sceneWidth, sceneHeight - y - height);
+    _rectLeft->setRect(0, y, x, height);
+    _rectRight->setRect(x + width, y, sceneWidth - x - width, height);
+
+    QDesktopWidget *desktop = QApplication::desktop();
+    QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
+
+    int screenWidth = geo.width();
+    int screenHeight = geo.height();
+
+    // Horizontal and vertical lines
+    _lineTop->setLine(0, y - 1, screenWidth, y - 1);
+    _lineBottom->setLine(0, y + height + 1, screenWidth, y + height + 1);
+    _lineLeft->setLine(x - 1, 0, x - 1, screenHeight);
+    _lineRight->setLine(x + width + 1, 0, x + width + 1, sceneHeight);
 }

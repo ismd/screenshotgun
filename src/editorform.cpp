@@ -32,6 +32,11 @@ AbstractMode* EditorForm::mode()
     return _mode;
 }
 
+EditorView* EditorForm::view()
+{
+    return _editorView;
+}
+
 void EditorForm::on_visibleAreaButton_clicked()
 {
     _mode = modes.visibleArea;

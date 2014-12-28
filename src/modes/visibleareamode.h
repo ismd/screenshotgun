@@ -11,6 +11,7 @@ class VisibleAreaMode : public AbstractMode
 {
 public:
     VisibleAreaMode(QGraphicsScene*, EditorForm*);
+    virtual ~VisibleAreaMode();
     void init(int x, int y);
     void move(int x, int y);
     void stop(int x, int y);
@@ -25,10 +26,15 @@ public:
 private:
     void set(int x, int y, int width, int height);
 
-    QGraphicsRectItem *rectTop;
-    QGraphicsRectItem *rectBottom;
-    QGraphicsRectItem *rectLeft;
-    QGraphicsRectItem *rectRight;
+    QGraphicsRectItem* _rectTop;
+    QGraphicsRectItem* _rectBottom;
+    QGraphicsRectItem* _rectLeft;
+    QGraphicsRectItem* _rectRight;
+
+    QGraphicsLineItem* _lineTop;
+    QGraphicsLineItem* _lineBottom;
+    QGraphicsLineItem* _lineLeft;
+    QGraphicsLineItem* _lineRight;
 
     EditorForm* _form;
 };

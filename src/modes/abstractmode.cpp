@@ -8,4 +8,5 @@ AbstractMode::AbstractMode(QGraphicsScene *scene) : _scene(scene)
 
 AbstractMode::~AbstractMode()
 {
+    delete _pen;
 }
