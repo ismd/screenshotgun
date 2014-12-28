@@ -1,34 +1,34 @@
 QT += widgets network
 
 SOURCES += \
-    main.cpp\
-    server.cpp \
-    editorview.cpp \
-    editorform.cpp \
-    modes/visibleareamode.cpp \
-    modes/abstractmode.cpp \
-    modes/linemode.cpp \
-    modes/rectmode.cpp \
-    settings.cpp \
-    newversion.cpp
+    src/main.cpp\
+    src/server.cpp \
+    src/editorview.cpp \
+    src/editorform.cpp \
+    src/modes/visibleareamode.cpp \
+    src/modes/abstractmode.cpp \
+    src/modes/linemode.cpp \
+    src/modes/rectmode.cpp \
+    src/settings.cpp \
+    src/newversion.cpp
 
 HEADERS += \
-    server.h \
-    editorview.h \
-    editorform.h \
-    modes/visibleareamode.h \
-    modes/abstractmode.h \
-    modes/linemode.h \
-    modes/rectmode.h \
-    settings.h \
-    const.h \
-    newversion.h
+    src/server.h \
+    src/editorview.h \
+    src/editorform.h \
+    src/modes/visibleareamode.h \
+    src/modes/abstractmode.h \
+    src/modes/linemode.h \
+    src/modes/rectmode.h \
+    src/settings.h \
+    src/const.h \
+    src/newversion.h
 
 OTHER_FILES +=
 
 RESOURCES +=
 
 FORMS += \
-    settings.ui \
-    editorform.ui \
-    newversion.ui
+    ui/settings.ui \
+    ui/editorform.ui \
+    ui/newversion.ui
