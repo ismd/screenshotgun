@@ -18,7 +18,7 @@ public:
 
 private slots:
     void accept();
-    void newVersionDownloaded(QByteArray);
+    void newVersionDownloaded(const QByteArray&);
     void downloadProgress(qint64, qint64);
 
 private:

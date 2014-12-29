@@ -10,7 +10,8 @@ SOURCES += \
     src/modes/linemode.cpp \
     src/modes/rectmode.cpp \
     src/settings.cpp \
-    src/newversion.cpp
+    src/newversion.cpp \
+    src/updater.cpp
 
 HEADERS += \
     src/server.h \
@@ -22,7 +23,8 @@ HEADERS += \
     src/modes/rectmode.h \
     src/settings.h \
     src/const.h \
-    src/newversion.h
+    src/newversion.h \
+    src/updater.h
 
 OTHER_FILES +=
 

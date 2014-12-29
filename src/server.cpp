@@ -5,6 +5,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include "server.h"
+#include "const.h"
 
 Server::Server(QObject *parent) :
     QObject(parent),
@@ -100,13 +101,7 @@ void Server::downloadNewVersion()
 {
     QNetworkRequest request;
 
-    #ifdef Q_OS_WIN32
-    request.setUrl(_url + "/dist/open-screen-cloud.exe");
-    #endif
-    #ifndef Q_OS_WIN32
-    request.setUrl(_url + "/dist/open-screen-cloud");
-    #endif
-
+    request.setUrl(_url + URL_NEW_VERSION);
     request.setRawHeader("User-Agent", "OpenScreenCloud client");
 
     _reply = _manager->get(request);
