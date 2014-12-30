@@ -171,14 +171,15 @@ void VisibleAreaMode::set(int x, int y, int width, int height)
     int screenHeight = geo.height();
 
     // Horizontal and vertical lines
-    _lineTop->setLine(0, y - 1, screenWidth, y - 1);
-    _lineLeft->setLine(x - 1, 0, x - 1, screenHeight);
-
     if (0 == width && 0 == height) {
+        _lineTop->setLine(0, y, screenWidth, y);
+        _lineLeft->setLine(x, 0, x, screenHeight);
         return;
     }
 
+    _lineTop->setLine(0, y - 1, screenWidth, y - 1);
     _lineBottom->setLine(0, y + height + 1, screenWidth, y + height + 1);
+    _lineLeft->setLine(x - 1, 0, x - 1, screenHeight);
     _lineRight->setLine(x + width + 1, 0, x + width + 1, sceneHeight);
 }
 
