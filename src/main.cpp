@@ -1,7 +1,7 @@
-#include <QApplication>
 #include "editorview.h"
 #include "const.h"
 #include "updater.h"
+#include <QApplication>
 
 int main(int argc, char *argv[])
 {
@@ -9,8 +9,15 @@ int main(int argc, char *argv[])
     QStringList args = app.arguments();
 
     if (args.contains("--update")) {
+        int pathIndex = args.indexOf("--update") + 1;
+
+        if (pathIndex >= args.size()) {
+            qCritical() << "Bad update file path";
+            exit(1);
+        }
+
         Updater updater;
-        updater.copyNew(args.at(args.indexOf("--update") + 1));
+        updater.copyNew(args.at(pathIndex));
         return 0;
     }
 

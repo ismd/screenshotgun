@@ -1,11 +1,11 @@
+#include "const.h"
+#include "editorview.h"
+#include "newversion.h"
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QScreen>
 #include <QWindow>
 #include <QClipboard>
-#include "editorview.h"
-#include "const.h"
-#include "newversion.h"
 
 EditorView::EditorView() :
     QGraphicsView(),
