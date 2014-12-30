@@ -18,6 +18,7 @@ EditorForm::EditorForm(EditorView *parent) :
     modes.rect = new RectMode(scene);
 
     _mode = modes.visibleArea;
+    _editorView->setMouseTracking(true);
 }
 
 EditorForm::~EditorForm()
@@ -40,16 +41,19 @@ EditorView* EditorForm::view()
 void EditorForm::on_visibleAreaButton_clicked()
 {
     _mode = modes.visibleArea;
+    _editorView->setMouseTracking(!modes.visibleArea->initialized());
 }
 
 void EditorForm::on_lineButton_clicked()
 {
     _mode = modes.line;
+    _editorView->setMouseTracking(false);
 }
 
 void EditorForm::on_rectButton_clicked()
 {
     _mode = modes.rect;
+    _editorView->setMouseTracking(false);
 }
 
 void EditorForm::on_okButton_clicked()

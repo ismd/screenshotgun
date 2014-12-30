@@ -82,6 +82,7 @@ VisibleAreaMode::~VisibleAreaMode()
 
 void VisibleAreaMode::init(int x, int y)
 {
+    _initialized = true;
     _form->hide();
 
     area.x = x;
@@ -94,6 +95,14 @@ void VisibleAreaMode::init(int x, int y)
 
 void VisibleAreaMode::move(int x, int y)
 {
+    if (!_initialized) {
+        area.x = x;
+        area.y = y;
+        area.width = 0;
+        area.height = 0;
+        set(area.x, area.y, area.width, area.height);
+    }
+
     if (x > area.x && qAbs(area.x + area.width - x) <= qAbs(area.x - x)) {
         area.width = x - area.x;
     } else {
@@ -113,6 +122,8 @@ void VisibleAreaMode::move(int x, int y)
 
 void VisibleAreaMode::stop(int x, int y)
 {
+    _form->view()->setMouseTracking(false);
+
     move(x, y);
     const int padding = 10;
 
@@ -161,7 +172,17 @@ void VisibleAreaMode::set(int x, int y, int width, int height)
 
     // Horizontal and vertical lines
     _lineTop->setLine(0, y - 1, screenWidth, y - 1);
-    _lineBottom->setLine(0, y + height + 1, screenWidth, y + height + 1);
     _lineLeft->setLine(x - 1, 0, x - 1, screenHeight);
+
+    if (0 == width && 0 == height) {
+        return;
+    }
+
+    _lineBottom->setLine(0, y + height + 1, screenWidth, y + height + 1);
     _lineRight->setLine(x + width + 1, 0, x + width + 1, sceneHeight);
+}
+
+bool VisibleAreaMode::initialized()
+{
+    return _initialized;
 }

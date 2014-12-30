@@ -15,6 +15,7 @@ public:
     void init(int x, int y);
     void move(int x, int y);
     void stop(int x, int y);
+    bool initialized();
 
     struct {
         int x;
@@ -37,6 +38,7 @@ private:
     QGraphicsLineItem* _lineRight;
 
     EditorForm* _form;
+    bool _initialized = false;
 };
 
 #endif // VISIBLEAREAMODE_H
