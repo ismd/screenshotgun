@@ -102,11 +102,6 @@ void EditorView::run()
 
     // Background screenshot
     _scene->addPixmap(_screenshot);
-
-    if (NULL != _editorForm) {
-        delete _editorForm;
-    }
-
     _editorForm = new EditorForm(this);
     showFullScreen();
 }
@@ -142,5 +137,6 @@ void EditorView::uploaded(QString url)
 
     _trayIcon->showMessage("Link copied to clipboard",
                            url,
-                           QSystemTrayIcon::Information);
+                           QSystemTrayIcon::Information,
+                           3000);
 }
