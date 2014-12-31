@@ -11,7 +11,7 @@ EditorView::EditorView() :
     QGraphicsView(),
     _scene(new QGraphicsScene(this)),
     _editorForm(NULL),
-    _trayIcon(new QSystemTrayIcon(this)),
+    _trayIcon(new TrayIcon(this)),
     _settings(new Settings(this)),
     _server(new Server(this))
 {
@@ -51,7 +51,7 @@ void EditorView::init()
 
     _trayIcon->show();
     connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-            this, SLOT(run()));
+            this, SLOT(run(QSystemTrayIcon::ActivationReason)));
 }
 
 QGraphicsScene* EditorView::scene()
@@ -93,8 +93,12 @@ void EditorView::wheelEvent(QWheelEvent *event)
     }
 }
 
-void EditorView::run()
+void EditorView::run(QSystemTrayIcon::ActivationReason reason)
 {
+    if (reason != QSystemTrayIcon::Trigger) {
+        return;
+    }
+
     // Making screenshot
     QDesktopWidget *desktop = QApplication::desktop();
     QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));

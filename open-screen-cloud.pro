@@ -11,7 +11,8 @@ SOURCES += \
     src/modes/rectmode.cpp \
     src/settings.cpp \
     src/newversion.cpp \
-    src/updater.cpp
+    src/updater.cpp \
+    src/trayicon.cpp
 
 HEADERS += \
     src/server.h \
@@ -24,7 +25,8 @@ HEADERS += \
     src/settings.h \
     src/const.h \
     src/newversion.h \
-    src/updater.h
+    src/updater.h \
+    src/trayicon.h
 
 OTHER_FILES +=
 

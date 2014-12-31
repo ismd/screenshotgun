@@ -38,7 +38,7 @@ private:
     QGraphicsLineItem* _lineRight;
 
     EditorForm* _form;
-    bool _initialized = false;
+    bool _initialized;
 };
 
 #endif // VISIBLEAREAMODE_H

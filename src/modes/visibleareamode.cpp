@@ -8,6 +8,7 @@
 VisibleAreaMode::VisibleAreaMode(QGraphicsScene *scene, EditorForm *form) :
     AbstractMode(scene),
     _form(form),
+    _initialized(false),
     _rectTop(new QGraphicsRectItem),
     _rectBottom(new QGraphicsRectItem),
     _rectLeft(new QGraphicsRectItem),
