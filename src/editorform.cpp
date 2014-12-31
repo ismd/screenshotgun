@@ -9,6 +9,7 @@ EditorForm::EditorForm(EditorView *parent) :
 {
     hide();
     ui->setupUi(this);
+    ui->selectedCircle->lower();
 
     QGraphicsScene *scene = _editorView->scene();
 
@@ -40,18 +41,21 @@ EditorView* EditorForm::view()
 
 void EditorForm::on_visibleAreaButton_clicked()
 {
+    setSelected(ui->visibleAreaButton);
     _mode = modes.visibleArea;
     _editorView->setMouseTracking(!modes.visibleArea->initialized());
 }
 
 void EditorForm::on_lineButton_clicked()
 {
+    setSelected(ui->lineButton);
     _mode = modes.line;
     _editorView->setMouseTracking(false);
 }
 
 void EditorForm::on_rectButton_clicked()
 {
+    setSelected(ui->rectButton);
     _mode = modes.rect;
     _editorView->setMouseTracking(false);
 }
@@ -82,4 +86,19 @@ void EditorForm::on_okButton_clicked()
     image.save(&buffer, "PNG");
 
     _editorView->server()->upload(bytes);
+}
+
+void EditorForm::setSelected(QPushButton *button)
+{
+    int x = ui->selectedCircle->x();
+    int y = ui->selectedCircle->y();
+    int width = ui->selectedCircle->width();
+    int height = ui->selectedCircle->height();
+
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->selectedCircle, "geometry");
+    animation->setDuration(500);
+    animation->setStartValue(QRect(x, y, width, height));
+    animation->setEndValue(QRect(x, button->y(), width, height));
+
+    animation->start();
 }

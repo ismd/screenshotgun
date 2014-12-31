@@ -2,6 +2,7 @@
 #define EDITORFORM_H
 
 #include <QWidget>
+#include <QPushButton>
 #include "modes/linemode.h"
 #include "modes/rectmode.h"
 #include "modes/visibleareamode.h"
@@ -36,6 +37,8 @@ private slots:
     void on_okButton_clicked();
 
 private:
+    void setSelected(QPushButton*);
+
     Ui::EditorForm *ui;
     EditorView* _editorView;
     AbstractMode* _mode;

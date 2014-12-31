@@ -38,6 +38,13 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    QFile file(":/style.qss");
+    file.open(QFile::ReadOnly);
+    QString style = QLatin1String(file.readAll());
+    file.close();
+
+    qApp->setStyleSheet(style);
+
     EditorView window;
     return app.exec();
 }

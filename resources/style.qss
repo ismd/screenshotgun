@@ -1,0 +1,21 @@
+EditorForm #widget {
+    background: #0e0e0e;
+    border-radius: 25px;
+}
+
+EditorForm QPushButton,
+EditorForm #selectedCircle {
+    border-radius: 23px;
+}
+
+EditorForm QPushButton:hover {
+    background: #df631d;
+}
+
+EditorForm #selectedCircle {
+    background: #53a495;
+}
+
+EditorForm QPushButton#okButton {
+    background: #fb0;
+}

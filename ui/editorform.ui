@@ -22,9 +22,6 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
-  <property name="styleSheet">
-   <string notr="true">background: transparent;</string>
-  </property>
   <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
@@ -33,10 +30,6 @@
      <width>50</width>
      <height>350</height>
     </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background: #0e0e0e;
-border-radius: 25px;</string>
    </property>
    <widget class="QPushButton" name="visibleAreaButton">
     <property name="geometry">
@@ -47,22 +40,21 @@ border-radius: 25px;</string>
       <height>46</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background: #df631d;
-border-radius: 23px;</string>
-    </property>
     <property name="text">
      <string/>
     </property>
     <property name="icon">
      <iconset resource="../resources/res.qrc">
-      <normaloff>:/images/editorform/visiblearea.png</normaloff>:/images/editorform/visiblearea.png</iconset>
+      <normaloff>:/editorform/images/visiblearea.png</normaloff>:/editorform/images/visiblearea.png</iconset>
     </property>
     <property name="iconSize">
      <size>
       <width>21</width>
       <height>21</height>
      </size>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="lineButton">
@@ -73,10 +65,6 @@ border-radius: 23px;</string>
       <width>46</width>
       <height>46</height>
      </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background: #df631d;
-border-radius: 23px;</string>
     </property>
     <property name="text">
      <string>Line</string>
@@ -91,16 +79,12 @@ border-radius: 23px;</string>
       <height>46</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background: #df631d;
-border-radius: 23px;</string>
-    </property>
     <property name="text">
      <string/>
     </property>
     <property name="icon">
      <iconset resource="../resources/res.qrc">
-      <normaloff>:/images/editorform/rectangle.png</normaloff>:/images/editorform/rectangle.png</iconset>
+      <normaloff>:/editorform/images/rectangle.png</normaloff>:/editorform/images/rectangle.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -118,16 +102,12 @@ border-radius: 23px;</string>
       <height>46</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background: #df631d;
-border-radius: 23px;</string>
-    </property>
     <property name="text">
      <string/>
     </property>
     <property name="icon">
      <iconset resource="../resources/res.qrc">
-      <normaloff>:/images/editorform/circle.png</normaloff>:/images/editorform/circle.png</iconset>
+      <normaloff>:/editorform/images/circle.png</normaloff>:/editorform/images/circle.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -145,16 +125,9 @@ border-radius: 23px;</string>
       <height>46</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background: #df631d;
-border-radius: 23px;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
     <property name="icon">
      <iconset resource="../resources/res.qrc">
-      <normaloff>:/images/editorform/text.png</normaloff>:/images/editorform/text.png</iconset>
+      <normaloff>:/editorform/images/text.png</normaloff>:/editorform/images/text.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -172,16 +145,12 @@ border-radius: 23px;</string>
       <height>46</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background: #fb0;
-border-radius: 23px;XS</string>
-    </property>
     <property name="text">
      <string/>
     </property>
     <property name="icon">
      <iconset resource="../resources/res.qrc">
-      <normaloff>:/images/editorform/ok.png</normaloff>:/images/editorform/ok.png</iconset>
+      <normaloff>:/editorform/images/ok.png</normaloff>:/editorform/images/ok.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -199,22 +168,28 @@ border-radius: 23px;XS</string>
       <height>46</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background: #df631d;
-border-radius: 23px;</string>
-    </property>
     <property name="text">
      <string/>
     </property>
     <property name="icon">
      <iconset resource="../resources/res.qrc">
-      <normaloff>:/images/editorform/arrow.png</normaloff>:/images/editorform/arrow.png</iconset>
+      <normaloff>:/editorform/images/arrow.png</normaloff>:/editorform/images/arrow.png</iconset>
     </property>
     <property name="iconSize">
      <size>
       <width>17</width>
       <height>17</height>
      </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="selectedCircle">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>2</y>
+      <width>46</width>
+      <height>46</height>
+     </rect>
     </property>
    </widget>
   </widget>
