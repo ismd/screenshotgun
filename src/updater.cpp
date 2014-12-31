@@ -32,7 +32,8 @@ void Updater::update(const QByteArray &file)
 
 void Updater::copyNew(const QString& path)
 {
-    QFile currentFile(QApplication::applicationFilePath());
+    QString currentFilePath = QApplication::applicationFilePath();
+    QFile currentFile(currentFilePath);
     QFile oldFile(path);
     oldFile.remove();
 
@@ -41,6 +42,10 @@ void Updater::copyNew(const QString& path)
         exit(1);
     }
 
-    QProcess::startDetached(path);
+    QStringList args;
+    args.append("--update-remove");
+    args.append(currentFilePath);
+
+    QProcess::startDetached(path, args);
     exit(12);
 }
