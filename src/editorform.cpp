@@ -20,6 +20,11 @@ EditorForm::EditorForm(EditorView *parent) :
 
     _mode = modes.visibleArea;
     _editorView->setMouseTracking(true);
+
+    setSelected(ui->visibleAreaButton);
+    _buttons.append(ui->visibleAreaButton);
+    _buttons.append(ui->lineButton);
+    _buttons.append(ui->rectButton);
 }
 
 EditorForm::~EditorForm()
@@ -42,21 +47,18 @@ EditorView* EditorForm::view()
 void EditorForm::on_visibleAreaButton_clicked()
 {
     setSelected(ui->visibleAreaButton);
-    _mode = modes.visibleArea;
     _editorView->setMouseTracking(!modes.visibleArea->initialized());
 }
 
 void EditorForm::on_lineButton_clicked()
 {
     setSelected(ui->lineButton);
-    _mode = modes.line;
     _editorView->setMouseTracking(false);
 }
 
 void EditorForm::on_rectButton_clicked()
 {
     setSelected(ui->rectButton);
-    _mode = modes.rect;
     _editorView->setMouseTracking(false);
 }
 
@@ -88,8 +90,50 @@ void EditorForm::on_okButton_clicked()
     _editorView->server()->upload(bytes);
 }
 
+void EditorForm::setSelectedNext()
+{
+    QLinkedListIterator<QPushButton*> i(_buttons);
+
+    while (i.next() != _selected) {
+    }
+
+    if (!i.hasNext()) {
+        setSelected(_buttons.front());
+        return;
+    }
+
+    setSelected(i.next());
+}
+
+void EditorForm::setSelectedPrevious()
+{
+    QLinkedListIterator<QPushButton*> i(_buttons);
+
+    while (i.next() != _selected) {
+    }
+
+    i.previous();
+
+    if (!i.hasPrevious()) {
+        setSelected(_buttons.back());
+        return;
+    }
+
+    setSelected(i.previous());
+}
+
 void EditorForm::setSelected(QPushButton *button)
 {
+    _selected = button;
+
+    if (button == ui->visibleAreaButton) {
+        _mode = modes.visibleArea;
+    } else if (button == ui->lineButton) {
+        _mode = modes.line;
+    } else if (button == ui->rectButton) {
+        _mode = modes.rect;
+    }
+
     int x = ui->selectedCircle->x();
     int y = ui->selectedCircle->y();
     int width = ui->selectedCircle->width();

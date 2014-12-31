@@ -23,6 +23,8 @@ public:
     ~EditorForm();
     AbstractMode* mode();
     EditorView* view();
+    void setSelectedNext();
+    void setSelectedPrevious();
 
     struct {
         VisibleAreaMode *visibleArea;
@@ -42,6 +44,8 @@ private:
     Ui::EditorForm *ui;
     EditorView* _editorView;
     AbstractMode* _mode;
+    QLinkedList<QPushButton*> _buttons;
+    QPushButton* _selected;
 };
 
 #endif // EDITORFORM_H

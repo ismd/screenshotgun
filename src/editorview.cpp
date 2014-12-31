@@ -84,6 +84,15 @@ void EditorView::mouseReleaseEvent(QMouseEvent *e)
     _editorForm->mode()->stop(e->x(), e->y());
 }
 
+void EditorView::wheelEvent(QWheelEvent *event)
+{
+    if (event->delta() < 0) {
+        _editorForm->setSelectedNext();
+    } else {
+        _editorForm->setSelectedPrevious();
+    }
+}
+
 void EditorView::run()
 {
     // Making screenshot
