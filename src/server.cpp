@@ -69,6 +69,8 @@ void Server::uploaded(QNetworkReply *reply)
 
     if (0 == jsonObject["status"].toString().compare("ok")) {
         emit(screenshotUrl(jsonObject["url"].toString()));
+    } else {
+        emit(uploadError());
     }
 }
 

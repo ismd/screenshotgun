@@ -22,6 +22,7 @@ signals:
     void newVersionDownloaded(QByteArray);
     void screenshotUrl(QString);
     void downloadProgress(qint64, qint64);
+    void uploadError();
 
 private slots:
     void uploaded(QNetworkReply*);

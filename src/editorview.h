@@ -32,6 +32,7 @@ private slots:
     void serverVersion(QString);
     void connectionError();
     void uploaded(QString);
+    void uploadError();
 
 private:
     void init();

@@ -27,6 +27,9 @@ EditorView::EditorView() :
     connect(_server, SIGNAL(screenshotUrl(QString)),
             this, SLOT(uploaded(QString)));
 
+    connect(_server, SIGNAL(uploadError()),
+            this, SLOT(uploadError()));
+
     // isValid will send signal `valid'
     if (!_settings->isValid()) {
         _settings->show();
@@ -152,4 +155,12 @@ void EditorView::uploaded(QString url)
                            url,
                            QSystemTrayIcon::Information,
                            3000);
+}
+
+void EditorView::uploadError()
+{
+    _trayIcon->showMessage("Error while uploading screenshot",
+                           "Check your server logs",
+                           QSystemTrayIcon::Critical,
+                           10000);
 }
