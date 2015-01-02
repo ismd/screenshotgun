@@ -34,6 +34,8 @@ EditorView::EditorView() :
     if (!_settings->isValid()) {
         _settings->show();
     }
+
+    _trayIcon->show();
 }
 
 EditorView::~EditorView()
@@ -52,7 +54,6 @@ void EditorView::init()
 
     setScene(_scene);
 
-    _trayIcon->show();
     connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(run(QSystemTrayIcon::ActivationReason)));
 }
@@ -135,7 +136,6 @@ void EditorView::serverVersion(QString version)
     if (VERSION != version) {
         _newVersion = new NewVersion(this, _server);
         _newVersion->show();
-        return;
     }
 
     init();
