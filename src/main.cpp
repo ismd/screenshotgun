@@ -6,7 +6,6 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setQuitOnLastWindowClosed(false);
 
     QStringList args = app.arguments();
 
@@ -45,7 +44,8 @@ int main(int argc, char *argv[])
     QString style = QLatin1String(file.readAll());
     file.close();
 
-    qApp->setStyleSheet(style);
+    app.setQuitOnLastWindowClosed(false);
+    app.setStyleSheet(style);
 
     EditorView window;
     return app.exec();

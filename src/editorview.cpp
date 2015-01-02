@@ -88,13 +88,23 @@ void EditorView::mouseReleaseEvent(QMouseEvent *e)
     _editorForm->mode()->stop(e->x(), e->y());
 }
 
-void EditorView::wheelEvent(QWheelEvent *event)
+void EditorView::wheelEvent(QWheelEvent *e)
 {
-    if (event->delta() < 0) {
+    if (e->delta() < 0) {
         _editorForm->setSelectedNext();
     } else {
         _editorForm->setSelectedPrevious();
     }
+}
+
+void EditorView::keyReleaseEvent(QKeyEvent *e)
+{
+    if (e->key() != Qt::Key_Escape) {
+        return;
+    }
+
+    hide();
+    _editorForm->hide();
 }
 
 void EditorView::run(QSystemTrayIcon::ActivationReason reason)

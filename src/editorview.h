@@ -21,10 +21,11 @@ public:
     Server* server();
 
 protected:
-    void mousePressEvent(QMouseEvent *e);
-    void mouseMoveEvent(QMouseEvent *e);
-    void mouseReleaseEvent(QMouseEvent *e);
+    void mousePressEvent(QMouseEvent*);
+    void mouseMoveEvent(QMouseEvent*);
+    void mouseReleaseEvent(QMouseEvent*);
     void wheelEvent(QWheelEvent*);
+    void keyReleaseEvent(QKeyEvent*);
 
 private slots:
     void run(QSystemTrayIcon::ActivationReason);
