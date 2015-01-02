@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Настройки</string>
   </property>
   <widget class="QDialogButtonBox" name="submitButtons">
    <property name="geometry">
@@ -88,7 +88,7 @@
       <item>
        <widget class="QLineEdit" name="serverEdit">
         <property name="text">
-         <string/>
+         <string>screenshotgun.com</string>
         </property>
         <property name="placeholderText">
          <string>Адрес Open Screen Cloud сервера</string>
