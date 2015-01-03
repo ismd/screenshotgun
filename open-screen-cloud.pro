@@ -1,3 +1,9 @@
+unix:!macx {
+    INCLUDEPATH += /usr/include/qt/QtGui/5.4.0/QtGui
+    LIBS += -lX11
+    SOURCES += src/qxtglobalshortcut_x11.cpp
+}
+
 QT += widgets network
 
 SOURCES += \
@@ -12,7 +18,8 @@ SOURCES += \
     src/settings.cpp \
     src/newversion.cpp \
     src/updater.cpp \
-    src/trayicon.cpp
+    src/trayicon.cpp \
+    src/qxtglobalshortcut.cpp
 
 HEADERS += \
     src/server.h \
@@ -26,7 +33,10 @@ HEADERS += \
     src/const.h \
     src/newversion.h \
     src/updater.h \
-    src/trayicon.h
+    src/trayicon.h \
+    src/qxtglobalshortcut_p.h \
+    src/qxtglobal.h \
+    src/qxtglobalshortcut.h
 
 OTHER_FILES +=
 

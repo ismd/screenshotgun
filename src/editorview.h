@@ -28,7 +28,8 @@ protected:
     void keyReleaseEvent(QKeyEvent*);
 
 private slots:
-    void run(QSystemTrayIcon::ActivationReason);
+    void run();
+    void trayActivated(QSystemTrayIcon::ActivationReason);
     void checkVersion();
     void serverVersion(QString);
     void connectionError();

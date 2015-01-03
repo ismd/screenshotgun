@@ -1,6 +1,7 @@
 #include "const.h"
 #include "editorview.h"
 #include "newversion.h"
+#include "qxtglobalshortcut.h"
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QScreen>
@@ -55,7 +56,13 @@ void EditorView::init()
     setScene(_scene);
 
     connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-            this, SLOT(run(QSystemTrayIcon::ActivationReason)));
+            this, SLOT(trayActivated(QSystemTrayIcon::ActivationReason)));
+
+    QxtGlobalShortcut* shortcut = new QxtGlobalShortcut(this);
+    shortcut->setShortcut(QKeySequence("Ctrl+Shift+F12"));
+
+    connect(shortcut, SIGNAL(activated()),
+            this, SLOT(run()));
 }
 
 QGraphicsScene* EditorView::scene()
@@ -107,12 +114,15 @@ void EditorView::keyReleaseEvent(QKeyEvent *e)
     _editorForm->hide();
 }
 
-void EditorView::run(QSystemTrayIcon::ActivationReason reason)
+void EditorView::trayActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    if (reason != QSystemTrayIcon::Trigger) {
-        return;
+    if (reason == QSystemTrayIcon::Trigger) {
+        run();
     }
+}
 
+void EditorView::run()
+{
     // Making screenshot
     QDesktopWidget *desktop = QApplication::desktop();
     QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
