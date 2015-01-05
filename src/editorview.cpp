@@ -58,8 +58,8 @@ void EditorView::init()
     connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayActivated(QSystemTrayIcon::ActivationReason)));
 
-    QxtGlobalShortcut* shortcut = new QxtGlobalShortcut(this);
-    shortcut->setShortcut(QKeySequence("Ctrl+Shift+F12"));
+    QxtGlobalShortcut *shortcut = new QxtGlobalShortcut(this);
+    shortcut->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Print));
 
     connect(shortcut, SIGNAL(activated()),
             this, SLOT(run()));
