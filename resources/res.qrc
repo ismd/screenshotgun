@@ -7,5 +7,6 @@
         <file>editorform/images/text.png</file>
         <file>editorform/images/visiblearea.png</file>
         <file>style.qss</file>
+        <file>editorform/images/line.png</file>
     </qresource>
 </RCC>

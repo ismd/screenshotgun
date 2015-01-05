@@ -66,8 +66,15 @@
       <height>46</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Line</string>
+    <property name="icon">
+     <iconset resource="../resources/res.qrc">
+      <normaloff>:/editorform/images/line.png</normaloff>:/editorform/images/line.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>17</width>
+      <height>17</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="rectButton">
