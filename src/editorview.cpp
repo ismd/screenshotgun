@@ -1,12 +1,15 @@
 #include "const.h"
 #include "editorview.h"
 #include "newversion.h"
-#include "qxtglobalshortcut.h"
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QScreen>
 #include <QWindow>
 #include <QClipboard>
+
+#ifdef Q_OS_LINUX
+#include "qxtglobalshortcut.h"
+#endif
 
 EditorView::EditorView() :
     QGraphicsView(),
@@ -31,12 +34,14 @@ EditorView::EditorView() :
     connect(_server, SIGNAL(uploadError()),
             this, SLOT(uploadError()));
 
+#ifdef Q_OS_LINUX
     // isValid will send signal `valid'
     if (!_settings->isValid()) {
         _settings->show();
     }
 
     _trayIcon->show();
+#endif
 }
 
 EditorView::~EditorView()
