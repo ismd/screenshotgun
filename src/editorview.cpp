@@ -8,7 +8,7 @@
 #include <QClipboard>
 
 #ifdef Q_OS_LINUX
-#include "qxtglobalshortcut.h"
+#  include "qxtglobalshortcut.h"
 #endif
 
 EditorView::EditorView() :
@@ -34,14 +34,12 @@ EditorView::EditorView() :
     connect(_server, SIGNAL(uploadError()),
             this, SLOT(uploadError()));
 
-#ifdef Q_OS_LINUX
     // isValid will send signal `valid'
     if (!_settings->isValid()) {
         _settings->show();
     }
 
     _trayIcon->show();
-#endif
 }
 
 EditorView::~EditorView()
@@ -63,11 +61,13 @@ void EditorView::init()
     connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayActivated(QSystemTrayIcon::ActivationReason)));
 
+#ifdef Q_OS_LINUX
     QxtGlobalShortcut *shortcut = new QxtGlobalShortcut(this);
     shortcut->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Print));
 
     connect(shortcut, SIGNAL(activated()),
             this, SLOT(run()));
+#endif
 }
 
 QGraphicsScene* EditorView::scene()
