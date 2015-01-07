@@ -4,7 +4,7 @@
 Settings::Settings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Settings),
-    _settings(new QSettings("openscreencloud"))
+    _settings(new QSettings("screenshotgun"))
 {
     ui->setupUi(this);
 

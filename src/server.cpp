@@ -46,7 +46,7 @@ void Server::upload(QByteArray bytes)
 
     QNetworkRequest request;
     request.setUrl(QUrl(_url + "/screen/upload"));
-    request.setRawHeader("User-Agent", "OpenScreenCloud client");
+    request.setRawHeader("User-Agent", "Screenshotgun client");
 
     connect(_manager, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(uploaded(QNetworkReply*)));
@@ -78,7 +78,7 @@ void Server::version()
 {
     QNetworkRequest request;
     request.setUrl(QUrl(_url + "/dist/version"));
-    request.setRawHeader("User-Agent", "OpenScreenCloud client");
+    request.setRawHeader("User-Agent", "Screenshotgun client");
 
     _manager->get(request);
 
@@ -104,7 +104,7 @@ void Server::downloadNewVersion()
     QNetworkRequest request;
 
     request.setUrl(_url + URL_NEW_VERSION);
-    request.setRawHeader("User-Agent", "OpenScreenCloud client");
+    request.setRawHeader("User-Agent", "Screenshotgun client");
 
     _reply = _manager->get(request);
 

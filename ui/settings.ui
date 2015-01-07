@@ -88,7 +88,7 @@
       <item>
        <widget class="QLineEdit" name="serverEdit">
         <property name="placeholderText">
-         <string>Адрес Open Screen Cloud сервера</string>
+         <string>Адрес сервера</string>
         </property>
        </widget>
       </item>
