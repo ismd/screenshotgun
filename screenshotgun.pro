@@ -1,5 +1,5 @@
 unix:!macx {
-    INCLUDEPATH += /usr/include/qt/QtGui/5.4.0/QtGui
+    INCLUDEPATH += /usr/include/qt/QtGui/5.4.1/QtGui
     LIBS += -lX11
 
     HEADERS += \
