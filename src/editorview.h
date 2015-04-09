@@ -20,6 +20,10 @@ public:
     Settings* settings();
     Server* server();
 
+#ifdef Q_OS_WIN32
+    bool nativeEvent(const QByteArray & eventType, void * message, long *result);
+#endif
+
 protected:
     void mousePressEvent(QMouseEvent*);
     void mouseMoveEvent(QMouseEvent*);

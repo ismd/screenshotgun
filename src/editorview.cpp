@@ -7,6 +7,10 @@
 #include <QWindow>
 #include <QClipboard>
 
+#ifdef Q_OS_WIN32
+#  include <windows.h>
+#endif
+
 #ifdef Q_OS_LINUX
 #  include "qxtglobalshortcut.h"
 #endif
@@ -61,6 +65,10 @@ void EditorView::init()
     connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayActivated(QSystemTrayIcon::ActivationReason)));
 
+#ifdef Q_OS_WIN32
+    RegisterHotKey((HWND)winId(), 100, MOD_ALT, VK_SNAPSHOT);
+#endif
+
 #ifdef Q_OS_LINUX
     QxtGlobalShortcut *shortcut = new QxtGlobalShortcut(this);
     shortcut->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Print));
@@ -84,6 +92,22 @@ Server* EditorView::server()
 {
     return _server;
 }
+
+#ifdef Q_OS_WIN32
+bool EditorView::nativeEvent(const QByteArray & eventType, void * message, long *result)
+{
+    MSG* msg = reinterpret_cast<MSG*>(message);
+
+    if (msg->message == WM_HOTKEY){
+        if (msg->wParam == 100){
+            run();
+            return true;
+        }
+    }
+
+    return false;
+}
+#endif
 
 void EditorView::mousePressEvent(QMouseEvent *e)
 {
