@@ -10,6 +10,10 @@ public:
     ~AutoStartup();
     void set(bool);
 
+#ifdef Q_OS_WIN32
+    void setWindows(bool);
+#endif
+
 #ifdef Q_OS_LINUX
     void setLinux(bool);
 #endif
