@@ -26,7 +26,8 @@ SOURCES += \
     src/settings.cpp \
     src/newversion.cpp \
     src/updater.cpp \
-    src/trayicon.cpp
+    src/trayicon.cpp \
+    src/autostartup.cpp
 
 HEADERS += \
     src/server.h \
@@ -40,7 +41,8 @@ HEADERS += \
     src/const.h \
     src/newversion.h \
     src/updater.h \
-    src/trayicon.h
+    src/trayicon.h \
+    src/autostartup.h
 
 OTHER_FILES +=
 
