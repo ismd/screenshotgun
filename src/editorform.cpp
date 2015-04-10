@@ -22,9 +22,9 @@ EditorForm::EditorForm(EditorView *parent) :
     _editorView->setMouseTracking(true);
 
     setSelected(ui->visibleAreaButton);
+    _buttons.append(ui->rectButton);
     _buttons.append(ui->visibleAreaButton);
     _buttons.append(ui->lineButton);
-    _buttons.append(ui->rectButton);
 }
 
 EditorForm::~EditorForm()
@@ -98,7 +98,7 @@ void EditorForm::setSelectedNext()
     }
 
     if (!i.hasNext()) {
-        setSelected(_buttons.front());
+        //setSelected(_buttons.front());
         return;
     }
 
@@ -115,7 +115,7 @@ void EditorForm::setSelectedPrevious()
     i.previous();
 
     if (!i.hasPrevious()) {
-        setSelected(_buttons.back());
+        //setSelected(_buttons.back());
         return;
     }
 
