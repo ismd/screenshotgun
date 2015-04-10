@@ -52,8 +52,8 @@ EditorView::~EditorView()
 
 void EditorView::init()
 {
-    disconnect(_settings, SIGNAL(valid()),
-               this, SLOT(checkVersion()));
+//    disconnect(_settings, SIGNAL(valid()),
+//               this, SLOT(checkVersion()));
 
     setFrameShape(QFrame::NoFrame);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

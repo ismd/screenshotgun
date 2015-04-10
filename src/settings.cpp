@@ -1,6 +1,7 @@
 #include "settings.h"
 #include "ui_settings.h"
 #include "autostartup.h"
+#include <QDebug>
 
 Settings::Settings(QWidget *parent) :
     QDialog(parent),
@@ -64,4 +65,10 @@ Settings* Settings::setError(QString message)
     }
 
     return this;
+}
+
+void Settings::show()
+{
+    ui->submitButtons->setEnabled(true);
+    QDialog::show();
 }

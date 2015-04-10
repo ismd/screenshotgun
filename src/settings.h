@@ -19,6 +19,7 @@ public:
     bool isValid();
     QString server();
     Settings* setError(QString);
+    void show();
 
 signals:
     void valid();
