@@ -75,7 +75,7 @@ void AutoStartup::setLinux(bool enabled)
            << QLatin1String("X-GNOME-Autostart-enabled=") << "true" << endl
             ;
     } else {
-        if (!QFile::remove(desktopFileLocation)) {
+        if (QFile(desktopFileLocation).exists() && !QFile::remove(desktopFileLocation)) {
             qDebug() << "Could not remove autostart desktop file";
         }
     }
