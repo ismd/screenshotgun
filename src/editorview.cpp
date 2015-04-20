@@ -48,9 +48,6 @@ EditorView::EditorView() :
 
 void EditorView::init()
 {
-//    disconnect(_settings, SIGNAL(valid()),
-//               this, SLOT(checkVersion()));
-
     setFrameShape(QFrame::NoFrame);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -67,7 +64,7 @@ void EditorView::init()
 
 #ifdef Q_OS_LINUX
     QxtGlobalShortcut *shortcut = new QxtGlobalShortcut(this);
-    shortcut->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Print));
+    shortcut->setShortcut(QKeySequence(tr("Alt+Print")));
 
     connect(shortcut, SIGNAL(activated()),
             this, SLOT(run()));
