@@ -6,7 +6,6 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-
     QStringList args = app.arguments();
 
     if (args.contains("--update")) {

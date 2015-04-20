@@ -28,5 +28,5 @@ TrayIcon::~TrayIcon()
 
 void TrayIcon::showSettings()
 {
-    _editorView->settings()->show();
+    _editorView->settingsForm()->show();
 }

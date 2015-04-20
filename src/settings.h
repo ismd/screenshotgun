@@ -1,34 +1,26 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QDialog>
 #include <QSettings>
-#include <QObject>
+#include <QString>
 
-namespace Ui {
-    class Settings;
-}
-
-class Settings : public QDialog
+class Settings
 {
-    Q_OBJECT
-
 public:
-    explicit Settings(QWidget *parent = 0);
+    Settings();
     ~Settings();
-    bool isValid();
-    QString server();
-    Settings* setError(QString);
-    void show();
 
-signals:
-    void valid();
+    bool exists();
 
-private slots:
-    void accept();
+    bool autostartup();
+    bool serverChecked();
+    QString serverUrl();
+
+    void setAutostartup(bool);
+    void setServerChecked(bool);
+    void setServerUrl(QString);
 
 private:
-    Ui::Settings *ui;
     QSettings* _settings;
 };
 

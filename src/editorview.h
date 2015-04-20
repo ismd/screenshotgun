@@ -4,10 +4,11 @@
 #include <QGraphicsView>
 #include <QMouseEvent>
 #include "editorform.h"
-#include "settings.h"
+#include "settingsform.h"
 #include "server.h"
 #include "newversion.h"
 #include "trayicon.h"
+#include "settings.h"
 
 class EditorView : public QGraphicsView
 {
@@ -16,7 +17,7 @@ class EditorView : public QGraphicsView
 public:
     EditorView();
     QGraphicsScene* scene();
-    Settings* settings();
+    SettingsForm* settingsForm();
     Server* server();
 
 #ifdef Q_OS_WIN32
@@ -45,7 +46,8 @@ private:
     QGraphicsScene* _scene;
     EditorForm* _editorForm;
     TrayIcon* _trayIcon;
-    Settings* _settings;
+    Settings _settings;
+    SettingsForm* _settingsForm;
     Server* _server;
     NewVersion* _newVersion;
 };

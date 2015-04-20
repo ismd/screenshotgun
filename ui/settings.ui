@@ -87,6 +87,9 @@
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QLineEdit" name="serverEdit">
+        <property name="text">
+         <string>screenshotgun.com</string>
+        </property>
         <property name="placeholderText">
          <string>Адрес сервера</string>
         </property>

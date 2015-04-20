@@ -23,11 +23,12 @@ SOURCES += \
     src/modes/abstractmode.cpp \
     src/modes/linemode.cpp \
     src/modes/rectmode.cpp \
-    src/settings.cpp \
     src/newversion.cpp \
     src/updater.cpp \
     src/trayicon.cpp \
-    src/autostartup.cpp
+    src/autostartup.cpp \
+    src/settingsform.cpp \
+    src/settings.cpp
 
 HEADERS += \
     src/server.h \
@@ -37,12 +38,13 @@ HEADERS += \
     src/modes/abstractmode.h \
     src/modes/linemode.h \
     src/modes/rectmode.h \
-    src/settings.h \
     src/const.h \
     src/newversion.h \
     src/updater.h \
     src/trayicon.h \
-    src/autostartup.h
+    src/autostartup.h \
+    src/settingsform.h \
+    src/settings.h
 
 OTHER_FILES +=
 

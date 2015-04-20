@@ -1,74 +1,46 @@
 #include "settings.h"
-#include "ui_settings.h"
-#include "autostartup.h"
-#include <QDebug>
 
-Settings::Settings(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::Settings),
+Settings::Settings() :
     _settings(new QSettings("screenshotgun"))
 {
-    ui->setupUi(this);
-
-    ui->autoStartupCheckBox->setChecked(_settings->value("common/autostartup").toBool());
-    ui->serverRadioButton->setChecked(_settings->value("server/checked").toBool());
-    ui->serverEdit->setText(_settings->value("server/url").toString());
-    ui->errorLabel->setVisible(false);
 }
 
 Settings::~Settings()
 {
-    delete ui;
+    delete _settings;
 }
 
-bool Settings::isValid()
+bool Settings::exists()
 {
-    bool isValid = ui->serverEdit->text().length() > 0;
-
-    if (isValid) {
-        bool autoStartup = ui->autoStartupCheckBox->isChecked();
-
-        _settings->setValue("common/autostartup", autoStartup);
-        _settings->setValue("server/checked", ui->serverRadioButton->isChecked());
-        _settings->setValue("server/url", ui->serverEdit->text());
-
-        AutoStartup as;
-        as.set(autoStartup);
-
-        emit(valid());
-    }
-
-    return isValid;
+    return _settings->contains("common/autostartup");
 }
 
-QString Settings::server()
+bool Settings::autostartup()
+{
+    return _settings->value("common/autostartup").toBool();
+}
+
+bool Settings::serverChecked()
+{
+    return _settings->value("server/checked").toBool();
+}
+
+QString Settings::serverUrl()
 {
     return _settings->value("server/url").toString();
 }
 
-void Settings::accept()
+void Settings::setAutostartup(bool value)
 {
-    ui->submitButtons->setEnabled(false);
-
-    if (!isValid()) {
-        ui->submitButtons->setEnabled(true);
-    }
+    _settings->setValue("common/autostartup", value);
 }
 
-Settings* Settings::setError(QString message)
+void Settings::setServerChecked(bool value)
 {
-    ui->errorLabel->setText(message);
-    ui->errorLabel->setVisible("" == message ? false : true);
-
-    if ("" != message) {
-        ui->submitButtons->setEnabled(true);
-    }
-
-    return this;
+    _settings->setValue("server/checked", value);
 }
 
-void Settings::show()
+void Settings::setServerUrl(QString value)
 {
-    ui->submitButtons->setEnabled(true);
-    QDialog::show();
+    _settings->setValue("server/url", value);
 }

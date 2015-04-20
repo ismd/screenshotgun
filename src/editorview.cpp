@@ -20,10 +20,10 @@ EditorView::EditorView() :
     _scene(new QGraphicsScene(this)),
     _editorForm(NULL),
     _trayIcon(new TrayIcon(this)),
-    _settings(new Settings(this)),
+    _settingsForm(new SettingsForm(&_settings, this)),
     _server(new Server(this))
 {
-    connect(_settings, SIGNAL(valid()),
+    connect(_settingsForm, SIGNAL(valid()),
             this, SLOT(checkVersion()));
 
     connect(_server, SIGNAL(serverVersion(QString)),
@@ -39,8 +39,8 @@ EditorView::EditorView() :
             this, SLOT(uploadError()));
 
     // isValid will send signal `valid'
-    if (!_settings->isValid()) {
-        _settings->show();
+    if (!_settings.exists() || !_settingsForm->isValid()) {
+        _settingsForm->show();
     }
 
     _trayIcon->show();
@@ -76,9 +76,9 @@ QGraphicsScene* EditorView::scene()
     return _scene;
 }
 
-Settings* EditorView::settings()
+SettingsForm* EditorView::settingsForm()
 {
-    return _settings;
+    return _settingsForm;
 }
 
 Server* EditorView::server()
@@ -167,13 +167,13 @@ void EditorView::run()
 
 void EditorView::checkVersion()
 {
-    _server->setUrl(_settings->server());
+    _server->setUrl(_settingsForm->server());
     _server->version();
 }
 
 void EditorView::serverVersion(QString version)
 {
-    _settings->setError("")->hide();
+    _settingsForm->setError("")->hide();
 
     if (VERSION != version) {
         _newVersion = new NewVersion(this, _server);
@@ -185,7 +185,7 @@ void EditorView::serverVersion(QString version)
 
 void EditorView::connectionError()
 {
-    _settings->setError(QString("Can't connect to server"))->show();
+    _settingsForm->setError(QString("Can't connect to server"))->show();
 }
 
 void EditorView::uploaded(QString url)
