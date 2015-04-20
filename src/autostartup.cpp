@@ -6,14 +6,6 @@
 
 static const char runPathC[] = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run";
 
-AutoStartup::AutoStartup()
-{
-}
-
-AutoStartup::~AutoStartup()
-{
-}
-
 void AutoStartup::set(bool enabled)
 {
 #ifdef Q_OS_WIN32

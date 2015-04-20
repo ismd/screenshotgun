@@ -20,10 +20,6 @@ Server::Server(QString url, QObject *parent) :
     setUrl(url);
 }
 
-Server::~Server()
-{
-}
-
 void Server::setUrl(QString url)
 {
     if ("http://" == url.left(7) || "https://" == url.left(8)) {

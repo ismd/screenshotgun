@@ -5,14 +5,6 @@
 #include "updater.h"
 #include "const.h"
 
-Updater::Updater()
-{
-}
-
-Updater::~Updater()
-{
-}
-
 void Updater::update(const QByteArray &file)
 {
     QFile tempFile(QApplication::applicationDirPath() + "/" + TMP_BIN_FILENAME);

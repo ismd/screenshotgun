@@ -6,8 +6,6 @@
 class AutoStartup
 {
 public:
-    AutoStartup();
-    ~AutoStartup();
     void set(bool);
 
 #ifdef Q_OS_WIN32

@@ -6,8 +6,6 @@
 class Updater
 {
 public:
-    Updater();
-    ~Updater();
     void update(const QByteArray&);
     void copyNew(const QString&);
 };

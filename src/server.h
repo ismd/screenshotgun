@@ -10,7 +10,6 @@ class Server : public QObject
 public:
     Server(QObject *parent = 0);
     Server(QString url, QObject *parent = 0);
-    ~Server();
     void setUrl(QString);
     void upload(QByteArray);
     void version();

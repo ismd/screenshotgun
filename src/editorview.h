@@ -15,7 +15,6 @@ class EditorView : public QGraphicsView
 
 public:
     EditorView();
-    ~EditorView();
     QGraphicsScene* scene();
     Settings* settings();
     Server* server();

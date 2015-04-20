@@ -46,10 +46,6 @@ EditorView::EditorView() :
     _trayIcon->show();
 }
 
-EditorView::~EditorView()
-{
-}
-
 void EditorView::init()
 {
 //    disconnect(_settings, SIGNAL(valid()),
