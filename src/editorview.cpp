@@ -9,9 +9,7 @@
 
 #ifdef Q_OS_WIN32
 #  include <windows.h>
-#endif
-
-#ifdef Q_OS_LINUX
+#elif defined(Q_OS_LINUX)
 #  include "qxtglobalshortcut.h"
 #endif
 
@@ -60,7 +58,7 @@ void EditorView::init()
 
 #ifdef Q_OS_WIN32
     RegisterHotKey((HWND)winId(), 100, MOD_ALT, VK_SNAPSHOT);
-#elif Q_OS_LINUX
+#elif defined(Q_OS_LINUX)
     QxtGlobalShortcut *shortcut = new QxtGlobalShortcut(this);
     shortcut->setShortcut(QKeySequence(tr("Alt+Print")));
 

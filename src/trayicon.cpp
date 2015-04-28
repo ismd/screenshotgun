@@ -16,7 +16,7 @@ TrayIcon::TrayIcon(EditorView *parent) :
 
 #ifdef Q_OS_WIN32
     setIcon(QIcon(":/icons/icon-16.png"));
-#elif Q_OS_LINUX
+#elif defined(Q_OS_LINUX)
     setIcon(QIcon(":/icons/icon-22.png"));
 #endif
 
