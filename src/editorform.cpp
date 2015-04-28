@@ -5,7 +5,8 @@
 EditorForm::EditorForm(EditorView *parent) :
     QWidget(parent),
     ui(new Ui::EditorForm),
-    _editorView(parent)
+    _editorView(parent),
+    _dragging(false)
 {
     hide();
     ui->setupUi(this);
@@ -22,8 +23,8 @@ EditorForm::EditorForm(EditorView *parent) :
     _editorView->setMouseTracking(true);
 
     setSelected(ui->visibleAreaButton);
-    _buttons.append(ui->rectButton);
     _buttons.append(ui->visibleAreaButton);
+    _buttons.append(ui->rectButton);
     _buttons.append(ui->lineButton);
 }
 
@@ -42,6 +43,43 @@ AbstractMode* EditorForm::mode()
 EditorView* EditorForm::view()
 {
     return _editorView;
+}
+
+void EditorForm::mousePressEvent(QMouseEvent* event)
+{
+    const QRect dragLabelGeometry = ui->dragLabel->geometry();
+
+    int x = event->x(),
+        y = event->y(),
+        dragLabelX = dragLabelGeometry.x(),
+        dragLabelY = dragLabelGeometry.y();
+
+    if (x < dragLabelX ||
+        x > dragLabelX + dragLabelGeometry.width() ||
+        y < dragLabelY ||
+        y > dragLabelY + dragLabelGeometry.height())
+    {
+        return;
+    }
+
+    _initDragCoords.x = x;
+    _initDragCoords.y = y;
+    _dragging = true;
+}
+
+void EditorForm::mouseReleaseEvent(QMouseEvent* event)
+{
+    _dragging = false;
+}
+
+void EditorForm::mouseMoveEvent(QMouseEvent* event)
+{
+    if (!_dragging) {
+        return;
+    }
+
+    move(geometry().x() + event->x() - _initDragCoords.x,
+         geometry().y() + event->y() - _initDragCoords.y);
 }
 
 void EditorForm::on_visibleAreaButton_clicked()

@@ -60,9 +60,7 @@ void EditorView::init()
 
 #ifdef Q_OS_WIN32
     RegisterHotKey((HWND)winId(), 100, MOD_ALT, VK_SNAPSHOT);
-#endif
-
-#ifdef Q_OS_LINUX
+#elif Q_OS_LINUX
     QxtGlobalShortcut *shortcut = new QxtGlobalShortcut(this);
     shortcut->setShortcut(QKeySequence(tr("Alt+Print")));
 

@@ -14,6 +14,14 @@ TrayIcon::TrayIcon(EditorView *parent) :
     connect(_quitAction, SIGNAL(triggered()),
             qApp, SLOT(quit()));
 
+#ifdef Q_OS_WIN32
+    setIcon(QIcon(":/icons/icon-16.png"));
+#elif Q_OS_LINUX
+    setIcon(QIcon(":/icons/icon-22.png"));
+#endif
+
+    setToolTip("ScreenShotGun");
+
     _iconMenu = new QMenu();
     _iconMenu->addAction(_settingsAction);
     _iconMenu->addAction(_quitAction);

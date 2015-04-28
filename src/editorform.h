@@ -32,6 +32,11 @@ public:
         RectMode *rect;
     } modes;
 
+protected:
+    void mousePressEvent(QMouseEvent*);
+    void mouseReleaseEvent(QMouseEvent*);
+    void mouseMoveEvent(QMouseEvent*);
+
 private slots:
     void on_visibleAreaButton_clicked();
     void on_lineButton_clicked();
@@ -46,6 +51,11 @@ private:
     AbstractMode* _mode;
     QLinkedList<QPushButton*> _buttons;
     QPushButton* _selected;
+    bool _dragging;
+    struct {
+        int x;
+        int y;
+    } _initDragCoords;
 };
 
 #endif // EDITORFORM_H

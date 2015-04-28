@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>50</width>
-    <height>350</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -28,14 +28,14 @@
      <x>0</x>
      <y>0</y>
      <width>50</width>
-     <height>350</height>
+     <height>400</height>
     </rect>
    </property>
    <widget class="QPushButton" name="visibleAreaButton">
     <property name="geometry">
      <rect>
       <x>2</x>
-      <y>102</y>
+      <y>2</y>
       <width>46</width>
       <height>46</height>
      </rect>
@@ -45,7 +45,7 @@
     </property>
     <property name="icon">
      <iconset resource="../resources/res.qrc">
-      <normaloff>:/editorform/images/visiblearea.png</normaloff>:/editorform/images/visiblearea.png</iconset>
+      <normaloff>:/editorform/visiblearea.png</normaloff>:/editorform/visiblearea.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -61,14 +61,14 @@
     <property name="geometry">
      <rect>
       <x>2</x>
-      <y>252</y>
+      <y>202</y>
       <width>46</width>
       <height>46</height>
      </rect>
     </property>
     <property name="icon">
      <iconset resource="../resources/res.qrc">
-      <normaloff>:/editorform/images/line.png</normaloff>:/editorform/images/line.png</iconset>
+      <normaloff>:/editorform/line.png</normaloff>:/editorform/line.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -78,95 +78,6 @@
     </property>
    </widget>
    <widget class="QPushButton" name="rectButton">
-    <property name="geometry">
-     <rect>
-      <x>2</x>
-      <y>52</y>
-      <width>46</width>
-      <height>46</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset resource="../resources/res.qrc">
-      <normaloff>:/editorform/images/rectangle.png</normaloff>:/editorform/images/rectangle.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>18</width>
-      <height>18</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="circleButton">
-    <property name="geometry">
-     <rect>
-      <x>2</x>
-      <y>2</y>
-      <width>46</width>
-      <height>46</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset resource="../resources/res.qrc">
-      <normaloff>:/editorform/images/circle.png</normaloff>:/editorform/images/circle.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>18</width>
-      <height>18</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="textButton">
-    <property name="geometry">
-     <rect>
-      <x>2</x>
-      <y>202</y>
-      <width>46</width>
-      <height>46</height>
-     </rect>
-    </property>
-    <property name="icon">
-     <iconset resource="../resources/res.qrc">
-      <normaloff>:/editorform/images/text.png</normaloff>:/editorform/images/text.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>14</width>
-      <height>17</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="okButton">
-    <property name="geometry">
-     <rect>
-      <x>2</x>
-      <y>302</y>
-      <width>46</width>
-      <height>46</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset resource="../resources/res.qrc">
-      <normaloff>:/editorform/images/ok.png</normaloff>:/editorform/images/ok.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>29</width>
-      <height>17</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="arrowButton">
     <property name="geometry">
      <rect>
       <x>2</x>
@@ -180,7 +91,96 @@
     </property>
     <property name="icon">
      <iconset resource="../resources/res.qrc">
-      <normaloff>:/editorform/images/arrow.png</normaloff>:/editorform/images/arrow.png</iconset>
+      <normaloff>:/editorform/rectangle.png</normaloff>:/editorform/rectangle.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>18</width>
+      <height>18</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="circleButton">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>102</y>
+      <width>46</width>
+      <height>46</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/res.qrc">
+      <normaloff>:/editorform/circle.png</normaloff>:/editorform/circle.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>18</width>
+      <height>18</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="textButton">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>302</y>
+      <width>46</width>
+      <height>46</height>
+     </rect>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/res.qrc">
+      <normaloff>:/editorform/text.png</normaloff>:/editorform/text.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>14</width>
+      <height>17</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="okButton">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>352</y>
+      <width>46</width>
+      <height>46</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/res.qrc">
+      <normaloff>:/editorform/ok.png</normaloff>:/editorform/ok.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>29</width>
+      <height>17</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="arrowButton">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>252</y>
+      <width>46</width>
+      <height>46</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resources/res.qrc">
+      <normaloff>:/editorform/arrow.png</normaloff>:/editorform/arrow.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -193,10 +193,35 @@
     <property name="geometry">
      <rect>
       <x>2</x>
-      <y>2</y>
+      <y>102</y>
       <width>46</width>
       <height>46</height>
      </rect>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="dragLabel">
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>52</y>
+      <width>46</width>
+      <height>46</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>OpenHandCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../resources/res.qrc">:/editorform/drag.png</pixmap>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>

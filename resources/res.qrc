@@ -1,12 +1,15 @@
 <RCC>
     <qresource prefix="/">
-        <file>editorform/images/arrow.png</file>
-        <file>editorform/images/circle.png</file>
-        <file>editorform/images/ok.png</file>
-        <file>editorform/images/rectangle.png</file>
-        <file>editorform/images/text.png</file>
-        <file>editorform/images/visiblearea.png</file>
         <file>style.qss</file>
-        <file>editorform/images/line.png</file>
+        <file>icons/icon-16.png</file>
+        <file>icons/icon-22.png</file>
+        <file>editorform/arrow.png</file>
+        <file>editorform/circle.png</file>
+        <file>editorform/line.png</file>
+        <file>editorform/ok.png</file>
+        <file>editorform/rectangle.png</file>
+        <file>editorform/text.png</file>
+        <file>editorform/visiblearea.png</file>
+        <file>editorform/drag.png</file>
     </qresource>
 </RCC>
