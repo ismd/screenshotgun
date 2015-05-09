@@ -3,21 +3,31 @@
 #include "updater.h"
 #include <QDebug>
 #include <QApplication>
+#include <iostream>
 
-void msgHandler(QtMsgType type, const char* msg)
+void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    const char symbols[] = {'I', 'E', '!', 'X'};
-    QString output = QString("[%1] %2").arg(symbols[type]).arg(msg);
-    std::cerr << output.toStdString() << std::endl;
+    QByteArray localMsg = msg.toLocal8Bit();
 
-    if (type == QtFatalMsg) {
+    switch (type) {
+    case QtDebugMsg:
+        fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+        break;
+    case QtWarningMsg:
+        fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+        break;
+    case QtCriticalMsg:
+        fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+        break;
+    case QtFatalMsg:
+        fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
         abort();
     }
 }
 
 int main(int argc, char *argv[])
 {
-    qInstallMsgHandler(msgHandler);
+    qInstallMessageHandler(messageHandler);
     QApplication app(argc, argv);
     QStringList args = app.arguments();
 
