@@ -1,6 +1,7 @@
 #include "editorview.h"
 #include "const.h"
 #include "updater.h"
+#include <QDebug>
 #include <QApplication>
 
 int main(int argc, char *argv[])
