@@ -3,6 +3,7 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QSettings>
+#include <QTextStream>
 
 static const char runPathC[] = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run";
 
