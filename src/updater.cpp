@@ -1,5 +1,5 @@
+#include <iostream>
 #include <QFileInfo>
-#include <QDebug>
 #include <QProcess>
 #include <QApplication>
 #include "updater.h"
@@ -30,7 +30,7 @@ void Updater::copyNew(const QString& path)
     oldFile.remove();
 
     if (!currentFile.copy(path)) {
-        qDebug() << "Can't copy new version";
+        std::cerr << "Can't copy new version";
         exit(1);
     }
 

@@ -1,33 +1,11 @@
+#include <iostream>
+#include <QApplication>
 #include "editorview.h"
 #include "const.h"
 #include "updater.h"
-#include <QDebug>
-#include <QApplication>
-#include <iostream>
-
-void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
-{
-    QByteArray localMsg = msg.toLocal8Bit();
-
-    switch (type) {
-    case QtDebugMsg:
-        fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-        break;
-    case QtWarningMsg:
-        fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-        break;
-    case QtCriticalMsg:
-        fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-        break;
-    case QtFatalMsg:
-        fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-        abort();
-    }
-}
 
 int main(int argc, char *argv[])
 {
-    qInstallMessageHandler(messageHandler);
     QApplication app(argc, argv);
     QStringList args = app.arguments();
 
@@ -35,7 +13,7 @@ int main(int argc, char *argv[])
         int pathIndex = args.indexOf("--update") + 1;
 
         if (pathIndex >= args.size()) {
-            qCritical() << "Bad update file path";
+            std::cerr << "Bad update file path";
             exit(1);
         }
 
@@ -48,7 +26,7 @@ int main(int argc, char *argv[])
         int pathIndex = args.indexOf("--update-remove") + 1;
 
         if (pathIndex >= args.size()) {
-            qCritical() << "Bad update-remove file path";
+            std::cerr << "Bad update-remove file path";
             exit(1);
         }
 
@@ -57,7 +35,7 @@ int main(int argc, char *argv[])
     }
 
     if (args.contains("--version") || args.contains("-v")) {
-        qDebug() << VERSION;
+        std::cout << VERSION;
         return 0;
     }
 

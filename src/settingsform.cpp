@@ -1,7 +1,6 @@
 #include "settingsform.h"
 #include "ui_settings.h"
 #include "autostartup.h"
-#include <QDebug>
 
 SettingsForm::SettingsForm(Settings* settings, QWidget *parent) :
     _settings(settings),
