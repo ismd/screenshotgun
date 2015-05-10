@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
         int pathIndex = args.indexOf("--update") + 1;
 
         if (pathIndex >= args.size()) {
-            std::cerr << "Bad update file path";
+            std::cerr << "Bad update file path" << std::endl;
             exit(1);
         }
 
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
         int pathIndex = args.indexOf("--update-remove") + 1;
 
         if (pathIndex >= args.size()) {
-            std::cerr << "Bad update-remove file path";
+            std::cerr << "Bad update-remove file path" << std::endl;
             exit(1);
         }
 
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     }
 
     if (args.contains("--version") || args.contains("-v")) {
-        std::cout << VERSION;
+        std::cout << VERSION << std::endl;
         return 0;
     }
 

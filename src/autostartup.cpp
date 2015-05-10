@@ -43,13 +43,13 @@ void AutoStartup::setLinux(bool enabled)
 
     if (enabled) {
         if (!QDir().exists(autoStartPath) && !QDir().mkpath(autoStartPath)) {
-            std::cerr << "Could not create autostart directory";
+            std::cerr << "Could not create autostart directory" << std::endl;
             return;
         }
 
         QFile iniFile(desktopFileLocation);
         if (!iniFile.open(QIODevice::WriteOnly)) {
-            std::cerr << "Could not write auto start entry" << desktopFileLocation;
+            std::cerr << "Could not write auto start entry" << desktopFileLocation.toStdString() << std::endl;
             return;
         }
 
@@ -68,7 +68,7 @@ void AutoStartup::setLinux(bool enabled)
             ;
     } else {
         if (QFile(desktopFileLocation).exists() && !QFile::remove(desktopFileLocation)) {
-            std::cerr << "Could not remove autostart desktop file";
+            std::cerr << "Could not remove autostart desktop file" << std::endl;
         }
     }
 }

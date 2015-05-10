@@ -30,7 +30,7 @@ void Updater::copyNew(const QString& path)
     oldFile.remove();
 
     if (!currentFile.copy(path)) {
-        std::cerr << "Can't copy new version";
+        std::cerr << "Can't copy new version" << std::endl;
         exit(1);
     }
 
