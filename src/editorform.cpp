@@ -1,6 +1,6 @@
 #include "editorform.h"
-#include "ui_editorform.h"
 #include "editorview.h"
+#include "ui_editorform.h"
 
 EditorForm::EditorForm(EditorView *parent) :
     QWidget(parent),

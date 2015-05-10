@@ -1,9 +1,9 @@
 #include <iostream>
-#include "autostartup.h"
-#include <QStandardPaths>
 #include <QDir>
 #include <QSettings>
+#include <QStandardPaths>
 #include <QTextStream>
+#include "autostartup.h"
 
 static const char runPathC[] = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run";
 

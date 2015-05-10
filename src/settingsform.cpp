@@ -1,6 +1,6 @@
+#include "autostartup.h"
 #include "settingsform.h"
 #include "ui_settings.h"
-#include "autostartup.h"
 
 SettingsForm::SettingsForm(Settings* settings, QWidget *parent) :
     _settings(settings),

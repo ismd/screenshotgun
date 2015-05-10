@@ -1,6 +1,6 @@
-#include "trayicon.h"
-#include "editorview.h"
 #include <QApplication>
+#include "editorview.h"
+#include "trayicon.h"
 
 TrayIcon::TrayIcon(EditorView *parent) :
     _editorView(parent),

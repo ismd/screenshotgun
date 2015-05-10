@@ -1,7 +1,7 @@
 #include <iostream>
 #include <QApplication>
-#include "editorview.h"
 #include "const.h"
+#include "editorview.h"
 #include "updater.h"
 
 int main(int argc, char *argv[])

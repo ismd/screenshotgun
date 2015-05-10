@@ -1,8 +1,8 @@
 #ifndef EDITORFORM_H
 #define EDITORFORM_H
 
-#include <QWidget>
 #include <QPushButton>
+#include <QWidget>
 #include "modes/linemode.h"
 #include "modes/rectmode.h"
 #include "modes/visibleareamode.h"

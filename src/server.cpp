@@ -1,11 +1,11 @@
-#include <QNetworkRequest>
-#include <QHttpMultiPart>
 #include <QFile>
-#include <QNetworkAccessManager>
+#include <QHttpMultiPart>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include "server.h"
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
 #include "const.h"
+#include "server.h"
 
 Server::Server(QObject *parent) :
     QObject(parent),

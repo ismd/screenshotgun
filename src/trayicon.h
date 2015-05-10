@@ -1,9 +1,9 @@
 #ifndef TRAYICON_H
 #define TRAYICON_H
 
-#include <QSystemTrayIcon>
 #include <QAction>
 #include <QMenu>
+#include <QSystemTrayIcon>
 
 class EditorView;
 

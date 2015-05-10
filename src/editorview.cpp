@@ -1,11 +1,11 @@
-#include "const.h"
-#include "editorview.h"
-#include "newversion.h"
 #include <QApplication>
+#include <QClipboard>
 #include <QDesktopWidget>
 #include <QScreen>
 #include <QWindow>
-#include <QClipboard>
+#include "const.h"
+#include "editorview.h"
+#include "newversion.h"
 
 #ifdef Q_OS_WIN32
 #  include <windows.h>

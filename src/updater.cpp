@@ -1,9 +1,9 @@
 #include <iostream>
+#include <QApplication>
 #include <QFileInfo>
 #include <QProcess>
-#include <QApplication>
-#include "updater.h"
 #include "const.h"
+#include "updater.h"
 
 void Updater::update(const QByteArray &file)
 {

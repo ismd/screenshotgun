@@ -4,11 +4,11 @@
 #include <QGraphicsView>
 #include <QMouseEvent>
 #include "editorform.h"
-#include "settingsform.h"
-#include "server.h"
 #include "newversion.h"
-#include "trayicon.h"
+#include "server.h"
 #include "settings.h"
+#include "settingsform.h"
+#include "trayicon.h"
 
 class EditorView : public QGraphicsView
 {

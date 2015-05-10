@@ -1,10 +1,10 @@
 #ifndef SETTINGSFORM_H
 #define SETTINGSFORM_H
 
-#include "settings.h"
 #include <QDialog>
-#include <QSettings>
 #include <QObject>
+#include <QSettings>
+#include "settings.h"
 
 namespace Ui {
     class Settings;
