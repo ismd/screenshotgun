@@ -1,0 +1,13 @@
+[Desktop Entry]
+Categories=Network;Application;
+Comment=ScreenShotGun
+Exec=screenshotgun
+GenericName=screenshotgun
+Name=ScreenShotGun
+X-KDE-StartupNotify=true
+MimeType=application/x-designer;
+Icon=screenshotgun.png
+Terminal=false
+Type=Application
+Version=1
+Name[ru_RU]=ScreenShotGun
