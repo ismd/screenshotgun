@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <QWidget>
 #include "modes/linemode.h"
+#include "modes/arrowmode.h"
 #include "modes/rectmode.h"
 #include "modes/visibleareamode.h"
 #include "server.h"
@@ -29,6 +30,7 @@ public:
     struct {
         VisibleAreaMode *visibleArea;
         LineMode *line;
+        ArrowMode *arrow;
         RectMode *rect;
     } modes;
 
@@ -40,6 +42,7 @@ protected:
 private slots:
     void on_visibleAreaButton_clicked();
     void on_lineButton_clicked();
+    void on_arrowButton_clicked();
     void on_rectButton_clicked();
     void on_okButton_clicked();
 

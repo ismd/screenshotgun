@@ -17,6 +17,7 @@ EditorForm::EditorForm(EditorView *parent) :
     // Setting default mode
     modes.visibleArea = new VisibleAreaMode(scene, static_cast<EditorForm*>(this));
     modes.line = new LineMode(scene);
+    modes.arrow = new ArrowMode(scene);
     modes.rect = new RectMode(scene);
 
     _mode = modes.visibleArea;
@@ -26,12 +27,14 @@ EditorForm::EditorForm(EditorView *parent) :
     _buttons.append(ui->visibleAreaButton);
     _buttons.append(ui->rectButton);
     _buttons.append(ui->lineButton);
+    _buttons.append(ui->arrowButton);
 }
 
 EditorForm::~EditorForm()
 {
     delete modes.visibleArea;
     delete modes.line;
+    delete modes.arrow;
     delete modes.rect;
 }
 
@@ -91,6 +94,12 @@ void EditorForm::on_visibleAreaButton_clicked()
 void EditorForm::on_lineButton_clicked()
 {
     setSelected(ui->lineButton);
+    _editorView->setMouseTracking(false);
+}
+
+void EditorForm::on_arrowButton_clicked()
+{
+    setSelected(ui->arrowButton);
     _editorView->setMouseTracking(false);
 }
 
@@ -168,6 +177,8 @@ void EditorForm::setSelected(QPushButton *button)
         _mode = modes.visibleArea;
     } else if (button == ui->lineButton) {
         _mode = modes.line;
+    } else if (button == ui->arrowButton) {
+        _mode = modes.arrow;
     } else if (button == ui->rectButton) {
         _mode = modes.rect;
     }

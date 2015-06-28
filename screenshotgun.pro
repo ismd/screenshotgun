@@ -28,7 +28,8 @@ SOURCES += \
     src/trayicon.cpp \
     src/autostartup.cpp \
     src/settingsform.cpp \
-    src/settings.cpp
+    src/settings.cpp \
+    src/modes/arrowmode.cpp
 
 HEADERS += \
     src/server.h \
@@ -44,7 +45,8 @@ HEADERS += \
     src/trayicon.h \
     src/autostartup.h \
     src/settingsform.h \
-    src/settings.h
+    src/settings.h \
+    src/modes/arrowmode.h
 
 OTHER_FILES +=
 

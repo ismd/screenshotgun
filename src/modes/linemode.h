@@ -12,7 +12,7 @@ public:
     void move(int x, int y);
     void stop(int x, int y);
 
-private:
+protected:
     QGraphicsLineItem *line;
 };
 
