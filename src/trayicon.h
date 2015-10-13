@@ -18,10 +18,15 @@ public:
 private:
     EditorView* _editorView;
     QMenu* _iconMenu;
+    QAction* _makeScreenshotAction;
     QAction* _settingsAction;
     QAction* _quitAction;
 
+signals:
+    void makeScreenshot();
+
 private slots:
+    void makeScreenshotAction();
     void showSettings();
 };
 

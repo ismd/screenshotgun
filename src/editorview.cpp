@@ -8,9 +8,9 @@
 #include "newversion.h"
 
 #ifdef Q_OS_WIN32
-#  include <windows.h>
+#include <windows.h>
 #elif defined(Q_OS_LINUX)
-#  include "qxtglobalshortcut.h"
+#include "qxtglobalshortcut.h"
 #endif
 
 EditorView::EditorView() :
@@ -56,15 +56,18 @@ void EditorView::init()
     connect(_trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayActivated(QSystemTrayIcon::ActivationReason)));
 
-#ifdef Q_OS_WIN32
+    connect(_trayIcon, SIGNAL(makeScreenshot()),
+            this, SLOT(run()));
+
+    #ifdef Q_OS_WIN32
     RegisterHotKey((HWND)winId(), 100, MOD_ALT, VK_SNAPSHOT);
-#elif defined(Q_OS_LINUX)
+    #elif defined(Q_OS_LINUX)
     QxtGlobalShortcut *shortcut = new QxtGlobalShortcut(this);
     shortcut->setShortcut(QKeySequence(tr("Alt+Print")));
 
     connect(shortcut, SIGNAL(activated()),
             this, SLOT(run()));
-#endif
+    #endif
 }
 
 QGraphicsScene* EditorView::scene()
