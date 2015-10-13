@@ -20,7 +20,7 @@ TrayIcon::TrayIcon(EditorView *parent) :
     setIcon(QIcon(":/icons/icon-22.png"));
 #endif
 
-    setToolTip("ScreenShotGun");
+    setToolTip("Screenshotgun");
 
     _iconMenu = new QMenu();
     _iconMenu->addAction(_settingsAction);
