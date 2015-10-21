@@ -88,6 +88,7 @@ void Server::versionFromServer(QNetworkReply *reply)
             this, SLOT(versionFromServer(QNetworkReply*)));
 
     if (QNetworkReply::NoError != reply->error()) {
+        qDebug() << reply->errorString();
         emit(connectionError());
         return;
     }
