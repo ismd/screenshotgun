@@ -2,12 +2,13 @@
 <Installer>
     <Name>Screenshotgun</Name>
     <Version>0.1.0</Version>
+    <Publisher>Vladimir Kosteley</Publisher>
     <ProductUrl>http://screenshotgun.com</ProductUrl>
     <InstallerWindowIcon>screenshotgun</InstallerWindowIcon>
     <Logo>screenshotgun.com</Logo>
     <RunProgram>@TargetDir@/screenshotgun</RunProgram>
     <StartMenuDir>Screenshotgun</StartMenuDir>
-    <TargetDir>@HomeDir@/Screenshotgun</TargetDir>
+    <TargetDir>@ApplicationsDir@/Screenshotgun</TargetDir>
     <AdminTargetDir>@ApplicationsDir@/Screenshotgun</AdminTargetDir>
     <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
     <RemoteRepositories>
