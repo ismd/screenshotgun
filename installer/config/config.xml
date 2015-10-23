@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <Name>Screenshotgun</Name>
+    <Version>0.1.0</Version>
+    <ProductUrl>http://screenshotgun.com</ProductUrl>
+    <InstallerWindowIcon>screenshotgun</InstallerWindowIcon>
+    <Logo>screenshotgun.com</Logo>
+    <RunProgram>@TargetDir@/screenshotgun</RunProgram>
+    <StartMenuDir>Screenshotgun</StartMenuDir>
+    <TargetDir>@HomeDir@/Screenshotgun</TargetDir>
+    <AdminTargetDir>@ApplicationsDir@/Screenshotgun</AdminTargetDir>
+    <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
+    <RemoteRepositories>
+        <Repository>
+            <Url>http://screenshotgun.com/dist/installer-repository</Url>
+            <Enabled>1</Enabled>
+            <DisplayName>Official repository</DisplayName>
+        </Repository>
+    </RemoteRepositories>
+</Installer>
