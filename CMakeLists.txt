@@ -38,12 +38,12 @@ set(SOURCE_FILES
     src/updater.cpp
     src/updater.h)
 
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Network REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Network REQUIRED)
 
 if(UNIX AND NOT APPLE)
-    find_package(X11)
-    include_directories(/usr/include/qt/QtGui/${Qt5Widgets_VERSION}/QtGui)
+    find_package(X11 REQUIRED)
+    find_package(Qt5 COMPONENTS Gui REQUIRED)
+    include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
     list(APPEND SOURCE_FILES
         src/qxtglobal.h
@@ -58,10 +58,10 @@ qt5_wrap_ui(UIS_HDRS
     ui/newversion.ui
     ui/settings.ui)
 
-add_executable(screenshotgun ${SOURCE_FILES} ${UIS_HDRS} resources/res.qrc)
-
 if(UNIX AND NOT APPLE)
+    add_executable(screenshotgun ${SOURCE_FILES} ${UIS_HDRS} resources/res.qrc)
     target_link_libraries(screenshotgun X11 Qt5::Widgets Qt5::Network)
 else(WIN32)
+    add_executable(screenshotgun WIN32 ${SOURCE_FILES} ${UIS_HDRS} resources/res.qrc)
     target_link_libraries(screenshotgun Qt5::Widgets Qt5::Network)
 endif()
