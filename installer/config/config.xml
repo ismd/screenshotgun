@@ -5,7 +5,8 @@
     <Publisher>Vladimir Kosteley</Publisher>
     <ProductUrl>http://screenshotgun.com</ProductUrl>
     <InstallerWindowIcon>screenshotgun</InstallerWindowIcon>
-    <Logo>screenshotgun.com</Logo>
+    <InstallerApplicationIcon>screenshotgun</InstallerApplicationIcon>
+    <Logo>screenshotgun.png</Logo>
     <RunProgram>@TargetDir@/screenshotgun</RunProgram>
     <StartMenuDir>Screenshotgun</StartMenuDir>
     <TargetDir>@ApplicationsDir@/Screenshotgun</TargetDir>
