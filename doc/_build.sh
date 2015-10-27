@@ -1,87 +1,64 @@
 #!/bin/bash
+if [[ ! $1 ]]; then
+  echo "Usage: $0 <version>"
+  exit 0
+fi
+
 SRC_PATH=/home/ismd/src/screenshotgun
+VERSION=$1
 
 BUILD_PATH_UBUNTU_64=/home/ismd/build/screenshotgun-ubuntu-64
 BUILD_PATH_WINDOWS_32=/home/ismd/build/screenshotgun-windows-32
+BUILD_PATH_DEB_64=/home/ismd/build/deb-64
 
 DIST_PATH=/srv/screenshotgun.com/public/dist
 PPA_PATH=/home/ismd/repos/ppa
 
-UBUNTU_64_OUTPUT_BIN=screenshotgun
-WINDOWS_32_OUTPUT_BIN=screenshotgun.exe
-
-UBUNTU_64_BIN=screenshotgun
-WINDOWS_32_BIN=screenshotgun.exe
-
-VERSION_FILE=$DIST_PATH/version
+DEB_64_FILENAME=screenshotgun_amd64.deb
 
 rm -rf $BUILD_PATH_UBUNTU_64
 rm -rf $BUILD_PATH_WINDOWS_32
 mkdir $BUILD_PATH_UBUNTU_64
 mkdir $BUILD_PATH_WINDOWS_32
 
-cd $SRC_PATH
-git checkout -- `find . -name const.h`
 echo "*** Updating working copy ***"
+cd $SRC_PATH
 git pull
 
-LAST_VERSION=`git rev-list HEAD --count`
-CURRENT_VERSION=`cat $VERSION_FILE`
-
-if [ $LAST_VERSION == $CURRENT_VERSION ]; then
-  echo -e "\n*** Already last version ($LAST_VERSION) ***"
+if [[ $(git status -s | wc -l) -eq 0 ]]; then
+  echo -e "\n*** No changes ***"
   exit 228
 fi
-
-sed -i "s/\#define VERSION \".*\"/\#define VERSION \"$LAST_VERSION\"/g" `find $SRC_PATH -name const.h`
 
 # Compiling for ubuntu 64
 echo -e "\n*** Compiling for ubuntu 64 ***"
 
-#docker run \
-#       -v $SRC_PATH:/home/ismd/src/screenshotgun:ro \
-#       -v $BUILD_PATH_UBUNTU_64:/home/ismd/build-output \
-#       ismd/screenshotgun-ubuntu /home/ismd/bin/build.sh
-
-#cd $SRC_PATH
-#qmake -config release -o $BUILD_PATH_UBUNTU_64/Makefile
-
 cd $BUILD_PATH_UBUNTU_64
 cmake $SRC_PATH
-cmake --build . --target all
-#make || exit $?
-strip $UBUNTU_64_OUTPUT_BIN
+cmake --build . || exit $?
+strip screenshotgun
 
 # Compiling for windows 32
-MXE_PATH=/home/ismd/src/mxe
+echo -e "\n*** Compiling for windows 32 ***"
 
-#cd $SRC_PATH
-#$MXE_PATH/usr/bin/i686-w64-mingw32.static-qmake-qt5 -config release -o $BUILD_PATH_WINDOWS_32/Makefile
+MXE_PATH=/home/ismd/src/mxe
+PATH=$MXE_PATH/usr/bin:$PATH
 
 cd $BUILD_PATH_WINDOWS_32
-PATH=$MXE_PATH/usr/bin:$PATH
-echo -e "\n*** Compiling for windows 32 ***"
-#make || exit $?
 cmake $SRC_PATH
-cmake --build . --target all -- -j 1 -DCMAKE_TOOLCHAIN_FILE=${MXE_PATH}/usr/i686-w64-mingw32.static/share/cmake/mxe-conf.cmake
-
-# Clearing
-cd $SRC_PATH
-git checkout -- `find . -name const.h`
+cmake --build . -- -j1 -DCMAKE_TOOLCHAIN_FILE=${MXE_PATH}/usr/i686-w64-mingw32.static/share/cmake/mxe-conf.cmake || exit $?
 
 # Deb 64
-DEB_64_FILENAME=screenshotgun_${LAST_VERSION}_amd64.deb
-
-cp $BUILD_PATH_UBUNTU_64/$UBUNTU_64_OUTPUT_BIN /home/ismd/build/deb-64/usr/bin/$UBUNTU_64_BIN
-cd /home/ismd/build/deb-64
-sed -i "s/Version: .*/Version: $LAST_VERSION/g" DEBIAN/control
+cp $BUILD_PATH_UBUNTU_64/screenshotgun $BUILD_PATH_DEB_64/usr/bin/screenshotgun
+cd $BUILD_PATH_DEB_64
+sed -i "s/Version: .*/Version: $VERSION/g" DEBIAN/control
 
 SIZE_DEB_64=`du -s usr | sed -s 's/\(.*\)\s.*/\1/'`
 sed -i "s/Installed-Size: .*/Installed-Size: $SIZE_DEB_64/g" DEBIAN/control
 find . -type f ! -regex '.*.hg.*' ! -regex '.*?debian-binary.*' ! -regex '.*?DEBIAN.*' -printf '%P ' | xargs md5sum > DEBIAN/md5sums
 
-cp $SRC_PATH/dist/screenshotgun.desktop /home/ismd/build/deb-64/usr/share/applications/screenshotgun.desktop
-cp $SRC_PATH/dist/screenshotgun.png /home/ismd/build/deb-64/usr/share/pixmaps/screenshotgun.png
+cp $SRC_PATH/dist/screenshotgun.desktop $BUILD_PATH_DEB_64/usr/share/applications/screenshotgun.desktop
+cp $SRC_PATH/dist/screenshotgun.png $BUILD_PATH_DEB_64/usr/share/pixmaps/screenshotgun.png
 
 cd ..
 fakeroot dpkg-deb --build deb-64
@@ -93,9 +70,7 @@ reprepro remove trusty screenshotgun
 reprepro includedeb trusty $DEB_64_FILENAME
 
 # Copying new versions
-rm $DIST_PATH/*.deb
-mv $PPA_PATH/$DEB_64_FILENAME $DIST_PATH/screenshotgun_amd64.deb
-cp $BUILD_PATH_WINDOWS_32/release/$WINDOWS_32_OUTPUT_BIN $DIST_PATH/$WINDOWS_32_BIN
+mv $PPA_PATH/$DEB_64_FILENAME $DIST_PATH/$DEB_64_FILENAME
+cp $BUILD_PATH_WINDOWS_32/release/screenshotgun.exe $DIST_PATH/screenshotgun.exe
 
-echo $LAST_VERSION > $VERSION_FILE
 echo -e "\n*** Success ***"
