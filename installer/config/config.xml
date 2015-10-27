@@ -12,6 +12,7 @@
     <TargetDir>@ApplicationsDir@/Screenshotgun</TargetDir>
     <AdminTargetDir>@ApplicationsDir@/Screenshotgun</AdminTargetDir>
     <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
+    <ControlScript>controlscript.qs</ControlScript>
     <RemoteRepositories>
         <Repository>
             <Url>http://screenshotgun.com/dist/installer-repository</Url>
