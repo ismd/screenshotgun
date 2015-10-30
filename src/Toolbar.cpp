@@ -1,7 +1,7 @@
 #include <QGraphicsScene>
 #include "App.h"
 #include "Toolbar.h"
-#include "ui_toolbar.h"
+#include "ui_Toolbar.h"
 
 Toolbar::Toolbar(AppView& appView)
     : QWidget(&appView),

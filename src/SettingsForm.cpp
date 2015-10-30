@@ -1,7 +1,7 @@
 #include "App.h"
 #include "Autostartup.h"
 #include "SettingsForm.h"
-#include "ui_settings.h"
+#include "ui_Settings.h"
 
 SettingsForm::SettingsForm(App& app) : ui(new Ui::Settings), app_(app) {
     ui->setupUi(this);
