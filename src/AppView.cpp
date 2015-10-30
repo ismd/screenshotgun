@@ -20,6 +20,15 @@ AppView::AppView(App& app)
 
     reinitVisibleArea();
     setScene(&scene_);
+
+#if defined(Q_OS_LINUX)
+    shortcut_.setShortcut(QKeySequence(tr("Alt+Print")));
+
+    connect(&shortcut_, SIGNAL(activated()),
+            this, SLOT(makeScreenshot()));
+#elif defined(Q_OS_WIN32)
+    RegisterHotKey((HWND)winId(), 100, MOD_ALT, VK_SNAPSHOT);
+#endif
 }
 
 AppView::~AppView() {
@@ -119,3 +128,18 @@ void AppView::keyReleaseEvent(QKeyEvent* e) {
         toolbar_.hide();
     }
 }
+
+#ifdef Q_OS_WIN32
+bool AppView::nativeEvent(const QByteArray& eventType, void* message, long* result) {
+    MSG* msg = reinterpret_cast<MSG*>(message);
+
+    if (msg->message == WM_HOTKEY){
+        if (msg->wParam == 100){
+            makeScreenshot();
+            return true;
+        }
+    }
+
+    return false;
+}
+#endif

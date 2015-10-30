@@ -2,10 +2,6 @@
 #include <QClipboard>
 #include "App.h"
 
-#ifdef Q_OS_WIN32
-    #include <windows.h>
-#endif
-
 App::App() : appView_(*this), trayIcon_(*this), settingsForm_(*this) {
     connect(&server_, SIGNAL(uploadSuccess(QString)),
             this, SLOT(uploadSuccess(QString)));
@@ -21,15 +17,6 @@ App::App() : appView_(*this), trayIcon_(*this), settingsForm_(*this) {
     }
 
     trayIcon_.show();
-
-#ifdef Q_OS_WIN32
-    RegisterHotKey((HWND)winId(), 100, MOD_ALT, VK_SNAPSHOT);
-#elif defined(Q_OS_LINUX)
-    shortcut_.setShortcut(QKeySequence(tr("Alt+Print")));
-
-    connect(&shortcut_, SIGNAL(activated()),
-            this, SLOT(makeScreenshot()));
-#endif
 }
 
 SettingsForm& App::settingsForm() {
@@ -60,18 +47,3 @@ void App::uploadError() {
                           QSystemTrayIcon::Critical,
                           10000);
 }
-
-#ifdef Q_OS_WIN32
-bool App::nativeEvent(const QByteArray& eventType, void* message, long* result) {
-    MSG* msg = reinterpret_cast<MSG*>(message);
-
-    if (msg->message == WM_HOTKEY){
-        if (msg->wParam == 100){
-            makeScreenshot();
-            return true;
-        }
-    }
-
-    return false;
-}
-#endif

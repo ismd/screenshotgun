@@ -9,6 +9,12 @@
 #include "modes/VisibleAreaMode.h"
 #include "Toolbar.h"
 
+#if defined(Q_OS_LINUX)
+    #include "qxtglobalshortcut.h"
+#elif defined(Q_OS_WIN32)
+    #include <windows.h>
+#endif
+
 class App;
 
 class AppView : public QGraphicsView {
@@ -19,15 +25,13 @@ public:
     ~AppView();
 
     App& app();
-    void makeScreenshot();
     QGraphicsScene& scene();
     VisibleAreaMode& visibleAreaMode();
     void mode(ToolbarMode);
     void reinitVisibleArea();
 
-#ifdef Q_OS_WIN32
-    bool nativeEvent(const QByteArray & eventType, void * message, long *result);
-#endif
+public slots:
+    void makeScreenshot();
 
 protected:
     void mousePressEvent(QMouseEvent*);
@@ -47,6 +51,12 @@ private:
     LineMode lineMode_;
     ArrowMode arrowMode_;
     RectMode rectMode_;
+
+#if defined(Q_OS_LINUX)
+    QxtGlobalShortcut shortcut_;
+#elif defined(Q_OS_WIN32)
+    bool nativeEvent(const QByteArray& eventType, void* message, long* result);
+#endif
 };
 
 #endif //SCREENSHOTGUN_APPVIEW_H

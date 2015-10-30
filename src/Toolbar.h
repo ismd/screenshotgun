@@ -7,7 +7,7 @@
 
 class AppView;
 
-enum ToolbarMode {
+enum class ToolbarMode {
     VISIBLE_AREA,
     LINE,
     ARROW,

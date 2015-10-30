@@ -45,8 +45,8 @@ MXE_PATH=/home/ismd/src/mxe
 PATH=$MXE_PATH/usr/bin:$PATH
 
 cd $BUILD_PATH_WINDOWS_32
-cmake $SRC_PATH
-cmake --build . -- -j1 -DCMAKE_TOOLCHAIN_FILE=${MXE_PATH}/usr/i686-w64-mingw32.static/share/cmake/mxe-conf.cmake || exit $?
+cmake $SRC_PATH -DCMAKE_TOOLCHAIN_FILE=${MXE_PATH}/usr/i686-w64-mingw32.shared/share/cmake/mxe-conf.cmake
+cmake --build . -- -j1 || exit $?
 
 # Deb 64
 cp $BUILD_PATH_UBUNTU_64/screenshotgun $BUILD_PATH_DEB_64/usr/bin/screenshotgun
