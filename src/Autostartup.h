@@ -1,10 +1,8 @@
-#ifndef AUTOSTARTUP_H
-#define AUTOSTARTUP_H
+#ifndef SCREENSHOTGUN_AUTOSTARTUP_H
+#define SCREENSHOTGUN_AUTOSTARTUP_H
 
-#include <QCoreApplication>
+class AutoStartup {
 
-class AutoStartup
-{
 public:
     void set(bool);
 
@@ -17,4 +15,4 @@ public:
 #endif
 };
 
-#endif // AUTOSTARTUP_H
+#endif // SCREENSHOTGUN_AUTOSTARTUP_H

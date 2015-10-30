@@ -7,36 +7,31 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 set(SOURCE_FILES
-    src/modes/abstractmode.cpp
-    src/modes/abstractmode.h
-    src/modes/arrowmode.cpp
-    src/modes/arrowmode.h
-    src/modes/linemode.cpp
-    src/modes/linemode.h
-    src/modes/rectmode.cpp
-    src/modes/rectmode.h
-    src/modes/visibleareamode.cpp
-    src/modes/visibleareamode.h
-    src/autostartup.cpp
-    src/autostartup.h
-    src/const.h
-    src/editorform.cpp
-    src/editorform.h
-    src/editorview.cpp
-    src/editorview.h
+    src/modes/AbstractMode.cpp
+    src/modes/AbstractMode.h
+    src/modes/ArrowMode.cpp
+    src/modes/ArrowMode.h
+    src/modes/LineMode.cpp
+    src/modes/LineMode.h
+    src/modes/RectMode.cpp
+    src/modes/RectMode.h
+    src/modes/VisibleAreaMode.cpp
+    src/modes/VisibleAreaMode.h
+    src/Autostartup.cpp
+    src/Autostartup.h
+    src/Toolbar.cpp
+    src/Toolbar.h
+    src/App.cpp
+    src/App.h
     src/main.cpp
-    src/newversion.cpp
-    src/newversion.h
-    src/server.cpp
-    src/server.h
-    src/settings.cpp
-    src/settings.h
-    src/settingsform.cpp
-    src/settingsform.h
-    src/trayicon.cpp
-    src/trayicon.h
-    src/updater.cpp
-    src/updater.h)
+    src/Server.cpp
+    src/Server.h
+    src/Settings.cpp
+    src/Settings.h
+    src/SettingsForm.cpp
+    src/SettingsForm.h
+    src/TrayIcon.cpp
+    src/TrayIcon.h src/AppView.cpp src/AppView.h)
 
 find_package(Qt5 COMPONENTS Widgets Network REQUIRED)
 
@@ -54,9 +49,9 @@ if(UNIX AND NOT APPLE)
 endif()
 
 qt5_wrap_ui(UIS_HDRS
-    ui/editorform.ui
-    ui/newversion.ui
-    ui/settings.ui)
+    ui/Toolbar.ui
+    ui/NewVersion.ui
+    ui/Settings.ui)
 
 if(UNIX AND NOT APPLE)
     add_executable(screenshotgun ${SOURCE_FILES} ${UIS_HDRS} resources/res.qrc)

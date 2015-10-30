@@ -1,21 +1,21 @@
-EditorForm #widget {
+Toolbar #widget {
     background: #0e0e0e;
     border-radius: 25px;
 }
 
-EditorForm QPushButton,
-EditorForm #selectedCircle {
+Toolbar QPushButton,
+Toolbar #selectedCircle {
     border-radius: 23px;
 }
 
-EditorForm QPushButton:hover {
+Toolbar QPushButton:hover {
     background: #df631d;
 }
 
-EditorForm #selectedCircle {
+Toolbar #selectedCircle {
     background: #53a495;
 }
 
-EditorForm QPushButton#okButton {
+Toolbar QPushButton#okButton {
     background: #fb0;
 }

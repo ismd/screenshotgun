@@ -1,28 +1,25 @@
 #include <QtCore/qmath.h>
-#include "arrowmode.h"
+#include "ArrowMode.h"
 
-ArrowMode::ArrowMode(QGraphicsScene *scene) : AbstractMode(scene)
-{
+ArrowMode::ArrowMode(QGraphicsScene& scene) : AbstractMode(scene) {
 }
 
-void ArrowMode::init(int x, int y)
-{
+void ArrowMode::init(int x, int y) {
     line = new QGraphicsLineItem(x, y, x, y);
-    line->setPen(*_pen);
+    line->setPen(pen);
 
     path = new QGraphicsPathItem();
-    QPen pathPen = QPen(*_pen);
+    QPen pathPen = QPen(pen);
     pathPen.setWidth(1);
 
     path->setPen(pathPen);
-    path->setBrush(QBrush(_pen->brush()));
+    path->setBrush(QBrush(pen.brush()));
 
-    _scene->addItem(line);
-    _scene->addItem(path);
+    scene_.addItem(line);
+    scene_.addItem(path);
 }
 
-void ArrowMode::move(int x, int y)
-{
+void ArrowMode::move(int x, int y) {
     QLineF l = line->line();
     l.setP2(QPointF(x, y));
 
@@ -49,7 +46,6 @@ void ArrowMode::move(int x, int y)
     path->setPath(painterPath);
 }
 
-void ArrowMode::stop(int x, int y)
-{
+void ArrowMode::stop(int x, int y) {
     move(x, y);
 }

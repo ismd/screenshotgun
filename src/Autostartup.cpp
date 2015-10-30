@@ -1,14 +1,14 @@
-#include <iostream>
+#include <QCoreApplication>
+#include <QDebug>
 #include <QDir>
 #include <QSettings>
 #include <QStandardPaths>
 #include <QTextStream>
-#include "autostartup.h"
+#include "Autostartup.h"
 
 static const char runPathC[] = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run";
 
-void AutoStartup::set(bool enabled)
-{
+void AutoStartup::set(bool enabled) {
 #ifdef Q_OS_WIN32
     setWindows(enabled);
 #endif
@@ -19,8 +19,7 @@ void AutoStartup::set(bool enabled)
 }
 
 #ifdef Q_OS_WIN32
-void AutoStartup::setWindows(bool enabled)
-{
+void AutoStartup::setWindows(bool enabled) {
     QString runPath = QLatin1String(runPathC);
     QSettings settings(runPath, QSettings::NativeFormat);
 
@@ -33,24 +32,23 @@ void AutoStartup::setWindows(bool enabled)
 #endif
 
 #ifdef Q_OS_LINUX
-void AutoStartup::setLinux(bool enabled)
-{
+void AutoStartup::setLinux(bool enabled) {
     QString autoStartPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
-            + QLatin1String("/autostart/");
+                            + QLatin1String("/autostart/");
 
     QString desktopFileLocation = autoStartPath
-            + "Screenshotgun"
-            + QLatin1String(".desktop");
+                                  + "Screenshotgun"
+                                  + QLatin1String(".desktop");
 
     if (enabled) {
         if (!QDir().exists(autoStartPath) && !QDir().mkpath(autoStartPath)) {
-            std::cerr << "Could not create autostart directory" << std::endl;
+            qDebug() << "Could not create autostart directory";
             return;
         }
 
         QFile iniFile(desktopFileLocation);
         if (!iniFile.open(QIODevice::WriteOnly)) {
-            std::cerr << "Could not write auto start entry" << desktopFileLocation.toStdString() << std::endl;
+            qDebug() << "Could not write auto start entry" << desktopFileLocation;
             return;
         }
 
@@ -69,7 +67,7 @@ void AutoStartup::setLinux(bool enabled)
             ;
     } else {
         if (QFile(desktopFileLocation).exists() && !QFile::remove(desktopFileLocation)) {
-            std::cerr << "Could not remove autostart desktop file" << std::endl;
+            qDebug() << "Could not remove autostart desktop file";
         }
     }
 }
