@@ -19,12 +19,18 @@ signals:
 private slots:
     void trayActivated(QSystemTrayIcon::ActivationReason);
     void makeScreenshotSlot();
+#if defined(Q_OS_WIN32)
+    void updateSlot();
+#endif
     void showSettings();
 
 private:
     App& app_;
     QMenu iconMenu_;
     QAction makeScreenshotAction_;
+#if defined(Q_OS_WIN32)
+    QAction updateAction_;
+#endif
     QAction settingsAction_;
     QAction quitAction_;
 };

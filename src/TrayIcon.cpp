@@ -1,10 +1,14 @@
 #include <QApplication>
+#include <QProcess>
 #include "App.h"
 #include "TrayIcon.h"
 
 TrayIcon::TrayIcon(App& app)
     : app_(app),
       makeScreenshotAction_("Сделать скриншот", this),
+#if defined(Q_OS_WIN32)
+      updateAction_("Обновить", this),
+#endif
       settingsAction_("Настройки", this),
       quitAction_("Выход", this) {
 
@@ -14,16 +18,21 @@ TrayIcon::TrayIcon(App& app)
     connect(&makeScreenshotAction_, SIGNAL(triggered()),
             this, SLOT(makeScreenshotSlot()));
 
+#if defined(Q_OS_WIN32)
+    connect(&updateAction_, SIGNAL(triggered()),
+            this, SLOT(updateSlot()));
+#endif
+
     connect(&settingsAction_, SIGNAL(triggered()),
             this, SLOT(showSettings()));
 
     connect(&quitAction_, SIGNAL(triggered()),
             qApp, SLOT(quit()));
 
-#ifdef Q_OS_WIN32
-    setIcon(QIcon(":/icons/icon-16.png"));
-#elif defined(Q_OS_LINUX)
+#if defined(Q_OS_LINUX)
     setIcon(QIcon(":/icons/icon-22.png"));
+#elif defined(Q_OS_WIN32)
+    setIcon(QIcon(":/icons/icon-16.png"));
 #endif
 
     setToolTip("Screenshotgun");
@@ -44,6 +53,12 @@ void TrayIcon::trayActivated(QSystemTrayIcon::ActivationReason reason) {
 void TrayIcon::makeScreenshotSlot() {
     emit makeScreenshot();
 }
+
+#if defined(Q_OS_WIN32)
+void TrayIcon::updateSlot() {
+    QProcess::startDetached(QApplication::applicationDirPath() + "/maintenancetool.exe --updater");
+}
+#endif
 
 void TrayIcon::showSettings() {
     app_.settingsForm().show();
