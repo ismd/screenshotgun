@@ -17,15 +17,16 @@ public:
     explicit SettingsForm(App&);
     ~SettingsForm();
 
-    bool valid() const;
-    void saveValues();
-    void setError(const QString&);
+    bool valid();
+    void error(const QString&);
     void show();
 
 private slots:
     void accept();
 
 private:
+    void saveValues();
+
     Ui::Settings* ui;
     App& app_;
     Settings settings;

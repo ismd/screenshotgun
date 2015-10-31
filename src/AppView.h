@@ -29,6 +29,7 @@ public:
     VisibleAreaMode& visibleAreaMode();
     void mode(ToolbarMode);
     void reinitVisibleArea();
+    void initShortcut();
 
 public slots:
     void makeScreenshot();

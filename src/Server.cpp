@@ -6,8 +6,6 @@
 #include "Server.h"
 
 Server::Server(QObject* parent) : QObject(parent) {
-    connect(&manager_, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(uploadedSlot(QNetworkReply*)));
 }
 
 void Server::setUrl(QString url) {
@@ -16,6 +14,8 @@ void Server::setUrl(QString url) {
     } else {
         url_ = "http://" + url;
     }
+
+    checkConnection();
 }
 
 void Server::upload(QByteArray bytes) {
@@ -32,6 +32,9 @@ void Server::upload(QByteArray bytes) {
     request.setUrl(QUrl(url_ + "/screen/upload"));
     request.setRawHeader("User-Agent", "Screenshotgun client");
 
+    connect(&manager_, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(uploadedSlot(QNetworkReply*)));
+
     reply_ = manager_.post(request, multiPart);
 
     reply_->setParent(&manager_);
@@ -39,8 +42,8 @@ void Server::upload(QByteArray bytes) {
 }
 
 void Server::uploadedSlot(QNetworkReply* reply) {
-//    disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
-//               this, SLOT(uploadedSlot(QNetworkReply*)));
+    disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
+               this, SLOT(uploadedSlot(QNetworkReply*)));
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
     reply->close();
@@ -54,4 +57,27 @@ void Server::uploadedSlot(QNetworkReply* reply) {
     }
 
     delete reply_;
+}
+
+void Server::connectionSlot(QNetworkReply* reply) {
+    disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
+               this, SLOT(connectionSlot(QNetworkReply*)));
+
+    if (QNetworkReply::NoError != reply->error()) {
+        qDebug() << reply->errorString();
+        emit(connectionError());
+        return;
+    }
+
+    emit(connectionSuccess());
+}
+
+bool Server::checkConnection() {
+    QNetworkRequest request(url_);
+    request.setRawHeader("User-Agent", "Screenshotgun client");
+
+    connect(&manager_, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(connectionSlot(QNetworkReply*)));
+
+    manager_.get(request);
 }

@@ -15,32 +15,19 @@ SettingsForm::~SettingsForm() {
     delete ui;
 }
 
-bool SettingsForm::valid() const {
+bool SettingsForm::valid() {
     QString serverUrl = ui->serverEdit->text();
     bool valid = serverUrl.length() > 0;
 
     if (valid) {
         app_.server().setUrl(serverUrl);
+        saveValues();
     }
 
     return valid;
 }
 
-void SettingsForm::saveValues() {
-    if (!valid()) {
-        return;
-    }
-
-    bool autoStartupValue = ui->autoStartupCheckBox->isChecked();
-
-    settings.autostartup(autoStartupValue);
-    settings.serverUrl(ui->serverEdit->text());
-
-    AutoStartup autoStartup;
-    autoStartup.set(autoStartupValue);
-}
-
-void SettingsForm::setError(const QString& message) {
+void SettingsForm::error(const QString& message) {
     ui->errorLabel->setText(message);
 
     if ("" != message) {
@@ -58,11 +45,19 @@ void SettingsForm::show() {
 }
 
 void SettingsForm::accept() {
-    ui->submitButtons->setEnabled(false);
+    error("");
 
-    if (valid()) {
-        saveValues();
-    } else {
+    if (!valid()) {
         ui->submitButtons->setEnabled(true);
     }
+}
+
+void SettingsForm::saveValues() {
+    bool autoStartupValue = ui->autoStartupCheckBox->isChecked();
+
+    settings.autostartup(autoStartupValue);
+    settings.serverUrl(ui->serverEdit->text());
+
+    AutoStartup autoStartup;
+    autoStartup.set(autoStartupValue);
 }

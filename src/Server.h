@@ -13,13 +13,18 @@ public:
     void upload(QByteArray);
 
 signals:
+    void connectionSuccess();
+    void connectionError();
     void uploadSuccess(QString);
     void uploadError();
 
 private slots:
     void uploadedSlot(QNetworkReply*);
+    void connectionSlot(QNetworkReply*);
 
 private:
+    bool checkConnection();
+
     QString url_;
     QNetworkAccessManager manager_;
     QNetworkReply* reply_;

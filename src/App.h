@@ -18,6 +18,8 @@ public:
 
 private slots:
     void makeScreenshot();
+    void connectionSuccess();
+    void connectionError();
     void uploadSuccess(QString);
     void uploadError();
 

@@ -20,15 +20,6 @@ AppView::AppView(App& app)
 
     reinitVisibleArea();
     setScene(&scene_);
-
-#if defined(Q_OS_LINUX)
-    shortcut_.setShortcut(QKeySequence(tr("Alt+Print")));
-
-    connect(&shortcut_, SIGNAL(activated()),
-            this, SLOT(makeScreenshot()));
-#elif defined(Q_OS_WIN32)
-    RegisterHotKey((HWND)winId(), 100, MOD_ALT, VK_SNAPSHOT);
-#endif
 }
 
 AppView::~AppView() {
@@ -101,6 +92,19 @@ void AppView::reinitVisibleArea() {
 
     toolbar_.select(ToolbarMode::VISIBLE_AREA);
 }
+
+#if defined(Q_OS_LINUX)
+void AppView::initShortcut() {
+    shortcut_.setShortcut(QKeySequence(tr("Alt+Print")));
+
+    connect(&shortcut_, SIGNAL(activated()),
+            this, SLOT(makeScreenshot()));
+}
+#elif defined(Q_OS_WIN32)
+void AppView::initShortcut() {
+    RegisterHotKey((HWND)winId(), 100, MOD_ALT, VK_SNAPSHOT);
+}
+#endif
 
 void AppView::mousePressEvent(QMouseEvent* e) {
     currentMode_->init(e->x(), e->y());
