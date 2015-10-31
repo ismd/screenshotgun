@@ -72,6 +72,7 @@ reprepro includedeb trusty $DEB_64_FILENAME
 mv $PPA_PATH/$DEB_64_FILENAME $DIST_PATH/$DEB_64_FILENAME
 
 # Arch
+cd $ARCH_PATH
 ARCH_VERSION=$(echo $VERSION | sed -e "s/-/_/g")
 sed -i "s/pkgver = .*/pkgver = $ARCH_VERSION/g" $ARCH_PATH/.SRCINFO
 sed -i "s/pkgver=.*/pkgver=$ARCH_VERSION/g" $ARCH_PATH/PKGBUILD
