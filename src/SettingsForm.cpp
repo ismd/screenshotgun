@@ -40,6 +40,10 @@ void SettingsForm::error(const QString& message) {
 }
 
 void SettingsForm::show() {
+    if ("" == ui->serverEdit->text()) {
+        ui->serverEdit->setText("screenshotgun.com");
+    }
+
     ui->submitButtons->setEnabled(true);
     QDialog::show();
 }
