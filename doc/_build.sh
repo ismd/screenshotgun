@@ -75,7 +75,7 @@ mv $PPA_PATH/$DEB_64_FILENAME $DIST_PATH/$DEB_64_FILENAME
 # Qt installer
 cp $BUILD_PATH_WINDOWS_32/screenshotgun.exe $SRC_PATH/installer/packages/screenshotgun/data/screenshotgun.exe
 sed -i "s/<Version>.*<\/Version>/<Version>$VERSION-$VERSION_DATE<\/Version>/g" $SRC_PATH/installer/packages/screenshotgun/meta/package.xml
-sed -i "s/<ReleaseDate>.*<\/ReleaseDate>/<ReleaseDate>$DATE<\/ReleaseDate>/g" $SRC_PATH/installer/packages/screenshotgun/meta/package.xml
+sed -i "s/<ReleaseDate>.*<\/ReleaseDate>/<ReleaseDate>$VERSION_DATE<\/ReleaseDate>/g" $SRC_PATH/installer/packages/screenshotgun/meta/package.xml
 repogen --update-new-components -p $SRC_PATH/installer/packages $DIST_PATH/installer-repository
 
 echo -e "\n*** Success ***"
