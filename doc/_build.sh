@@ -7,18 +7,18 @@ fi
 SRC_PATH=/home/ismd/src/screenshotgun
 VERSION=$1
 
-BUILD_PATH_UBUNTU_64=/home/ismd/build/screenshotgun-ubuntu-64
+BUILD_PATH_LINUX_64=/home/ismd/build/screenshotgun-linux-64
 BUILD_PATH_WINDOWS_32=/home/ismd/build/screenshotgun-windows-32
 BUILD_PATH_DEB_64=/home/ismd/build/deb-64
 
 DIST_PATH=/srv/screenshotgun.com/public/dist
 PPA_PATH=/home/ismd/repos/ppa
-
+ARCH_PATH=/home/ismd/src/screenshotgun-aur
 DEB_64_FILENAME=screenshotgun_amd64.deb
 
-rm -rf $BUILD_PATH_UBUNTU_64
+rm -rf $BUILD_PATH_LINUX_64
 rm -rf $BUILD_PATH_WINDOWS_32
-mkdir $BUILD_PATH_UBUNTU_64
+mkdir $BUILD_PATH_LINUX_64
 mkdir $BUILD_PATH_WINDOWS_32
 
 echo "*** Updating working copy ***"
@@ -30,10 +30,10 @@ if [[ $(git status -s | wc -l) -eq 0 ]]; then
   #exit 228
 fi
 
-# Compiling for ubuntu 64
-echo -e "\n*** Compiling for ubuntu 64 ***"
+# Compiling for linux 64
+echo -e "\n*** Compiling for linux 64 ***"
 
-cd $BUILD_PATH_UBUNTU_64
+cd $BUILD_PATH_LINUX_64
 cmake $SRC_PATH
 cmake --build . || exit $?
 strip screenshotgun
@@ -49,7 +49,7 @@ cmake $SRC_PATH -DCMAKE_TOOLCHAIN_FILE=${MXE_PATH}/usr/i686-w64-mingw32.shared/s
 cmake --build . -- -j1 || exit $?
 
 # Deb 64
-cp $BUILD_PATH_UBUNTU_64/screenshotgun $BUILD_PATH_DEB_64/usr/bin/screenshotgun
+cp $BUILD_PATH_LINUX_64/screenshotgun $BUILD_PATH_DEB_64/usr/bin/screenshotgun
 cd $BUILD_PATH_DEB_64
 sed -i "s/Version: .*/Version: $VERSION/g" DEBIAN/control
 
@@ -70,6 +70,13 @@ reprepro remove trusty screenshotgun
 reprepro includedeb trusty $DEB_64_FILENAME
 
 mv $PPA_PATH/$DEB_64_FILENAME $DIST_PATH/$DEB_64_FILENAME
+
+# Arch
+ARCH_VERSION=$(echo $VERSION | sed -e "s/-/_/g")
+sed -i "s/pkgver = .*/pkgver = $ARCH_VERSION/g" $ARCH_PATH/.SRCINFO
+sed -i "s/pkgver=.*/pkgver=$ARCH_VERSION/g" $ARCH_PATH/PKGBUILD
+git commit -a -m "Version $ARCH_VERSION"
+git push
 
 # Qt installer
 cp $BUILD_PATH_WINDOWS_32/screenshotgun.exe $SRC_PATH/installer/packages/screenshotgun/data/screenshotgun.exe
