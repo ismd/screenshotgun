@@ -26,7 +26,7 @@ cd $SRC_PATH
 git pull
 
 if [[ $(git status -s | wc -l) -eq 0 ]]; then
-  echo -e "\n*** No changes ***"
+  echo "*** No changes ***"
   #exit 228
 fi
 

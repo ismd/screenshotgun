@@ -38,6 +38,9 @@ TrayIcon::TrayIcon(App& app)
     setToolTip("Screenshotgun");
 
     iconMenu_.addAction(&makeScreenshotAction_);
+#if defined(Q_OS_WIN32)
+    iconMenu_.addAction(&updateAction_);
+#endif
     iconMenu_.addAction(&settingsAction_);
     iconMenu_.addAction(&quitAction_);
 
