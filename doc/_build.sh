@@ -69,8 +69,13 @@ cd $PPA_PATH
 reprepro remove trusty screenshotgun
 reprepro includedeb trusty $DEB_64_FILENAME
 
-# Copying new versions
 mv $PPA_PATH/$DEB_64_FILENAME $DIST_PATH/$DEB_64_FILENAME
-cp $BUILD_PATH_WINDOWS_32/release/screenshotgun.exe $DIST_PATH/screenshotgun.exe
+
+# Qt installer
+cp $BUILD_PATH_WINDOWS_32/release/screenshotgun.exe $SRC_PATH/installer/packages/screenshotgun/data/screenshotgun.exe
+sed -i "s/<Version>.*<\/Version>/<Version>$VERSION<\/Version>/g" $SRC_PATH/installer/packages/screenshotgun/meta/package.xml
+DATE=`date +%F`
+sed -i "s/<ReleaseDate>.*<\/ReleaseDate>/<ReleaseDate>$DATE<\/ReleaseDate>/g" $SRC_PATH/installer/packages/screenshotgun/meta/package.xml
+repogen --update-new-components -p $SRC_PATH/installer/packages $DIST_PATH/installer-repository
 
 echo -e "\n*** Success ***"

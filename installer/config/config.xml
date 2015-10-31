@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Installer>
     <Name>Screenshotgun</Name>
-    <Version>0.1.0</Version>
+    <Version>0.11</Version>
     <Publisher>Vladimir Kosteley</Publisher>
     <ProductUrl>http://screenshotgun.com</ProductUrl>
     <InstallerWindowIcon>screenshotgun</InstallerWindowIcon>
