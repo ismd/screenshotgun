@@ -3,12 +3,12 @@
 #include "SettingsForm.h"
 #include "ui_Settings.h"
 
-SettingsForm::SettingsForm(App& app) : ui(new Ui::Settings), app_(app) {
+SettingsForm::SettingsForm(App& app) : ui(new Ui::Settings), app_(app), settings_(app_.settings()) {
     ui->setupUi(this);
     ui->errorLabel->setVisible(false);
 
-    ui->autoStartupCheckBox->setChecked(settings.autostartup());
-    ui->serverEdit->setText(settings.serverUrl());
+    ui->autoStartupCheckBox->setChecked(settings_.autostartup());
+    ui->serverEdit->setText(settings_.serverUrl());
 }
 
 SettingsForm::~SettingsForm() {
@@ -59,8 +59,8 @@ void SettingsForm::accept() {
 void SettingsForm::saveValues() {
     bool autoStartupValue = ui->autoStartupCheckBox->isChecked();
 
-    settings.autostartup(autoStartupValue);
-    settings.serverUrl(ui->serverEdit->text());
+    settings_.autostartup(autoStartupValue);
+    settings_.serverUrl(ui->serverEdit->text());
 
     AutoStartup autoStartup;
     autoStartup.set(autoStartupValue);

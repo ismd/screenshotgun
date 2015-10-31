@@ -29,7 +29,7 @@ private:
 
     Ui::Settings* ui;
     App& app_;
-    Settings settings;
+    Settings& settings_;
 };
 
 #endif // SCREENSHOTGUN_SETTINGSFORM_H

@@ -30,6 +30,10 @@ Server& App::server() {
     return server_;
 }
 
+Settings& App::settings() {
+    return settings_;
+}
+
 void App::makeScreenshot() {
     appView_.makeScreenshot();
 }

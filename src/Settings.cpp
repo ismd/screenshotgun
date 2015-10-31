@@ -20,5 +20,5 @@ void Settings::autostartup(bool value) {
 }
 
 void Settings::serverUrl(const QString& value) {
-    settings_.setValue("server/url_", value);
+    settings_.setValue("server/url", value);
 }

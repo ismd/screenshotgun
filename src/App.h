@@ -15,6 +15,7 @@ public:
 
     SettingsForm& settingsForm();
     Server& server();
+    Settings& settings();
 
 private slots:
     void makeScreenshot();
@@ -28,6 +29,7 @@ private:
     TrayIcon trayIcon_;
     SettingsForm settingsForm_;
     Server server_;
+    Settings settings_;
 };
 
 #endif // SCREENSHOTGUN_APP_H
