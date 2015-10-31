@@ -25,10 +25,10 @@ echo "*** Updating working copy ***"
 cd $SRC_PATH
 git pull
 
-if [[ $(git status -s | wc -l) -eq 0 ]]; then
-  echo "*** No changes ***"
-  #exit 228
-fi
+#if [[ $(git status -s | wc -l) -eq 0 ]]; then
+#  echo "*** No changes ***"
+#  exit 228
+#fi
 
 # Compiling for linux 64
 echo -e "\n*** Compiling for linux 64 ***"
