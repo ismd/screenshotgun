@@ -49,6 +49,8 @@ cmake $SRC_PATH -DCMAKE_TOOLCHAIN_FILE=${MXE_PATH}/usr/i686-w64-mingw32.shared/s
 cmake --build . -- -j1 || exit $?
 
 # Deb 64
+echo -e "\n*** Making deb 64 ***"
+
 cp $BUILD_PATH_LINUX_64/screenshotgun $BUILD_PATH_DEB_64/usr/bin/screenshotgun
 cd $BUILD_PATH_DEB_64
 sed -i "s/Version: .*/Version: $VERSION/g" DEBIAN/control
@@ -65,6 +67,8 @@ fakeroot dpkg-deb --build deb-64
 cp deb-64.deb $PPA_PATH/$DEB_64_FILENAME
 
 # PPA
+echo -e "\n*** PPA ***"
+
 cd $PPA_PATH
 reprepro remove trusty screenshotgun
 reprepro includedeb trusty $DEB_64_FILENAME
@@ -72,6 +76,8 @@ reprepro includedeb trusty $DEB_64_FILENAME
 mv $PPA_PATH/$DEB_64_FILENAME $DIST_PATH/$DEB_64_FILENAME
 
 # Arch
+echo -e "\n*** Arch AUR ***"
+
 cd $ARCH_PATH
 ARCH_VERSION=$(echo $VERSION | sed -e "s/-/_/g")
 sed -i "s/pkgver = .*/pkgver = $ARCH_VERSION/g" $ARCH_PATH/.SRCINFO
@@ -80,6 +86,8 @@ git commit -a -m "Version $ARCH_VERSION"
 git push
 
 # Qt installer
+echo -e "\n*** Qt installer ***"
+
 cp $BUILD_PATH_WINDOWS_32/screenshotgun.exe $SRC_PATH/installer/packages/screenshotgun/data/screenshotgun.exe
 sed -i "s/<Version>.*<\/Version>/<Version>$VERSION<\/Version>/g" $SRC_PATH/installer/packages/screenshotgun/meta/package.xml
 CURRENT_DATE=`date +%F`
