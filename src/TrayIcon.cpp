@@ -59,7 +59,7 @@ void TrayIcon::makeScreenshotSlot() {
 
 #if defined(Q_OS_WIN32)
 void TrayIcon::updateSlot() {
-    QProcess::startDetached(QApplication::applicationDirPath() + "/maintenancetool.exe --updater");
+    QProcess::startDetached(QApplication::applicationDirPath() + "\\maintenancetool.exe --updater");
 }
 #endif
 
