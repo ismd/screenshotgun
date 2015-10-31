@@ -6,7 +6,6 @@ fi
 
 SRC_PATH=/home/ismd/src/screenshotgun
 VERSION=$1
-VERSION_DATE=`date +%F`
 
 BUILD_PATH_UBUNTU_64=/home/ismd/build/screenshotgun-ubuntu-64
 BUILD_PATH_WINDOWS_32=/home/ismd/build/screenshotgun-windows-32
@@ -52,7 +51,7 @@ cmake --build . -- -j1 || exit $?
 # Deb 64
 cp $BUILD_PATH_UBUNTU_64/screenshotgun $BUILD_PATH_DEB_64/usr/bin/screenshotgun
 cd $BUILD_PATH_DEB_64
-sed -i "s/Version: .*/Version: $VERSION-$VERSION_DATE/g" DEBIAN/control
+sed -i "s/Version: .*/Version: $VERSION/g" DEBIAN/control
 
 SIZE_DEB_64=`du -s usr | sed -s 's/\(.*\)\s.*/\1/'`
 sed -i "s/Installed-Size: .*/Installed-Size: $SIZE_DEB_64/g" DEBIAN/control
@@ -74,8 +73,9 @@ mv $PPA_PATH/$DEB_64_FILENAME $DIST_PATH/$DEB_64_FILENAME
 
 # Qt installer
 cp $BUILD_PATH_WINDOWS_32/screenshotgun.exe $SRC_PATH/installer/packages/screenshotgun/data/screenshotgun.exe
-sed -i "s/<Version>.*<\/Version>/<Version>$VERSION-$VERSION_DATE<\/Version>/g" $SRC_PATH/installer/packages/screenshotgun/meta/package.xml
-sed -i "s/<ReleaseDate>.*<\/ReleaseDate>/<ReleaseDate>$VERSION_DATE<\/ReleaseDate>/g" $SRC_PATH/installer/packages/screenshotgun/meta/package.xml
+sed -i "s/<Version>.*<\/Version>/<Version>$VERSION<\/Version>/g" $SRC_PATH/installer/packages/screenshotgun/meta/package.xml
+CURRENT_DATE=`date +%F`
+sed -i "s/<ReleaseDate>.*<\/ReleaseDate>/<ReleaseDate>$CURRENT_DATE<\/ReleaseDate>/g" $SRC_PATH/installer/packages/screenshotgun/meta/package.xml
 repogen --update-new-components -p $SRC_PATH/installer/packages $DIST_PATH/installer-repository
 
 echo -e "\n*** Success ***"
