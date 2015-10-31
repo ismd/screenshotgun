@@ -28,7 +28,7 @@ git pull
 
 if [[ $(git status -s | wc -l) -eq 0 ]]; then
   echo -e "\n*** No changes ***"
-  exit 228
+  #exit 228
 fi
 
 # Compiling for ubuntu 64
