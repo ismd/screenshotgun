@@ -3,16 +3,18 @@
 #include "SettingsForm.h"
 #include "ui_Settings.h"
 
-SettingsForm::SettingsForm(App& app) : ui(new Ui::Settings), app_(app), settings_(app_.settings()) {
+SettingsForm::SettingsForm(App& app) : ui(new Ui::Settings), app_(app), settings_(app.settings()) {
     ui->setupUi(this);
     ui->errorLabel->setVisible(false);
-
-    ui->autoStartupCheckBox->setChecked(settings_.autostartup());
-    ui->serverEdit->setText(settings_.serverUrl());
 }
 
 SettingsForm::~SettingsForm() {
     delete ui;
+}
+
+void SettingsForm::init() {
+    ui->autoStartupCheckBox->setChecked(settings_.autostartup());
+    ui->serverEdit->setText(settings_.serverUrl());
 }
 
 bool SettingsForm::valid() {

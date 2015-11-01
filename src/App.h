@@ -27,9 +27,9 @@ private slots:
 private:
     AppView appView_;
     TrayIcon trayIcon_;
+    Settings settings_;
     SettingsForm settingsForm_;
     Server server_;
-    Settings settings_;
 };
 
 #endif // SCREENSHOTGUN_APP_H

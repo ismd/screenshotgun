@@ -3,10 +3,6 @@
 Settings::Settings() : settings_("screenshotgun") {
 }
 
-bool Settings::exists() const {
-    return settings_.contains("common/autostartup");
-}
-
 bool Settings::autostartup() const {
     return settings_.value("common/autostartup", false).toBool();
 }

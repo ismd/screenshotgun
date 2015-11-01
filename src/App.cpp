@@ -15,6 +15,7 @@ App::App() : appView_(*this), trayIcon_(*this), settingsForm_(*this) {
     connect(&server_, SIGNAL(uploadError()),
             this, SLOT(uploadError()));
 
+    settingsForm_.init();
     if (!settingsForm_.valid()) {
         settingsForm_.show();
     }

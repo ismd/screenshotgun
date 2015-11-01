@@ -7,8 +7,6 @@ class Settings {
 public:
     Settings();
 
-    bool exists() const;
-
     bool autostartup() const;
     QString serverUrl() const;
 

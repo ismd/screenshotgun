@@ -2,7 +2,6 @@
 #define SCREENSHOTGUN_SETTINGSFORM_H
 
 #include <QDialog>
-#include "Settings.h"
 
 class App;
 
@@ -17,6 +16,7 @@ public:
     explicit SettingsForm(App&);
     ~SettingsForm();
 
+    void init();
     bool valid();
     void error(const QString&);
     void show();
