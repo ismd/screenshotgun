@@ -162,7 +162,12 @@ void Toolbar::on_okButton_clicked() {
     appView_.app().server().upload(bytes);
 }
 
-void Toolbar::setSelected(QPushButton* button) {
+void Toolbar::show() {
+    setSelected(ui->arrowButton, false);
+    QWidget::show();
+}
+
+void Toolbar::setSelected(QPushButton* const button, bool animate) {
     selected_ = button;
 
     if (button == ui->visibleAreaButton) {
@@ -180,8 +185,8 @@ void Toolbar::setSelected(QPushButton* button) {
     int width = ui->selectedCircle->width();
     int height = ui->selectedCircle->height();
 
-    QPropertyAnimation *animation = new QPropertyAnimation(ui->selectedCircle, "geometry");
-    animation->setDuration(500);
+    QPropertyAnimation* animation = new QPropertyAnimation(ui->selectedCircle, "geometry");
+    animation->setDuration(animate ? 500 : 0);
     animation->setStartValue(QRect(x, y, width, height));
     animation->setEndValue(QRect(x, button->y(), width, height));
 

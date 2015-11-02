@@ -30,6 +30,7 @@ public:
     void select(ToolbarMode);
     void setSelectedNext();
     void setSelectedPrevious();
+    void show();
 
 protected:
     void mousePressEvent(QMouseEvent*);
@@ -44,7 +45,7 @@ private slots:
     void on_okButton_clicked();
 
 private:
-    void setSelected(QPushButton*);
+    void setSelected(QPushButton* const, bool animate = true);
 
     Ui::Toolbar* ui;
     AppView& appView_;
