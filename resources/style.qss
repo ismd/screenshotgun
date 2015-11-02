@@ -1,6 +1,7 @@
 Toolbar #widget {
     background: #0e0e0e;
     border-radius: 25px;
+    background-color: rgba(0, 0, 0, .8);
 }
 
 Toolbar QPushButton,
