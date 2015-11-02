@@ -2,12 +2,9 @@
 #define SCREENSHOTGUN_SETTINGSFORM_H
 
 #include <QDialog>
+#include "ui_Settings.h"
 
 class App;
-
-namespace Ui {
-    class Settings;
-}
 
 class SettingsForm : public QDialog {
     Q_OBJECT

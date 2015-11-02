@@ -10,7 +10,7 @@
 #include "Toolbar.h"
 
 #if defined(Q_OS_LINUX)
-    #include "qxtglobalshortcut.h"
+    #include "qxt/qxtglobalshortcut.h"
 #elif defined(Q_OS_WIN32)
     #include <windows.h>
 #endif

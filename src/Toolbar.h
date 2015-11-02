@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <QWidget>
 #include "Server.h"
+#include "ui_Toolbar.h"
 
 class AppView;
 
@@ -13,10 +14,6 @@ enum class ToolbarMode {
     ARROW,
     RECT
 };
-
-namespace Ui {
-    class Toolbar;
-}
 
 class Toolbar : public QWidget {
     Q_OBJECT

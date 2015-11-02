@@ -41,11 +41,11 @@ if(UNIX AND NOT APPLE)
     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
     list(APPEND SOURCE_FILES
-        src/qxtglobal.h
-        src/qxtglobalshortcut.h
-        src/qxtglobalshortcut_p.h
-        src/qxtglobalshortcut.cpp
-        src/qxtglobalshortcut_x11.cpp)
+        src/qxt/qxtglobal.h
+        src/qxt/qxtglobalshortcut.h
+        src/qxt/qxtglobalshortcut_p.h
+        src/qxt/qxtglobalshortcut.cpp
+        src/qxt/qxtglobalshortcut_x11.cpp)
 endif()
 
 qt5_wrap_ui(UIS_HDRS
