@@ -14,11 +14,14 @@ Toolbar::Toolbar(AppView& appView)
 
     appView_.setMouseTracking(true);
 
-    setSelected(ui->visibleAreaButton);
     buttons_.append(ui->visibleAreaButton);
     buttons_.append(ui->rectButton);
     buttons_.append(ui->lineButton);
     buttons_.append(ui->arrowButton);
+
+    animation_.setTargetObject(ui->selectedCircle);
+    animation_.setPropertyName("geometry");
+    setSelected(ui->visibleAreaButton);
 }
 
 Toolbar::~Toolbar() {
@@ -184,10 +187,8 @@ void Toolbar::setSelected(QPushButton* const button, bool animate) {
     int width = ui->selectedCircle->width();
     int height = ui->selectedCircle->height();
 
-    QPropertyAnimation* animation = new QPropertyAnimation(ui->selectedCircle, "geometry");
-    animation->setDuration(animate ? 500 : 0);
-    animation->setStartValue(QRect(x, y, width, height));
-    animation->setEndValue(QRect(x, button->y(), width, height));
+    animation_.setDuration(animate ? 500 : 0);
+    animation_.setEndValue(QRect(x, button->y(), width, height));
 
-    animation->start();
+    animation_.start();
 }

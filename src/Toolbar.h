@@ -53,6 +53,7 @@ private:
         int x;
         int y;
     } initDragCoords_;
+    QPropertyAnimation animation_;
 };
 
 #endif // SCREENSHOTGUN_TOOLBAR_H
