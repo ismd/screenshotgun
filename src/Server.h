@@ -23,7 +23,7 @@ private slots:
     void connectionSlot(QNetworkReply*);
 
 private:
-    bool checkConnection();
+    void checkConnection();
 
     QString url_;
     QNetworkAccessManager manager_;

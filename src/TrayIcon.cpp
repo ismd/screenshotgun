@@ -1,13 +1,14 @@
 #include <QApplication>
 #include <QMessageBox>
-#include <QProcess>
 #include "App.h"
 #include "TrayIcon.h"
 
 TrayIcon::TrayIcon(App& app)
     : app_(app),
       makeScreenshotAction_("Сделать скриншот", this),
+#if defined(Q_OS_WIN32)
       updateAction_("Обновить", this),
+#endif
       settingsAction_("Настройки", this),
       quitAction_("Выход", this) {
 
@@ -17,8 +18,10 @@ TrayIcon::TrayIcon(App& app)
     connect(&makeScreenshotAction_, SIGNAL(triggered()),
             this, SLOT(makeScreenshotSlot()));
 
+#if defined(Q_OS_WIN32)
     connect(&updateAction_, SIGNAL(triggered()),
             this, SLOT(updateSlot()));
+#endif
 
     connect(&settingsAction_, SIGNAL(triggered()),
             this, SLOT(showSettings()));
@@ -55,13 +58,23 @@ void TrayIcon::makeScreenshotSlot() {
 }
 
 void TrayIcon::updateSlot() {
-    bool result = QProcess::startDetached("maintenancetool.exe --updater");
+#if defined(Q_OS_WIN32)
+    disconnect(&app_.updater(), SIGNAL(noUpdate()),
+            this, SLOT(noUpdate()));
+    connect(&app_.updater(), SIGNAL(noUpdate()),
+            this, SLOT(noUpdate()));
 
-    if (!result) {
-        QMessageBox::critical(NULL,
-                              "Не удалось запустить maintenancetool.exe",
-                              "Скачайте инсталлятор с сайта http://screenshotgun.com и переустановите приложение.");
-    }
+    app_.updater().check();
+#endif
+}
+
+void TrayIcon::noUpdate() {
+#if defined(Q_OS_WIN32)
+    showMessage("",
+                "Нет доступных обновлений",
+                QSystemTrayIcon::Information,
+                3000);
+#endif
 }
 
 void TrayIcon::showSettings() {

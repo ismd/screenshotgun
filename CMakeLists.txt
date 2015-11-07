@@ -31,7 +31,11 @@ set(SOURCE_FILES
     src/SettingsForm.cpp
     src/SettingsForm.h
     src/TrayIcon.cpp
-    src/TrayIcon.h src/AppView.cpp src/AppView.h)
+    src/TrayIcon.h
+    src/AppView.cpp
+    src/AppView.h
+    src/Updater_win.cpp
+    src/Updater_win.h)
 
 find_package(Qt5 COMPONENTS Widgets Network REQUIRED)
 
@@ -50,7 +54,7 @@ endif()
 
 qt5_wrap_ui(UIS_HDRS
     ui/Toolbar.ui
-    ui/NewVersion.ui
+    ui/Update.ui
     ui/Settings.ui)
 
 if(UNIX AND NOT APPLE)

@@ -72,7 +72,7 @@ void Server::connectionSlot(QNetworkReply* reply) {
     emit(connectionSuccess());
 }
 
-bool Server::checkConnection() {
+void Server::checkConnection() {
     QNetworkRequest request(url_);
     request.setRawHeader("User-Agent", "Screenshotgun client");
 

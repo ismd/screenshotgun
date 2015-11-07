@@ -7,6 +7,10 @@
 #include "SettingsForm.h"
 #include "TrayIcon.h"
 
+#if defined(Q_OS_WIN32)
+#include "Updater_win.h"
+#endif
+
 class App : public QObject {
     Q_OBJECT
 
@@ -16,6 +20,9 @@ public:
     SettingsForm& settingsForm();
     Server& server();
     Settings& settings();
+#if defined(Q_OS_WIN32)
+    Updater& updater();
+#endif
 
 private slots:
     void makeScreenshot();
@@ -30,6 +37,9 @@ private:
     Settings settings_;
     SettingsForm settingsForm_;
     Server server_;
+#if defined(Q_OS_WIN32)
+    Updater updater_;
+#endif
 };
 
 #endif // SCREENSHOTGUN_APP_H

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>NewVersion</class>
- <widget class="QDialog" name="NewVersion">
+ <class>Update</class>
+ <widget class="QDialog" name="Update">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>444</width>
-    <height>103</height>
+    <width>367</width>
+    <height>107</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>50</y>
+     <x>160</x>
+     <y>60</y>
      <width>176</width>
      <height>29</height>
     </rect>
@@ -34,12 +34,12 @@
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>398</width>
+     <width>341</width>
      <height>19</height>
     </rect>
    </property>
    <property name="text">
-    <string>Доступна новая версия. Запустить обновление?</string>
+    <string>Доступна версия {VERSION}</string>
    </property>
   </widget>
  </widget>
@@ -48,7 +48,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>NewVersion</receiver>
+   <receiver>Update</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -64,7 +64,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>NewVersion</receiver>
+   <receiver>Update</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

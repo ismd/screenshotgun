@@ -21,6 +21,10 @@ App::App() : appView_(*this), trayIcon_(*this), settingsForm_(*this) {
     }
 
     trayIcon_.show();
+
+#if defined(Q_OS_WIN32)
+    updater_.check();
+#endif
 }
 
 SettingsForm& App::settingsForm() {
@@ -34,6 +38,12 @@ Server& App::server() {
 Settings& App::settings() {
     return settings_;
 }
+
+#if defined(Q_OS_WIN32)
+Updater& App::updater() {
+    return updater_;
+}
+#endif
 
 void App::makeScreenshot() {
     appView_.makeScreenshot();
@@ -56,15 +66,15 @@ void App::uploadSuccess(QString url) {
     QClipboard* clipboard = QApplication::clipboard();
     clipboard->setText(url);
 
-    trayIcon_.showMessage("Link copied to clipboard",
+    trayIcon_.showMessage("Ссылка скопирована в буфер обмена",
                           url,
                           QSystemTrayIcon::Information,
                           3000);
 }
 
 void App::uploadError() {
-    trayIcon_.showMessage("Error while uploading screenshot",
-                          "Check your server logs",
+    trayIcon_.showMessage("Ошибка во время загрузки скриншота",
+                          "Обратитесь к разработчику и проверьте логи на сервере",
                           QSystemTrayIcon::Critical,
                           10000);
 }
