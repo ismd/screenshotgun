@@ -13,9 +13,9 @@ public:
     ~Updater();
 
     void check();
-    void update();
 
 signals:
+    void updateAvailable(QString);
     void noUpdate();
 
 private slots:

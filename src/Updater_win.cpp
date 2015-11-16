@@ -1,6 +1,5 @@
 #include <QDialogButtonBox>
 #include <QMessageBox>
-#include <QRegExp>
 #include "App.h"
 #include "Updater_win.h"
 
@@ -29,8 +28,9 @@ void Updater::checkUpdates() {
     rx.setMinimal(true);
 
     if (-1 != rx.indexIn(output)) {
-        ui->label->setText("Доступна версия " + rx.cap(1));
-        show();
+        QString version = rx.cap(1);
+        emit updateAvailable(version);
+        ui->label->setText("Доступна версия " + version);
     } else {
         emit noUpdate();
     }

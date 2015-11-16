@@ -23,6 +23,9 @@ App::App() : appView_(*this), trayIcon_(*this), settingsForm_(*this) {
     trayIcon_.show();
 
 #if defined(Q_OS_WIN32)
+    connect(&updater_, SIGNAL(updateAvailable(QString)),
+            this, SLOT(updateAvailable(const QString&)));
+
     updater_.check();
 #endif
 }
@@ -62,7 +65,7 @@ void App::connectionError() {
     settingsForm_.show();
 }
 
-void App::uploadSuccess(QString url) {
+void App::uploadSuccess(const QString& url) {
     QClipboard* clipboard = QApplication::clipboard();
     clipboard->setText(url);
 
@@ -73,8 +76,12 @@ void App::uploadSuccess(QString url) {
 }
 
 void App::uploadError() {
-    trayIcon_.showMessage("Ошибка во время загрузки скриншота",
-                          "Обратитесь к разработчику и проверьте логи на сервере",
-                          QSystemTrayIcon::Critical,
-                          10000);
+    trayIcon_.showError("Ошибка во время загрузки скриншота",
+                        "Обратитесь к разработчику и проверьте логи на сервере");
+}
+
+void App::updateAvailable(const QString& version) {
+#if defined(Q_OS_WIN32)
+    trayIcon_.showNewVersionAvailable(version);
+#endif
 }

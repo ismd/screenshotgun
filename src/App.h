@@ -28,8 +28,9 @@ private slots:
     void makeScreenshot();
     void connectionSuccess();
     void connectionError();
-    void uploadSuccess(QString);
+    void uploadSuccess(const QString&);
     void uploadError();
+    void updateAvailable(const QString&);
 
 private:
     AppView appView_;
