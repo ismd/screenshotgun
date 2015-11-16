@@ -165,7 +165,26 @@ void Toolbar::on_okButton_clicked() {
 }
 
 void Toolbar::show() {
-    setSelected(ui->arrowButton, false);
+    ToolbarMode lastTool = appView_.app().settings().lastTool();
+
+    switch (lastTool) {
+        case ToolbarMode::LINE:
+            setSelected(ui->lineButton, false);
+            break;
+
+        case ToolbarMode::ARROW:
+            setSelected(ui->arrowButton, false);
+            break;
+
+        case ToolbarMode::RECT:
+            setSelected(ui->rectButton, false);
+            break;
+
+        default:
+            setSelected(ui->arrowButton, false);
+            break;
+    }
+
     QWidget::show();
 }
 

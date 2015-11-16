@@ -2,6 +2,7 @@
 #define SCREENSHOTGUN_SETTINGS_H
 
 #include <QSettings>
+#include "Toolbar.h"
 
 class Settings {
 public:
@@ -9,9 +10,11 @@ public:
 
     bool autostartup() const;
     QString serverUrl() const;
+    ToolbarMode lastTool() const;
 
-    void autostartup(bool);
+    void autostartup(const bool);
     void serverUrl(const QString&);
+    void lastTool(const ToolbarMode&);
 
 private:
     QSettings settings_;
