@@ -13,6 +13,7 @@ void History::addLink(const QString& url) {
     }
 
     links(historyLinks);
+    emit linkAdded(url);
 }
 
 ToolbarMode History::tool() const {

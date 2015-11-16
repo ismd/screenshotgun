@@ -4,7 +4,9 @@
 #include <QSettings>
 #include "Toolbar.h"
 
-class History {
+class History : public QObject {
+    Q_OBJECT
+
 public:
     History();
     void addLink(const QString&);
@@ -14,6 +16,9 @@ public:
 
     void lastTool(const ToolbarMode&);
     void links(const QStringList&);
+
+signals:
+    void linkAdded(const QString&);
 
 private:
     QSettings settings_;

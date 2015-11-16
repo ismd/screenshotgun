@@ -13,6 +13,7 @@ class TrayIcon : public QSystemTrayIcon {
 public:
     explicit TrayIcon(App&);
 
+    void show();
     void showMessage(const QString& title,
                      const QString& msg,
                      QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::Information,
@@ -32,6 +33,8 @@ private slots:
     void updateSlot();
     void noUpdate();
     void showSettings();
+    void openLink();
+    void linkAdded(const QString&);
 
 private:
     App& app_;
@@ -41,6 +44,7 @@ private:
     QAction updateAction_;
 #endif
     QAction settingsAction_;
+    QMenu historyMenu_;
     QAction quitAction_;
 };
 

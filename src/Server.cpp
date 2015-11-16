@@ -51,9 +51,9 @@ void Server::uploadedSlot(QNetworkReply* reply) {
     QJsonObject jsonObject = jsonResponse.object();
 
     if (0 == jsonObject["status"].toString().compare("ok")) {
-        emit(uploadSuccess(jsonObject["url"].toString()));
+        emit uploadSuccess(jsonObject["url"].toString());
     } else {
-        emit(uploadError());
+        emit uploadError();
     }
 
     delete reply_;
@@ -65,11 +65,11 @@ void Server::connectionSlot(QNetworkReply* reply) {
 
     if (QNetworkReply::NoError != reply->error()) {
         qDebug() << reply->errorString();
-        emit(connectionError());
+        emit connectionError();
         return;
     }
 
-    emit(connectionSuccess());
+    emit connectionSuccess();
 }
 
 void Server::checkConnection() {

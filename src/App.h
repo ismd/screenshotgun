@@ -37,8 +37,8 @@ private slots:
 
 private:
     AppView appView_;
-    TrayIcon trayIcon_;
     Settings settings_;
+    TrayIcon trayIcon_;
     History history_;
     SettingsForm settingsForm_;
     Server server_;
