@@ -70,17 +70,17 @@ void AppView::mode(ToolbarMode mode) {
 
         case ToolbarMode::LINE:
             currentMode_ = &lineMode_;
-            app().settings().lastTool(ToolbarMode::LINE);
+            app().history().lastTool(ToolbarMode::LINE);
             break;
 
         case ToolbarMode::ARROW:
             currentMode_ = &arrowMode_;
-            app().settings().lastTool(ToolbarMode::ARROW);
+            app().history().lastTool(ToolbarMode::ARROW);
             break;
 
         case ToolbarMode::RECT:
             currentMode_ = &rectMode_;
-            app().settings().lastTool(ToolbarMode::RECT);
+            app().history().lastTool(ToolbarMode::RECT);
             break;
     }
 }

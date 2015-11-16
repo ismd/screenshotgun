@@ -42,6 +42,10 @@ Settings& App::settings() {
     return settings_;
 }
 
+History& App::history() {
+    return history_;
+}
+
 #if defined(Q_OS_WIN32)
 Updater& App::updater() {
     return updater_;
@@ -71,6 +75,7 @@ void App::connectionError() {
 
 void App::uploadSuccess(const QString& url) {
     QClipboard* clipboard = QApplication::clipboard();
+    history_.addLink(url);
 
     if (copyImageToClipboard_) {
         clipboard->setImage(appView_.toolbar().image());

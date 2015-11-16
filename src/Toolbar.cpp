@@ -144,7 +144,7 @@ void Toolbar::on_okButton_clicked() {
 }
 
 void Toolbar::show() {
-    ToolbarMode lastTool = appView_.app().settings().lastTool();
+    ToolbarMode lastTool = appView_.app().history().tool();
 
     switch (lastTool) {
         case ToolbarMode::LINE:

@@ -2,6 +2,7 @@
 #define SCREENSHOTGUN_APP_H
 
 #include "AppView.h"
+#include "History.h"
 #include "Server.h"
 #include "Settings.h"
 #include "SettingsForm.h"
@@ -20,6 +21,7 @@ public:
     SettingsForm& settingsForm();
     Server& server();
     Settings& settings();
+    History& history();
 #if defined(Q_OS_WIN32)
     Updater& updater();
 #endif
@@ -37,6 +39,7 @@ private:
     AppView appView_;
     TrayIcon trayIcon_;
     Settings settings_;
+    History history_;
     SettingsForm settingsForm_;
     Server server_;
 #if defined(Q_OS_WIN32)

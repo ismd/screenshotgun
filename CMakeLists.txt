@@ -35,7 +35,9 @@ set(SOURCE_FILES
     src/AppView.cpp
     src/AppView.h
     src/Updater_win.cpp
-    src/Updater_win.h)
+    src/Updater_win.h
+    src/History.cpp
+    src/History.h)
 
 find_package(Qt5 COMPONENTS Widgets Network REQUIRED)
 
