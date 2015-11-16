@@ -23,6 +23,7 @@ public:
 #if defined(Q_OS_WIN32)
     Updater& updater();
 #endif
+    void copyImageToClipboard(bool);
 
 private slots:
     void makeScreenshot();
@@ -41,6 +42,7 @@ private:
 #if defined(Q_OS_WIN32)
     Updater updater_;
 #endif
+    bool copyImageToClipboard_;
 };
 
 #endif // SCREENSHOTGUN_APP_H

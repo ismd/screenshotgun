@@ -28,6 +28,8 @@ public:
     void setSelectedNext();
     void setSelectedPrevious();
     void show();
+    void submit(bool copyImage = false);
+    QImage& image();
 
 protected:
     void mousePressEvent(QMouseEvent*);
@@ -54,6 +56,7 @@ private:
         int y;
     } initDragCoords_;
     QPropertyAnimation animation_;
+    QImage* image_;
 };
 
 #endif // SCREENSHOTGUN_TOOLBAR_H

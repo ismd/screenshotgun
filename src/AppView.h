@@ -30,6 +30,7 @@ public:
     void mode(ToolbarMode);
     void reinitVisibleArea();
     void initShortcut();
+    Toolbar& toolbar();
 
 public slots:
     void makeScreenshot();

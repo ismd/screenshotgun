@@ -6,11 +6,13 @@ Toolbar::Toolbar(AppView& appView)
     : QWidget(&appView),
       ui(new Ui::Toolbar),
       appView_(appView),
-      dragging_(false) {
+      dragging_(false),
+      image_(0) {
 
     hide();
     ui->setupUi(this);
     ui->selectedCircle->lower();
+    setFocusPolicy(Qt::ClickFocus);
 
     appView_.setMouseTracking(true);
 
@@ -26,6 +28,7 @@ Toolbar::Toolbar(AppView& appView)
 
 Toolbar::~Toolbar() {
     delete ui;
+    delete image_;
 }
 
 AppView& Toolbar::appView() {
@@ -137,31 +140,7 @@ void Toolbar::on_rectButton_clicked() {
 }
 
 void Toolbar::on_okButton_clicked() {
-    appView_.hide();
-    hide();
-
-    QGraphicsScene& scene = appView_.scene();
-    //scene.clearSelection();
-
-    VisibleAreaMode& visibleAreaMode = appView_.visibleAreaMode();
-    scene.setSceneRect(visibleAreaMode.area.x,
-                       visibleAreaMode.area.y,
-                       visibleAreaMode.area.width,
-                       visibleAreaMode.area.height);
-
-    QImage image(scene.sceneRect().size().toSize(), QImage::Format_ARGB32);
-    image.fill(Qt::transparent);
-
-    QPainter painter(&image);
-    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-    scene.render(&painter);
-
-    QByteArray bytes;
-    QBuffer buffer(&bytes);
-    buffer.open(QIODevice::WriteOnly);
-    image.save(&buffer, "PNG");
-
-    appView_.app().server().upload(bytes);
+    submit();
 }
 
 void Toolbar::show() {
@@ -186,6 +165,43 @@ void Toolbar::show() {
     }
 
     QWidget::show();
+}
+
+void Toolbar::submit(bool copyImage) {
+    appView_.hide();
+    hide();
+
+    QGraphicsScene& scene = appView_.scene();
+    //scene.clearSelection();
+
+    VisibleAreaMode& visibleAreaMode = appView_.visibleAreaMode();
+    scene.setSceneRect(visibleAreaMode.area.x,
+                       visibleAreaMode.area.y,
+                       visibleAreaMode.area.width,
+                       visibleAreaMode.area.height);
+
+    if (image_ != 0) {
+        delete image_;
+    }
+
+    image_ = new QImage(scene.sceneRect().size().toSize(), QImage::Format_ARGB32);
+    image_->fill(Qt::transparent);
+
+    QPainter painter(image_);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    scene.render(&painter);
+
+    QByteArray bytes;
+    QBuffer buffer(&bytes);
+    buffer.open(QIODevice::WriteOnly);
+    image_->save(&buffer, "PNG");
+
+    appView_.app().copyImageToClipboard(copyImage);
+    appView_.app().server().upload(bytes);
+}
+
+QImage& Toolbar::image() {
+    return *image_;
 }
 
 void Toolbar::setSelected(QPushButton* const button, bool animate) {

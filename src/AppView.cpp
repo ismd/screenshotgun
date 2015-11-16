@@ -96,18 +96,20 @@ void AppView::reinitVisibleArea() {
     toolbar_.select(ToolbarMode::VISIBLE_AREA);
 }
 
-#if defined(Q_OS_LINUX)
 void AppView::initShortcut() {
+#if defined(Q_OS_LINUX)
     shortcut_.setShortcut(QKeySequence(tr("Alt+Print")));
 
     connect(&shortcut_, SIGNAL(activated()),
             this, SLOT(makeScreenshot()));
-}
 #elif defined(Q_OS_WIN32)
-void AppView::initShortcut() {
     RegisterHotKey((HWND)winId(), 100, MOD_ALT, VK_SNAPSHOT);
-}
 #endif
+}
+
+Toolbar& AppView::toolbar() {
+    return toolbar_;
+}
 
 void AppView::mousePressEvent(QMouseEvent* e) {
     currentMode_->init(e->x(), e->y());
@@ -130,10 +132,16 @@ void AppView::wheelEvent(QWheelEvent* e) {
 }
 
 void AppView::keyReleaseEvent(QKeyEvent* e) {
-    if (e->key() == Qt::Key_Escape) {
+    int key = e->key();
+
+    if (key == Qt::Key_Escape) {
         hide();
         toolbar_.hide();
+    } else if (key == Qt::Key_Return) {
+        toolbar_.submit(e->modifiers().testFlag(Qt::AltModifier));
     }
+
+    QGraphicsView::keyReleaseEvent(e);
 }
 
 #ifdef Q_OS_WIN32
