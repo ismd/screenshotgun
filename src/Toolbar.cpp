@@ -205,6 +205,10 @@ QImage& Toolbar::image() {
 }
 
 void Toolbar::setSelected(QPushButton* const button, bool animate) {
+    if (animation_.state() != QAbstractAnimation::Stopped) {
+        return;
+    }
+
     selected_ = button;
 
     if (button == ui->visibleAreaButton) {
