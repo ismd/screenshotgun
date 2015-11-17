@@ -28,15 +28,15 @@ public:
 private:
     void set(int x, int y, int width, int height);
 
-    QGraphicsRectItem* rectTop;
-    QGraphicsRectItem* rectBottom;
-    QGraphicsRectItem* rectLeft;
-    QGraphicsRectItem* rectRight;
+    QGraphicsRectItem rectTop;
+    QGraphicsRectItem rectBottom;
+    QGraphicsRectItem rectLeft;
+    QGraphicsRectItem rectRight;
 
-    QGraphicsLineItem* lineTop;
-    QGraphicsLineItem* lineBottom;
-    QGraphicsLineItem* lineLeft;
-    QGraphicsLineItem* lineRight;
+    QGraphicsLineItem lineTop;
+    QGraphicsLineItem lineBottom;
+    QGraphicsLineItem lineLeft;
+    QGraphicsLineItem lineRight;
 
     Toolbar& toolbar_;
     bool initialized_;

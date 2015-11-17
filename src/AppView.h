@@ -31,6 +31,7 @@ public:
     void reinitVisibleArea();
     void initShortcut();
     Toolbar& toolbar();
+    void hide();
 
 public slots:
     void makeScreenshot();

@@ -7,7 +7,7 @@
 AppView::AppView(App& app)
     : app_(app),
       toolbar_(*this),
-      visibleAreaMode_(0),
+      visibleAreaMode_(new VisibleAreaMode(scene_, toolbar_)),
       lineMode_(scene_),
       arrowMode_(scene_),
       rectMode_(scene_),
@@ -45,9 +45,7 @@ void AppView::makeScreenshot() {
         height = screenshot_.height();
 
     setGeometry(0, 0, width, height);
-    scene_.clear();
     scene_.setSceneRect(0, 0, width, height);
-    reinitVisibleArea();
 
     // Background screenshot
     scene_.addPixmap(screenshot_);
@@ -86,13 +84,7 @@ void AppView::mode(ToolbarMode mode) {
 }
 
 void AppView::reinitVisibleArea() {
-    if (visibleAreaMode_ != 0) {
-        delete visibleAreaMode_;
-    }
-
-    visibleAreaMode_ = new VisibleAreaMode(scene_, toolbar_);
     currentMode_ = visibleAreaMode_;
-
     toolbar_.select(ToolbarMode::VISIBLE_AREA);
 }
 
@@ -109,6 +101,13 @@ void AppView::initShortcut() {
 
 Toolbar& AppView::toolbar() {
     return toolbar_;
+}
+
+void AppView::hide() {
+    delete visibleAreaMode_;
+    visibleAreaMode_ = new VisibleAreaMode(scene_, toolbar_);
+    reinitVisibleArea();
+    QGraphicsView::hide();
 }
 
 void AppView::mousePressEvent(QMouseEvent* e) {
