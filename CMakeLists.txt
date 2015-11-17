@@ -62,6 +62,12 @@ qt5_wrap_ui(UIS_HDRS
 if(UNIX AND NOT APPLE)
     add_executable(screenshotgun ${SOURCE_FILES} ${UIS_HDRS} resources/res.qrc)
     target_link_libraries(screenshotgun X11 Qt5::Widgets Qt5::Network)
+
+    install(TARGETS screenshotgun DESTINATION bin)
+    install(FILES "${CMAKE_SOURCE_DIR}/dist/screenshotgun.desktop"
+        DESTINATION share/applications)
+    install(FILES "${CMAKE_SOURCE_DIR}/dist/screenshotgun.png"
+        DESTINATION share/pixmaps)
 else(WIN32)
     add_executable(screenshotgun WIN32 ${SOURCE_FILES} ${UIS_HDRS} resources/res.qrc)
     target_link_libraries(screenshotgun Qt5::Widgets Qt5::Network)

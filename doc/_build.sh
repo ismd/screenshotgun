@@ -34,33 +34,19 @@ git pull
 echo -e "\n*** Compiling for linux 64 ***"
 
 cd $BUILD_PATH_LINUX_64
-cmake $SRC_PATH
+cmake $SRC_PATH -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$BUILD_PATH_DEB_64/usr
 cmake --build . || exit $?
-strip screenshotgun
-
-# Compiling for windows 32
-echo -e "\n*** Compiling for windows 32 ***"
-
-MXE_PATH=/home/ismd/src/mxe
-PATH=$MXE_PATH/usr/bin:$PATH
-
-cd $BUILD_PATH_WINDOWS_32
-cmake $SRC_PATH -DCMAKE_TOOLCHAIN_FILE=${MXE_PATH}/usr/i686-w64-mingw32.shared/share/cmake/mxe-conf.cmake
-cmake --build . -- -j1 || exit $?
+make install/strip
 
 # Deb 64
 echo -e "\n*** Making deb 64 ***"
 
-cp $BUILD_PATH_LINUX_64/screenshotgun $BUILD_PATH_DEB_64/usr/bin/screenshotgun
 cd $BUILD_PATH_DEB_64
 sed -i "s/Version: .*/Version: $VERSION/g" DEBIAN/control
 
 SIZE_DEB_64=`du -s usr | sed -s 's/\(.*\)\s.*/\1/'`
 sed -i "s/Installed-Size: .*/Installed-Size: $SIZE_DEB_64/g" DEBIAN/control
 find . -type f ! -regex '.*.hg.*' ! -regex '.*?debian-binary.*' ! -regex '.*?DEBIAN.*' -printf '%P ' | xargs md5sum > DEBIAN/md5sums
-
-cp $SRC_PATH/dist/screenshotgun.desktop $BUILD_PATH_DEB_64/usr/share/applications/screenshotgun.desktop
-cp $SRC_PATH/dist/screenshotgun.png $BUILD_PATH_DEB_64/usr/share/pixmaps/screenshotgun.png
 
 cd ..
 fakeroot dpkg-deb --build deb-64
@@ -75,10 +61,21 @@ reprepro includedeb trusty $DEB_64_FILENAME
 
 mv $PPA_PATH/$DEB_64_FILENAME $DIST_PATH/$DEB_64_FILENAME
 
+# Compiling for windows 32
+echo -e "\n*** Compiling for windows 32 ***"
+
+MXE_PATH=/home/ismd/src/mxe
+PATH=$MXE_PATH/usr/bin:$PATH
+
+cd $BUILD_PATH_WINDOWS_32
+cmake $SRC_PATH -DCMAKE_TOOLCHAIN_FILE=${MXE_PATH}/usr/i686-w64-mingw32.shared/share/cmake/mxe-conf.cmake -DCMAKE_BUILD_TYPE=Release
+cmake --build . || exit $?
+
 # Arch
 echo -e "\n*** Arch AUR ***"
 
 cd $ARCH_PATH
+git pull
 ARCH_VERSION=$(echo $VERSION | sed -e "s/-/_/g")
 sed -i "s/pkgver = .*/pkgver = $ARCH_VERSION/g" $ARCH_PATH/.SRCINFO
 sed -i "s/pkgver=.*/pkgver=$ARCH_VERSION/g" $ARCH_PATH/PKGBUILD
