@@ -29,6 +29,9 @@ ToolbarMode History::tool() const {
         case static_cast<int>(ToolbarMode::RECT):
             return ToolbarMode::RECT;
 
+        case static_cast<int>(ToolbarMode::ELLIPSE):
+            return ToolbarMode::ELLIPSE;
+
         default:
             return ToolbarMode::ARROW;
     }

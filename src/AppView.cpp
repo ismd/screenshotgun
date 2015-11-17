@@ -11,6 +11,7 @@ AppView::AppView(App& app)
       lineMode_(scene_),
       arrowMode_(scene_),
       rectMode_(scene_),
+      ellipseMode_(scene_),
       currentMode_(visibleAreaMode_) {
 
     setFrameShape(QFrame::NoFrame);
@@ -60,7 +61,7 @@ VisibleAreaMode& AppView::visibleAreaMode() {
     return *visibleAreaMode_;
 }
 
-void AppView::mode(ToolbarMode mode) {
+void AppView::mode(const ToolbarMode mode) {
     switch (mode) {
         case ToolbarMode::VISIBLE_AREA:
             currentMode_ = visibleAreaMode_;
@@ -79,6 +80,11 @@ void AppView::mode(ToolbarMode mode) {
         case ToolbarMode::RECT:
             currentMode_ = &rectMode_;
             app().history().lastTool(ToolbarMode::RECT);
+            break;
+
+        case ToolbarMode::ELLIPSE:
+            currentMode_ = &ellipseMode_;
+            app().history().lastTool(ToolbarMode::ELLIPSE);
             break;
     }
 }

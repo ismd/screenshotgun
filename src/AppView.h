@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include "modes/LineMode.h"
 #include "modes/ArrowMode.h"
+#include "modes/EllipseMode.h"
 #include "modes/RectMode.h"
 #include "modes/VisibleAreaMode.h"
 #include "Toolbar.h"
@@ -27,7 +28,7 @@ public:
     App& app();
     QGraphicsScene& scene();
     VisibleAreaMode& visibleAreaMode();
-    void mode(ToolbarMode);
+    void mode(const ToolbarMode);
     void reinitVisibleArea();
     void initShortcut();
     Toolbar& toolbar();
@@ -54,6 +55,7 @@ private:
     LineMode lineMode_;
     ArrowMode arrowMode_;
     RectMode rectMode_;
+    EllipseMode ellipseMode_;
 
 #if defined(Q_OS_LINUX)
     QxtGlobalShortcut shortcut_;

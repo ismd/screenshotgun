@@ -17,6 +17,7 @@ Toolbar::Toolbar(AppView& appView)
     appView_.setMouseTracking(true);
 
     buttons_.append(ui->visibleAreaButton);
+    buttons_.append(ui->ellipseButton);
     buttons_.append(ui->rectButton);
     buttons_.append(ui->lineButton);
     buttons_.append(ui->arrowButton);
@@ -35,22 +36,26 @@ AppView& Toolbar::appView() {
     return appView_;
 }
 
-void Toolbar::select(ToolbarMode mode) {
+void Toolbar::select(const ToolbarMode mode, bool animate) {
     switch (mode) {
         case ToolbarMode::VISIBLE_AREA:
-            setSelected(ui->visibleAreaButton);
+            setSelected(ui->visibleAreaButton, animate);
             break;
 
         case ToolbarMode::LINE:
-            setSelected(ui->lineButton);
+            setSelected(ui->lineButton, animate);
             break;
 
         case ToolbarMode::ARROW:
-            setSelected(ui->arrowButton);
+            setSelected(ui->arrowButton, animate);
             break;
 
         case ToolbarMode::RECT:
-            setSelected(ui->rectButton);
+            setSelected(ui->rectButton, animate);
+            break;
+
+        case ToolbarMode::ELLIPSE:
+            setSelected(ui->ellipseButton, animate);
             break;
     }
 }
@@ -139,31 +144,17 @@ void Toolbar::on_rectButton_clicked() {
     appView_.setMouseTracking(false);
 }
 
+void Toolbar::on_ellipseButton_clicked() {
+    setSelected(ui->ellipseButton);
+    appView_.setMouseTracking(false);
+}
+
 void Toolbar::on_okButton_clicked() {
     submit();
 }
 
 void Toolbar::show() {
-    ToolbarMode lastTool = appView_.app().history().tool();
-
-    switch (lastTool) {
-        case ToolbarMode::LINE:
-            setSelected(ui->lineButton, false);
-            break;
-
-        case ToolbarMode::ARROW:
-            setSelected(ui->arrowButton, false);
-            break;
-
-        case ToolbarMode::RECT:
-            setSelected(ui->rectButton, false);
-            break;
-
-        default:
-            setSelected(ui->arrowButton, false);
-            break;
-    }
-
+    select(appView_.app().history().tool());
     QWidget::show();
 }
 
@@ -219,6 +210,8 @@ void Toolbar::setSelected(QPushButton* const button, bool animate) {
         appView_.mode(ToolbarMode::ARROW);
     } else if (button == ui->rectButton) {
         appView_.mode(ToolbarMode::RECT);
+    } else if (button == ui->ellipseButton) {
+        appView_.mode(ToolbarMode::ELLIPSE);
     }
 
     int x = ui->selectedCircle->x();

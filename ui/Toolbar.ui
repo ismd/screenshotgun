@@ -109,7 +109,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="circleButton">
+   <widget class="QPushButton" name="ellipseButton">
     <property name="geometry">
      <rect>
       <x>2</x>

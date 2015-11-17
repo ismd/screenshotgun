@@ -12,7 +12,8 @@ enum class ToolbarMode {
     VISIBLE_AREA,
     LINE,
     ARROW,
-    RECT
+    RECT,
+    ELLIPSE
 };
 
 class Toolbar : public QWidget {
@@ -24,7 +25,7 @@ public:
 
     AppView& appView();
 
-    void select(ToolbarMode);
+    void select(const ToolbarMode, bool animate = false);
     void setSelectedNext();
     void setSelectedPrevious();
     void show();
@@ -41,6 +42,7 @@ private slots:
     void on_lineButton_clicked();
     void on_arrowButton_clicked();
     void on_rectButton_clicked();
+    void on_ellipseButton_clicked();
     void on_okButton_clicked();
 
 private:
