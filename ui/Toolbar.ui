@@ -40,6 +40,9 @@
       <height>46</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -66,6 +69,9 @@
       <height>46</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="icon">
      <iconset resource="../resources/res.qrc">
       <normaloff>:/toolbar/line.png</normaloff>:/toolbar/line.png</iconset>
@@ -85,6 +91,9 @@
       <width>46</width>
       <height>46</height>
      </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="text">
      <string/>
@@ -152,6 +161,9 @@
       <height>46</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -174,6 +186,9 @@
       <width>46</width>
       <height>46</height>
      </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="text">
      <string/>
