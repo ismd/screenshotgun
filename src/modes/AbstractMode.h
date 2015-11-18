@@ -2,6 +2,7 @@
 #define SCREENSHOTGUN_ABSTRACTMODE_H
 
 #include <QGraphicsScene>
+#include <QKeyEvent>
 
 class AbstractMode {
 

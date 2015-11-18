@@ -12,6 +12,7 @@ AppView::AppView(App& app)
       arrowMode_(scene_),
       rectMode_(scene_),
       ellipseMode_(scene_),
+      textMode_(scene_, *this),
       currentMode_(visibleAreaMode_) {
 
     setFrameShape(QFrame::NoFrame);
@@ -85,6 +86,11 @@ void AppView::mode(const ToolbarMode mode) {
         case ToolbarMode::ELLIPSE:
             currentMode_ = &ellipseMode_;
             app().history().lastTool(ToolbarMode::ELLIPSE);
+            break;
+
+        case ToolbarMode::TEXT:
+            currentMode_ = &textMode_;
+            app().history().lastTool(ToolbarMode::TEXT);
             break;
     }
 }

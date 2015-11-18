@@ -13,7 +13,8 @@ enum class ToolbarMode {
     LINE,
     ARROW,
     RECT,
-    ELLIPSE
+    ELLIPSE,
+    TEXT
 };
 
 class Toolbar : public QWidget {
@@ -43,10 +44,11 @@ private slots:
     void on_arrowButton_clicked();
     void on_rectButton_clicked();
     void on_ellipseButton_clicked();
+    void on_textButton_clicked();
     void on_okButton_clicked();
 
 private:
-    void setSelected(QPushButton* const, bool animate = true);
+    void setSelected(QPushButton*, bool animate = true);
 
     Ui::Toolbar* ui;
     AppView& appView_;

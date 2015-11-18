@@ -14,7 +14,7 @@ public:
     void stop(int x, int y);
 
 protected:
-    QGraphicsLineItem* line;
+    QGraphicsLineItem* line_;
 };
 
 #endif // SCREENSHOTGUN_LINEMODE_H

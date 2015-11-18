@@ -7,6 +7,7 @@
 #include "modes/ArrowMode.h"
 #include "modes/EllipseMode.h"
 #include "modes/RectMode.h"
+#include "modes/TextMode.h"
 #include "modes/VisibleAreaMode.h"
 #include "Toolbar.h"
 
@@ -56,6 +57,7 @@ private:
     ArrowMode arrowMode_;
     RectMode rectMode_;
     EllipseMode ellipseMode_;
+    TextMode textMode_;
 
 #if defined(Q_OS_LINUX)
     QxtGlobalShortcut shortcut_;

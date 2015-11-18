@@ -141,6 +141,9 @@
       <height>46</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="icon">
      <iconset resource="../resources/res.qrc">
       <normaloff>:/toolbar/text.png</normaloff>:/toolbar/text.png</iconset>
@@ -212,6 +215,9 @@
       <width>46</width>
       <height>46</height>
      </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

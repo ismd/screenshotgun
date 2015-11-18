@@ -13,52 +13,52 @@ VisibleAreaMode::VisibleAreaMode(QGraphicsScene& scene, Toolbar& toolbar)
     QPen pen(Qt::NoPen);
     QBrush brush(Qt::black);
 
-    rectTop.setOpacity(.65);
-    rectBottom.setOpacity(.65);
-    rectLeft.setOpacity(.65);
-    rectRight.setOpacity(.65);
+    rectTop_.setOpacity(.65);
+    rectBottom_.setOpacity(.65);
+    rectLeft_.setOpacity(.65);
+    rectRight_.setOpacity(.65);
 
-    rectTop.setPen(pen);
-    rectBottom.setPen(pen);
-    rectLeft.setPen(pen);
-    rectRight.setPen(pen);
+    rectTop_.setPen(pen);
+    rectBottom_.setPen(pen);
+    rectLeft_.setPen(pen);
+    rectRight_.setPen(pen);
 
-    rectTop.setBrush(brush);
-    rectBottom.setBrush(brush);
-    rectLeft.setBrush(brush);
-    rectRight.setBrush(brush);
+    rectTop_.setBrush(brush);
+    rectBottom_.setBrush(brush);
+    rectLeft_.setBrush(brush);
+    rectRight_.setBrush(brush);
 
-    rectTop.setZValue(1);
-    rectBottom.setZValue(1);
-    rectLeft.setZValue(1);
-    rectRight.setZValue(1);
+    rectTop_.setZValue(1);
+    rectBottom_.setZValue(1);
+    rectLeft_.setZValue(1);
+    rectRight_.setZValue(1);
 
     // First rectangle fullscreen
-    rectTop.setRect(0, 0, scene.width(), scene.height());
+    rectTop_.setRect(0, 0, scene.width(), scene.height());
 
-    scene.addItem(&rectTop);
-    scene.addItem(&rectBottom);
-    scene.addItem(&rectLeft);
-    scene.addItem(&rectRight);
+    scene.addItem(&rectTop_);
+    scene.addItem(&rectBottom_);
+    scene.addItem(&rectLeft_);
+    scene.addItem(&rectRight_);
 
     QPen linePen;
     linePen.setWidthF(.2);
     linePen.setColor(QColor(230, 230, 230));
 
-    lineTop.setPen(linePen);
-    lineBottom.setPen(linePen);
-    lineLeft.setPen(linePen);
-    lineRight.setPen(linePen);
+    lineTop_.setPen(linePen);
+    lineBottom_.setPen(linePen);
+    lineLeft_.setPen(linePen);
+    lineRight_.setPen(linePen);
 
-    lineTop.setZValue(1);
-    lineBottom.setZValue(1);
-    lineLeft.setZValue(1);
-    lineRight.setZValue(1);
+    lineTop_.setZValue(1);
+    lineBottom_.setZValue(1);
+    lineLeft_.setZValue(1);
+    lineRight_.setZValue(1);
 
-    scene.addItem(&lineTop);
-    scene.addItem(&lineBottom);
-    scene.addItem(&lineLeft);
-    scene.addItem(&lineRight);
+    scene.addItem(&lineTop_);
+    scene.addItem(&lineBottom_);
+    scene.addItem(&lineLeft_);
+    scene.addItem(&lineRight_);
 }
 
 void VisibleAreaMode::init(int x, int y) {
@@ -136,10 +136,10 @@ void VisibleAreaMode::set(int x, int y, int width, int height) {
     int sceneWidth = scene_.width(),
         sceneHeight = scene_.height();
 
-    rectTop.setRect(0, 0, sceneWidth, y);
-    rectBottom.setRect(0, y + height, sceneWidth, sceneHeight - y - height);
-    rectLeft.setRect(0, y, x, height);
-    rectRight.setRect(x + width, y, sceneWidth - x - width, height);
+    rectTop_.setRect(0, 0, sceneWidth, y);
+    rectBottom_.setRect(0, y + height, sceneWidth, sceneHeight - y - height);
+    rectLeft_.setRect(0, y, x, height);
+    rectRight_.setRect(x + width, y, sceneWidth - x - width, height);
 
     QDesktopWidget *desktop = QApplication::desktop();
     QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
@@ -149,15 +149,15 @@ void VisibleAreaMode::set(int x, int y, int width, int height) {
 
     // Horizontal and vertical lines
     if (0 == width && 0 == height) {
-        lineTop.setLine(0, y, screenWidth, y);
-        lineLeft.setLine(x, 0, x, screenHeight);
+        lineTop_.setLine(0, y, screenWidth, y);
+        lineLeft_.setLine(x, 0, x, screenHeight);
         return;
     }
 
-    lineTop.setLine(0, y - 1, screenWidth, y - 1);
-    lineBottom.setLine(0, y + height + 1, screenWidth, y + height + 1);
-    lineLeft.setLine(x - 1, 0, x - 1, screenHeight);
-    lineRight.setLine(x + width + 1, 0, x + width + 1, sceneHeight);
+    lineTop_.setLine(0, y - 1, screenWidth, y - 1);
+    lineBottom_.setLine(0, y + height + 1, screenWidth, y + height + 1);
+    lineLeft_.setLine(x - 1, 0, x - 1, screenHeight);
+    lineRight_.setLine(x + width + 1, 0, x + width + 1, sceneHeight);
 }
 
 bool VisibleAreaMode::initialized() {

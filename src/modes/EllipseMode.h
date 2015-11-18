@@ -13,7 +13,7 @@ public:
     void stop(int x, int y);
 
 private:
-    QGraphicsEllipseItem*ellipse_;
+    QGraphicsEllipseItem* ellipse_;
 
     struct {
         int x;

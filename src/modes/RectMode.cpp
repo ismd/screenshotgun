@@ -10,11 +10,11 @@ void RectMode::init(int x, int y) {
 
     QBrush brush(Qt::NoBrush);
 
-    rect = new QGraphicsRectItem();
-    rect->setPen(pen);
-    rect->setBrush(brush);
+    rect_ = new QGraphicsRectItem();
+    rect_->setPen(pen);
+    rect_->setBrush(brush);
 
-    scene_.addItem(rect);
+    scene_.addItem(rect_);
 }
 
 void RectMode::move(int x, int y) {
@@ -23,7 +23,7 @@ void RectMode::move(int x, int y) {
     int maxX = qMax(x, coords.x);
     int maxY = qMax(y, coords.y);
 
-    rect->setRect(minX, minY, maxX - minX, maxY - minY);
+    rect_->setRect(minX, minY, maxX - minX, maxY - minY);
 }
 
 void RectMode::stop(int x, int y) {

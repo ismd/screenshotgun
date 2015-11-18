@@ -15,8 +15,8 @@ public:
     void stop(int x, int y);
 
 protected:
-    QGraphicsLineItem* line;
-    QGraphicsPathItem* path;
+    QGraphicsLineItem* line_;
+    QGraphicsPathItem* path_;
 };
 
 #endif // SCREENSHOTGUN_ARROWMODE_H

@@ -13,7 +13,7 @@ public:
     void stop(int x, int y);
 
 private:
-    QGraphicsRectItem* rect;
+    QGraphicsRectItem* rect_;
 
     struct {
         int x;

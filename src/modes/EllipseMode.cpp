@@ -1,4 +1,4 @@
-#include <QGraphicsRectItem>
+#include <QGraphicsEllipseItem>
 #include "EllipseMode.h"
 
 EllipseMode::EllipseMode(QGraphicsScene& scene) : AbstractMode(scene) {

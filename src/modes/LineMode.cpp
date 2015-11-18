@@ -4,16 +4,16 @@ LineMode::LineMode(QGraphicsScene& scene) : AbstractMode(scene) {
 }
 
 void LineMode::init(int x, int y) {
-    line = new QGraphicsLineItem(x, y, x, y);
-    line->setPen(pen);
+    line_ = new QGraphicsLineItem(x, y, x, y);
+    line_->setPen(pen);
 
-    scene_.addItem(line);
+    scene_.addItem(line_);
 }
 
 void LineMode::move(int x, int y) {
-    QLineF l = line->line();
+    QLineF l = line_->line();
     l.setP2(QPointF(x, y));
-    line->setLine(l);
+    line_->setLine(l);
 }
 
 void LineMode::stop(int x, int y) {

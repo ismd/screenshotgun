@@ -32,6 +32,9 @@ ToolbarMode History::tool() const {
         case static_cast<int>(ToolbarMode::ELLIPSE):
             return ToolbarMode::ELLIPSE;
 
+        case static_cast<int>(ToolbarMode::TEXT):
+            return ToolbarMode::TEXT;
+
         default:
             return ToolbarMode::ARROW;
     }

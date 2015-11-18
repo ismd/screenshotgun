@@ -17,6 +17,8 @@ set(SOURCE_FILES
     src/modes/RectMode.h
     src/modes/EllipseMode.cpp
     src/modes/EllipseMode.h
+    src/modes/TextMode.cpp
+    src/modes/TextMode.h
     src/modes/VisibleAreaMode.cpp
     src/modes/VisibleAreaMode.h
     src/Autostartup.cpp

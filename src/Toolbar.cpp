@@ -21,6 +21,7 @@ Toolbar::Toolbar(AppView& appView)
     buttons_.append(ui->rectButton);
     buttons_.append(ui->lineButton);
     buttons_.append(ui->arrowButton);
+    buttons_.append(ui->textButton);
 
     animation_.setTargetObject(ui->selectedCircle);
     animation_.setPropertyName("geometry");
@@ -56,6 +57,10 @@ void Toolbar::select(const ToolbarMode mode, bool animate) {
 
         case ToolbarMode::ELLIPSE:
             setSelected(ui->ellipseButton, animate);
+            break;
+
+        case ToolbarMode::TEXT:
+            setSelected(ui->textButton, animate);
             break;
     }
 }
@@ -149,6 +154,11 @@ void Toolbar::on_ellipseButton_clicked() {
     appView_.setMouseTracking(false);
 }
 
+void Toolbar::on_textButton_clicked() {
+    setSelected(ui->textButton);
+    appView_.setMouseTracking(false);
+}
+
 void Toolbar::on_okButton_clicked() {
     submit();
 }
@@ -195,7 +205,7 @@ QImage& Toolbar::image() {
     return *image_;
 }
 
-void Toolbar::setSelected(QPushButton* const button, bool animate) {
+void Toolbar::setSelected(QPushButton* button, bool animate) {
     if (animation_.state() != QAbstractAnimation::Stopped) {
         return;
     }
@@ -212,6 +222,14 @@ void Toolbar::setSelected(QPushButton* const button, bool animate) {
         appView_.mode(ToolbarMode::RECT);
     } else if (button == ui->ellipseButton) {
         appView_.mode(ToolbarMode::ELLIPSE);
+    } else if (button == ui->textButton) {
+        appView_.mode(ToolbarMode::TEXT);
+    }
+
+    if (button == ui->textButton) {
+        appView_.setCursor(Qt::IBeamCursor);
+    } else {
+        appView_.setCursor(Qt::ArrowCursor);
     }
 
     int x = ui->selectedCircle->x();

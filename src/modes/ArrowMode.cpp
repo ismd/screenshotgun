@@ -5,22 +5,22 @@ ArrowMode::ArrowMode(QGraphicsScene& scene) : AbstractMode(scene) {
 }
 
 void ArrowMode::init(int x, int y) {
-    line = new QGraphicsLineItem(x, y, x, y);
-    line->setPen(pen);
+    line_ = new QGraphicsLineItem(x, y, x, y);
+    line_->setPen(pen);
 
-    path = new QGraphicsPathItem();
+    path_ = new QGraphicsPathItem();
     QPen pathPen = QPen(pen);
     pathPen.setWidth(1);
 
-    path->setPen(pathPen);
-    path->setBrush(QBrush(pen.brush()));
+    path_->setPen(pathPen);
+    path_->setBrush(QBrush(pen.brush()));
 
-    scene_.addItem(line);
-    scene_.addItem(path);
+    scene_.addItem(line_);
+    scene_.addItem(path_);
 }
 
 void ArrowMode::move(int x, int y) {
-    QLineF l = line->line();
+    QLineF l = line_->line();
     l.setP2(QPointF(x, y));
 
     // Angle
@@ -42,8 +42,8 @@ void ArrowMode::move(int x, int y) {
     l.setP2(QPointF(x + qCos(angle) * 5 * sign,
                     y + qSin(angle) * 5 * sign));
 
-    line->setLine(l);
-    path->setPath(painterPath);
+    line_->setLine(l);
+    path_->setPath(painterPath);
 }
 
 void ArrowMode::stop(int x, int y) {
