@@ -169,7 +169,6 @@ void Toolbar::show() {
 }
 
 void Toolbar::submit(bool copyImage) {
-    appView_.hide();
     hide();
 
     QGraphicsScene& scene = appView_.scene();
@@ -197,7 +196,8 @@ void Toolbar::submit(bool copyImage) {
     buffer.open(QIODevice::WriteOnly);
     image_->save(&buffer, "PNG");
 
-    appView_.app().copyImageToClipboard(copyImage);
+    appView_.hide();
+    appView_.app().setCopyImageToClipboard(copyImage);
     appView_.app().server().upload(bytes);
 }
 

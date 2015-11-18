@@ -25,7 +25,7 @@ public:
 #if defined(Q_OS_WIN32)
     Updater& updater();
 #endif
-    void copyImageToClipboard(bool);
+    void setCopyImageToClipboard(bool);
 
 private slots:
     void makeScreenshot();

@@ -52,7 +52,7 @@ Updater& App::updater() {
 }
 #endif
 
-void App::copyImageToClipboard(bool value) {
+void App::setCopyImageToClipboard(bool value) {
     copyImageToClipboard_ = value;
 }
 
