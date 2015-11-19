@@ -7,6 +7,7 @@
 class AppView;
 
 class TextMode : public AbstractMode {
+    Q_OBJECT
 
 public:
     TextMode(QGraphicsScene&, AppView&);
@@ -14,6 +15,9 @@ public:
     void init(int x, int y);
     void move(int x, int y);
     void stop(int x, int y);
+
+private slots:
+    void clearFocus();
 
 private:
     QPlainTextEdit* text_;

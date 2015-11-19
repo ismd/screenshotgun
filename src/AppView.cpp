@@ -68,6 +68,8 @@ VisibleAreaMode& AppView::visibleAreaMode() const {
 }
 
 void AppView::mode(const ToolbarMode mode) {
+    emit toolChanged(mode);
+
     switch (mode) {
         case ToolbarMode::VISIBLE_AREA:
             currentMode_ = visibleAreaMode_;

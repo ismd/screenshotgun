@@ -35,6 +35,9 @@ public:
     Toolbar& toolbar();
     void hide();
 
+signals:
+    void toolChanged(ToolbarMode);
+
 public slots:
     void makeScreenshot();
 

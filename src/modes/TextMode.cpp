@@ -4,7 +4,10 @@
 TextMode::TextMode(QGraphicsScene& scene, AppView& appView)
     : AbstractMode(scene),
       initialized_(false),
-      appView_(appView) {
+      appView_(appView),
+      text_(0) {
+    connect(&appView_, SIGNAL(toolChanged(ToolbarMode)),
+            this, SLOT(clearFocus()));
 }
 
 void TextMode::init(int x, int y) {
@@ -28,4 +31,10 @@ void TextMode::stop(int x, int y) {
     initialized_ = true;
     scene_.addWidget(text_);
     text_->setFocus();
+}
+
+void TextMode::clearFocus() {
+    if (0 != text_) {
+        text_->clearFocus();
+    }
 }

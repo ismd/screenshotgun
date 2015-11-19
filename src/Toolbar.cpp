@@ -210,6 +210,10 @@ void Toolbar::setSelected(QPushButton* button, bool animate) {
         return;
     }
 
+    if (button == selected_) {
+        return;
+    }
+
     selected_ = button;
 
     if (button == ui->visibleAreaButton) {
@@ -224,6 +228,8 @@ void Toolbar::setSelected(QPushButton* button, bool animate) {
         appView_.mode(ToolbarMode::ELLIPSE);
     } else if (button == ui->textButton) {
         appView_.mode(ToolbarMode::TEXT);
+    } else {
+        return;
     }
 
     if (button == ui->textButton) {

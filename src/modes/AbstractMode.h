@@ -4,7 +4,8 @@
 #include <QGraphicsScene>
 #include <QKeyEvent>
 
-class AbstractMode {
+class AbstractMode : public QObject {
+    Q_OBJECT
 
 public:
     AbstractMode(QGraphicsScene&);
