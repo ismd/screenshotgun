@@ -29,7 +29,7 @@ public:
     App& app() const;
     QGraphicsScene& scene();
     VisibleAreaMode& visibleAreaMode() const;
-    void mode(const ToolbarMode);
+    void setMode(const ToolbarMode);
     void reinitVisibleArea();
     void initShortcut();
     Toolbar& toolbar();

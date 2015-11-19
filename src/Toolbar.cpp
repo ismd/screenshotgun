@@ -217,17 +217,17 @@ void Toolbar::setSelected(QPushButton* button, bool animate) {
     selected_ = button;
 
     if (button == ui->visibleAreaButton) {
-        appView_.mode(ToolbarMode::VISIBLE_AREA);
+        appView_.setMode(ToolbarMode::VISIBLE_AREA);
     } else if (button == ui->lineButton) {
-        appView_.mode(ToolbarMode::LINE);
+        appView_.setMode(ToolbarMode::LINE);
     } else if (button == ui->arrowButton) {
-        appView_.mode(ToolbarMode::ARROW);
+        appView_.setMode(ToolbarMode::ARROW);
     } else if (button == ui->rectButton) {
-        appView_.mode(ToolbarMode::RECT);
+        appView_.setMode(ToolbarMode::RECT);
     } else if (button == ui->ellipseButton) {
-        appView_.mode(ToolbarMode::ELLIPSE);
+        appView_.setMode(ToolbarMode::ELLIPSE);
     } else if (button == ui->textButton) {
-        appView_.mode(ToolbarMode::TEXT);
+        appView_.setMode(ToolbarMode::TEXT);
     } else {
         return;
     }

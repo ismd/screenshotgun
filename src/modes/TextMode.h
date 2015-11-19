@@ -1,8 +1,8 @@
 #ifndef SCREENSHOTGUN_TEXTMODE_H
 #define SCREENSHOTGUN_TEXTMODE_H
 
-#include <QPlainTextEdit>
 #include "AbstractMode.h"
+#include "TextArea.h"
 
 class AppView;
 
@@ -11,6 +11,7 @@ class TextMode : public AbstractMode {
 
 public:
     TextMode(QGraphicsScene&, AppView&);
+    TextArea* textArea();
 
     void init(int x, int y);
     void move(int x, int y);
@@ -20,7 +21,7 @@ private slots:
     void clearFocus();
 
 private:
-    QPlainTextEdit* text_;
+    TextArea* textArea_;
     bool initialized_;
     AppView& appView_;
 };

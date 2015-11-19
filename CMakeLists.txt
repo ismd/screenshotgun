@@ -41,7 +41,7 @@ set(SOURCE_FILES
     src/Updater_win.cpp
     src/Updater_win.h
     src/History.cpp
-    src/History.h)
+    src/History.h src/modes/TextArea.cpp src/modes/TextArea.h)
 
 find_package(Qt5 COMPONENTS Widgets Network REQUIRED)
 

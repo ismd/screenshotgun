@@ -67,7 +67,7 @@ VisibleAreaMode& AppView::visibleAreaMode() const {
     return *visibleAreaMode_;
 }
 
-void AppView::mode(const ToolbarMode mode) {
+void AppView::setMode(const ToolbarMode mode) {
     emit toolChanged(mode);
 
     switch (mode) {
@@ -156,7 +156,9 @@ void AppView::keyReleaseEvent(QKeyEvent* e) {
         hide();
         toolbar_.hide();
     } else if (key == Qt::Key_Return) {
-        toolbar_.submit(e->modifiers().testFlag(Qt::AltModifier));
+        if (currentMode_ != &textMode_ || textMode_.textArea() == 0 || !textMode_.textArea()->hasFocus()) {
+            toolbar_.submit(e->modifiers().testFlag(Qt::AltModifier));
+        }
     }
 
     QGraphicsView::keyReleaseEvent(e);
