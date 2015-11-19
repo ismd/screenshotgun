@@ -28,11 +28,16 @@ AppView::~AppView() {
     delete visibleAreaMode_;
 }
 
-App& AppView::app() {
+App& AppView::app() const {
     return app_;
 }
 
 void AppView::makeScreenshot() {
+    if (!app_.connected()) {
+        app_.settingsForm().showCantConnect();
+        return;
+    }
+
     // Making screenshot
     QDesktopWidget* desktop = QApplication::desktop();
     QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
@@ -58,7 +63,7 @@ QGraphicsScene& AppView::scene() {
     return scene_;
 }
 
-VisibleAreaMode& AppView::visibleAreaMode() {
+VisibleAreaMode& AppView::visibleAreaMode() const {
     return *visibleAreaMode_;
 }
 

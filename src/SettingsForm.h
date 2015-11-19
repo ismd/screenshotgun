@@ -17,6 +17,7 @@ public:
     bool valid();
     void error(const QString&);
     void show();
+    void showCantConnect();
 
 private slots:
     void accept();

@@ -2,7 +2,13 @@
 #include <QClipboard>
 #include "App.h"
 
-App::App() : appView_(*this), trayIcon_(*this), settingsForm_(*this), copyImageToClipboard_(false) {
+App::App()
+    : appView_(*this),
+      trayIcon_(*this),
+      settingsForm_(*this),
+      copyImageToClipboard_(false),
+      connectionChecks_(0),
+      connected_(false) {
     connect(&server_, SIGNAL(connectionSuccess()),
             this, SLOT(connectionSuccess()));
 
@@ -14,6 +20,10 @@ App::App() : appView_(*this), trayIcon_(*this), settingsForm_(*this), copyImageT
 
     connect(&server_, SIGNAL(uploadError()),
             this, SLOT(uploadError()));
+
+    appView_.initShortcut();
+    connect(&trayIcon_, SIGNAL(makeScreenshot()),
+            this, SLOT(makeScreenshot()));
 
     settingsForm_.init();
     if (!settingsForm_.valid()) {
@@ -56,21 +66,45 @@ void App::setCopyImageToClipboard(bool value) {
     copyImageToClipboard_ = value;
 }
 
+void App::setConnectionChecks(int value) {
+    connectionChecks_ = value;
+}
+
+bool App::connected() const {
+    return connected_;
+}
+
+void App::timerEvent(QTimerEvent *event) {
+    if (-1 != connectionChecks_) {
+        server_.checkConnection();
+    }
+
+    if (-1 == connectionChecks_ || ++connectionChecks_ > 2) {
+        killTimer(event->timerId());
+        connectionChecks_ = -1;
+    }
+}
+
 void App::makeScreenshot() {
     appView_.makeScreenshot();
 }
 
 void App::connectionSuccess() {
-    settingsForm_.hide();
+    qDebug() << "Connection established to" << server_.url();
 
-    appView_.initShortcut();
-    connect(&trayIcon_, SIGNAL(makeScreenshot()),
-            this, SLOT(makeScreenshot()));
+    connected_ = true;
+    connectionChecks_ = -1;
+    settingsForm_.hide();
 }
 
 void App::connectionError() {
-    settingsForm_.error("Не удалось подключиться к серверу");
-    settingsForm_.show();
+    qDebug() << "Can't connect to" << server_.url() << "Attempt #" << connectionChecks_;
+
+    if (0 == connectionChecks_) {
+        startTimer(20000);
+    } else if (-1 == connectionChecks_) {
+        settingsForm_.showCantConnect();
+    }
 }
 
 void App::uploadSuccess(const QString& url) {

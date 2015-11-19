@@ -33,7 +33,7 @@ Toolbar::~Toolbar() {
     delete image_;
 }
 
-AppView& Toolbar::appView() {
+AppView& Toolbar::appView() const {
     return appView_;
 }
 
@@ -201,7 +201,7 @@ void Toolbar::submit(bool copyImage) {
     appView_.app().server().upload(bytes);
 }
 
-QImage& Toolbar::image() {
+QImage& Toolbar::image() const {
     return *image_;
 }
 

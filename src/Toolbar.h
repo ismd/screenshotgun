@@ -24,14 +24,14 @@ public:
     explicit Toolbar(AppView&);
     ~Toolbar();
 
-    AppView& appView();
+    AppView& appView() const;
 
     void select(const ToolbarMode, bool animate = false);
     void setSelectedNext();
     void setSelectedPrevious();
     void show();
     void submit(bool copyImage = false);
-    QImage& image();
+    QImage& image() const;
 
 protected:
     void mousePressEvent(QMouseEvent*);

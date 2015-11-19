@@ -26,9 +26,9 @@ public:
     explicit AppView(App&);
     ~AppView();
 
-    App& app();
+    App& app() const;
     QGraphicsScene& scene();
-    VisibleAreaMode& visibleAreaMode();
+    VisibleAreaMode& visibleAreaMode() const;
     void mode(const ToolbarMode);
     void reinitVisibleArea();
     void initShortcut();

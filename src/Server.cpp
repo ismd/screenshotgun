@@ -8,7 +8,11 @@
 Server::Server(QObject* parent) : QObject(parent) {
 }
 
-void Server::setUrl(QString url) {
+QString Server::url() const {
+    return url_;
+}
+
+void Server::setUrl(const QString& url) {
     if ("http://" == url.left(7) || "https://" == url.left(8)) {
         url_ = url;
     } else {
@@ -41,6 +45,16 @@ void Server::upload(QByteArray bytes) {
     multiPart->setParent(reply_); // delete the multiPart with the reply
 }
 
+void Server::checkConnection() {
+    QNetworkRequest request(url_);
+    request.setRawHeader("User-Agent", "Screenshotgun client");
+
+    connect(&manager_, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(connectionSlot(QNetworkReply*)));
+
+    manager_.get(request);
+}
+
 void Server::uploadedSlot(QNetworkReply* reply) {
     disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
                this, SLOT(uploadedSlot(QNetworkReply*)));
@@ -70,14 +84,4 @@ void Server::connectionSlot(QNetworkReply* reply) {
     }
 
     emit connectionSuccess();
-}
-
-void Server::checkConnection() {
-    QNetworkRequest request(url_);
-    request.setRawHeader("User-Agent", "Screenshotgun client");
-
-    connect(&manager_, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(connectionSlot(QNetworkReply*)));
-
-    manager_.get(request);
 }

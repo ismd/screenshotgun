@@ -9,8 +9,10 @@ class Server : public QObject {
 public:
     Server(QObject* parent = 0);
 
-    void setUrl(QString);
+    QString url() const;
+    void setUrl(const QString&);
     void upload(QByteArray);
+    void checkConnection();
 
 signals:
     void connectionSuccess();
@@ -23,8 +25,6 @@ private slots:
     void connectionSlot(QNetworkReply*);
 
 private:
-    void checkConnection();
-
     QString url_;
     QNetworkAccessManager manager_;
     QNetworkReply* reply_;

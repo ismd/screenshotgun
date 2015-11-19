@@ -1,6 +1,7 @@
 #ifndef SCREENSHOTGUN_APP_H
 #define SCREENSHOTGUN_APP_H
 
+#include <atomic>
 #include "AppView.h"
 #include "History.h"
 #include "Server.h"
@@ -26,6 +27,11 @@ public:
     Updater& updater();
 #endif
     void setCopyImageToClipboard(bool);
+    void setConnectionChecks(int);
+    bool connected() const;
+
+protected:
+    void timerEvent(QTimerEvent*);
 
 private slots:
     void makeScreenshot();
@@ -46,6 +52,8 @@ private:
     Updater updater_;
 #endif
     bool copyImageToClipboard_;
+    std::atomic_int connectionChecks_;
+    bool connected_;
 };
 
 #endif // SCREENSHOTGUN_APP_H

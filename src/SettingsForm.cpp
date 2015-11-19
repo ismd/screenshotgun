@@ -49,8 +49,15 @@ void SettingsForm::show() {
     QDialog::show();
 }
 
+void SettingsForm::showCantConnect() {
+    app_.setConnectionChecks(-1);
+    error("Не удалось подключиться к серверу");
+    show();
+}
+
 void SettingsForm::accept() {
     error("");
+    app_.setConnectionChecks(-1);
 
     if (!valid()) {
         ui->submitButtons->setEnabled(true);
