@@ -33,7 +33,6 @@ public:
     void reinitVisibleArea();
     void initShortcut();
     Toolbar& toolbar();
-    void hide();
 
 signals:
     void toolChanged(ToolbarMode);

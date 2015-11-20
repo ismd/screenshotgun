@@ -7,20 +7,18 @@
 AppView::AppView(App& app)
     : app_(app),
       toolbar_(*this),
-      visibleAreaMode_(new VisibleAreaMode(scene_, toolbar_)),
+      visibleAreaMode_(0),
       lineMode_(scene_),
       arrowMode_(scene_),
       rectMode_(scene_),
       ellipseMode_(scene_),
-      textMode_(scene_, *this),
-      currentMode_(visibleAreaMode_) {
+      textMode_(scene_, *this) {
 
     setFrameShape(QFrame::NoFrame);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
-    reinitVisibleArea();
     setScene(&scene_);
 }
 
@@ -53,6 +51,8 @@ void AppView::makeScreenshot() {
 
     setGeometry(0, 0, width, height);
     scene_.setSceneRect(0, 0, width, height);
+
+    reinitVisibleArea();
 
     // Background screenshot
     scene_.addPixmap(screenshot_);
@@ -103,8 +103,14 @@ void AppView::setMode(const ToolbarMode mode) {
 }
 
 void AppView::reinitVisibleArea() {
+    if (0 != visibleAreaMode_) {
+        delete visibleAreaMode_;
+    }
+
+    visibleAreaMode_ = new VisibleAreaMode(scene_, toolbar_);
     currentMode_ = visibleAreaMode_;
     toolbar_.select(ToolbarMode::VISIBLE_AREA);
+    setMouseTracking(true);
 }
 
 void AppView::initShortcut() {
@@ -120,13 +126,6 @@ void AppView::initShortcut() {
 
 Toolbar& AppView::toolbar() {
     return toolbar_;
-}
-
-void AppView::hide() {
-    delete visibleAreaMode_;
-    visibleAreaMode_ = new VisibleAreaMode(scene_, toolbar_);
-    reinitVisibleArea();
-    QGraphicsView::hide();
 }
 
 void AppView::mousePressEvent(QMouseEvent* e) {
