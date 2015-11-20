@@ -1,7 +1,6 @@
 #ifndef SCREENSHOTGUN_APP_H
 #define SCREENSHOTGUN_APP_H
 
-#include <atomic>
 #include "AppView.h"
 #include "History.h"
 #include "Server.h"
@@ -52,7 +51,7 @@ private:
     Updater updater_;
 #endif
     bool copyImageToClipboard_;
-    std::atomic_int connectionChecks_;
+    int connectionChecks_;
     bool connected_;
 };
 
