@@ -129,15 +129,42 @@ Toolbar& AppView::toolbar() {
 }
 
 void AppView::mousePressEvent(QMouseEvent* e) {
-    currentMode_->init(e->x(), e->y());
+    int x = e->x();
+    int y = e->y();
+
+    if (currentMode_ != visibleAreaMode_
+        && visibleAreaMode_->initialized()
+        && visibleAreaMode_->isResizablePosition(x, y))
+    {
+        visibleAreaMode_->resizeInit(x, y);
+        return;
+    }
+
+    currentMode_->init(x, y);
 }
 
 void AppView::mouseMoveEvent(QMouseEvent* e) {
-    currentMode_->move(e->x(), e->y());
+    int x = e->x();
+    int y = e->y();
+
+    if (visibleAreaMode_->resizing()) {
+        visibleAreaMode_->resizeMove(x, y);
+        return;
+    }
+
+    currentMode_->move(x, y);
 }
 
 void AppView::mouseReleaseEvent(QMouseEvent* e) {
-    currentMode_->stop(e->x(), e->y());
+    int x = e->x();
+    int y = e->y();
+
+    if (visibleAreaMode_->resizing()) {
+        visibleAreaMode_->resizeStop(x, y);
+        return;
+    }
+
+    currentMode_->stop(x, y);
 }
 
 void AppView::wheelEvent(QWheelEvent* e) {
