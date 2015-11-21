@@ -7,7 +7,7 @@ fi
 SRC_PATH=/home/ismd/src/screenshotgun
 VERSION=$1
 
-BUILD_PATH_LINUX_64=/home/ismd/build/screenshotgun-linux-64
+#BUILD_PATH_LINUX_64=/home/ismd/build/screenshotgun-linux-64
 BUILD_PATH_WINDOWS_32=/home/ismd/build/screenshotgun-windows-32
 BUILD_PATH_DEB_64=/home/ismd/build/deb-64
 
@@ -16,9 +16,9 @@ PPA_PATH=/home/ismd/repos/ppa
 ARCH_PATH=/home/ismd/src/screenshotgun-aur
 DEB_64_FILENAME=screenshotgun_amd64.deb
 
-rm -rf $BUILD_PATH_LINUX_64
+#rm -rf $BUILD_PATH_LINUX_64
 rm -rf $BUILD_PATH_WINDOWS_32
-mkdir $BUILD_PATH_LINUX_64
+#mkdir $BUILD_PATH_LINUX_64
 mkdir $BUILD_PATH_WINDOWS_32
 
 echo "*** Updating working copy ***"
@@ -38,7 +38,7 @@ echo -e "\n*** Compiling for linux 64 ***"
 #cmake --build . || exit $?
 #make install/strip
 
-docker run -it -v $SRC_PATH:$SRC_PATH:ro -v $BUILD_PATH_LINUX_64:/home/ismd/build-output ismd/screenshotgun-ubuntu /home/ismd/bin/build.sh
+docker run -t -v $SRC_PATH:$SRC_PATH:ro -v $BUILD_PATH_DEB_64/usr:/home/ismd/build-output ismd/screenshotgun-ubuntu /home/ismd/bin/build.sh
 
 # Deb 64
 echo -e "\n*** Making deb 64 ***"
