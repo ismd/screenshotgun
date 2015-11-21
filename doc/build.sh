@@ -38,7 +38,7 @@ echo -e "\n*** Compiling for linux 64 ***"
 #cmake --build . || exit $?
 #make install/strip
 
-docker run -t -v $SRC_PATH:$SRC_PATH:ro -v $BUILD_PATH_DEB_64/usr:/home/ismd/build-output ismd/screenshotgun-ubuntu /home/ismd/bin/build.sh
+docker run -i -v $SRC_PATH:$SRC_PATH:ro -v $BUILD_PATH_DEB_64/usr:/home/ismd/build-output ismd/screenshotgun-ubuntu /home/ismd/bin/build.sh
 
 # Deb 64
 echo -e "\n*** Making deb 64 ***"
