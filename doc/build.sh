@@ -33,10 +33,12 @@ git pull
 # Compiling for linux 64
 echo -e "\n*** Compiling for linux 64 ***"
 
-cd $BUILD_PATH_LINUX_64
-cmake $SRC_PATH -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$BUILD_PATH_DEB_64/usr
-cmake --build . || exit $?
-make install/strip
+#cd $BUILD_PATH_LINUX_64
+#cmake $SRC_PATH -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$BUILD_PATH_DEB_64/usr
+#cmake --build . || exit $?
+#make install/strip
+
+docker run -it -v $SRC_PATH:$SRC_PATH:ro -v $BUILD_PATH_LINUX_64:/home/ismd/build-output ismd/screenshotgun-ubuntu /home/ismd/bin/build.sh
 
 # Deb 64
 echo -e "\n*** Making deb 64 ***"
