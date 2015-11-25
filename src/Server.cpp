@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QFile>
 #include <QHttpMultiPart>
 #include <QJsonDocument>
@@ -79,7 +78,7 @@ void Server::connectionSlot(QNetworkReply* reply) {
                this, SLOT(connectionSlot(QNetworkReply*)));
 
     if (QNetworkReply::NoError != reply->error()) {
-        qDebug() << reply->errorString();
+        //qDebug() << reply->errorString();
         emit connectionError();
         return;
     }

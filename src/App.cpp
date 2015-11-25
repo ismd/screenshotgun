@@ -1,6 +1,5 @@
 #include <QApplication>
 #include <QClipboard>
-#include <QDebug>
 #include "App.h"
 
 App::App()

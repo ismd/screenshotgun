@@ -1,5 +1,4 @@
 #include <QCoreApplication>
-#include <QDebug>
 #include <QDir>
 #include <QSettings>
 #include <QStandardPaths>
@@ -42,13 +41,13 @@ void AutoStartup::setLinux(bool enabled) {
 
     if (enabled) {
         if (!QDir().exists(autoStartPath) && !QDir().mkpath(autoStartPath)) {
-            qDebug() << "Could not create autostart directory";
+            //qDebug() << "Could not create autostart directory";
             return;
         }
 
         QFile iniFile(desktopFileLocation);
         if (!iniFile.open(QIODevice::WriteOnly)) {
-            qDebug() << "Could not write auto start entry" << desktopFileLocation;
+            //qDebug() << "Could not write auto start entry" << desktopFileLocation;
             return;
         }
 
@@ -67,7 +66,7 @@ void AutoStartup::setLinux(bool enabled) {
             ;
     } else {
         if (QFile(desktopFileLocation).exists() && !QFile::remove(desktopFileLocation)) {
-            qDebug() << "Could not remove autostart desktop file";
+            //qDebug() << "Could not remove autostart desktop file";
         }
     }
 }
