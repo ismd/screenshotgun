@@ -1,4 +1,3 @@
-#include <QDebug>
 #include "TextArea.h"
 
 TextArea::TextArea(QWidget* parent) : QPlainTextEdit(parent) {

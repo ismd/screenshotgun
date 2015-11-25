@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QFile>
 #include <QHttpMultiPart>
 #include <QJsonDocument>
