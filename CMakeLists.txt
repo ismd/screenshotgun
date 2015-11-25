@@ -43,6 +43,8 @@ set(SOURCE_FILES
     src/History.cpp
     src/History.h src/modes/TextArea.cpp src/modes/TextArea.h)
 
+add_definitions(-DQT_COMPILING_QSTRING_COMPAT_CPP)
+
 find_package(Qt5 COMPONENTS Widgets Network REQUIRED)
 
 if(UNIX AND NOT APPLE)
