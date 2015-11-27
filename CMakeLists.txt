@@ -7,6 +7,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 set(SOURCE_FILES
+    resources/res.qrc
     src/modes/AbstractMode.cpp
     src/modes/AbstractMode.h
     src/modes/ArrowMode.cpp
@@ -21,6 +22,8 @@ set(SOURCE_FILES
     src/modes/TextMode.h
     src/modes/VisibleAreaMode.cpp
     src/modes/VisibleAreaMode.h
+    src/modes/TextArea.cpp
+    src/modes/TextArea.h
     src/Autostartup.cpp
     src/Autostartup.h
     src/Toolbar.cpp
@@ -41,16 +44,31 @@ set(SOURCE_FILES
     src/Updater_win.cpp
     src/Updater_win.h
     src/History.cpp
-    src/History.h src/modes/TextArea.cpp src/modes/TextArea.h)
+    src/History.h)
 
-add_definitions(-DQT_COMPILING_QSTRING_COMPAT_CPP)
+find_package(Qt5 COMPONENTS Gui Network Widgets REQUIRED)
 
-find_package(Qt5 COMPONENTS Widgets Network REQUIRED)
+qt5_wrap_ui(SOURCE_FILES
+    ui/Toolbar.ui
+    ui/Update.ui
+    ui/Settings.ui)
 
 if(UNIX AND NOT APPLE)
     find_package(X11 REQUIRED)
-    find_package(Qt5 COMPONENTS Gui REQUIRED)
-    include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
+
+    if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Release")
+        include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
+    else()
+        include_directories(${QT5_DIR}/include/QtGui/${Qt5Gui_VERSION}/QtGui)
+        link_directories(${QT5_DIR}/lib
+            ${QT5_DIR}/plugins/platforms
+            ${QT5_DIR}/qtbase/src/plugins/platforms/xcb/xcb-static
+            ${QT5_DIR}/plugins/xcbglintegrations
+            ${QT5_DIR}/qtbase/src/plugins/platforms/xcb/gl_integrations/xcb_egl/xcb-static
+            ${QT5_DIR}/qtbase/src/plugins/platforms/xcb/gl_integrations/xcb_glx/xcb-static
+            ${QT5_DIR}/plugins/imageformats
+            ${QT5_DIR}/plugins/egldeviceintegrations)
+    endif()
 
     list(APPEND SOURCE_FILES
         src/qxt/qxtglobal.h
@@ -58,16 +76,22 @@ if(UNIX AND NOT APPLE)
         src/qxt/qxtglobalshortcut_p.h
         src/qxt/qxtglobalshortcut.cpp
         src/qxt/qxtglobalshortcut_x11.cpp)
-endif()
 
-qt5_wrap_ui(UIS_HDRS
-    ui/Toolbar.ui
-    ui/Update.ui
-    ui/Settings.ui)
+    if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Release")
+        add_executable(screenshotgun ${SOURCE_FILES})
+        target_link_libraries(screenshotgun X11 Qt5::Widgets Qt5::Network)
+    else()
+        list(APPEND SOURCE_FILES src/plugins.cpp)
 
-if(UNIX AND NOT APPLE)
-    add_executable(screenshotgun ${SOURCE_FILES} ${UIS_HDRS} resources/res.qrc)
-    target_link_libraries(screenshotgun X11 Qt5::Widgets Qt5::Network)
+        add_executable(screenshotgun ${SOURCE_FILES})
+        target_link_libraries(screenshotgun
+            gobject-2.0 qwayland-egl wayland-egl qwayland-generic Qt5WaylandClient wayland-client wayland-cursor qxcb
+            qxcb-egl-integration qxcb-glx-integration Qt5XcbQpa Xi SM ICE xcb-static qdds qicns qico qjp2 jasper qmng
+            mng qtga qtiff tiff qwbmp qwebp webp qeglfs-kms-integration drm gbm qeglfs-x11-integration X11-xcb xcb
+            Qt5EglDeviceIntegration Qt5PlatformSupport fontconfig freetype Qt5DBus Xrender Xext X11 input xkbcommon
+            udev mtdev qtharfbuzzng Qt5::Core icui18n icuuc icudata qtpcre m dl gthread-2.0 -pthread glib-2.0 rt EGL GL
+            pthread Qt5::Widgets Qt5::Gui Qt5::Network proxy)
+    endif()
 
     install(TARGETS screenshotgun RUNTIME DESTINATION bin)
     install(FILES "${CMAKE_SOURCE_DIR}/dist/screenshotgun.desktop"
@@ -75,6 +99,6 @@ if(UNIX AND NOT APPLE)
     install(FILES "${CMAKE_SOURCE_DIR}/dist/screenshotgun.png"
         DESTINATION share/pixmaps)
 else(WIN32)
-    add_executable(screenshotgun WIN32 ${SOURCE_FILES} ${UIS_HDRS} resources/res.qrc)
+    add_executable(screenshotgun WIN32 ${SOURCE_FILES})
     target_link_libraries(screenshotgun Qt5::Widgets Qt5::Network)
 endif()
