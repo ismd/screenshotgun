@@ -69,7 +69,7 @@ if(UNIX AND NOT APPLE)
         add_executable(screenshotgun ${SOURCE_FILES})
         target_link_libraries(screenshotgun X11 Qt5::Widgets Qt5::Gui Qt5::Network)
     else()
-        include_directories(${Qt5_DIR}/include/QtGui/${Qt5Gui_VERSION}/QtGui)
+        include_directories(${ADDITIONAL_INCLUDE})
 
         link_directories(${Qt5_DIR}/lib
             ${Qt5_DIR}/plugins/platforms
