@@ -71,14 +71,14 @@ if(UNIX AND NOT APPLE)
     else()
         include_directories(${ADDITIONAL_INCLUDE})
 
-        link_directories(${Qt5_DIR}/lib
-            ${Qt5_DIR}/plugins/platforms
-            ${Qt5_DIR}/qtbase/src/plugins/platforms/xcb/xcb-static
-            ${Qt5_DIR}/plugins/xcbglintegrations
-            ${Qt5_DIR}/qtbase/src/plugins/platforms/xcb/gl_integrations/xcb_egl/xcb-static
-            ${Qt5_DIR}/qtbase/src/plugins/platforms/xcb/gl_integrations/xcb_glx/xcb-static
-            ${Qt5_DIR}/plugins/imageformats
-            ${Qt5_DIR}/plugins/egldeviceintegrations)
+        link_directories(${QT5_PATH}/lib
+            ${QT5_PATH}/plugins/platforms
+            ${QT5_PATH}/qtbase/src/plugins/platforms/xcb/xcb-static
+            ${QT5_PATH}/plugins/xcbglintegrations
+            ${QT5_PATH}/qtbase/src/plugins/platforms/xcb/gl_integrations/xcb_egl/xcb-static
+            ${QT5_PATH}/qtbase/src/plugins/platforms/xcb/gl_integrations/xcb_glx/xcb-static
+            ${QT5_PATH}/plugins/imageformats
+            ${QT5_PATH}/plugins/egldeviceintegrations)
 
         list(APPEND SOURCE_FILES src/plugins.cpp)
 
