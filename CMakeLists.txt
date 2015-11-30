@@ -56,10 +56,21 @@ qt5_wrap_ui(SOURCE_FILES
 if(UNIX AND NOT APPLE)
     find_package(X11 REQUIRED)
 
-    if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Release")
+    list(APPEND SOURCE_FILES
+        src/qxt/qxtglobal.h
+        src/qxt/qxtglobalshortcut.h
+        src/qxt/qxtglobalshortcut_p.h
+        src/qxt/qxtglobalshortcut.cpp
+        src/qxt/qxtglobalshortcut_x11.cpp)
+
+    if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Release" OR NOT ${BUILD_TYPE} MATCHES "static")
         include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
+
+        add_executable(screenshotgun ${SOURCE_FILES})
+        target_link_libraries(screenshotgun X11 Qt5::Widgets Qt5::Gui Qt5::Network)
     else()
         include_directories(${QT5_DIR}/include/QtGui/${Qt5Gui_VERSION}/QtGui)
+
         link_directories(${QT5_DIR}/lib
             ${QT5_DIR}/plugins/platforms
             ${QT5_DIR}/qtbase/src/plugins/platforms/xcb/xcb-static
@@ -68,19 +79,7 @@ if(UNIX AND NOT APPLE)
             ${QT5_DIR}/qtbase/src/plugins/platforms/xcb/gl_integrations/xcb_glx/xcb-static
             ${QT5_DIR}/plugins/imageformats
             ${QT5_DIR}/plugins/egldeviceintegrations)
-    endif()
 
-    list(APPEND SOURCE_FILES
-        src/qxt/qxtglobal.h
-        src/qxt/qxtglobalshortcut.h
-        src/qxt/qxtglobalshortcut_p.h
-        src/qxt/qxtglobalshortcut.cpp
-        src/qxt/qxtglobalshortcut_x11.cpp)
-
-    if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Release")
-        add_executable(screenshotgun ${SOURCE_FILES})
-        target_link_libraries(screenshotgun X11 Qt5::Widgets Qt5::Network)
-    else()
         list(APPEND SOURCE_FILES src/plugins.cpp)
 
         add_executable(screenshotgun ${SOURCE_FILES})
@@ -100,5 +99,5 @@ if(UNIX AND NOT APPLE)
         DESTINATION share/pixmaps)
 else(WIN32)
     add_executable(screenshotgun WIN32 ${SOURCE_FILES})
-    target_link_libraries(screenshotgun Qt5::Widgets Qt5::Network)
+    target_link_libraries(screenshotgun Qt5::Widgets Qt5::Gui Qt5::Network)
 endif()
