@@ -63,7 +63,7 @@ if(UNIX AND NOT APPLE)
         src/qxt/qxtglobalshortcut.cpp
         src/qxt/qxtglobalshortcut_x11.cpp)
 
-    if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Release" OR NOT ${BUILD_TYPE} MATCHES "static")
+    if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Release" OR NOT DEFINED ${STATIC_BUILD})
         include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
         add_executable(screenshotgun ${SOURCE_FILES})
