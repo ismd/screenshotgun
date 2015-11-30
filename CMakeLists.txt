@@ -63,22 +63,22 @@ if(UNIX AND NOT APPLE)
         src/qxt/qxtglobalshortcut.cpp
         src/qxt/qxtglobalshortcut_x11.cpp)
 
-    if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Release" OR NOT DEFINED ${STATIC_BUILD})
+    if(NOT ${CMAKE_BUILD_TYPE} MATCHES "Release" OR NOT DEFINED STATIC_BUILD OR NOT ${STATIC_BUILD})
         include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
         add_executable(screenshotgun ${SOURCE_FILES})
         target_link_libraries(screenshotgun X11 Qt5::Widgets Qt5::Gui Qt5::Network)
     else()
-        include_directories(${QT5_DIR}/include/QtGui/${Qt5Gui_VERSION}/QtGui)
+        include_directories(${Qt5_DIR}/include/QtGui/${Qt5Gui_VERSION}/QtGui)
 
-        link_directories(${QT5_DIR}/lib
-            ${QT5_DIR}/plugins/platforms
-            ${QT5_DIR}/qtbase/src/plugins/platforms/xcb/xcb-static
-            ${QT5_DIR}/plugins/xcbglintegrations
-            ${QT5_DIR}/qtbase/src/plugins/platforms/xcb/gl_integrations/xcb_egl/xcb-static
-            ${QT5_DIR}/qtbase/src/plugins/platforms/xcb/gl_integrations/xcb_glx/xcb-static
-            ${QT5_DIR}/plugins/imageformats
-            ${QT5_DIR}/plugins/egldeviceintegrations)
+        link_directories(${Qt5_DIR}/lib
+            ${Qt5_DIR}/plugins/platforms
+            ${Qt5_DIR}/qtbase/src/plugins/platforms/xcb/xcb-static
+            ${Qt5_DIR}/plugins/xcbglintegrations
+            ${Qt5_DIR}/qtbase/src/plugins/platforms/xcb/gl_integrations/xcb_egl/xcb-static
+            ${Qt5_DIR}/qtbase/src/plugins/platforms/xcb/gl_integrations/xcb_glx/xcb-static
+            ${Qt5_DIR}/plugins/imageformats
+            ${Qt5_DIR}/plugins/egldeviceintegrations)
 
         list(APPEND SOURCE_FILES src/plugins.cpp)
 
