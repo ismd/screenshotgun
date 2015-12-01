@@ -87,7 +87,7 @@ if(UNIX AND NOT APPLE)
             gobject-2.0 qwayland-egl wayland-egl qwayland-generic Qt5WaylandClient wayland-client wayland-cursor qxcb
             qxcb-egl-integration qxcb-glx-integration Qt5XcbQpa Xi SM ICE xcb-static qdds qicns qico qjp2 jasper qmng
             mng qtga qtiff tiff qwbmp qwebp webp qeglfs-kms-integration drm gbm qeglfs-x11-integration X11-xcb xcb
-            Qt5EglDeviceIntegration Qt5PlatformSupport fontconfig freetype Qt5DBus Xrender Xext X11 input xkbcommon
+            Qt5EglDeviceIntegration Qt5PlatformSupport fontconfig freetype Qt5DBus Xrender Xext X11 xkbcommon
             udev mtdev qtharfbuzzng Qt5::Core icui18n icuuc icudata qtpcre m dl gthread-2.0 -pthread glib-2.0 rt EGL GL
             pthread Qt5::Widgets Qt5::Gui Qt5::Network proxy)
     endif()
