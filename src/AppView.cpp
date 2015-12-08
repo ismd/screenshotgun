@@ -14,6 +14,8 @@ AppView::AppView(App& app)
       ellipseMode_(scene_),
       textMode_(scene_, *this) {
 
+    setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
+    setFocusPolicy(Qt::StrongFocus);
     setFrameShape(QFrame::NoFrame);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
