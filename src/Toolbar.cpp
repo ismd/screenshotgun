@@ -227,7 +227,7 @@ void Toolbar::setSelected(QPushButton* button, bool animate) {
     if (button == ui->textButton) {
         appView_.setCursor(Qt::IBeamCursor);
     } else {
-        appView_.setCursor(Qt::ArrowCursor);
+        appView_.setCursor(Qt::CrossCursor);
     }
 
     int x = ui->selectedCircle->x();

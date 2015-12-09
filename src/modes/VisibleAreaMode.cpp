@@ -105,23 +105,7 @@ void VisibleAreaMode::resizeInit(int x, int y) {
     resizeInfo_.y = y;
 
     // Detecting side
-    if (x <= area.x && y <= area.y) {
-        resizeInfo_.direction = ResizeDirection::TOP_LEFT;
-    } else if (x <= area.x && y >= area.y && y <= area.y + area.height) {
-        resizeInfo_.direction = ResizeDirection::LEFT;
-    } else if (x <= area.x && y >= area.y + area.height) {
-        resizeInfo_.direction = ResizeDirection::BOTTOM_LEFT;
-    } else if (x >= area.x && x <= area.x + area.width && y <= area.y) {
-        resizeInfo_.direction = ResizeDirection::TOP;
-    } else if (x >= area.x && x <= area.x + area.width && y >= area.y + area.height) {
-        resizeInfo_.direction = ResizeDirection::BOTTOM;
-    } else if (x >= area.x && y <= area.y) {
-        resizeInfo_.direction = ResizeDirection::TOP_RIGHT;
-    } else if (x >= area.x && y >= area.y && y <= area.y + area.height) {
-        resizeInfo_.direction = ResizeDirection::RIGHT;
-    } else if (x >= area.x && y >= area.y + area.height) {
-        resizeInfo_.direction = ResizeDirection::BOTTOM_RIGHT;
-    }
+    resizeInfo_.direction = resizablePosition(x, y);
 }
 
 void VisibleAreaMode::resizeMove(int x, int y) {
@@ -257,4 +241,24 @@ bool VisibleAreaMode::initialized() {
 
 bool VisibleAreaMode::resizing() {
     return resizing_;
+}
+
+ResizeDirection VisibleAreaMode::resizablePosition(int x, int y) {
+    if (x <= area.x && y <= area.y) {
+        return ResizeDirection::TOP_LEFT;
+    } else if (x <= area.x && y >= area.y && y <= area.y + area.height) {
+        return ResizeDirection::LEFT;
+    } else if (x <= area.x && y >= area.y + area.height) {
+        return ResizeDirection::BOTTOM_LEFT;
+    } else if (x >= area.x && x <= area.x + area.width && y <= area.y) {
+        return ResizeDirection::TOP;
+    } else if (x >= area.x && x <= area.x + area.width && y >= area.y + area.height) {
+        return ResizeDirection::BOTTOM;
+    } else if (x >= area.x && y <= area.y) {
+        return ResizeDirection::TOP_RIGHT;
+    } else if (x >= area.x && y >= area.y && y <= area.y + area.height) {
+        return ResizeDirection::RIGHT;
+    } else if (x >= area.x && y >= area.y + area.height) {
+        return ResizeDirection::BOTTOM_RIGHT;
+    }
 }

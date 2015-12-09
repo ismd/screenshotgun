@@ -34,6 +34,7 @@ public:
     bool isResizablePosition(int x, int y);
     bool initialized();
     bool resizing();
+    ResizeDirection resizablePosition(int x, int y);
 
     struct {
         int x;

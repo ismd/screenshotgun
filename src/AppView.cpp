@@ -22,6 +22,7 @@ AppView::AppView(App& app)
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     setMouseTracking(true);
+    setCursor(Qt::BlankCursor);
 
     setScene(&scene_);
 }
@@ -153,11 +154,32 @@ void AppView::mouseMoveEvent(QMouseEvent* e) {
 
     if (visibleAreaMode_->resizing()) {
         visibleAreaMode_->resizeMove(x, y);
-        return;
-    }
-
-    if (usingMode_ || currentMode_ == visibleAreaMode_ && !visibleAreaMode_->initialized()) {
+    } else if (usingMode_ || currentMode_ == visibleAreaMode_ && !visibleAreaMode_->initialized()) {
         currentMode_->move(x, y);
+    } else if (currentMode_ != visibleAreaMode_ && visibleAreaMode_->isResizablePosition(x, y)) {
+        switch (visibleAreaMode_->resizablePosition(x, y)) {
+            case ResizeDirection::TOP:
+            case ResizeDirection::BOTTOM:
+                setCursor(Qt::SizeVerCursor);
+                break;
+
+            case ResizeDirection::LEFT:
+            case ResizeDirection::RIGHT:
+                setCursor(Qt::SizeHorCursor);
+                break;
+
+            case ResizeDirection::TOP_LEFT:
+            case ResizeDirection::BOTTOM_RIGHT:
+                setCursor(Qt::SizeFDiagCursor);
+                break;
+
+            case ResizeDirection::TOP_RIGHT:
+            case ResizeDirection::BOTTOM_LEFT:
+                setCursor(Qt::SizeBDiagCursor);
+                break;
+        }
+    } else {
+        setCursor(Qt::CrossCursor);
     }
 }
 
