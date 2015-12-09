@@ -3,7 +3,7 @@
 
 #include <QPushButton>
 #include <QWidget>
-#include "Server.h"
+#include "services/Server.h"
 #include "ui_Toolbar.h"
 
 class AppView;

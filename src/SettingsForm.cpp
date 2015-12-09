@@ -12,16 +12,50 @@ SettingsForm::~SettingsForm() {
 }
 
 void SettingsForm::init() {
+    switch (settings_.service()) {
+        case UploadService::SERVER:
+            ui->radioButtonServer->setChecked(true);
+            break;
+
+        case UploadService::YANDEX:
+            ui->radioButtonYandex->setChecked(true);
+            break;
+    }
+
     ui->autoStartupCheckBox->setChecked(settings_.autostartup());
     ui->serverEdit->setText(settings_.serverUrl());
+    ui->yandexToken->setText(settings_.yandexToken());
 }
 
 bool SettingsForm::valid() {
-    QString serverUrl = ui->serverEdit->text();
-    bool valid = serverUrl.length() > 0;
+    bool valid;
+
+    if (settings_.exists()) {
+        if (ui->radioButtonServer->isChecked()) {
+            valid = ui->serverEdit->text().length() > 0;
+
+            if (valid) {
+                app_.setUploadService(UploadService::SERVER);
+                app_.server().setUrl(ui->serverEdit->text());
+            } else {
+                error("Не указан адрес сервера");
+            }
+        } else if (ui->radioButtonYandex->isChecked()) {
+            valid = ui->yandexToken->text().length() > 0;
+
+            if (valid) {
+                hide();
+                app_.setUploadService(UploadService::YANDEX);
+                app_.yandex().setToken(ui->yandexToken->text());
+            } else {
+                error("Не указан токен");
+            }
+        }
+    } else {
+        settings_.create();
+    }
 
     if (valid) {
-        app_.server().setUrl(serverUrl);
         saveValues();
     }
 
@@ -67,8 +101,15 @@ void SettingsForm::accept() {
 void SettingsForm::saveValues() {
     bool autoStartupValue = ui->autoStartupCheckBox->isChecked();
 
-    settings_.autostartup(autoStartupValue);
-    settings_.serverUrl(ui->serverEdit->text());
+    if (ui->radioButtonServer->isChecked()) {
+        settings_.setService(UploadService::SERVER);
+    } else if (ui->radioButtonYandex->isChecked()) {
+        settings_.setService(UploadService::YANDEX);
+    }
+
+    settings_.setAutostartup(autoStartupValue);
+    settings_.setServerUrl(ui->serverEdit->text());
+    settings_.setYandexToken(ui->yandexToken->text());
 
     AutoStartup autoStartup;
     autoStartup.set(autoStartupValue);

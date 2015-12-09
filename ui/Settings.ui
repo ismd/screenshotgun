@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>441</width>
+    <width>462</width>
     <height>280</height>
    </rect>
   </property>
@@ -24,7 +24,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>441</width>
+     <width>461</width>
      <height>281</height>
     </rect>
    </property>
@@ -113,20 +113,36 @@
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QDialogButtonBox" name="submitButtons">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>200</y>
+       <width>171</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>418</width>
-       <height>140</height>
+       <x>11</x>
+       <y>11</y>
+       <width>431</width>
+       <height>126</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
-      <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0" rowspan="4">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QRadioButton" name="serverRadioButton">
+         <widget class="QRadioButton" name="radioButtonServer">
           <property name="text">
            <string>Сервер</string>
           </property>
@@ -146,9 +162,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="serverRadioButton_3">
+         <widget class="QRadioButton" name="radioButtonYandex">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="text">
            <string>Яндекс.Диск</string>
@@ -167,109 +183,89 @@
         </item>
        </layout>
       </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="serverEdit">
+        <property name="text">
+         <string>screenshotgun.com</string>
+        </property>
+        <property name="placeholderText">
+         <string>Адрес сервера</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QLineEdit" name="serverEdit">
-          <property name="text">
-           <string>screenshotgun.com</string>
+         <widget class="QLineEdit" name="lineEdit">
+          <property name="enabled">
+           <bool>false</bool>
           </property>
           <property name="placeholderText">
-           <string>Адрес сервера</string>
+           <string>Логин</string>
           </property>
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QLineEdit" name="lineEdit">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="placeholderText">
-             <string>Логин</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="lineEdit_2">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="placeholderText">
-             <string>Пароль</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QLineEdit" name="lineEdit_2">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="placeholderText">
+           <string>Пароль</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLineEdit" name="yandexToken">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="placeholderText">
+           <string>Токен</string>
+          </property>
+         </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QLineEdit" name="lineEdit_3">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="placeholderText">
-             <string>Логин</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="lineEdit_4">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="placeholderText">
-             <string>Пароль</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>&lt;a href=&quot;https://oauth.yandex.ru/authorize?response_type=token&amp;client_id=9cc4557692e44328bfecf32f2c131eea&quot;&gt;Получить токен&lt;/a&gt;</string>
+          </property>
+          <property name="openExternalLinks">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLineEdit" name="lineEdit_5">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="placeholderText">
+           <string>Логин</string>
+          </property>
+         </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QLineEdit" name="lineEdit_5">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="placeholderText">
-             <string>Логин</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="lineEdit_6">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="placeholderText">
-             <string>Пароль</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QLineEdit" name="lineEdit_6">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="placeholderText">
+           <string>Пароль</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
      </layout>
-    </widget>
-    <widget class="QDialogButtonBox" name="submitButtons">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>200</y>
-       <width>171</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_2">

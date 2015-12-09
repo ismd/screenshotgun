@@ -36,7 +36,7 @@ App& AppView::app() const {
 }
 
 void AppView::makeScreenshot() {
-    if (!app_.connected()) {
+    if (app_.uploadService() == UploadService::SERVER && !app_.connected()) {
         app_.settingsForm().showCantConnect();
         return;
     }
@@ -52,7 +52,7 @@ void AppView::makeScreenshot() {
                                                                geo.height());
 
     int width = screenshot_.width(),
-        height = screenshot_.height();
+            height = screenshot_.height();
 
     setGeometry(0, 0, width, height);
     scene_.setSceneRect(0, 0, width, height);

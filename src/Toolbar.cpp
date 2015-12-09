@@ -164,7 +164,6 @@ void Toolbar::submit(bool copyImage) {
     hide();
 
     QGraphicsScene& scene = appView_.scene();
-    //scene.clearSelection();
 
     VisibleAreaMode& visibleAreaMode = appView_.visibleAreaMode();
     scene.setSceneRect(visibleAreaMode.area.x,
@@ -190,7 +189,16 @@ void Toolbar::submit(bool copyImage) {
 
     appView_.hide();
     appView_.app().setCopyImageToClipboard(copyImage);
-    appView_.app().server().upload(bytes);
+
+    switch (appView_.app().uploadService()) {
+        case UploadService::SERVER:
+            appView_.app().server().upload(bytes);
+            break;
+
+        case UploadService::YANDEX:
+            appView_.app().yandex().upload(bytes);
+            break;
+    }
 }
 
 QImage& Toolbar::image() const {

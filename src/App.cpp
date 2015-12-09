@@ -21,6 +21,12 @@ App::App()
     connect(&server_, SIGNAL(uploadError()),
             this, SLOT(uploadError()));
 
+    connect(&yandex_, SIGNAL(uploadSuccess(QString)),
+            this, SLOT(uploadSuccess(QString)));
+
+    connect(&yandex_, SIGNAL(uploadError(QString)),
+            this, SLOT(uploadError(QString)));
+
     appView_.initShortcut();
     connect(&trayIcon_, SIGNAL(makeScreenshot()),
             this, SLOT(makeScreenshot()));
@@ -44,8 +50,16 @@ SettingsForm& App::settingsForm() {
     return settingsForm_;
 }
 
+UploadService App::uploadService() const {
+    return service_;
+}
+
 Server& App::server() {
     return server_;
+}
+
+Yandex& App::yandex() {
+    return yandex_;
 }
 
 Settings& App::settings() {
@@ -61,6 +75,10 @@ Updater& App::updater() {
     return updater_;
 }
 #endif
+
+void App::setUploadService(UploadService service) {
+    service_ = service;
+}
 
 void App::setCopyImageToClipboard(bool value) {
     copyImageToClipboard_ = value;
@@ -129,8 +147,11 @@ void App::uploadSuccess(const QString& url) {
 }
 
 void App::uploadError() {
-    trayIcon_.showError("Ошибка во время загрузки скриншота",
-                        "Обратитесь к разработчику и проверьте логи на сервере");
+    uploadError("Обратитесь к разработчику и проверьте логи на сервере");
+}
+
+void App::uploadError(QString error) {
+    trayIcon_.showError("Ошибка во время загрузки скриншота", error);
 }
 
 void App::updateAvailable(const QString& version) {

@@ -31,8 +31,8 @@ set(SOURCE_FILES
     src/App.cpp
     src/App.h
     src/main.cpp
-    src/Server.cpp
-    src/Server.h
+    src/services/Server.cpp
+    src/services/Server.h
     src/Settings.cpp
     src/Settings.h
     src/SettingsForm.cpp
@@ -44,7 +44,7 @@ set(SOURCE_FILES
     src/Updater_win.cpp
     src/Updater_win.h
     src/History.cpp
-    src/History.h)
+    src/History.h src/services/Yandex.cpp src/services/Yandex.h)
 
 find_package(Qt5 COMPONENTS Gui Network Widgets REQUIRED)
 
