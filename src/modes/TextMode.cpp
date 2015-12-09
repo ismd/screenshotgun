@@ -29,8 +29,6 @@ void TextMode::move(int x, int y) {
 }
 
 void TextMode::stop(int x, int y) {
-    appView_.setMouseTracking(true);
-
     move(x, y);
     initialized_ = true;
     scene_.addWidget(textArea_);

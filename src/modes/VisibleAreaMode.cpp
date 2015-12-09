@@ -92,7 +92,6 @@ void VisibleAreaMode::move(int x, int y) {
 }
 
 void VisibleAreaMode::stop(int x, int y) {
-    toolbar_.appView().setMouseTracking(false);
     move(x, y);
     updateToolbarPosition();
     toolbar_.show();

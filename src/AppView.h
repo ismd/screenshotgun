@@ -60,6 +60,7 @@ private:
     RectMode rectMode_;
     EllipseMode ellipseMode_;
     TextMode textMode_;
+    bool usingMode_;
 
 #if defined(Q_OS_LINUX)
     QxtGlobalShortcut shortcut_;

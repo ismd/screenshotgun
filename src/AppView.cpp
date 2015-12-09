@@ -12,7 +12,8 @@ AppView::AppView(App& app)
       arrowMode_(scene_),
       rectMode_(scene_),
       ellipseMode_(scene_),
-      textMode_(scene_, *this) {
+      textMode_(scene_, *this),
+      usingMode_(false) {
 
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
     setFocusPolicy(Qt::StrongFocus);
@@ -20,6 +21,7 @@ AppView::AppView(App& app)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    setMouseTracking(true);
 
     setScene(&scene_);
 }
@@ -112,7 +114,6 @@ void AppView::reinitVisibleArea() {
     visibleAreaMode_ = new VisibleAreaMode(scene_, toolbar_);
     currentMode_ = visibleAreaMode_;
     toolbar_.select(ToolbarMode::VISIBLE_AREA);
-    setMouseTracking(true);
 }
 
 void AppView::initShortcut() {
@@ -142,6 +143,7 @@ void AppView::mousePressEvent(QMouseEvent* e) {
         return;
     }
 
+    usingMode_ = true;
     currentMode_->init(x, y);
 }
 
@@ -154,7 +156,9 @@ void AppView::mouseMoveEvent(QMouseEvent* e) {
         return;
     }
 
-    currentMode_->move(x, y);
+    if (usingMode_ || currentMode_ == visibleAreaMode_ && !visibleAreaMode_->initialized()) {
+        currentMode_->move(x, y);
+    }
 }
 
 void AppView::mouseReleaseEvent(QMouseEvent* e) {
@@ -167,6 +171,10 @@ void AppView::mouseReleaseEvent(QMouseEvent* e) {
     }
 
     currentMode_->stop(x, y);
+
+    if (currentMode_ != visibleAreaMode_) {
+        usingMode_ = false;
+    }
 }
 
 void AppView::wheelEvent(QWheelEvent* e) {

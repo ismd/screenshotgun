@@ -14,8 +14,6 @@ Toolbar::Toolbar(AppView& appView)
     ui->selectedCircle->lower();
     setFocusPolicy(Qt::ClickFocus);
 
-    appView_.setMouseTracking(true);
-
     buttons_.append(ui->visibleAreaButton);
     buttons_.append(ui->ellipseButton);
     buttons_.append(ui->rectButton);
@@ -131,32 +129,26 @@ void Toolbar::mouseMoveEvent(QMouseEvent* event) {
 
 void Toolbar::on_visibleAreaButton_clicked() {
     setSelected(ui->visibleAreaButton);
-    appView_.setMouseTracking(!appView_.visibleAreaMode().initialized());
 }
 
 void Toolbar::on_lineButton_clicked() {
     setSelected(ui->lineButton);
-    appView_.setMouseTracking(false);
 }
 
 void Toolbar::on_arrowButton_clicked() {
     setSelected(ui->arrowButton);
-    appView_.setMouseTracking(false);
 }
 
 void Toolbar::on_rectButton_clicked() {
     setSelected(ui->rectButton);
-    appView_.setMouseTracking(false);
 }
 
 void Toolbar::on_ellipseButton_clicked() {
     setSelected(ui->ellipseButton);
-    appView_.setMouseTracking(false);
 }
 
 void Toolbar::on_textButton_clicked() {
     setSelected(ui->textButton);
-    appView_.setMouseTracking(false);
 }
 
 void Toolbar::on_okButton_clicked() {
