@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QClipboard>
+#include <QDesktopServices>
 #include "App.h"
 
 App::App()
@@ -126,6 +127,7 @@ void App::connectionError() {
 }
 
 void App::uploadSuccess(const QString& url) {
+    lastUrl_ = url;
     QClipboard* clipboard = QApplication::clipboard();
     history_.addLink(url);
 
@@ -144,6 +146,12 @@ void App::uploadSuccess(const QString& url) {
                               QSystemTrayIcon::Information,
                               3000);
     }
+
+    disconnect(&trayIcon_, SIGNAL(messageClicked()),
+               this, SLOT(openUrl()));
+
+    connect(&trayIcon_, SIGNAL(messageClicked()),
+            this, SLOT(openUrl()));
 }
 
 void App::uploadError() {
@@ -158,4 +166,8 @@ void App::updateAvailable(const QString& version) {
 #if defined(Q_OS_WIN32)
     trayIcon_.showNewVersionAvailable(version);
 #endif
+}
+
+void App::openUrl() {
+    QDesktopServices::openUrl(QUrl(lastUrl_));
 }

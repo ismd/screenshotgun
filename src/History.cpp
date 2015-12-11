@@ -44,9 +44,9 @@ QStringList History::links() {
     QStringList links;
     int size = settings_.beginReadArray("links");
 
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; i++) {
         settings_.setArrayIndex(i);
-        links.append(settings_.value("link").toString());
+        links.prepend(settings_.value("link").toString());
     }
 
     settings_.endArray();

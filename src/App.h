@@ -44,6 +44,7 @@ private slots:
     void uploadError();
     void uploadError(QString);
     void updateAvailable(const QString&);
+    void openUrl();
 
 private:
     AppView appView_;
@@ -60,6 +61,7 @@ private:
     bool copyImageToClipboard_;
     int connectionChecks_;
     bool connected_;
+    QString lastUrl_;
 };
 
 #endif // SCREENSHOTGUN_APP_H
