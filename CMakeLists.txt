@@ -53,6 +53,11 @@ qt5_wrap_ui(SOURCE_FILES
     ui/Update.ui
     ui/Settings.ui)
 
+if(APPLE)
+    include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
+
+    add_executable(screenshotgun ${SOURCE_FILES})
+    target_link_libraries(screenshotgun Qt5::Widgets Qt5::Network)
 if(UNIX AND NOT APPLE)
     find_package(X11 REQUIRED)
 
