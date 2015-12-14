@@ -13,9 +13,10 @@ TrayIcon::TrayIcon(App& app)
       settingsAction_("Настройки", this),
       historyMenu_("История"),
       quitAction_("Выход", this) {
-
+#ifndef Q_OS_OSX
     connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayActivated(QSystemTrayIcon::ActivationReason)));
+#endif
 
     connect(&makeScreenshotAction_, SIGNAL(triggered()),
             this, SLOT(makeScreenshotSlot()));
@@ -31,10 +32,13 @@ TrayIcon::TrayIcon(App& app)
     connect(&quitAction_, SIGNAL(triggered()),
             qApp, SLOT(quit()));
 
+
 #if defined(Q_OS_LINUX)
     setIcon(QIcon(":/icons/icon-22.png"));
 #elif defined(Q_OS_WIN32)
     setIcon(QIcon(":/icons/icon-16.png"));
+#elif defined(Q_OS_OSX)
+    setIcon(QIcon(":/icons/icon-22.png"));
 #endif
 
     setToolTip("Screenshotgun");
