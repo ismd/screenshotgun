@@ -59,7 +59,7 @@ if(APPLE)
 
     add_executable(screenshotgun ${SOURCE_FILES})
     target_link_libraries(screenshotgun Qt5::Widgets Qt5::Network)
-if(UNIX AND NOT APPLE)
+else(UNIX)
     find_package(X11 REQUIRED)
 
     list(APPEND SOURCE_FILES

@@ -82,27 +82,27 @@ void AppView::setMode(const ToolbarMode mode) {
 
         case ToolbarMode::LINE:
             currentMode_ = &lineMode_;
-            app().history().lastTool(ToolbarMode::LINE);
+            app().history().setLastTool(ToolbarMode::LINE);
             break;
 
         case ToolbarMode::ARROW:
             currentMode_ = &arrowMode_;
-            app().history().lastTool(ToolbarMode::ARROW);
+            app().history().setLastTool(ToolbarMode::ARROW);
             break;
 
         case ToolbarMode::RECT:
             currentMode_ = &rectMode_;
-            app().history().lastTool(ToolbarMode::RECT);
+            app().history().setLastTool(ToolbarMode::RECT);
             break;
 
         case ToolbarMode::ELLIPSE:
             currentMode_ = &ellipseMode_;
-            app().history().lastTool(ToolbarMode::ELLIPSE);
+            app().history().setLastTool(ToolbarMode::ELLIPSE);
             break;
 
         case ToolbarMode::TEXT:
             currentMode_ = &textMode_;
-            app().history().lastTool(ToolbarMode::TEXT);
+            app().history().setLastTool(ToolbarMode::TEXT);
             break;
     }
 }

@@ -6,13 +6,14 @@ History::History() : settings_("screenshotgun", "history") {
 
 void History::addLink(const QString& url) {
     QStringList historyLinks(links());
+    std::reverse(std::begin(historyLinks), std::end(historyLinks));
 
     historyLinks.prepend(url);
     if (historyLinks.size() > 10) {
         historyLinks.removeLast();
     }
 
-    links(historyLinks);
+    setLinks(historyLinks);
     emit linkAdded(url);
 }
 
@@ -53,11 +54,11 @@ QStringList History::links() {
     return links;
 }
 
-void History::lastTool(const ToolbarMode& value) {
+void History::setLastTool(const ToolbarMode &value) {
     settings_.setValue("last_tool", static_cast<int>(value));
 }
 
-void History::links(const QStringList& value) {
+void History::setLinks(const QStringList &value) {
     settings_.beginWriteArray("links");
 
     for (int i = 0; i < value.size(); ++i) {

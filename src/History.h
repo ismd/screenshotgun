@@ -14,8 +14,8 @@ public:
     ToolbarMode tool() const;
     QStringList links();
 
-    void lastTool(const ToolbarMode&);
-    void links(const QStringList&);
+    void setLastTool(const ToolbarMode &);
+    void setLinks(const QStringList &);
 
 signals:
     void linkAdded(const QString&);
