@@ -23,6 +23,9 @@ private slots:
     void tokenReply(QNetworkReply*);
 
 private:
+    void acceptDropbox();
+    void acceptYandex();
+
     App& app_;
     Ui::OAuth* ui;
     UploadService service_;

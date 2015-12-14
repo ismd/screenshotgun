@@ -23,6 +23,7 @@ public:
 private slots:
     void accept();
     void showAuthDropbox();
+    void showAuthYandex();
 
 private:
     void saveValues();

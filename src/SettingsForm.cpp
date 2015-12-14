@@ -12,6 +12,9 @@ SettingsForm::SettingsForm(App& app)
 
     connect(ui->authDropbox, SIGNAL(clicked()),
             this, SLOT(showAuthDropbox()));
+
+    connect(ui->authYandex, SIGNAL(clicked()),
+            this, SLOT(showAuthYandex()));
 }
 
 SettingsForm::~SettingsForm() {
@@ -35,7 +38,6 @@ void SettingsForm::init() {
 
     ui->autoStartupCheckBox->setChecked(settings_.autostartup());
     ui->serverEdit->setText(settings_.serverUrl());
-    ui->yandexToken->setText(settings_.yandexToken());
 }
 
 bool SettingsForm::valid() {
@@ -56,20 +58,20 @@ bool SettingsForm::valid() {
 
             if (valid) {
                 hide();
-                app_.dropbox().setToken(settings_.dropboxToken());
                 app_.setUploadService(UploadService::DROPBOX);
+                app_.dropbox().setToken(settings_.dropboxToken());
             } else {
                 error("Приложение не авторизовано");
             }
         } else if (ui->radioButtonYandex->isChecked()) {
-            valid = ui->yandexToken->text().length() > 0;
+            valid = settings_.yandexToken().length() > 0;
 
             if (valid) {
                 hide();
                 app_.setUploadService(UploadService::YANDEX);
-                app_.yandex().setToken(ui->yandexToken->text());
+                app_.yandex().setToken(settings_.yandexToken());
             } else {
-                error("Не указан токен");
+                error("Приложение не авторизовано");
             }
         }
     } else {
@@ -132,7 +134,6 @@ void SettingsForm::saveValues() {
 
     settings_.setAutostartup(autoStartupValue);
     settings_.setServerUrl(ui->serverEdit->text());
-    settings_.setYandexToken(ui->yandexToken->text());
 
     AutoStartup autoStartup;
     autoStartup.set(autoStartupValue);
@@ -140,5 +141,10 @@ void SettingsForm::saveValues() {
 
 void SettingsForm::showAuthDropbox() {
     oauth_.setService(UploadService::DROPBOX);
+    oauth_.show();
+}
+
+void SettingsForm::showAuthYandex() {
+    oauth_.setService(UploadService::YANDEX);
     oauth_.show();
 }
