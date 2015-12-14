@@ -5,6 +5,7 @@
 
 enum class UploadService {
     SERVER,
+    DROPBOX,
     YANDEX
 };
 
@@ -18,11 +19,13 @@ public:
     bool autostartup() const;
     UploadService service() const;
     QString serverUrl() const;
+    QString dropboxToken() const;
     QString yandexToken() const;
 
     void setAutostartup(const bool);
     void setService(const UploadService);
     void setServerUrl(const QString&);
+    void setDropboxToken(const QString&);
     void setYandexToken(const QString&);
 
 private:

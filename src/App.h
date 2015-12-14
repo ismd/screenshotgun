@@ -3,6 +3,7 @@
 
 #include "AppView.h"
 #include "History.h"
+#include "services/Dropbox.h"
 #include "services/Server.h"
 #include "services/Yandex.h"
 #include "Settings.h"
@@ -22,9 +23,11 @@ public:
     SettingsForm& settingsForm();
     UploadService uploadService() const;
     Server& server();
+    Dropbox& dropbox();
     Yandex& yandex();
     Settings& settings();
     History& history();
+    TrayIcon& trayIcon();
 #if defined(Q_OS_WIN32)
     Updater& updater();
 #endif
@@ -54,6 +57,7 @@ private:
     SettingsForm settingsForm_;
     UploadService service_;
     Server server_;
+    Dropbox dropbox_;
     Yandex yandex_;
 #if defined(Q_OS_WIN32)
     Updater updater_;

@@ -2,9 +2,16 @@
 #include "Autostartup.h"
 #include "SettingsForm.h"
 
-SettingsForm::SettingsForm(App& app) : ui(new Ui::Settings), app_(app), settings_(app.settings()) {
+SettingsForm::SettingsForm(App& app)
+        : ui(new Ui::Settings),
+          app_(app),
+          settings_(app.settings()),
+          oauth_(app) {
     ui->setupUi(this);
     ui->errorLabel->setVisible(false);
+
+    connect(ui->authDropbox, SIGNAL(clicked()),
+            this, SLOT(showAuthDropbox()));
 }
 
 SettingsForm::~SettingsForm() {
@@ -15,6 +22,10 @@ void SettingsForm::init() {
     switch (settings_.service()) {
         case UploadService::SERVER:
             ui->radioButtonServer->setChecked(true);
+            break;
+
+        case UploadService::DROPBOX:
+            ui->radioButtonDropbox->setChecked(true);
             break;
 
         case UploadService::YANDEX:
@@ -28,7 +39,7 @@ void SettingsForm::init() {
 }
 
 bool SettingsForm::valid() {
-    bool valid;
+    bool valid = false;
 
     if (settings_.exists()) {
         if (ui->radioButtonServer->isChecked()) {
@@ -39,6 +50,16 @@ bool SettingsForm::valid() {
                 app_.server().setUrl(ui->serverEdit->text());
             } else {
                 error("Не указан адрес сервера");
+            }
+        } else if (ui->radioButtonDropbox->isChecked()) {
+            valid = settings_.dropboxToken().length() > 0;
+
+            if (valid) {
+                hide();
+                app_.dropbox().setToken(settings_.dropboxToken());
+                app_.setUploadService(UploadService::DROPBOX);
+            } else {
+                error("Приложение не авторизовано");
             }
         } else if (ui->radioButtonYandex->isChecked()) {
             valid = ui->yandexToken->text().length() > 0;
@@ -103,6 +124,8 @@ void SettingsForm::saveValues() {
 
     if (ui->radioButtonServer->isChecked()) {
         settings_.setService(UploadService::SERVER);
+    } else if (ui->radioButtonDropbox->isChecked()) {
+        settings_.setService(UploadService::DROPBOX);
     } else if (ui->radioButtonYandex->isChecked()) {
         settings_.setService(UploadService::YANDEX);
     }
@@ -113,4 +136,9 @@ void SettingsForm::saveValues() {
 
     AutoStartup autoStartup;
     autoStartup.set(autoStartupValue);
+}
+
+void SettingsForm::showAuthDropbox() {
+    oauth_.setService(UploadService::DROPBOX);
+    oauth_.show();
 }

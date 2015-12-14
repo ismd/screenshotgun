@@ -1,15 +1,15 @@
-#ifndef SCREENSHOTGUN_YANDEX_H
-#define SCREENSHOTGUN_YANDEX_H
+#ifndef SCREENSHOTGUN_DROPBOX_H
+#define SCREENSHOTGUN_DROPBOX_H
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include "ServiceHelper.h"
 
-class Yandex : public QObject {
+class Dropbox : public QObject {
     Q_OBJECT
 
 public:
-    Yandex();
+    Dropbox();
 
     void setToken(QString);
     void upload(QByteArray);
@@ -20,16 +20,13 @@ signals:
 
 private slots:
     void uploadReply(QNetworkReply*);
-    void putReply(QNetworkReply*);
-    void publishReply(QNetworkReply*);
-    void infoReply(QNetworkReply*);
+    void shareReply(QNetworkReply*);
 
 private:
     QString token_;
     QNetworkAccessManager manager_;
-    QByteArray image_;
     QString filename_;
     ServiceHelper helper_;
 };
 
-#endif //SCREENSHOTGUN_YANDEX_H
+#endif //SCREENSHOTGUN_DROPBOX_H

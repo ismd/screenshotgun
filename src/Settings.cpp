@@ -23,6 +23,10 @@ QString Settings::serverUrl() const {
     return settings_.value("server/url", "").toString();
 }
 
+QString Settings::dropboxToken() const {
+    return settings_.value("dropbox/token", "").toString();
+}
+
 QString Settings::yandexToken() const {
     return settings_.value("yandex/token", "").toString();
 }
@@ -37,6 +41,10 @@ void Settings::setService(const UploadService value) {
 
 void Settings::setServerUrl(const QString& value) {
     settings_.setValue("server/url", value);
+}
+
+void Settings::setDropboxToken(const QString& value) {
+    settings_.setValue("dropbox/token", value);
 }
 
 void Settings::setYandexToken(const QString& value) {

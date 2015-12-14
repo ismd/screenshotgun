@@ -195,6 +195,10 @@ void Toolbar::submit(bool copyImage) {
             appView_.app().server().upload(bytes);
             break;
 
+        case UploadService::DROPBOX:
+            appView_.app().dropbox().upload(bytes);
+            break;
+
         case UploadService::YANDEX:
             appView_.app().yandex().upload(bytes);
             break;

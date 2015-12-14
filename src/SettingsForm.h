@@ -2,6 +2,7 @@
 #define SCREENSHOTGUN_SETTINGSFORM_H
 
 #include <QDialog>
+#include "OAuth.h"
 #include "ui_Settings.h"
 
 class App;
@@ -21,6 +22,7 @@ public:
 
 private slots:
     void accept();
+    void showAuthDropbox();
 
 private:
     void saveValues();
@@ -28,6 +30,7 @@ private:
     Ui::Settings* ui;
     App& app_;
     Settings& settings_;
+    OAuth oauth_;
 };
 
 #endif // SCREENSHOTGUN_SETTINGSFORM_H

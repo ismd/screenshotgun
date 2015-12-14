@@ -22,6 +22,12 @@ App::App()
     connect(&server_, SIGNAL(uploadError()),
             this, SLOT(uploadError()));
 
+    connect(&dropbox_, SIGNAL(uploadSuccess(QString)),
+            this, SLOT(uploadSuccess(QString)));
+
+    connect(&dropbox_, SIGNAL(uploadError(QString)),
+            this, SLOT(uploadError(QString)));
+
     connect(&yandex_, SIGNAL(uploadSuccess(QString)),
             this, SLOT(uploadSuccess(QString)));
 
@@ -59,6 +65,10 @@ Server& App::server() {
     return server_;
 }
 
+Dropbox& App::dropbox() {
+    return dropbox_;
+}
+
 Yandex& App::yandex() {
     return yandex_;
 }
@@ -69,6 +79,10 @@ Settings& App::settings() {
 
 History& App::history() {
     return history_;
+}
+
+TrayIcon& App::trayIcon() {
+    return trayIcon_;
 }
 
 #if defined(Q_OS_WIN32)

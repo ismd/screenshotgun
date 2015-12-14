@@ -14,7 +14,7 @@ void Yandex::setToken(QString token) {
 void Yandex::upload(QByteArray image) {
     image_ = image;
 
-    filename_ = QDateTime::currentDateTime().toString("yyyy-MM-dd") + "_" + QString::number(QDateTime::currentMSecsSinceEpoch()) + ".png";
+    filename_ = helper_.generateFilename();
     QNetworkRequest request(QUrl("https://cloud-api.yandex.net/v1/disk/resources/upload?path=app:%2F" + filename_));
     request.setRawHeader("Authorization", QString("OAuth " + token_).toLatin1());
 
@@ -55,8 +55,7 @@ void Yandex::putReply(QNetworkReply* reply) {
     if (QNetworkReply::NoError != reply->error()) {
         emit uploadError("Неизвестная ошибка");
     } else {
-        QNetworkRequest request(
-                QUrl("https://cloud-api.yandex.net/v1/disk/resources/publish?path=app:%2F" + filename_));
+        QNetworkRequest request(QUrl("https://cloud-api.yandex.net/v1/disk/resources/publish?path=app:%2F" + filename_));
         request.setRawHeader("Authorization", QString("OAuth " + token_).toLatin1());
 
         connect(&manager_, SIGNAL(finished(QNetworkReply * )),
