@@ -2,7 +2,7 @@
 Name=Screenshotgun
 Comment=Open screenshoter
 Exec=screenshotgun
-Icon=screenshotgun.png
+Icon=screenshotgun
 Type=Application
 Categories=Network;Application;
 Terminal=false
