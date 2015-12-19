@@ -31,6 +31,18 @@ QString Settings::yandexToken() const {
     return settings_.value("yandex/token", "").toString();
 }
 
+QString Settings::googleToken() const {
+    return settings_.value("google/token", "").toString();
+}
+
+QString Settings::googleRefreshToken() const {
+    return settings_.value("google/refresh_token", "").toString();
+}
+
+QString Settings::googleFolderId() const {
+    return settings_.value("google/folder_id", "").toString();
+}
+
 void Settings::setAutostartup(const bool value) {
     settings_.setValue("common/autostartup", value);
 }
@@ -49,4 +61,16 @@ void Settings::setDropboxToken(const QString& value) {
 
 void Settings::setYandexToken(const QString& value) {
     settings_.setValue("yandex/token", value);
+}
+
+void Settings::setGoogleToken(const QString& value) {
+    settings_.setValue("google/token", value);
+}
+
+void Settings::setGoogleRefreshToken(const QString& value) {
+    settings_.setValue("google/refresh_token", value);
+}
+
+void Settings::setGoogleFolderId(const QString& value) {
+    settings_.setValue("google/folder_id", value);
 }

@@ -55,6 +55,8 @@ void Dropbox::uploadReply(QNetworkReply* reply) {
 
         manager_.post(request, QJsonDocument(json).toJson(QJsonDocument::Compact));
     }
+
+    delete reply;
 }
 
 void Dropbox::shareReply(QNetworkReply* reply) {
@@ -73,4 +75,6 @@ void Dropbox::shareReply(QNetworkReply* reply) {
     } else {
         emit uploadSuccess(jsonObject["url"].toString());
     }
+
+    delete reply;
 }

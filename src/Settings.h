@@ -6,7 +6,8 @@
 enum class UploadService {
     SERVER,
     DROPBOX,
-    YANDEX
+    YANDEX,
+    GOOGLE
 };
 
 class Settings {
@@ -21,12 +22,18 @@ public:
     QString serverUrl() const;
     QString dropboxToken() const;
     QString yandexToken() const;
+    QString googleToken() const;
+    QString googleRefreshToken() const;
+    QString googleFolderId() const;
 
     void setAutostartup(const bool);
     void setService(const UploadService);
     void setServerUrl(const QString&);
     void setDropboxToken(const QString&);
     void setYandexToken(const QString&);
+    void setGoogleToken(const QString&);
+    void setGoogleRefreshToken(const QString&);
+    void setGoogleFolderId(const QString&);
 
 private:
     QSettings settings_;

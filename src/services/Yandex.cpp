@@ -35,7 +35,7 @@ void Yandex::uploadReply(QNetworkReply* reply) {
 
     if (QNetworkReply::NoError != reply->error()) {
         emit uploadError(jsonObject["message"].toString());
-        qDebug() << QString(jsonResponse.toJson());
+        qDebug() << QString(jsonResponse.toJson(QJsonDocument::Compact));
     } else {
         QNetworkRequest request(QUrl(jsonObject["href"].toString()));
 
@@ -44,6 +44,8 @@ void Yandex::uploadReply(QNetworkReply* reply) {
 
         manager_.put(request, image_);
     }
+
+    delete reply;
 }
 
 void Yandex::putReply(QNetworkReply* reply) {
@@ -63,6 +65,8 @@ void Yandex::putReply(QNetworkReply* reply) {
 
         manager_.put(request, "");
     }
+
+    delete reply;
 }
 
 void Yandex::publishReply(QNetworkReply* reply) {
@@ -76,7 +80,7 @@ void Yandex::publishReply(QNetworkReply* reply) {
 
     if (QNetworkReply::NoError != reply->error()) {
         emit uploadError(jsonObject["message"].toString());
-        qDebug() << QString(jsonResponse.toJson());
+        qDebug() << QString(jsonResponse.toJson(QJsonDocument::Compact));
     } else {
         QNetworkRequest request(QUrl(jsonObject["href"].toString()));
         request.setRawHeader("Authorization", QString("OAuth " + token_).toLatin1());
@@ -86,6 +90,8 @@ void Yandex::publishReply(QNetworkReply* reply) {
 
         manager_.get(request);
     }
+
+    delete reply;
 }
 
 void Yandex::infoReply(QNetworkReply* reply) {
@@ -99,8 +105,10 @@ void Yandex::infoReply(QNetworkReply* reply) {
 
     if (QNetworkReply::NoError != reply->error()) {
         emit uploadError(jsonObject["message"].toString());
-        qDebug() << QString(jsonResponse.toJson());
+        qDebug() << QString(jsonResponse.toJson(QJsonDocument::Compact));
     } else {
         emit uploadSuccess(jsonObject["public_url"].toString());
     }
+
+    delete reply;
 }

@@ -162,7 +162,6 @@ void Toolbar::show() {
 
 void Toolbar::submit(bool copyImage) {
     hide();
-
     QGraphicsScene& scene = appView_.scene();
 
     VisibleAreaMode& visibleAreaMode = appView_.visibleAreaMode();
@@ -201,6 +200,10 @@ void Toolbar::submit(bool copyImage) {
 
         case UploadService::YANDEX:
             appView_.app().yandex().upload(bytes);
+            break;
+
+        case UploadService::GOOGLE:
+            appView_.app().google().upload(bytes);
             break;
     }
 }

@@ -7,7 +7,7 @@ class Server : public QObject {
     Q_OBJECT
 
 public:
-    Server(QObject* parent = 0);
+    Server();
 
     QString url() const;
     void setUrl(const QString&);
@@ -27,7 +27,6 @@ private slots:
 private:
     QString url_;
     QNetworkAccessManager manager_;
-    QNetworkReply* reply_;
 };
 
 #endif // SCREENSHOTGUN_SERVER_H

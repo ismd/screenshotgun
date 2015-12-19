@@ -54,7 +54,7 @@
        <x>11</x>
        <y>11</y>
        <width>351</width>
-       <height>130</height>
+       <height>132</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout">
@@ -91,9 +91,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="serverRadioButton_4">
+         <widget class="QRadioButton" name="radioButtonGoogle">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="text">
            <string>&amp;Google Drive</string>
@@ -112,30 +112,6 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QLineEdit" name="lineEdit_5">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="placeholderText">
-           <string>Логин</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_6">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="placeholderText">
-           <string>Пароль</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
       <item row="1" column="1">
        <widget class="QPushButton" name="authDropbox">
         <property name="text">
@@ -150,9 +126,16 @@
         </property>
        </widget>
       </item>
+      <item row="3" column="1">
+       <widget class="QPushButton" name="authGoogle">
+        <property name="text">
+         <string>Авторизоваться</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QWidget" name="layoutWidget1">
      <property name="geometry">
       <rect>
        <x>10</x>

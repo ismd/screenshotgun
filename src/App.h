@@ -6,6 +6,7 @@
 #include "services/Dropbox.h"
 #include "services/Server.h"
 #include "services/Yandex.h"
+#include "services/Google.h"
 #include "Settings.h"
 #include "SettingsForm.h"
 #include "TrayIcon.h"
@@ -25,6 +26,7 @@ public:
     Server& server();
     Dropbox& dropbox();
     Yandex& yandex();
+    Google& google();
     Settings& settings();
     History& history();
     TrayIcon& trayIcon();
@@ -54,11 +56,12 @@ private:
     Settings settings_;
     TrayIcon trayIcon_;
     History history_;
-    SettingsForm settingsForm_;
     UploadService service_;
     Server server_;
     Dropbox dropbox_;
     Yandex yandex_;
+    Google google_;
+    SettingsForm settingsForm_;
 #if defined(Q_OS_WIN32)
     Updater updater_;
 #endif

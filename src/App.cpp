@@ -7,6 +7,7 @@ App::App()
     : appView_(*this),
       trayIcon_(*this),
       settingsForm_(*this),
+      google_(*this),
       copyImageToClipboard_(false),
       connectionChecks_(0),
       connected_(false) {
@@ -32,6 +33,12 @@ App::App()
             this, SLOT(uploadSuccess(QString)));
 
     connect(&yandex_, SIGNAL(uploadError(QString)),
+            this, SLOT(uploadError(QString)));
+
+    connect(&google_, SIGNAL(uploadSuccess(QString)),
+            this, SLOT(uploadSuccess(QString)));
+
+    connect(&google_, SIGNAL(uploadError(QString)),
             this, SLOT(uploadError(QString)));
 
     appView_.initShortcut();
@@ -71,6 +78,10 @@ Dropbox& App::dropbox() {
 
 Yandex& App::yandex() {
     return yandex_;
+}
+
+Google& App::google() {
+    return google_;
 }
 
 Settings& App::settings() {

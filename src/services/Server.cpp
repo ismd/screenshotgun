@@ -5,7 +5,7 @@
 #include <QNetworkAccessManager>
 #include "Server.h"
 
-Server::Server(QObject* parent) : QObject(parent) {
+Server::Server() {
 }
 
 QString Server::url() const {
@@ -39,10 +39,7 @@ void Server::upload(QByteArray bytes) {
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(uploadedSlot(QNetworkReply*)));
 
-    reply_ = manager_.post(request, multiPart);
-
-    reply_->setParent(&manager_);
-    multiPart->setParent(reply_); // delete the multiPart with the reply
+    multiPart->setParent(manager_.post(request, multiPart)); // delete the multiPart with the reply
 }
 
 void Server::checkConnection() {
@@ -70,7 +67,7 @@ void Server::uploadedSlot(QNetworkReply* reply) {
         emit uploadError();
     }
 
-    delete reply_;
+    delete reply;
 }
 
 void Server::connectionSlot(QNetworkReply* reply) {
@@ -79,8 +76,8 @@ void Server::connectionSlot(QNetworkReply* reply) {
 
     if (QNetworkReply::NoError != reply->error()) {
         emit connectionError();
-        return;
+    } else {
+        emit connectionSuccess();
+        delete reply;
     }
-
-    emit connectionSuccess();
 }

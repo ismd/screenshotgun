@@ -44,7 +44,17 @@ set(SOURCE_FILES
     src/Updater_win.cpp
     src/Updater_win.h
     src/History.cpp
-    src/History.h src/services/Yandex.cpp src/services/Yandex.h src/services/Dropbox.cpp src/services/Dropbox.h src/OAuth.cpp src/OAuth.h src/services/ServiceHelper.cpp src/services/ServiceHelper.h)
+    src/History.h
+    src/services/Yandex.cpp
+    src/services/Yandex.h
+    src/services/Dropbox.cpp
+    src/services/Dropbox.h
+    src/services/Google.cpp
+    src/services/Google.h
+    src/OAuth.cpp
+    src/OAuth.h
+    src/services/ServiceHelper.cpp
+    src/services/ServiceHelper.h)
 
 find_package(Qt5 COMPONENTS Gui Network Widgets REQUIRED)
 

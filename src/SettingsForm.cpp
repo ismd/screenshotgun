@@ -15,6 +15,9 @@ SettingsForm::SettingsForm(App& app)
 
     connect(ui->authYandex, SIGNAL(clicked()),
             this, SLOT(showAuthYandex()));
+
+    connect(ui->authGoogle, SIGNAL(clicked()),
+            this, SLOT(showAuthGoogle()));
 }
 
 SettingsForm::~SettingsForm() {
@@ -33,6 +36,10 @@ void SettingsForm::init() {
 
         case UploadService::YANDEX:
             ui->radioButtonYandex->setChecked(true);
+            break;
+
+        case UploadService::GOOGLE:
+            ui->radioButtonGoogle->setChecked(true);
             break;
     }
 
@@ -70,6 +77,16 @@ bool SettingsForm::valid() {
                 hide();
                 app_.setUploadService(UploadService::YANDEX);
                 app_.yandex().setToken(settings_.yandexToken());
+            } else {
+                error("Приложение не авторизовано");
+            }
+        } else if (ui->radioButtonGoogle->isChecked()) {
+            valid = settings_.googleToken().length() > 0;
+
+            if (valid) {
+                hide();
+                app_.setUploadService(UploadService::GOOGLE);
+                app_.google().setToken(settings_.googleToken());
             } else {
                 error("Приложение не авторизовано");
             }
@@ -130,6 +147,8 @@ void SettingsForm::saveValues() {
         settings_.setService(UploadService::DROPBOX);
     } else if (ui->radioButtonYandex->isChecked()) {
         settings_.setService(UploadService::YANDEX);
+    } else if (ui->radioButtonGoogle->isChecked()) {
+        settings_.setService(UploadService::GOOGLE);
     }
 
     settings_.setAutostartup(autoStartupValue);
@@ -146,5 +165,10 @@ void SettingsForm::showAuthDropbox() {
 
 void SettingsForm::showAuthYandex() {
     oauth_.setService(UploadService::YANDEX);
+    oauth_.show();
+}
+
+void SettingsForm::showAuthGoogle() {
+    oauth_.setService(UploadService::GOOGLE);
     oauth_.show();
 }

@@ -5,16 +5,27 @@
 #include "App.h"
 #include "OAuth.h"
 
-const QString DROPBOX_APP_KEY = "wmae5esncijnqie";
-const QString DROPBOX_APP_SECRET = "3fp3vak8ijd1l1e";
+const QString DROPBOX_URL = "https://api.dropboxapi.com/1/oauth2/token";
+const QString DROPBOX_CLIENT_ID = "wmae5esncijnqie";
+const QString DROPBOX_CLIENT_SECRET = "3fp3vak8ijd1l1e";
+
+const QString YANDEX_URL = "https://oauth.yandex.ru/token";
 const QString YANDEX_CLIENT_ID = "9cc4557692e44328bfecf32f2c131eea";
 const QString YANDEX_CLIENT_SECRET = "1d2e753854d946ea80f3880c11c5f76e";
+
+const QString GOOGLE_URL = "https://www.googleapis.com/oauth2/v4/token";
+const QString GOOGLE_CLIENT_ID = "445396168271-7bankmpva981k4d74ebi11o7avgle1qa.apps.googleusercontent.com";
+const QString GOOGLE_CLIENT_SECRET = "_QjArq04n7dFs3TgyyB5w3D-";
 
 OAuth::OAuth(App& app) : app_(app), ui(new Ui::OAuth) {
     ui->setupUi(this);
 
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(tokenReply(QNetworkReply*)));
+
+    // Refresh tokens
+    connect(&app_.google(), SIGNAL(refreshToken(UploadService)),
+            this, SLOT(refreshToken(UploadService)));
 }
 
 OAuth::~OAuth() {
@@ -27,11 +38,15 @@ void OAuth::setService(UploadService service) {
 
     switch (service) {
         case UploadService::DROPBOX:
-            text.replace("{LINK}", "https://www.dropbox.com/1/oauth2/authorize?response_type=code&client_id=" + DROPBOX_APP_KEY);
+            text.replace("{LINK}", "https://www.dropbox.com/1/oauth2/authorize?response_type=code&client_id=" + DROPBOX_CLIENT_ID);
             break;
 
         case UploadService::YANDEX:
             text.replace("{LINK}", "https://oauth.yandex.ru/authorize?response_type=code&client_id=" + YANDEX_CLIENT_ID);
+            break;
+
+        case UploadService::GOOGLE:
+            text.replace("{LINK}", "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=https://www.googleapis.com/auth/drive.file&redirect_uri=urn:ietf:wg:oauth:2.0:oob&client_id=" + GOOGLE_CLIENT_ID);
             break;
     }
 
@@ -40,15 +55,18 @@ void OAuth::setService(UploadService service) {
 
 void OAuth::accept() {
     ui->submitButtons->setEnabled(false);
-    app_.settingsForm().error("");
 
     switch (service_) {
         case UploadService::DROPBOX:
-            acceptDropbox();
+            getToken(DROPBOX_URL, DROPBOX_CLIENT_ID, DROPBOX_CLIENT_SECRET);
             break;
 
         case UploadService::YANDEX:
-            acceptYandex();
+            getToken(YANDEX_URL, YANDEX_CLIENT_ID, YANDEX_CLIENT_SECRET);
+            break;
+
+        case UploadService::GOOGLE:
+            getToken(GOOGLE_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET);
             break;
     }
 }
@@ -60,15 +78,13 @@ void OAuth::tokenReply(QNetworkReply* reply) {
     reply->close();
 
     QJsonObject jsonObject = jsonResponse.object();
-
     if (QNetworkReply::NoError != reply->error()) {
-        app_.trayIcon().showError("Ошибка", "Неверный код");
-        qDebug() << jsonResponse.toJson();
+        app_.trayIcon().showError("Ошибка", jsonObject["error_description"].toString());
+        qDebug() << jsonResponse.toJson(QJsonDocument::Compact);
     } else {
         hide();
 
         QString token = jsonObject["access_token"].toString();
-
         switch (service_) {
             case UploadService::DROPBOX:
                 app_.settings().setDropboxToken(token);
@@ -77,32 +93,49 @@ void OAuth::tokenReply(QNetworkReply* reply) {
             case UploadService::YANDEX:
                 app_.settings().setYandexToken(token);
                 break;
+
+            case UploadService::GOOGLE:
+                app_.settings().setGoogleToken(token);
+                app_.settings().setGoogleRefreshToken(jsonObject["refresh_token"].toString());
+                break;
         }
+
+        app_.settingsForm().error("");
+        app_.settingsForm().show();
     }
 }
 
-void OAuth::acceptDropbox() {
-    QNetworkRequest request(QUrl("https://api.dropboxapi.com/1/oauth2/token"));
-    request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
+void OAuth::refreshToken(UploadService service) {
+    qDebug() << "Refreshing token";
+    service_ = service;
 
-    QUrlQuery query;
-    query.addQueryItem("code", ui->code->text());
-    query.addQueryItem("grant_type", "authorization_code");
-    query.addQueryItem("client_id", DROPBOX_APP_KEY);
-    query.addQueryItem("client_secret", DROPBOX_APP_SECRET);
-
-    manager_.post(request, query.toString().toLatin1());
+    switch (service) {
+        case UploadService::GOOGLE:
+            getToken(GOOGLE_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, true);
+            break;
+    }
 }
 
-void OAuth::acceptYandex() {
-    QNetworkRequest request(QUrl("https://oauth.yandex.ru/token"));
+void OAuth::getToken(const QString url, const QString clientId, const QString clientSecret, bool refresh) {
+    QUrl u(url);
+    QNetworkRequest request(u);
     request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
 
     QUrlQuery query;
-    query.addQueryItem("code", ui->code->text());
-    query.addQueryItem("grant_type", "authorization_code");
-    query.addQueryItem("client_id", YANDEX_CLIENT_ID);
-    query.addQueryItem("client_secret", YANDEX_CLIENT_SECRET);
+    query.addQueryItem("client_id", clientId);
+    query.addQueryItem("client_secret", clientSecret);
+
+    if (!refresh) {
+        query.addQueryItem("grant_type", "authorization_code");
+        query.addQueryItem("code", ui->code->text());
+
+        if (service_ == UploadService::GOOGLE) {
+            query.addQueryItem("redirect_uri", "urn:ietf:wg:oauth:2.0:oob");
+        }
+    } else {
+        query.addQueryItem("grant_type", "refresh_token");
+        query.addQueryItem("refresh_token", app_.settings().googleRefreshToken());
+    }
 
     manager_.post(request, query.toString().toLatin1());
 }

@@ -21,11 +21,10 @@ public:
 
 private slots:
     void tokenReply(QNetworkReply*);
+    void refreshToken(UploadService);
 
 private:
-    void acceptDropbox();
-    void acceptYandex();
-
+    void getToken(const QString url, const QString clientId, const QString clientSecret, bool refresh = false);
     App& app_;
     Ui::OAuth* ui;
     UploadService service_;
