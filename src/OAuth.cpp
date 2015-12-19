@@ -96,7 +96,11 @@ void OAuth::tokenReply(QNetworkReply* reply) {
 
             case UploadService::GOOGLE:
                 app_.settings().setGoogleToken(token);
-                app_.settings().setGoogleRefreshToken(jsonObject["refresh_token"].toString());
+
+                QString refreshToken = jsonObject["refresh_token"].toString();
+                if (refreshToken.length() > 0) {
+                    app_.settings().setGoogleRefreshToken(refreshToken);
+                }
                 break;
         }
 
