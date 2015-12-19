@@ -1,3 +1,4 @@
+#include <QClipboard>
 #include <QGraphicsScene>
 #include "App.h"
 #include "Toolbar.h"
@@ -162,6 +163,8 @@ void Toolbar::show() {
 
 void Toolbar::submit(bool copyImage) {
     hide();
+    QApplication::clipboard()->setText("");
+
     QGraphicsScene& scene = appView_.scene();
 
     VisibleAreaMode& visibleAreaMode = appView_.visibleAreaMode();
