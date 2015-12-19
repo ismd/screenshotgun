@@ -37,6 +37,8 @@ private:
     QString filename_;
     ServiceHelper helper_;
     QString uploadLink_;
+    QByteArray image_;
+    bool needReupload_;
 };
 
 #endif //SCREENSHOTGUN_GOOGLE_H
