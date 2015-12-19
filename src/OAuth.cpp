@@ -100,7 +100,7 @@ void OAuth::tokenReply(QNetworkReply* reply) {
                 break;
         }
 
-        app_.settingsForm().error("");
+        app_.settingsForm().setError("");
         app_.settingsForm().show();
     }
 }

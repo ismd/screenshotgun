@@ -58,7 +58,8 @@ bool SettingsForm::valid() {
                 app_.setUploadService(UploadService::SERVER);
                 app_.server().setUrl(ui->serverEdit->text());
             } else {
-                error("Не указан адрес сервера");
+                setError("Не указан адрес сервера");
+                ui->submitButtons->setEnabled(true);
             }
         } else if (ui->radioButtonDropbox->isChecked()) {
             valid = settings_.dropboxToken().length() > 0;
@@ -68,7 +69,8 @@ bool SettingsForm::valid() {
                 app_.setUploadService(UploadService::DROPBOX);
                 app_.dropbox().setToken(settings_.dropboxToken());
             } else {
-                error("Приложение не авторизовано");
+                setError("Приложение не авторизовано");
+                ui->submitButtons->setEnabled(true);
             }
         } else if (ui->radioButtonYandex->isChecked()) {
             valid = settings_.yandexToken().length() > 0;
@@ -78,7 +80,8 @@ bool SettingsForm::valid() {
                 app_.setUploadService(UploadService::YANDEX);
                 app_.yandex().setToken(settings_.yandexToken());
             } else {
-                error("Приложение не авторизовано");
+                setError("Приложение не авторизовано");
+                ui->submitButtons->setEnabled(true);
             }
         } else if (ui->radioButtonGoogle->isChecked()) {
             valid = settings_.googleToken().length() > 0;
@@ -88,7 +91,8 @@ bool SettingsForm::valid() {
                 app_.setUploadService(UploadService::GOOGLE);
                 app_.google().setToken(settings_.googleToken());
             } else {
-                error("Приложение не авторизовано");
+                setError("Приложение не авторизовано");
+                ui->submitButtons->setEnabled(true);
             }
         }
     } else {
@@ -102,15 +106,13 @@ bool SettingsForm::valid() {
     return valid;
 }
 
-void SettingsForm::error(const QString& message) {
+void SettingsForm::setError(const QString &message) {
     ui->errorLabel->setText(message);
 
     if ("" != message) {
         ui->errorLabel->setVisible(true);
-        ui->submitButtons->setEnabled(true);
     } else {
         ui->errorLabel->setVisible(false);
-        ui->submitButtons->setEnabled(false);
     }
 }
 
@@ -125,12 +127,14 @@ void SettingsForm::show() {
 
 void SettingsForm::showCantConnect() {
     app_.setConnectionChecks(-1);
-    error("Не удалось подключиться к серверу");
+    setError("Не удалось подключиться к серверу");
+    ui->submitButtons->setEnabled(true);
     show();
 }
 
 void SettingsForm::accept() {
-    error("");
+    setError("");
+    ui->submitButtons->setEnabled(false);
     app_.setConnectionChecks(-1);
 
     if (!valid()) {

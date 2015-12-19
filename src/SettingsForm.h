@@ -16,7 +16,7 @@ public:
 
     void init();
     bool valid();
-    void error(const QString&);
+    void setError(const QString &);
     void show();
     void showCantConnect();
 
