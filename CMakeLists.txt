@@ -68,7 +68,7 @@ if(APPLE)
     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
     add_executable(screenshotgun ${SOURCE_FILES})
-    target_link_libraries(screenshotgun Qt5::Widgets Qt5::Network)
+    target_link_libraries(screenshotgun Qt5::Widgets Qt5::Gui Qt5::Network)
 else(UNIX)
     find_package(X11 REQUIRED)
 
