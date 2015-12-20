@@ -15,7 +15,12 @@ AppView::AppView(App& app)
       textMode_(scene_, *this),
       usingMode_(false) {
 
-    setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
+#ifndef Q_OS_OSX
+    setWindowFlags(Qt::Widget | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
+#else
+    setWindowFlags(Qt::Drawer | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
+#endif
+
     setFocusPolicy(Qt::StrongFocus);
     setFrameShape(QFrame::NoFrame);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -61,7 +66,12 @@ void AppView::makeScreenshot() {
 
     // Background screenshot
     scene_.addPixmap(screenshot_);
+    
+#ifndef Q_OS_OSX
     showFullScreen();
+#else
+    showMaximized();
+#endif
 }
 
 QGraphicsScene& AppView::scene() {
