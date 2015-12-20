@@ -109,9 +109,9 @@ else(UNIX)
     endif()
 
     install(TARGETS screenshotgun RUNTIME DESTINATION bin)
-    install(FILES "${CMAKE_SOURCE_DIR}/dist/screenshotgun.desktop"
+    install(FILES "${CMAKE_SOURCE_DIR}/resources/dist/screenshotgun.desktop"
         DESTINATION share/applications)
-    install(FILES "${CMAKE_SOURCE_DIR}/dist/screenshotgun.png"
+    install(FILES "${CMAKE_SOURCE_DIR}/resources/dist/screenshotgun.png"
         DESTINATION share/pixmaps)
 else(WIN32)
     add_executable(screenshotgun WIN32 ${SOURCE_FILES})
