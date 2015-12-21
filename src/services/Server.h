@@ -8,7 +8,6 @@ class Server : public QObject {
 
 public:
     Server();
-
     QString url() const;
     void setUrl(const QString&);
     void upload(QByteArray);

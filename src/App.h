@@ -20,7 +20,6 @@ class App : public QObject {
 
 public:
     App();
-
     SettingsForm& settingsForm();
     UploadService uploadService() const;
     Server& server();

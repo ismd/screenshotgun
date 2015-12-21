@@ -13,9 +13,8 @@ class Google : public QObject {
 
 public:
     explicit Google(App&);
-
     void setToken(QString);
-    void upload(QByteArray);
+    void upload(const QByteArray&);
     void getFolder();
 
 signals:

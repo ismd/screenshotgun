@@ -16,7 +16,7 @@ void Google::setToken(QString token) {
     }
 }
 
-void Google::upload(QByteArray image) {
+void Google::upload(const QByteArray& image) {
     image_ = image;
     filename_ = helper_.generateFilename();
     QHttpMultiPart* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);

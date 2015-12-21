@@ -12,7 +12,6 @@ class TrayIcon : public QSystemTrayIcon {
 
 public:
     explicit TrayIcon(App&);
-
     void show();
     void showMessage(const QString& title,
                      const QString& msg,

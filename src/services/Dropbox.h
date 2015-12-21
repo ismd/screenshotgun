@@ -10,7 +10,6 @@ class Dropbox : public QObject {
 
 public:
     Dropbox();
-
     void setToken(QString);
     void upload(QByteArray);
 

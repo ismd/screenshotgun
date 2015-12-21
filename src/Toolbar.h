@@ -25,7 +25,6 @@ public:
     ~Toolbar();
 
     AppView& appView() const;
-
     void select(const ToolbarMode, bool animate = false);
     void setSelectedNext();
     void setSelectedPrevious();

@@ -10,7 +10,6 @@ class Yandex : public QObject {
 
 public:
     Yandex();
-
     void setToken(QString);
     void upload(QByteArray);
 

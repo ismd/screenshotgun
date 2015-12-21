@@ -11,7 +11,6 @@ class Updater : public QDialog {
 public:
     Updater();
     ~Updater();
-
     void check();
 
 signals:

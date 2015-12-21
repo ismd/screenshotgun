@@ -13,7 +13,6 @@ enum class UploadService {
 class Settings {
 public:
     Settings();
-
     bool exists() const;
     void create();
 
