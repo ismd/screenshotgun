@@ -69,7 +69,7 @@ if(APPLE)
 
     add_executable(screenshotgun MACOSX_BUNDLE ${SOURCE_FILES})
     target_link_libraries(screenshotgun Qt5::Widgets Qt5::Gui Qt5::Network)
-else(UNIX)
+elseif(UNIX)
     find_package(X11 REQUIRED)
 
     list(APPEND SOURCE_FILES
@@ -113,7 +113,7 @@ else(UNIX)
         DESTINATION share/applications)
     install(FILES "${CMAKE_SOURCE_DIR}/resources/dist/screenshotgun.png"
         DESTINATION share/pixmaps)
-else(WIN32)
+elseif(WIN32)
     add_executable(screenshotgun WIN32 ${SOURCE_FILES})
     target_link_libraries(screenshotgun Qt5::Widgets Qt5::Gui Qt5::Network)
 endif()
