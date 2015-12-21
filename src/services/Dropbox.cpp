@@ -15,7 +15,7 @@ void Dropbox::upload(QByteArray image) {
 
     QJsonObject json;
     json["path"] = "/" + filename_;
-    json["mode"] = "add";
+    json["mode"] = QString("add");
 
     request.setRawHeader("Authorization", QString("Bearer " + token_).toLatin1());
     request.setRawHeader("Content-Type", "application/octet-stream");

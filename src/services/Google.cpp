@@ -86,8 +86,8 @@ void Google::uploadReply(QNetworkReply* reply) {
         request.setRawHeader("Content-Type", "application/json");
 
         QJsonObject json;
-        json["role"] = "reader";
-        json["type"] = "anyone";
+        json["role"] = QString("reader");
+        json["type"] = QString("anyone");
 
         connect(&manager_, SIGNAL(finished(QNetworkReply*)),
                 this, SLOT(shareReply(QNetworkReply*)));
@@ -175,8 +175,8 @@ void Google::createFolder() {
     request.setRawHeader("Content-Type", "application/json");
 
     QJsonObject json;
-    json["title"] = "Screenshotgun";
-    json["mimeType"] = "application/vnd.google-apps.folder";
+    json["title"] = QString("Screenshotgun");
+    json["mimeType"] = QString("application/vnd.google-apps.folder");
 
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(createFolderReply(QNetworkReply*)));
