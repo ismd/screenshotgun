@@ -47,7 +47,7 @@ void Google::upload(const QByteArray& image) {
 void Google::getFolder() {
     qDebug() << "Getting Google Drive folder";
 
-    QNetworkRequest request(QUrl("https://www.googleapis.com/drive/v2/files?q=title+%3d+%27Screenshotgun%27+and+mimeType+%3d+%27application/vnd.google-apps.folder%27+and+trashed+=+false"));
+    QNetworkRequest request(QUrl("https://www.googleapis.com/drive/v2/files?q=title+%3d+%27Screenshotgun%27+and+mimeType+%3d+%27application/vnd.google-apps.folder%27+and+trashed+=+false+and+properties+has+{+key%3d%27for_screenshots%27+and+value%3d%27true%27+and+visibility%3d%27PRIVATE%27+}"));
     request.setRawHeader("Authorization", QString("Bearer " + token_).toLatin1());
 
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
@@ -127,9 +127,13 @@ void Google::getFolderReply(QNetworkReply* reply) {
 
     QJsonObject jsonObject = jsonResponse.object();
     if (QNetworkReply::NoError != reply->error()) {
-        needReupload_ = false;
-        app_.trayIcon().showError("Ошибка", "Не удалось получить папку в Google Drive");
-        qDebug() << jsonResponse.toJson(QJsonDocument::Compact);
+        if (jsonObject["error"].toObject()["code"].toInt() == 401) {
+            emit refreshToken(UploadService::GOOGLE);
+        } else {
+            needReupload_ = false;
+            app_.trayIcon().showError("Ошибка", "Не удалось получить папку в Google Drive");
+            qDebug() << jsonResponse.toJson(QJsonDocument::Compact);
+        }
     } else if (jsonObject["items"].toArray().isEmpty()) {
         createFolder();
     } else {
@@ -177,6 +181,15 @@ void Google::createFolder() {
     QJsonObject json;
     json["title"] = QString("Screenshotgun");
     json["mimeType"] = QString("application/vnd.google-apps.folder");
+
+    QJsonObject property;
+    property["key"] = QString("for_screenshots");
+    property["value"] = QString("true");
+    property["visibility"] = QString("PRIVATE");
+
+    QJsonArray properties;
+    properties.append(property);
+    json["properties"] = properties;
 
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(createFolderReply(QNetworkReply*)));
