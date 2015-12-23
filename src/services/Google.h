@@ -27,6 +27,7 @@ private slots:
     void shareReply(QNetworkReply*);
     void getFolderReply(QNetworkReply*);
     void createFolderReply(QNetworkReply*);
+    void reupload();
 
 private:
     void createFolder();

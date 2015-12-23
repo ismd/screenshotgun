@@ -17,7 +17,7 @@ const QString GOOGLE_URL = "https://www.googleapis.com/oauth2/v4/token";
 const QString GOOGLE_CLIENT_ID = "445396168271-7bankmpva981k4d74ebi11o7avgle1qa.apps.googleusercontent.com";
 const QString GOOGLE_CLIENT_SECRET = "_QjArq04n7dFs3TgyyB5w3D-";
 
-OAuth::OAuth(App& app) : app_(app), ui(new Ui::OAuth) {
+OAuth::OAuth(App& app) : app_(app), ui(new Ui::OAuth), refreshing_(false) {
     ui->setupUi(this);
 
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
@@ -88,14 +88,17 @@ void OAuth::tokenReply(QNetworkReply* reply) {
         switch (service_) {
             case UploadService::DROPBOX:
                 app_.settings().setDropboxToken(token);
+                app_.dropbox().setToken(token);
                 break;
 
             case UploadService::YANDEX:
                 app_.settings().setYandexToken(token);
+                app_.yandex().setToken(token);
                 break;
 
             case UploadService::GOOGLE:
                 app_.settings().setGoogleToken(token);
+                app_.google().setToken(token);
 
                 QString refreshToken = jsonObject["refresh_token"].toString();
                 if (refreshToken.length() > 0) {
@@ -105,22 +108,30 @@ void OAuth::tokenReply(QNetworkReply* reply) {
         }
 
         app_.settingsForm().setError("");
-        app_.settingsForm().show();
+
+        if (!refreshing_) {
+            app_.settingsForm().show();
+        }
+
+        emit tokenRefreshed();
     }
+
+    refreshing_ = false;
 }
 
 void OAuth::refreshToken(UploadService service) {
     qDebug() << "Refreshing token";
     service_ = service;
+    refreshing_ = true;
 
     switch (service) {
         case UploadService::GOOGLE:
-            getToken(GOOGLE_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, true);
+            getToken(GOOGLE_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET);
             break;
     }
 }
 
-void OAuth::getToken(const QString url, const QString clientId, const QString clientSecret, bool refresh) {
+void OAuth::getToken(const QString url, const QString clientId, const QString clientSecret) {
     QUrl u(url);
     QNetworkRequest request(u);
     request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -129,7 +140,7 @@ void OAuth::getToken(const QString url, const QString clientId, const QString cl
     query.addQueryItem("client_id", clientId);
     query.addQueryItem("client_secret", clientSecret);
 
-    if (!refresh) {
+    if (!refreshing_) {
         query.addQueryItem("grant_type", "authorization_code");
         query.addQueryItem("code", ui->code->text());
 

@@ -132,6 +132,10 @@ void SettingsForm::showCantConnect() {
     show();
 }
 
+OAuth& SettingsForm::oauth() {
+    return oauth_;
+}
+
 void SettingsForm::accept() {
     setError("");
     ui->submitButtons->setEnabled(false);

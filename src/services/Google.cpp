@@ -70,6 +70,8 @@ void Google::uploadReply(QNetworkReply* reply) {
         int code = jsonObject["error"].toObject()["code"].toInt();
 
         if (code == 401) {
+            connect(&app_.settingsForm().oauth(), SIGNAL(tokenRefreshed()),
+                    this, SLOT(reupload()));
             emit refreshToken(UploadService::GOOGLE);
         } else if (code == 404) {
             needReupload_ = true;
@@ -141,7 +143,7 @@ void Google::getFolderReply(QNetworkReply* reply) {
 
         if (needReupload_) {
             needReupload_ = false;
-            upload(image_);
+            reupload();
         }
     }
 
@@ -170,6 +172,13 @@ void Google::createFolderReply(QNetworkReply* reply) {
     }
 
     delete reply;
+}
+
+void Google::reupload() {
+    disconnect(&app_.settingsForm().oauth(), SIGNAL(tokenRefreshed()),
+               this, SLOT(reupload()));
+
+    upload(image_);
 }
 
 void Google::createFolder() {

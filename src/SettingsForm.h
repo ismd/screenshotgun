@@ -19,6 +19,7 @@ public:
     void setError(const QString &);
     void show();
     void showCantConnect();
+    OAuth& oauth();
 
 private slots:
     void accept();
