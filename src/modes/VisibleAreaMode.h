@@ -21,7 +21,7 @@ enum class ResizeDirection {
 class VisibleAreaMode : public AbstractMode {
 
 public:
-    VisibleAreaMode(QGraphicsScene&, Toolbar&);
+    VisibleAreaMode(QGraphicsScene&, Toolbar&, int, int);
 
     void init(int x, int y);
     void move(int x, int y);
@@ -67,6 +67,9 @@ private:
         int y;
         ResizeDirection direction;
     } resizeInfo_;
+
+    int maxWidth_;
+    int maxHeight_;
 };
 
 #endif // SCREENSHOTGUN_VISIBLEAREAMODE_H

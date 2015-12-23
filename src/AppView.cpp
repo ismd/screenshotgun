@@ -122,7 +122,10 @@ void AppView::reinitVisibleArea() {
         delete visibleAreaMode_;
     }
 
-    visibleAreaMode_ = new VisibleAreaMode(scene_, toolbar_);
+    QDesktopWidget* desktop = QApplication::desktop();
+    QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
+
+    visibleAreaMode_ = new VisibleAreaMode(scene_, toolbar_ , geo.width(), geo.height());
     currentMode_ = visibleAreaMode_;
     toolbar_.select(ToolbarMode::VISIBLE_AREA);
 }

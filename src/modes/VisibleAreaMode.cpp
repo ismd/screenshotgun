@@ -5,9 +5,11 @@
 #include "../Toolbar.h"
 #include "../App.h"
 
-VisibleAreaMode::VisibleAreaMode(QGraphicsScene& scene, Toolbar& toolbar)
+VisibleAreaMode::VisibleAreaMode(QGraphicsScene& scene, Toolbar& toolbar, int maxWidth, int maxHeight)
     : AbstractMode(scene),
       toolbar_(toolbar),
+      maxWidth_(maxWidth),
+      maxHeight_(maxHeight),
       initialized_(false),
       resizing_(false) {
 
@@ -65,7 +67,6 @@ VisibleAreaMode::VisibleAreaMode(QGraphicsScene& scene, Toolbar& toolbar)
 void VisibleAreaMode::init(int x, int y) {
     initialized_ = true;
     toolbar_.hide();
-
     setArea(x, y, 0, 0);
 }
 
@@ -158,6 +159,14 @@ void VisibleAreaMode::resizeStop(int x, int y) {
 }
 
 void VisibleAreaMode::updateSize() {
+    if (area.x + area.width > maxWidth_) {
+        area.width = maxWidth_ - area.x;
+    }
+
+    if (area.y + area.height > maxHeight_) {
+        area.height = maxHeight_ - area.y;
+    }
+
     int x = area.x;
     int y = area.y;
     int width = area.width;
@@ -232,7 +241,10 @@ void VisibleAreaMode::updateToolbarPosition() {
 }
 
 bool VisibleAreaMode::isResizablePosition(int x, int y) {
-    return x <= area.x || y <= area.y || x >= area.x + area.width || y >= area.y + area.height;
+    return x <= area.x ||
+           y <= area.y ||
+           x >= area.x + area.width - 3 ||
+           y >= area.y + area.height;
 }
 
 bool VisibleAreaMode::initialized() {
@@ -254,11 +266,11 @@ ResizeDirection VisibleAreaMode::resizablePosition(int x, int y) {
         return ResizeDirection::TOP;
     } else if (x >= area.x && x <= area.x + area.width && y >= area.y + area.height) {
         return ResizeDirection::BOTTOM;
-    } else if (x >= area.x && y <= area.y) {
+    } else if (x >= area.x + area.width && y <= area.y) {
         return ResizeDirection::TOP_RIGHT;
-    } else if (x >= area.x && y >= area.y && y <= area.y + area.height) {
+    } else if (x >= area.x + area.width - 3 && y >= area.y && y <= area.y + area.height) {
         return ResizeDirection::RIGHT;
-    } else if (x >= area.x && y >= area.y + area.height) {
+    } else if (x >= area.x + area.width && y >= area.y + area.height) {
         return ResizeDirection::BOTTOM_RIGHT;
     }
 }
