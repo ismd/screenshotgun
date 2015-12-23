@@ -33,10 +33,10 @@ void ArrowMode::move(int x, int y) {
     int sign = l.dx() < 0 ? 1 : -1;
 
     painterPath.moveTo(x, y);
-    painterPath.lineTo(x + qCos(angle - .2) * length * sign,
-                       y + qSin(angle - .2) * length * sign);
-    painterPath.lineTo(x + qCos(angle + .2) * length * sign,
-                       y + qSin(angle + .2) * length * sign);
+    painterPath.lineTo(x + qCos(angle - .25) * length * sign,
+                       y + qSin(angle - .25) * length * sign);
+    painterPath.lineTo(x + qCos(angle + .25) * length * sign,
+                       y + qSin(angle + .25) * length * sign);
     painterPath.lineTo(x, y);
 
     l.setP2(QPointF(x + qCos(angle) * 5 * sign,
