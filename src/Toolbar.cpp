@@ -161,7 +161,7 @@ void Toolbar::show() {
     QWidget::show();
 }
 
-void Toolbar::submit(bool copyImage) {
+void Toolbar::submit() {
     hide();
     QApplication::clipboard()->setText("");
 
@@ -190,7 +190,6 @@ void Toolbar::submit(bool copyImage) {
     image_->save(&buffer, "PNG");
 
     appView_.hide();
-    appView_.app().setCopyImageToClipboard(copyImage);
 
     switch (appView_.app().uploadService()) {
         case UploadService::SERVER:

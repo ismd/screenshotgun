@@ -227,7 +227,8 @@ void AppView::keyReleaseEvent(QKeyEvent* e) {
         toolbar_.hide();
     } else if (key == Qt::Key_Return) {
         if (currentMode_ != &textMode_ || textMode_.textArea() == 0 || !textMode_.textArea()->hasFocus()) {
-            toolbar_.submit(e->modifiers().testFlag(Qt::AltModifier));
+            app().setCopyImageToClipboard(e->modifiers().testFlag(Qt::AltModifier));
+            toolbar_.submit();
         }
     }
 

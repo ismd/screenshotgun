@@ -29,7 +29,7 @@ public:
     void setSelectedNext();
     void setSelectedPrevious();
     void show();
-    void submit(bool copyImage = false);
+    void submit();
     QImage& image() const;
 
 protected:
