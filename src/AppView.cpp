@@ -188,6 +188,8 @@ void AppView::mouseMoveEvent(QMouseEvent* e) {
                 setCursor(Qt::SizeBDiagCursor);
                 break;
         }
+    } else if (currentMode_ == &textMode_) {
+        setCursor(Qt::IBeamCursor);
     } else {
         setCursor(Qt::CrossCursor);
     }
