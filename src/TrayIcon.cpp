@@ -141,6 +141,8 @@ void TrayIcon::linkAdded(const QString& link) {
     }
 
     if (actions.size() > 9) {
-        historyMenu_.removeAction(actions.last());
+        auto lastAction = actions.last();
+        historyMenu_.removeAction(lastAction);
+        delete lastAction;
     }
 }

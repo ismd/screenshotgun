@@ -3,20 +3,13 @@
 
 #include <QGraphicsLineItem>
 #include <QGraphicsPathItem>
-#include "LineMode.h"
+#include "AbstractMode.h"
 
 class ArrowMode : public AbstractMode {
 
 public:
-    ArrowMode(QGraphicsScene&);
-
-    void init(int x, int y);
-    void move(int x, int y);
-    void stop(int x, int y);
-
-protected:
-    QGraphicsLineItem* line_;
-    QGraphicsPathItem* path_;
+    ArrowMode(Scene&);
+    virtual void init(int x, int y);
 };
 
 #endif // SCREENSHOTGUN_ARROWMODE_H

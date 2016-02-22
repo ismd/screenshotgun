@@ -6,7 +6,7 @@
 class TextArea : public QPlainTextEdit {
 
 public:
-    explicit TextArea(QWidget* parent = 0);
+    TextArea();
 
 protected:
     void keyReleaseEvent(QKeyEvent*);

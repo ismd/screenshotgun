@@ -2,66 +2,49 @@
 #include <QDesktopWidget>
 #include <QPainter>
 #include "VisibleAreaMode.h"
-#include "../Toolbar.h"
 #include "../App.h"
 
-VisibleAreaMode::VisibleAreaMode(QGraphicsScene& scene, Toolbar& toolbar, int maxWidth, int maxHeight)
+VisibleAreaMode::VisibleAreaMode(Scene& scene, Toolbar& toolbar, int maxWidth, int maxHeight)
     : AbstractMode(scene),
       toolbar_(toolbar),
       maxWidth_(maxWidth),
       maxHeight_(maxHeight),
       initialized_(false),
-      resizing_(false) {
+      rectTopLeft_(*this, ResizeDirection::TOP_LEFT),
+      rectTop_(*this, ResizeDirection::TOP),
+      rectTopRight_(*this, ResizeDirection::TOP_RIGHT),
+      rectLeft_(*this, ResizeDirection::LEFT),
+      rectRight_(*this, ResizeDirection::RIGHT),
+      rectBottomLeft_(*this, ResizeDirection::BOTTOM_LEFT),
+      rectBottom_(*this, ResizeDirection::BOTTOM),
+      rectBottomRight_(*this, ResizeDirection::BOTTOM_RIGHT) {
 
-    QPen pen(Qt::NoPen);
-    QBrush brush(Qt::black);
+    connect(&scene.sceneManager(), SIGNAL(modeChanged(ToolbarMode)),
+            this, SLOT(modeChanged(ToolbarMode)));
 
-    rectTop_.setOpacity(.65);
-    rectBottom_.setOpacity(.65);
-    rectLeft_.setOpacity(.65);
-    rectRight_.setOpacity(.65);
+    activeRect_.setPen(Qt::NoPen);
+    scene_.addItem(&activeRect_);
 
-    rectTop_.setPen(pen);
-    rectBottom_.setPen(pen);
-    rectLeft_.setPen(pen);
-    rectRight_.setPen(pen);
+    prepareRect(rectTopLeft_);
+    prepareRect(rectTop_);
+    prepareRect(rectTopRight_);
+    prepareRect(rectLeft_);
+    prepareRect(rectRight_);
+    prepareRect(rectBottomLeft_);
+    prepareRect(rectBottom_);
+    prepareRect(rectBottomRight_);
 
-    rectTop_.setBrush(brush);
-    rectBottom_.setBrush(brush);
-    rectLeft_.setBrush(brush);
-    rectRight_.setBrush(brush);
+    fullscreenRect_ = &rectTopLeft_;
+    fullscreenRect_->setRect(0, 0, scene_.width(), scene_.height());
 
-    rectTop_.setZValue(1);
-    rectBottom_.setZValue(1);
-    rectLeft_.setZValue(1);
-    rectRight_.setZValue(1);
-
-    // First rectangle fullscreen
-    rectTop_.setRect(0, 0, scene.width(), scene.height());
-
-    scene.addItem(&rectTop_);
-    scene.addItem(&rectBottom_);
-    scene.addItem(&rectLeft_);
-    scene.addItem(&rectRight_);
-
-    QPen linePen;
-    linePen.setWidthF(.2);
-    linePen.setColor(QColor(230, 230, 230));
-
-    lineTop_.setPen(linePen);
-    lineBottom_.setPen(linePen);
-    lineLeft_.setPen(linePen);
-    lineRight_.setPen(linePen);
-
-    lineTop_.setZValue(1);
-    lineBottom_.setZValue(1);
-    lineLeft_.setZValue(1);
-    lineRight_.setZValue(1);
-
-    scene.addItem(&lineTop_);
-    scene.addItem(&lineBottom_);
-    scene.addItem(&lineLeft_);
-    scene.addItem(&lineRight_);
+    prepareLine(lineTopLeft1_);
+    prepareLine(lineTopLeft2_);
+    prepareLine(lineTopRight1_);
+    prepareLine(lineTopRight2_);
+    prepareLine(lineBottomLeft1_);
+    prepareLine(lineBottomLeft2_);
+    prepareLine(lineBottomRight1_);
+    prepareLine(lineBottomRight2_);
 }
 
 void VisibleAreaMode::init(int x, int y) {
@@ -98,64 +81,32 @@ void VisibleAreaMode::stop(int x, int y) {
     toolbar_.show();
 }
 
-void VisibleAreaMode::resizeInit(int x, int y) {
-    resizing_ = true;
-    toolbar_.hide();
-
-    resizeInfo_.x = x;
-    resizeInfo_.y = y;
-
-    // Detecting side
-    resizeInfo_.direction = resizablePosition(x, y);
-}
-
-void VisibleAreaMode::resizeMove(int x, int y) {
-    int diffX = x - resizeInfo_.x;
-    int diffY = y - resizeInfo_.y;
-
-    switch (resizeInfo_.direction) {
-        case ResizeDirection::TOP_LEFT:
-            setArea(area.x + diffX, area.y + diffY, area.width - diffX, area.height - diffY);
-            break;
-
-        case ResizeDirection::LEFT:
-            setArea(area.x + diffX, area.y, area.width - diffX, area.height);
-            break;
-
-        case ResizeDirection::BOTTOM_LEFT:
-            setArea(area.x + diffX, area.y, area.width - diffX, area.height + diffY);
-            break;
-
-        case ResizeDirection::TOP:
-            setArea(area.x, area.y + diffY, area.width, area.height - diffY);
-            break;
-
-        case ResizeDirection::BOTTOM:
-            setArea(area.x, area.y, area.width, area.height + diffY);
-            break;
-
-        case ResizeDirection::TOP_RIGHT:
-            setArea(area.x, area.y + diffY, area.width + diffX, area.height - diffY);
-            break;
-
-        case ResizeDirection::RIGHT:
-            setArea(area.x, area.y, area.width + diffX, area.height);
-            break;
-
-        case ResizeDirection::BOTTOM_RIGHT:
-            setArea(area.x, area.y, area.width + diffX, area.height + diffY);
-            break;
+void VisibleAreaMode::modeChanged(ToolbarMode mode) {
+    if (mode == ToolbarMode::TEXT) {
+        activeRect_.setCursor(Qt::IBeamCursor);
+    } else {
+        activeRect_.setCursor(Qt::CrossCursor);
     }
 
-    resizeInfo_.x = x;
-    resizeInfo_.y = y;
-}
-
-void VisibleAreaMode::resizeStop(int x, int y) {
-    resizeMove(x, y);
-    resizing_ = false;
-    updateToolbarPosition();
-    toolbar_.show();
+    if (mode == ToolbarMode::VISIBLE_AREA) {
+        rectTopLeft_.setCursor(Qt::CrossCursor);
+        rectTop_.setCursor(Qt::CrossCursor);
+        rectTopRight_.setCursor(Qt::CrossCursor);
+        rectLeft_.setCursor(Qt::CrossCursor);
+        rectRight_.setCursor(Qt::CrossCursor);
+        rectBottomLeft_.setCursor(Qt::CrossCursor);
+        rectBottom_.setCursor(Qt::CrossCursor);
+        rectBottomRight_.setCursor(Qt::CrossCursor);
+    } else {
+        rectTopLeft_.setCursor(Qt::SizeFDiagCursor);
+        rectTop_.setCursor(Qt::SizeVerCursor);
+        rectTopRight_.setCursor(Qt::SizeBDiagCursor);
+        rectLeft_.setCursor(Qt::SizeHorCursor);
+        rectRight_.setCursor(Qt::SizeHorCursor);
+        rectBottomLeft_.setCursor(Qt::SizeBDiagCursor);
+        rectBottom_.setCursor(Qt::SizeVerCursor);
+        rectBottomRight_.setCursor(Qt::SizeFDiagCursor);
+    }
 }
 
 void VisibleAreaMode::updateSize() {
@@ -175,28 +126,35 @@ void VisibleAreaMode::updateSize() {
     int sceneWidth = scene_.width();
     int sceneHeight = scene_.height();
 
-    rectTop_.setRect(0, 0, sceneWidth, y);
-    rectBottom_.setRect(0, y + height, sceneWidth, sceneHeight - y - height);
-    rectLeft_.setRect(0, y, x, height);
-    rectRight_.setRect(x + width, y, sceneWidth - x - width, height);
+    if (!initialized_) {
+        lineTopLeft1_.setLine(0, y, x, y);
+        lineTopLeft2_.setLine(x, 0, x, y);
+        lineBottomLeft1_.setLine(x, y, sceneWidth, y);
+        lineBottomLeft2_.setLine(x, y, x, sceneHeight);
+    } else {
+        width = width > 0 ? width : 1;
+        height = height > 0 ? height : 1;
 
-    QDesktopWidget *desktop = QApplication::desktop();
-    QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
+        activeRect_.setRect(x, y, width, height);
 
-    int screenWidth = geo.width();
-    int screenHeight = geo.height();
+        rectTopLeft_.setRect(0, 0, x, y);
+        rectTop_.setRect(x, 0, width, y);
+        rectTopRight_.setRect(x + width, 0, sceneWidth - x - width, y);
+        rectLeft_.setRect(0, y, x, height);
+        rectRight_.setRect(x + width, y, sceneWidth - x - width, height);
+        rectBottomLeft_.setRect(0, y + height, x, sceneHeight - y - height);
+        rectBottom_.setRect(x, y + height, width, sceneHeight - y - height);
+        rectBottomRight_.setRect(x + width, y + height, sceneWidth - x - width, sceneHeight - y - height);
 
-    // Horizontal and vertical lines
-    if (0 == width && 0 == height) {
-        lineTop_.setLine(0, y, screenWidth, y);
-        lineLeft_.setLine(x, 0, x, screenHeight);
-        return;
+        lineTopLeft1_.setLine(0, y, x, y);
+        lineTopLeft2_.setLine(x, 0, x, y);
+        lineTopRight1_.setLine(x + width, 0, x + width, y);
+        lineTopRight2_.setLine(x + width, y, sceneWidth, y);
+        lineBottomLeft1_.setLine(0, y + height, x, y + height);
+        lineBottomLeft2_.setLine(x, y + height, x, sceneWidth);
+        lineBottomRight1_.setLine(x + width, y + height, x + width, sceneWidth);
+        lineBottomRight2_.setLine(x + width, y + height, sceneWidth, y + height);
     }
-
-    lineTop_.setLine(0, y - 1, screenWidth, y - 1);
-    lineBottom_.setLine(0, y + height + 1, screenWidth, y + height + 1);
-    lineLeft_.setLine(x - 1, 0, x - 1, screenHeight);
-    lineRight_.setLine(x + width + 1, 0, x + width + 1, sceneHeight);
 }
 
 void VisibleAreaMode::setArea(int x, int y, int width, int height) {
@@ -214,7 +172,7 @@ void VisibleAreaMode::setArea(int x, int y, int width, int height) {
 void VisibleAreaMode::updateToolbarPosition() {
     const int padding = 10;
 
-    QDesktopWidget *desktop = QApplication::desktop();
+    QDesktopWidget* desktop = QApplication::desktop();
     QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
 
     // Width
@@ -240,37 +198,30 @@ void VisibleAreaMode::updateToolbarPosition() {
     toolbar_.setGeometry(toolbarX, toolbarY, toolbarWidth, toolbarHeight);
 }
 
-bool VisibleAreaMode::isResizablePosition(int x, int y) {
-    return x <= area.x ||
-           y <= area.y ||
-           x >= area.x + area.width - 3 ||
-           y >= area.y + area.height;
+void VisibleAreaMode::prepareRect(QGraphicsRectItem& rect) {
+    rect.setOpacity(.65);
+    rect.setPen(Qt::NoPen);
+    rect.setBrush(QBrush(Qt::black));
+    rect.setZValue(1);
+
+    scene_.addItem(&rect);
+}
+
+void VisibleAreaMode::prepareLine(QGraphicsLineItem& line) {
+    line.setPen(QPen(QColor(180, 180, 180)));
+    line.setZValue(1);
+
+    scene_.addItem(&line);
 }
 
 bool VisibleAreaMode::initialized() {
     return initialized_;
 }
 
-bool VisibleAreaMode::resizing() {
-    return resizing_;
+void VisibleAreaMode::resizeArea(int x, int y, int width, int height) {
+    setArea(area.x + x, area.y + y, area.width - x + width, area.height - y + height);
 }
 
-ResizeDirection VisibleAreaMode::resizablePosition(int x, int y) {
-    if (x <= area.x && y <= area.y) {
-        return ResizeDirection::TOP_LEFT;
-    } else if (x <= area.x && y >= area.y && y <= area.y + area.height) {
-        return ResizeDirection::LEFT;
-    } else if (x <= area.x && y >= area.y + area.height) {
-        return ResizeDirection::BOTTOM_LEFT;
-    } else if (x >= area.x && x <= area.x + area.width && y <= area.y) {
-        return ResizeDirection::TOP;
-    } else if (x >= area.x && x <= area.x + area.width && y >= area.y + area.height) {
-        return ResizeDirection::BOTTOM;
-    } else if (x >= area.x + area.width && y <= area.y) {
-        return ResizeDirection::TOP_RIGHT;
-    } else if (x >= area.x + area.width - 3 && y >= area.y && y <= area.y + area.height) {
-        return ResizeDirection::RIGHT;
-    } else if (x >= area.x + area.width && y >= area.y + area.height) {
-        return ResizeDirection::BOTTOM_RIGHT;
-    }
+Toolbar& VisibleAreaMode::toolbar() {
+    return toolbar_;
 }

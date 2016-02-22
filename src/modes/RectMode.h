@@ -6,19 +6,8 @@
 class RectMode : public AbstractMode {
 
 public:
-    RectMode(QGraphicsScene&);
-
-    void init(int x, int y);
-    void move(int x, int y);
-    void stop(int x, int y);
-
-private:
-    QGraphicsRectItem* rect_;
-
-    struct {
-        int x;
-        int y;
-    } coords;
+    RectMode(Scene&);
+    virtual void init(int x, int y);
 };
 
 #endif // SCREENSHOTGUN_RECTMODE_H

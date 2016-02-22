@@ -1,5 +1,5 @@
+#include <QApplication>
 #include <QClipboard>
-#include <QGraphicsScene>
 #include "App.h"
 #include "Toolbar.h"
 
@@ -7,8 +7,7 @@ Toolbar::Toolbar(AppView& appView)
     : QWidget(&appView),
       ui(new Ui::Toolbar),
       appView_(appView),
-      dragging_(false),
-      image_(0) {
+      dragging_(false) {
 
     hide();
     ui->setupUi(this);
@@ -29,7 +28,6 @@ Toolbar::Toolbar(AppView& appView)
 
 Toolbar::~Toolbar() {
     delete ui;
-    delete image_;
 }
 
 AppView& Toolbar::appView() const {
@@ -85,7 +83,6 @@ void Toolbar::setSelectedPrevious() {
     }
 
     i.previous();
-
     if (!i.hasPrevious()) {
         //setSelected(buttons_.back());
         return;
@@ -163,55 +160,7 @@ void Toolbar::show() {
 
 void Toolbar::submit() {
     hide();
-    QApplication::clipboard()->setText("");
-
-    QGraphicsScene& scene = appView_.scene();
-
-    VisibleAreaMode& visibleAreaMode = appView_.visibleAreaMode();
-    scene.setSceneRect(visibleAreaMode.area.x,
-                       visibleAreaMode.area.y,
-                       visibleAreaMode.area.width,
-                       visibleAreaMode.area.height);
-
-    if (image_ != 0) {
-        delete image_;
-    }
-
-    image_ = new QImage(scene.sceneRect().size().toSize(), QImage::Format_ARGB32);
-    image_->fill(Qt::transparent);
-
-    QPainter painter(image_);
-    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-    scene.render(&painter);
-
-    QByteArray bytes;
-    QBuffer buffer(&bytes);
-    buffer.open(QIODevice::WriteOnly);
-    image_->save(&buffer, "PNG");
-
-    appView_.hide();
-
-    switch (appView_.app().uploadService()) {
-        case UploadService::SERVER:
-            appView_.app().server().upload(bytes);
-            break;
-
-        case UploadService::DROPBOX:
-            appView_.app().dropbox().upload(bytes);
-            break;
-
-        case UploadService::YANDEX:
-            appView_.app().yandex().upload(bytes);
-            break;
-
-        case UploadService::GOOGLE:
-            appView_.app().google().upload(bytes);
-            break;
-    }
-}
-
-QImage& Toolbar::image() const {
-    return *image_;
+    emit submitScreenshot();
 }
 
 void Toolbar::setSelected(QPushButton* button, bool animate) {
@@ -226,25 +175,19 @@ void Toolbar::setSelected(QPushButton* button, bool animate) {
     selected_ = button;
 
     if (button == ui->visibleAreaButton) {
-        appView_.setMode(ToolbarMode::VISIBLE_AREA);
+        appView_.sceneManager().setMode(ToolbarMode::VISIBLE_AREA);
     } else if (button == ui->lineButton) {
-        appView_.setMode(ToolbarMode::LINE);
+        appView_.sceneManager().setMode(ToolbarMode::LINE);
     } else if (button == ui->arrowButton) {
-        appView_.setMode(ToolbarMode::ARROW);
+        appView_.sceneManager().setMode(ToolbarMode::ARROW);
     } else if (button == ui->rectButton) {
-        appView_.setMode(ToolbarMode::RECT);
+        appView_.sceneManager().setMode(ToolbarMode::RECT);
     } else if (button == ui->ellipseButton) {
-        appView_.setMode(ToolbarMode::ELLIPSE);
+        appView_.sceneManager().setMode(ToolbarMode::ELLIPSE);
     } else if (button == ui->textButton) {
-        appView_.setMode(ToolbarMode::TEXT);
+        appView_.sceneManager().setMode(ToolbarMode::TEXT);
     } else {
         return;
-    }
-
-    if (button == ui->textButton) {
-        appView_.setCursor(Qt::IBeamCursor);
-    } else {
-        appView_.setCursor(Qt::CrossCursor);
     }
 
     int x = ui->selectedCircle->x();

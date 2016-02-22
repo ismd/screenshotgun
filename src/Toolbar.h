@@ -30,12 +30,14 @@ public:
     void setSelectedPrevious();
     void show();
     void submit();
-    QImage& image() const;
+
+signals:
+    void submitScreenshot();
 
 protected:
-    void mousePressEvent(QMouseEvent*);
-    void mouseReleaseEvent(QMouseEvent*);
-    void mouseMoveEvent(QMouseEvent*);
+    virtual void mousePressEvent(QMouseEvent*);
+    virtual void mouseReleaseEvent(QMouseEvent*);
+    virtual void mouseMoveEvent(QMouseEvent*);
 
 private slots:
     void on_visibleAreaButton_clicked();
@@ -59,7 +61,6 @@ private:
         int y;
     } initDragCoords_;
     QPropertyAnimation animation_;
-    QImage* image_;
 };
 
 #endif // SCREENSHOTGUN_TOOLBAR_H

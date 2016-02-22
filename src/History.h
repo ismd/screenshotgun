@@ -14,11 +14,13 @@ public:
     ToolbarMode tool() const;
     QStringList links();
 
-    void setLastTool(const ToolbarMode &);
-    void setLinks(const QStringList &);
+    void setLinks(const QStringList&);
 
 signals:
     void linkAdded(const QString&);
+
+public slots:
+    void setLastTool(const ToolbarMode&);
 
 private:
     QSettings settings_;

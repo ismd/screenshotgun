@@ -54,10 +54,6 @@ QStringList History::links() {
     return links;
 }
 
-void History::setLastTool(const ToolbarMode &value) {
-    settings_.setValue("last_tool", static_cast<int>(value));
-}
-
 void History::setLinks(const QStringList &value) {
     settings_.beginWriteArray("links");
 
@@ -67,4 +63,10 @@ void History::setLinks(const QStringList &value) {
     }
 
     settings_.endArray();
+}
+
+void History::setLastTool(const ToolbarMode &value) {
+    if (value != ToolbarMode::VISIBLE_AREA) {
+        settings_.setValue("last_tool", static_cast<int>(value));
+    }
 }

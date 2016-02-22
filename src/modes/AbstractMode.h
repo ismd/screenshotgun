@@ -1,22 +1,24 @@
 #ifndef SCREENSHOTGUN_ABSTRACTMODE_H
 #define SCREENSHOTGUN_ABSTRACTMODE_H
 
-#include <QGraphicsScene>
-#include <QKeyEvent>
+#include "items/ItemFactory.h"
+#include "../Scene.h"
 
 class AbstractMode : public QObject {
     Q_OBJECT
 
 public:
-    AbstractMode(QGraphicsScene&);
+    AbstractMode(Scene&);
+    Scene& scene();
 
-    virtual void init(int x, int y) = 0;
-    virtual void move(int x, int y) = 0;
-    virtual void stop(int x, int y) = 0;
+    virtual void init(int x, int y);
+    virtual void move(int x, int y);
+    virtual void stop(int x, int y);
 
 protected:
-    QGraphicsScene& scene_;
-    QPen pen;
+    Scene& scene_;
+    static ItemFactory itemFactory_;
+    AbstractItem* item_;
 };
 
 #endif // SCREENSHOTGUN_ABSTRACTMODE_H

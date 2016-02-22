@@ -10,7 +10,8 @@ App::App()
       google_(*this),
       copyImageToClipboard_(false),
       connectionChecks_(0),
-      connected_(false) {
+      connected_(false),
+      image_(0) {
     connect(&server_, SIGNAL(connectionSuccess()),
             this, SLOT(connectionSuccess()));
 
@@ -41,6 +42,9 @@ App::App()
     connect(&google_, SIGNAL(uploadError(QString)),
             this, SLOT(uploadError(QString)));
 
+    connect(&appView_.toolbar(), SIGNAL(submitScreenshot()),
+            this, SLOT(submitScreenshot()));
+
     appView_.initShortcut();
     connect(&trayIcon_, SIGNAL(makeScreenshot()),
             this, SLOT(makeScreenshot()));
@@ -58,6 +62,10 @@ App::App()
 
     updater_.check();
 #endif
+}
+
+App::~App() {
+    delete image_;
 }
 
 SettingsForm& App::settingsForm() {
@@ -133,6 +141,54 @@ void App::makeScreenshot() {
     appView_.makeScreenshot();
 }
 
+void App::submitScreenshot() {
+    QApplication::clipboard()->setText("");
+
+    Scene& scene = appView_.sceneManager().scene();
+    VisibleAreaMode* visibleAreaMode = appView_.sceneManager().visibleAreaMode();
+
+    scene.setSceneRect(visibleAreaMode->area.x,
+                       visibleAreaMode->area.y,
+                       visibleAreaMode->area.width,
+                       visibleAreaMode->area.height);
+
+    if (image_ != 0) {
+        delete image_;
+    }
+
+    image_ = new QImage(scene.sceneRect().size().toSize(), QImage::Format_ARGB32);
+    image_->fill(Qt::transparent);
+
+    QPainter painter(image_);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    scene.render(&painter);
+
+    QByteArray bytes;
+    QBuffer buffer(&bytes);
+    buffer.open(QIODevice::WriteOnly);
+    image_->save(&buffer, "PNG");
+
+    appView_.hide();
+
+    switch (uploadService()) {
+        case UploadService::SERVER:
+            server().upload(bytes);
+            break;
+
+        case UploadService::DROPBOX:
+            dropbox().upload(bytes);
+            break;
+
+        case UploadService::YANDEX:
+            yandex().upload(bytes);
+            break;
+
+        case UploadService::GOOGLE:
+            google().upload(bytes);
+            break;
+    }
+}
+
 void App::connectionSuccess() {
     qDebug() << "Connection established to" << server_.url();
 
@@ -157,7 +213,7 @@ void App::uploadSuccess(const QString& url) {
     history_.addLink(url);
 
     if (copyImageToClipboard_) {
-        clipboard->setImage(appView_.toolbar().image());
+        clipboard->setImage(*image_);
 
         trayIcon_.showMessage("Изображение скопировано в буфер обмена",
                               url,

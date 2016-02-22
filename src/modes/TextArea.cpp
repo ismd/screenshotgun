@@ -1,6 +1,6 @@
 #include "TextArea.h"
 
-TextArea::TextArea(QWidget* parent) : QPlainTextEdit(parent) {
+TextArea::TextArea() {
 }
 
 void TextArea::keyReleaseEvent(QKeyEvent* event) {
