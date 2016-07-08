@@ -22,6 +22,7 @@ public:
     App& app() const;
     SceneManager& sceneManager();
     Toolbar& toolbar();
+    QPixmap& screenshot();
     void initShortcut();
 
 public slots:

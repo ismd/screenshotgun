@@ -81,6 +81,10 @@ Toolbar& AppView::toolbar() {
     return toolbar_;
 }
 
+QPixmap& AppView::screenshot() {
+    return screenshot_;
+}
+
 void AppView::initShortcut() {
 #if defined(Q_OS_LINUX)
     shortcut_.setShortcut(QKeySequence(tr("Alt+Print")));

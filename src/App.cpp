@@ -147,6 +147,8 @@ void App::submitScreenshot() {
     Scene& scene = appView_.sceneManager().scene();
     VisibleAreaMode* visibleAreaMode = appView_.sceneManager().visibleAreaMode();
 
+    scene.addPixmap(appView_.screenshot());
+
     scene.setSceneRect(visibleAreaMode->area.x,
                        visibleAreaMode->area.y,
                        visibleAreaMode->area.width,
@@ -160,8 +162,7 @@ void App::submitScreenshot() {
     image_->fill(Qt::transparent);
 
     QPainter painter(image_);
-    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-    scene.render(&painter);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform | QPainter::TextAntialiasing);
 
     QByteArray bytes;
     QBuffer buffer(&bytes);
