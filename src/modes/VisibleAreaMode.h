@@ -48,14 +48,10 @@ private:
     VisibleAreaRect rectBottom_;
     VisibleAreaRect rectBottomRight_;
 
-    QGraphicsLineItem lineTopLeft1_;
-    QGraphicsLineItem lineTopLeft2_;
-    QGraphicsLineItem lineTopRight1_;
-    QGraphicsLineItem lineTopRight2_;
-    QGraphicsLineItem lineBottomLeft1_;
-    QGraphicsLineItem lineBottomLeft2_;
-    QGraphicsLineItem lineBottomRight1_;
-    QGraphicsLineItem lineBottomRight2_;
+    QGraphicsLineItem lineHorizontal1_;
+    QGraphicsLineItem lineHorizontal2_;
+    QGraphicsLineItem lineVertical1_;
+    QGraphicsLineItem lineVertical2_;
 
     Toolbar& toolbar_;
     bool initialized_;

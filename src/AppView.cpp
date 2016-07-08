@@ -10,8 +10,8 @@ AppView::AppView(App& app)
       toolbar_(*this) {
 
 #ifndef Q_OS_OSX
-    setWindowFlags(Qt::Widget | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint |
-                   Qt::WindowStaysOnTopHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
+    //setWindowFlags(Qt::Widget | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint |
+    //               Qt::WindowStaysOnTopHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 #else
     setWindowFlags(Qt::Drawer | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint |
                    Qt::WindowStaysOnTopHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
@@ -67,7 +67,8 @@ void AppView::makeScreenshot() {
     setBackgroundBrush(screenshot_);
 
 #ifndef Q_OS_OSX
-    showFullScreen();
+    //showFullScreen();
+    show();
 #else
     showMaximized();
 #endif

@@ -37,14 +37,10 @@ VisibleAreaMode::VisibleAreaMode(Scene& scene, Toolbar& toolbar, int maxWidth, i
     fullscreenRect_ = &rectTopLeft_;
     fullscreenRect_->setRect(0, 0, scene_.width(), scene_.height());
 
-    prepareLine(lineTopLeft1_);
-    prepareLine(lineTopLeft2_);
-    prepareLine(lineTopRight1_);
-    prepareLine(lineTopRight2_);
-    prepareLine(lineBottomLeft1_);
-    prepareLine(lineBottomLeft2_);
-    prepareLine(lineBottomRight1_);
-    prepareLine(lineBottomRight2_);
+    prepareLine(lineHorizontal1_);
+    prepareLine(lineHorizontal2_);
+    prepareLine(lineVertical1_);
+    prepareLine(lineVertical2_);
 }
 
 void VisibleAreaMode::init(int x, int y) {
@@ -127,10 +123,11 @@ void VisibleAreaMode::updateSize() {
     int sceneHeight = scene_.height();
 
     if (!initialized_) {
-        lineTopLeft1_.setLine(0, y, x, y);
-        lineTopLeft2_.setLine(x, 0, x, y);
-        lineBottomLeft1_.setLine(x, y, sceneWidth, y);
-        lineBottomLeft2_.setLine(x, y, x, sceneHeight);
+        lineHorizontal1_.setLine(0, y, sceneWidth, y);
+        lineVertical1_.setLine(x, 0, x, sceneHeight);
+
+        lineHorizontal1_.setVisible(true);
+        lineVertical1_.setVisible(true);
     } else {
         width = width > 0 ? width : 1;
         height = height > 0 ? height : 1;
@@ -146,14 +143,13 @@ void VisibleAreaMode::updateSize() {
         rectBottom_.setRect(x, y + height, width, sceneHeight - y - height);
         rectBottomRight_.setRect(x + width, y + height, sceneWidth - x - width, sceneHeight - y - height);
 
-        lineTopLeft1_.setLine(0, y, x, y);
-        lineTopLeft2_.setLine(x, 0, x, y);
-        lineTopRight1_.setLine(x + width, 0, x + width, y);
-        lineTopRight2_.setLine(x + width, y, sceneWidth, y);
-        lineBottomLeft1_.setLine(0, y + height, x, y + height);
-        lineBottomLeft2_.setLine(x, y + height, x, sceneWidth);
-        lineBottomRight1_.setLine(x + width, y + height, x + width, sceneWidth);
-        lineBottomRight2_.setLine(x + width, y + height, sceneWidth, y + height);
+        lineHorizontal1_.setLine(0, y, sceneWidth, y);
+        lineHorizontal2_.setLine(0, y + height, sceneWidth, y + height);
+        lineVertical1_.setLine(x, 0, x, sceneHeight);
+        lineVertical2_.setLine(x + width, 0, x + width, sceneHeight);
+
+        lineHorizontal2_.setVisible(true);
+        lineVertical2_.setVisible(true);
     }
 }
 
@@ -202,6 +198,7 @@ void VisibleAreaMode::prepareRect(QGraphicsRectItem& rect) {
     rect.setOpacity(.65);
     rect.setPen(Qt::NoPen);
     rect.setBrush(QBrush(Qt::black));
+    rect.setCursor(Qt::BlankCursor);
     rect.setZValue(1);
 
     scene_.addItem(&rect);
@@ -210,6 +207,7 @@ void VisibleAreaMode::prepareRect(QGraphicsRectItem& rect) {
 void VisibleAreaMode::prepareLine(QGraphicsLineItem& line) {
     line.setPen(QPen(QColor(180, 180, 180)));
     line.setZValue(1);
+    line.setVisible(false);
 
     scene_.addItem(&line);
 }
