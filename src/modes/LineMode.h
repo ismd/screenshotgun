@@ -7,8 +7,14 @@
 class LineMode : public AbstractMode {
 
 public:
-    LineMode(Scene&);
-    virtual void init(int x, int y);
+    LineMode(QGraphicsScene&);
+
+    void init(int x, int y);
+    void move(int x, int y);
+    void stop(int x, int y);
+
+protected:
+    QGraphicsLineItem* line_;
 };
 
 #endif // SCREENSHOTGUN_LINEMODE_H

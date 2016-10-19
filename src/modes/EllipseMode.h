@@ -6,8 +6,19 @@
 class EllipseMode : public AbstractMode {
 
 public:
-    EllipseMode(Scene&);
-    virtual void init(int x, int y);
+    EllipseMode(QGraphicsScene&);
+
+    void init(int x, int y);
+    void move(int x, int y);
+    void stop(int x, int y);
+
+private:
+    QGraphicsEllipseItem* ellipse_;
+
+    struct {
+        int x;
+        int y;
+    } coords;
 };
 
 #endif // SCREENSHOTGUN_ELLIPSEMODE_H

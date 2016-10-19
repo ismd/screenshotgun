@@ -1,11 +1,12 @@
 #include "../AppView.h"
 #include "TextMode.h"
 
-TextMode::TextMode(Scene& scene)
+TextMode::TextMode(QGraphicsScene& scene, AppView& appView)
     : AbstractMode(scene),
-      textArea_(new TextArea()),
-      initialized_(false) {
-    connect(&scene.sceneManager(), SIGNAL(modeChanged(ToolbarMode)),
+      initialized_(false),
+      appView_(appView),
+      textArea_(0) {
+    connect(&appView_, SIGNAL(toolChanged(ToolbarMode)),
             this, SLOT(clearFocus()));
 }
 
@@ -20,9 +21,11 @@ void TextMode::init(int x, int y) {
 }
 
 void TextMode::move(int x, int y) {
-    if (!initialized_) {
-        textArea_->move(x, y);
+    if (initialized_) {
+        return;
     }
+
+    textArea_->move(x, y);
 }
 
 void TextMode::stop(int x, int y) {

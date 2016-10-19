@@ -2,7 +2,14 @@
 #define SCREENSHOTGUN_APPVIEW_H
 
 #include <QGraphicsView>
-#include "SceneManager.h"
+#include <QMouseEvent>
+#include "modes/LineMode.h"
+#include "modes/ArrowMode.h"
+#include "modes/EllipseMode.h"
+#include "modes/RectMode.h"
+#include "modes/TextMode.h"
+#include "modes/VisibleAreaMode.h"
+#include "Toolbar.h"
 
 #if defined(Q_OS_LINUX)
     #include "qxt/qxtglobalshortcut.h"
@@ -20,19 +27,40 @@ public:
     ~AppView();
 
     App& app() const;
-    SceneManager& sceneManager();
-    Toolbar& toolbar();
-    QPixmap& screenshot();
+    QGraphicsScene& scene();
+    VisibleAreaMode& visibleAreaMode() const;
+    void setMode(const ToolbarMode);
+    void reinitVisibleArea();
     void initShortcut();
+    Toolbar& toolbar();
+
+signals:
+    void toolChanged(ToolbarMode);
 
 public slots:
     void makeScreenshot();
 
+protected:
+    void mousePressEvent(QMouseEvent*);
+    void mouseMoveEvent(QMouseEvent*);
+    void mouseReleaseEvent(QMouseEvent*);
+    void wheelEvent(QWheelEvent*);
+    void keyReleaseEvent(QKeyEvent*);
+
 private:
     App& app_;
-    SceneManager sceneManager_;
+    QGraphicsScene scene_;
     Toolbar toolbar_;
     QPixmap screenshot_;
+
+    AbstractMode* currentMode_;
+    VisibleAreaMode* visibleAreaMode_;
+    LineMode lineMode_;
+    ArrowMode arrowMode_;
+    RectMode rectMode_;
+    EllipseMode ellipseMode_;
+    TextMode textMode_;
+    bool usingMode_;
 
 #if defined(Q_OS_LINUX)
     QxtGlobalShortcut shortcut_;

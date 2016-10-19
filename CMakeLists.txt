@@ -54,18 +54,9 @@ set(SOURCE_FILES
     src/OAuth.cpp
     src/OAuth.h
     src/services/ServiceHelper.cpp
-    src/services/ServiceHelper.h
-    src/Scene.cpp
-    src/Scene.h
-    src/SceneManager.cpp
-    src/SceneManager.h
-    src/modes/items/ItemFactory.cpp
-    src/modes/items/ItemFactory.h
-    src/modes/VisibleAreaRect.cpp
-    src/modes/VisibleAreaRect.h src/modes/items/ArrowItem.cpp src/modes/items/ArrowItem.h src/modes/items/AbstractItem.cpp src/modes/items/AbstractItem.h src/modes/items/LineItem.cpp src/modes/items/LineItem.h src/modes/items/RectItem.cpp src/modes/items/RectItem.h src/modes/items/TextItem.cpp src/modes/items/TextItem.h src/modes/items/EllipseItem.cpp src/modes/items/EllipseItem.h)
+    src/services/ServiceHelper.h)
 
-find_package(Qt5 COMPONENTS Gui Network Widgets OpenGL REQUIRED)
-find_package(OpenGL)
+find_package(Qt5 COMPONENTS Gui Network Widgets REQUIRED)
 
 qt5_wrap_ui(SOURCE_FILES
     ui/OAuth.ui
@@ -92,7 +83,7 @@ elseif(UNIX)
         include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
         add_executable(screenshotgun ${SOURCE_FILES})
-        target_link_libraries(screenshotgun X11 Qt5::Widgets Qt5::Gui Qt5::Network Qt5::OpenGL)
+        target_link_libraries(screenshotgun X11 Qt5::Widgets Qt5::Gui Qt5::Network)
     else()
         include_directories(${ADDITIONAL_INCLUDE})
 

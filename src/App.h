@@ -20,7 +20,6 @@ class App : public QObject {
 
 public:
     App();
-    ~App();
     SettingsForm& settingsForm();
     UploadService uploadService() const;
     Server& server();
@@ -43,7 +42,6 @@ protected:
 
 private slots:
     void makeScreenshot();
-    void submitScreenshot();
     void connectionSuccess();
     void connectionError();
     void uploadSuccess(const QString&);
@@ -53,10 +51,10 @@ private slots:
     void openUrl();
 
 private:
-    History history_;
     AppView appView_;
     Settings settings_;
     TrayIcon trayIcon_;
+    History history_;
     UploadService service_;
     Server server_;
     Dropbox dropbox_;
@@ -70,7 +68,6 @@ private:
     int connectionChecks_;
     bool connected_;
     QString lastUrl_;
-    QImage* image_;
 };
 
 #endif // SCREENSHOTGUN_APP_H

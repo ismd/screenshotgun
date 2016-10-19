@@ -1,24 +1,40 @@
 #ifndef SCREENSHOTGUN_VISIBLEAREAMODE_H
 #define SCREENSHOTGUN_VISIBLEAREAMODE_H
 
+#include <QWidget>
 #include <QGraphicsRectItem>
 #include "AbstractMode.h"
-#include "VisibleAreaRect.h"
+
+class Toolbar;
+
+enum class ResizeDirection {
+    TOP,
+    LEFT,
+    RIGHT,
+    BOTTOM,
+    TOP_LEFT,
+    TOP_RIGHT,
+    BOTTOM_LEFT,
+    BOTTOM_RIGHT
+};
 
 class VisibleAreaMode : public AbstractMode {
-    Q_OBJECT
 
 public:
-    VisibleAreaMode(Scene&, Toolbar&, int, int);
+    VisibleAreaMode(QGraphicsScene&, Toolbar&, int, int);
 
-    virtual void init(int, int);
-    virtual void move(int, int);
-    virtual void stop(int, int);
+    void init(int x, int y);
+    void move(int x, int y);
+    void stop(int x, int y);
 
+    void resizeInit(int x, int y);
+    void resizeMove(int x, int y);
+    void resizeStop(int x, int y);
+
+    bool isResizablePosition(int x, int y);
     bool initialized();
-    void resizeArea(int, int, int, int);
-    Toolbar& toolbar();
-    void updateToolbarPosition();
+    bool resizing();
+    ResizeDirection resizablePosition(int x, int y);
 
     struct {
         int x;
@@ -27,34 +43,30 @@ public:
         int height;
     } area;
 
-private slots:
-    void modeChanged(ToolbarMode);
-
 private:
     void updateSize();
     void setArea(int x, int y, int width, int height);
-    void prepareRect(QGraphicsRectItem&);
-    void prepareLine(QGraphicsLineItem&);
+    void updateToolbarPosition();
 
-    QGraphicsRectItem activeRect_;
-    QGraphicsRectItem* fullscreenRect_;
+    QGraphicsRectItem rectTop_;
+    QGraphicsRectItem rectBottom_;
+    QGraphicsRectItem rectLeft_;
+    QGraphicsRectItem rectRight_;
 
-    VisibleAreaRect rectTopLeft_;
-    VisibleAreaRect rectTop_;
-    VisibleAreaRect rectTopRight_;
-    VisibleAreaRect rectLeft_;
-    VisibleAreaRect rectRight_;
-    VisibleAreaRect rectBottomLeft_;
-    VisibleAreaRect rectBottom_;
-    VisibleAreaRect rectBottomRight_;
-
-    QGraphicsLineItem lineHorizontal1_;
-    QGraphicsLineItem lineHorizontal2_;
-    QGraphicsLineItem lineVertical1_;
-    QGraphicsLineItem lineVertical2_;
+    QGraphicsLineItem lineTop_;
+    QGraphicsLineItem lineBottom_;
+    QGraphicsLineItem lineLeft_;
+    QGraphicsLineItem lineRight_;
 
     Toolbar& toolbar_;
     bool initialized_;
+    bool resizing_;
+
+    struct {
+        int x;
+        int y;
+        ResizeDirection direction;
+    } resizeInfo_;
 
     int maxWidth_;
     int maxHeight_;

@@ -16,9 +16,6 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <property name="cursor">
-   <cursorShape>ArrowCursor</cursorShape>
-  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -33,6 +30,9 @@
      <width>50</width>
      <height>400</height>
     </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>ArrowCursor</cursorShape>
    </property>
    <widget class="QPushButton" name="visibleAreaButton">
     <property name="geometry">
@@ -223,7 +223,7 @@
      </rect>
     </property>
     <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
+     <cursorShape>ArrowCursor</cursorShape>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
