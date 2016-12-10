@@ -46,7 +46,7 @@ App::App()
             this, SLOT(makeScreenshot()));
 
     settingsForm_.init();
-    if (!settingsForm_.valid()) {
+    if (!settingsForm_.valid(false)) {
         settingsForm_.show();
     }
 

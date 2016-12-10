@@ -47,7 +47,7 @@ void SettingsForm::init() {
     ui->serverEdit->setText(settings_.serverUrl());
 }
 
-bool SettingsForm::valid() {
+bool SettingsForm::valid(const bool save) {
     bool valid = false;
 
     if (settings_.exists()) {
@@ -99,7 +99,7 @@ bool SettingsForm::valid() {
         settings_.create();
     }
 
-    if (valid) {
+    if (save && valid) {
         saveValues();
     }
 
@@ -141,7 +141,7 @@ void SettingsForm::accept() {
     ui->submitButtons->setEnabled(false);
     app_.setConnectionChecks(-1);
 
-    if (!valid()) {
+    if (!valid(true)) {
         ui->submitButtons->setEnabled(true);
     }
 }

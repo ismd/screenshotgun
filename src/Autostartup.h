@@ -6,6 +6,7 @@ class AutoStartup {
 public:
     void set(bool);
 
+protected:
 #ifdef Q_OS_WIN32
     void setWindows(bool);
 #endif

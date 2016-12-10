@@ -15,8 +15,8 @@ public:
     ~SettingsForm();
 
     void init();
-    bool valid();
-    void setError(const QString &);
+    bool valid(const bool save);
+    void setError(const QString&);
     void show();
     void showCantConnect();
     OAuth& oauth();
