@@ -41,8 +41,6 @@ set(SOURCE_FILES
     src/TrayIcon.h
     src/AppView.cpp
     src/AppView.h
-    src/Updater_win.cpp
-    src/Updater_win.h
     src/History.cpp
     src/History.h
     src/services/Yandex.cpp
@@ -114,6 +112,10 @@ elseif(UNIX)
     install(FILES "${CMAKE_SOURCE_DIR}/resources/dist/screenshotgun.png"
         DESTINATION share/pixmaps)
 elseif(WIN32)
+    list(APPEND SOURCE_FILES
+        src/Updater_win.cpp
+        src/Updater_win.h)
+
     add_executable(screenshotgun WIN32 ${SOURCE_FILES})
     target_link_libraries(screenshotgun Qt5::Widgets Qt5::Gui Qt5::Network)
 endif()
