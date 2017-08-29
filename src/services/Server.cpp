@@ -23,7 +23,7 @@ void Server::setUrl(const QString& url) {
 }
 
 void Server::upload(QByteArray bytes) {
-    QHttpMultiPart* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+    auto multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
     QHttpPart imagePart;
     imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/png"));
@@ -39,7 +39,8 @@ void Server::upload(QByteArray bytes) {
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
             this, SLOT(uploadedSlot(QNetworkReply*)));
 
-    multiPart->setParent(manager_.post(request, multiPart)); // delete the multiPart with the reply
+    QNetworkReply* reply = manager_.post(request, multiPart);
+    multiPart->setParent(reply); // delete the multiPart with the reply
 }
 
 void Server::checkConnection() {
@@ -56,28 +57,33 @@ void Server::uploadedSlot(QNetworkReply* reply) {
     disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
                this, SLOT(uploadedSlot(QNetworkReply*)));
 
-    QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
-    reply->close();
-
-    QJsonObject jsonObject = jsonResponse.object();
-
-    if (0 == jsonObject["status"].toString().compare("ok")) {
-        emit uploadSuccess(jsonObject["url"].toString());
-    } else {
+    if (reply->error() != QNetworkReply::NoError) {
         emit uploadError();
+    } else {
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
+        reply->close();
+
+        QJsonObject jsonObject = jsonResponse.object();
+
+        if (0 == jsonObject["status"].toString().compare("ok")) {
+            emit uploadSuccess(jsonObject["url"].toString());
+        } else {
+            emit uploadError();
+        }
     }
 
-    delete reply;
+    reply->deleteLater();
 }
 
 void Server::connectionSlot(QNetworkReply* reply) {
     disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
                this, SLOT(connectionSlot(QNetworkReply*)));
 
-    if (QNetworkReply::NoError != reply->error()) {
+    if (reply->error() != QNetworkReply::NoError) {
         emit connectionError();
     } else {
         emit connectionSuccess();
-        delete reply;
     }
+
+    reply->deleteLater();
 }
