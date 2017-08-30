@@ -62,6 +62,9 @@ qt5_wrap_ui(SOURCE_FILES
     ui/Toolbar.ui
     ui/Update.ui)
 
+# For CLion
+include_directories(cmake-build-debug)
+
 if(APPLE)
     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
