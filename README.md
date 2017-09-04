@@ -10,7 +10,7 @@ Also you can get open source server part and deploy it by yourself [github.com/i
   
 Download binaries for Windows, Linux and macOS from official site [screenshotgun.com](http://screenshotgun.com)   
 
-![](https://github.com/ismd/screenshotgun/raw/master/resources/images/readme.png "Readme")
+![](https://github.com/ismd/screenshotgun/raw/master/resources/images/readme.png "")
 
 ## Build
 ### macOS
