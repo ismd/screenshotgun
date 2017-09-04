@@ -2,11 +2,11 @@
 #include "App.h"
 
 int main(int argc, char *argv[]) {
-    QCoreApplication::setOrganizationName("Screenshotgun");
-    QCoreApplication::setOrganizationDomain("screenshotgun.com");
-    QCoreApplication::setApplicationName("Screenshotgun");
-
     QApplication app(argc, argv);
+
+    app.setOrganizationName("Screenshotgun");
+    app.setOrganizationDomain("screenshotgun.com");
+    app.setApplicationName("Screenshotgun");
 
     QFile file(":/style.qss");
     file.open(QFile::ReadOnly);
