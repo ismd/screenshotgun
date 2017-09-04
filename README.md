@@ -10,6 +10,8 @@ Also you can get open source server part and deploy it by yourself [github.com/i
   
 Download binaries for Windows, Linux and macOS from official site [screenshotgun.com](http://screenshotgun.com)   
 
+![](https://github.com/ismd/screenshotgun/raw/master/resources/images/readme.png "Readme")
+
 ## Build
 ### macOS
 1. brew install cmake qt
