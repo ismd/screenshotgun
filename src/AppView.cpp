@@ -53,7 +53,7 @@ void AppView::makeScreenshot() {
                                                                geo.height());
 
     int width = screenshot_.width(),
-            height = screenshot_.height();
+        height = screenshot_.height();
 
     setGeometry(0, 0, width, height);
     scene_.setSceneRect(0, 0, width, height);
@@ -63,7 +63,8 @@ void AppView::makeScreenshot() {
     // Background screenshot
     scene_.addPixmap(screenshot_);
 
-    showFullScreen();
+    setGeometry(0, 0, width, height);
+    showNormal();
     activateWindow();
 }
 
