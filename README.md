@@ -1,5 +1,5 @@
 # Screenshotgun
-Cross-platform open screenshoter with cloud support and server part.  
+Open cross-platform screenshoter with cloud support and server part.  
 With this application you can make screenshots, draw different figures or write text on them and then upload to:  
 * [screenshotgun.com](http://screenshotgun.com)
 * Dropbox
