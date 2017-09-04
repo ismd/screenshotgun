@@ -15,7 +15,7 @@ AppView::AppView(App& app)
       textMode_(scene_, *this),
       usingMode_(false) {
 
-    setWindowFlags(Qt::Widget | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::Widget | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint | Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint);
 
     setFocusPolicy(Qt::StrongFocus);
     setFrameShape(QFrame::NoFrame);
@@ -64,6 +64,7 @@ void AppView::makeScreenshot() {
     scene_.addPixmap(screenshot_);
 
     showFullScreen();
+    activateWindow();
 }
 
 QGraphicsScene& AppView::scene() {
