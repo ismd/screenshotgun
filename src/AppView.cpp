@@ -15,7 +15,7 @@ AppView::AppView(App& app)
       textMode_(scene_, *this),
       usingMode_(false) {
 
-    setWindowFlags(Qt::Widget | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint | Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::Widget | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint | Qt::BypassWindowManagerHint | Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint | Qt::WindowOverridesSystemGestures);
 
     setFocusPolicy(Qt::StrongFocus);
     setFrameShape(QFrame::NoFrame);
