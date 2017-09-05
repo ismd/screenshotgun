@@ -64,8 +64,10 @@ void AppView::makeScreenshot() {
     scene_.addPixmap(screenshot_);
 
     setGeometry(0, 0, width, height);
-    showNormal();
+    raise();
+    repaint();
     activateWindow();
+    showNormal();
 }
 
 QGraphicsScene& AppView::scene() {
