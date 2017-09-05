@@ -66,7 +66,6 @@ void AppView::makeScreenshot() {
     setGeometry(0, 0, width, height);
     showNormal();
     activateWindow();
-    setFocus();
 }
 
 QGraphicsScene& AppView::scene() {

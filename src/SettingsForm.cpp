@@ -122,7 +122,10 @@ void SettingsForm::show() {
     }
 
     ui->submitButtons->setEnabled(true);
+
     QDialog::show();
+    activateWindow();
+    raise();
 }
 
 void SettingsForm::showCantConnect() {
