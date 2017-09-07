@@ -1,5 +1,5 @@
-#ifndef SCREENSHOTGUN_APPVIEW_H
-#define SCREENSHOTGUN_APPVIEW_H
+#ifndef SCREENSHOTGUN_OVERLAY_H
+#define SCREENSHOTGUN_OVERLAY_H
 
 #include <QGraphicsView>
 #include <QMouseEvent>
@@ -62,4 +62,4 @@ private:
     bool usingMode_;
 };
 
-#endif //SCREENSHOTGUN_APPVIEW_H
+#endif //SCREENSHOTGUN_OVERLAY_H
