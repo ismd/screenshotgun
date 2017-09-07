@@ -52,7 +52,9 @@ set(SOURCE_FILES
     src/OAuth.cpp
     src/OAuth.h
     src/services/ServiceHelper.cpp
-    src/services/ServiceHelper.h)
+    src/services/ServiceHelper.h
+    src/OverlayView.cpp
+    src/OverlayView.h)
 
 find_package(Qt5 COMPONENTS Gui Network Widgets REQUIRED)
 

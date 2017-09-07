@@ -21,7 +21,7 @@ class Toolbar : public QWidget {
     Q_OBJECT
 
 public:
-    explicit Toolbar(Overlay&);
+    explicit Toolbar(QWidget*, Overlay&);
     ~Toolbar();
 
     Overlay& overlay() const;

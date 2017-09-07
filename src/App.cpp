@@ -212,8 +212,8 @@ void App::initShortcut() {
 bool Overlay::nativeEvent(const QByteArray& eventType, void* message, long* result) {
     MSG* msg = reinterpret_cast<MSG*>(message);
 
-    if (msg->message == WM_HOTKEY){
-        if (msg->wParam == 100){
+    if (msg->message == WM_HOTKEY) {
+        if (msg->wParam == 100) {
             overlay_.makeScreenshot();
             return true;
         }

@@ -3,10 +3,10 @@
 #include "App.h"
 #include "Toolbar.h"
 
-Toolbar::Toolbar(Overlay& appView)
-    : QWidget(&appView),
+Toolbar::Toolbar(QWidget* parent, Overlay& overlay)
+    : QWidget(parent),
       ui(new Ui::Toolbar),
-      overlay_(appView),
+      overlay_(overlay),
       dragging_(false),
       image_(0) {
 

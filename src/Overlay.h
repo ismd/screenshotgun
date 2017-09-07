@@ -1,14 +1,7 @@
 #ifndef SCREENSHOTGUN_OVERLAY_H
 #define SCREENSHOTGUN_OVERLAY_H
 
-#include <QGraphicsView>
-#include <QMouseEvent>
-#include "modes/LineMode.h"
-#include "modes/ArrowMode.h"
-#include "modes/EllipseMode.h"
-#include "modes/RectMode.h"
-#include "modes/TextMode.h"
-#include "modes/VisibleAreaMode.h"
+#include "OverlayView.h"
 #include "Toolbar.h"
 
 #if defined(Q_OS_LINUX)
@@ -19,12 +12,11 @@
 
 class App;
 
-class Overlay : public QGraphicsView {
+class Overlay : public QWidget {
     Q_OBJECT
 
 public:
     explicit Overlay(App&);
-    ~Overlay();
 
     App& app() const;
     QGraphicsScene& scene();
@@ -40,26 +32,14 @@ public slots:
     void makeScreenshot();
 
 protected:
-    void mousePressEvent(QMouseEvent*);
-    void mouseMoveEvent(QMouseEvent*);
-    void mouseReleaseEvent(QMouseEvent*);
-    void wheelEvent(QWheelEvent*);
-    void keyReleaseEvent(QKeyEvent*);
+    void showEvent(QShowEvent*);
+    void hideEvent(QHideEvent*);
 
 private:
     App& app_;
-    QGraphicsScene scene_;
+    OverlayView overlayView_;
     Toolbar toolbar_;
     QPixmap screenshot_;
-
-    AbstractMode* currentMode_;
-    VisibleAreaMode* visibleAreaMode_;
-    LineMode lineMode_;
-    ArrowMode arrowMode_;
-    RectMode rectMode_;
-    EllipseMode ellipseMode_;
-    TextMode textMode_;
-    bool usingMode_;
 };
 
 #endif //SCREENSHOTGUN_OVERLAY_H
