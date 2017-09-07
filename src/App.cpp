@@ -4,7 +4,7 @@
 #include "App.h"
 
 App::App()
-    : appView_(*this),
+    : overlay_(*this),
       trayIcon_(*this),
       settingsForm_(*this),
       google_(*this),
@@ -41,7 +41,7 @@ App::App()
     connect(&google_, SIGNAL(uploadError(QString)),
             this, SLOT(uploadError(QString)));
 
-    appView_.initShortcut();
+    overlay_.initShortcut();
     connect(&trayIcon_, SIGNAL(makeScreenshot()),
             this, SLOT(makeScreenshot()));
 
@@ -130,7 +130,7 @@ void App::timerEvent(QTimerEvent *event) {
 }
 
 void App::makeScreenshot() {
-    appView_.makeScreenshot();
+    overlay_.makeScreenshot();
 }
 
 void App::connectionSuccess() {
@@ -157,7 +157,7 @@ void App::uploadSuccess(const QString& url) {
     history_.addLink(url);
 
     if (copyImageToClipboard_) {
-        clipboard->setImage(appView_.toolbar().image());
+        clipboard->setImage(overlay_.toolbar().image());
 
         trayIcon_.showMessage("Изображение скопировано в буфер обмена",
                               url,

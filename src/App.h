@@ -1,8 +1,8 @@
 #ifndef SCREENSHOTGUN_APP_H
 #define SCREENSHOTGUN_APP_H
 
-#include "AppView.h"
 #include "History.h"
+#include "Overlay.h"
 #include "services/Dropbox.h"
 #include "services/Server.h"
 #include "services/Yandex.h"
@@ -51,7 +51,7 @@ private slots:
     void openUrl();
 
 private:
-    AppView appView_;
+    Overlay overlay_;
     Settings settings_;
     TrayIcon trayIcon_;
     History history_;

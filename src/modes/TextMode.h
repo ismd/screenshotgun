@@ -4,13 +4,13 @@
 #include "AbstractMode.h"
 #include "TextArea.h"
 
-class AppView;
+class Overlay;
 
 class TextMode : public AbstractMode {
     Q_OBJECT
 
 public:
-    TextMode(QGraphicsScene&, AppView&);
+    TextMode(QGraphicsScene&, Overlay&);
     TextArea* textArea();
 
     void init(int x, int y);
@@ -23,7 +23,7 @@ private slots:
 private:
     TextArea* textArea_;
     bool initialized_;
-    AppView& appView_;
+    Overlay& overlay_;
 };
 
 #endif // SCREENSHOTGUN_TEXTMODE_H

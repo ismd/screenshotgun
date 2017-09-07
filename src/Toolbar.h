@@ -6,7 +6,7 @@
 #include "services/Server.h"
 #include "ui_Toolbar.h"
 
-class AppView;
+class Overlay;
 
 enum class ToolbarMode {
     VISIBLE_AREA,
@@ -21,10 +21,10 @@ class Toolbar : public QWidget {
     Q_OBJECT
 
 public:
-    explicit Toolbar(AppView&);
+    explicit Toolbar(Overlay&);
     ~Toolbar();
 
-    AppView& appView() const;
+    Overlay& overlay() const;
     void select(const ToolbarMode, bool animate = false);
     void setSelectedNext();
     void setSelectedPrevious();
@@ -50,7 +50,7 @@ private:
     void setSelected(QPushButton*, bool animate = true);
 
     Ui::Toolbar* ui;
-    AppView& appView_;
+    Overlay& overlay_;
     QLinkedList<QPushButton*> buttons_;
     QPushButton* selected_;
     bool dragging_;

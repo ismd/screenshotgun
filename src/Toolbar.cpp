@@ -3,10 +3,10 @@
 #include "App.h"
 #include "Toolbar.h"
 
-Toolbar::Toolbar(AppView& appView)
+Toolbar::Toolbar(Overlay& appView)
     : QWidget(&appView),
       ui(new Ui::Toolbar),
-      appView_(appView),
+      overlay_(appView),
       dragging_(false),
       image_(0) {
 
@@ -32,8 +32,8 @@ Toolbar::~Toolbar() {
     delete image_;
 }
 
-AppView& Toolbar::appView() const {
-    return appView_;
+Overlay& Toolbar::overlay() const {
+    return overlay_;
 }
 
 void Toolbar::select(const ToolbarMode mode, bool animate) {
@@ -157,7 +157,7 @@ void Toolbar::on_okButton_clicked() {
 }
 
 void Toolbar::show() {
-    select(appView_.app().history().tool());
+    select(overlay_.app().history().tool());
     QWidget::show();
 }
 
@@ -165,9 +165,9 @@ void Toolbar::submit() {
     hide();
     QApplication::clipboard()->setText("");
 
-    QGraphicsScene& scene = appView_.scene();
+    QGraphicsScene& scene = overlay_.scene();
 
-    VisibleAreaMode& visibleAreaMode = appView_.visibleAreaMode();
+    VisibleAreaMode& visibleAreaMode = overlay_.visibleAreaMode();
     scene.setSceneRect(visibleAreaMode.area.x,
                        visibleAreaMode.area.y,
                        visibleAreaMode.area.width,
@@ -189,23 +189,23 @@ void Toolbar::submit() {
     buffer.open(QIODevice::WriteOnly);
     image_->save(&buffer, "PNG");
 
-    appView_.hide();
+    overlay_.hide();
 
-    switch (appView_.app().uploadService()) {
+    switch (overlay_.app().uploadService()) {
         case UploadService::SERVER:
-            appView_.app().server().upload(bytes);
+            overlay_.app().server().upload(bytes);
             break;
 
         case UploadService::DROPBOX:
-            appView_.app().dropbox().upload(bytes);
+            overlay_.app().dropbox().upload(bytes);
             break;
 
         case UploadService::YANDEX:
-            appView_.app().yandex().upload(bytes);
+            overlay_.app().yandex().upload(bytes);
             break;
 
         case UploadService::GOOGLE:
-            appView_.app().google().upload(bytes);
+            overlay_.app().google().upload(bytes);
             break;
     }
 }
@@ -226,25 +226,25 @@ void Toolbar::setSelected(QPushButton* button, bool animate) {
     selected_ = button;
 
     if (button == ui->visibleAreaButton) {
-        appView_.setMode(ToolbarMode::VISIBLE_AREA);
+        overlay_.setMode(ToolbarMode::VISIBLE_AREA);
     } else if (button == ui->lineButton) {
-        appView_.setMode(ToolbarMode::LINE);
+        overlay_.setMode(ToolbarMode::LINE);
     } else if (button == ui->arrowButton) {
-        appView_.setMode(ToolbarMode::ARROW);
+        overlay_.setMode(ToolbarMode::ARROW);
     } else if (button == ui->rectButton) {
-        appView_.setMode(ToolbarMode::RECT);
+        overlay_.setMode(ToolbarMode::RECT);
     } else if (button == ui->ellipseButton) {
-        appView_.setMode(ToolbarMode::ELLIPSE);
+        overlay_.setMode(ToolbarMode::ELLIPSE);
     } else if (button == ui->textButton) {
-        appView_.setMode(ToolbarMode::TEXT);
+        overlay_.setMode(ToolbarMode::TEXT);
     } else {
         return;
     }
 
     if (button == ui->textButton) {
-        appView_.setCursor(Qt::IBeamCursor);
+        overlay_.setCursor(Qt::IBeamCursor);
     } else {
-        appView_.setCursor(Qt::CrossCursor);
+        overlay_.setCursor(Qt::CrossCursor);
     }
 
     int x = ui->selectedCircle->x();

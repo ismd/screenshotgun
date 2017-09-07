@@ -39,8 +39,8 @@ set(SOURCE_FILES
     src/SettingsForm.h
     src/TrayIcon.cpp
     src/TrayIcon.h
-    src/AppView.cpp
-    src/AppView.h
+    src/Overlay.cpp
+    src/Overlay.h
     src/History.cpp
     src/History.h
     src/services/Yandex.cpp

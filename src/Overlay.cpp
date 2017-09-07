@@ -2,9 +2,9 @@
 #include <QDesktopWidget>
 #include <QScreen>
 #include "App.h"
-#include "AppView.h"
+#include "Overlay.h"
 
-AppView::AppView(App& app)
+Overlay::Overlay(App& app)
     : app_(app),
       toolbar_(*this),
       visibleAreaMode_(0),
@@ -28,15 +28,15 @@ AppView::AppView(App& app)
     setScene(&scene_);
 }
 
-AppView::~AppView() {
+Overlay::~Overlay() {
     delete visibleAreaMode_;
 }
 
-App& AppView::app() const {
+App& Overlay::app() const {
     return app_;
 }
 
-void AppView::makeScreenshot() {
+void Overlay::makeScreenshot() {
     if (app_.uploadService() == UploadService::SERVER && !app_.connected()) {
         app_.settingsForm().showCantConnect();
         return;
@@ -63,22 +63,22 @@ void AppView::makeScreenshot() {
     // Background screenshot
     scene_.addPixmap(screenshot_);
 
-    setGeometry(0, 0, width, height);
+    //setGeometry(0, 0, width, height);
     raise();
     repaint();
     activateWindow();
     showNormal();
 }
 
-QGraphicsScene& AppView::scene() {
+QGraphicsScene& Overlay::scene() {
     return scene_;
 }
 
-VisibleAreaMode& AppView::visibleAreaMode() const {
+VisibleAreaMode& Overlay::visibleAreaMode() const {
     return *visibleAreaMode_;
 }
 
-void AppView::setMode(const ToolbarMode mode) {
+void Overlay::setMode(const ToolbarMode mode) {
     emit toolChanged(mode);
 
     switch (mode) {
@@ -113,7 +113,7 @@ void AppView::setMode(const ToolbarMode mode) {
     }
 }
 
-void AppView::reinitVisibleArea() {
+void Overlay::reinitVisibleArea() {
     if (0 != visibleAreaMode_) {
         delete visibleAreaMode_;
     }
@@ -126,7 +126,7 @@ void AppView::reinitVisibleArea() {
     toolbar_.select(ToolbarMode::VISIBLE_AREA);
 }
 
-void AppView::initShortcut() {
+void Overlay::initShortcut() {
 #if defined(Q_OS_LINUX)
     shortcut_.setShortcut(QKeySequence(tr("Alt+Print")));
 
@@ -137,11 +137,11 @@ void AppView::initShortcut() {
 #endif
 }
 
-Toolbar& AppView::toolbar() {
+Toolbar& Overlay::toolbar() {
     return toolbar_;
 }
 
-void AppView::mousePressEvent(QMouseEvent* e) {
+void Overlay::mousePressEvent(QMouseEvent* e) {
     int x = e->x();
     int y = e->y();
 
@@ -157,7 +157,7 @@ void AppView::mousePressEvent(QMouseEvent* e) {
     currentMode_->init(x, y);
 }
 
-void AppView::mouseMoveEvent(QMouseEvent* e) {
+void Overlay::mouseMoveEvent(QMouseEvent* e) {
     int x = e->x();
     int y = e->y();
 
@@ -194,7 +194,7 @@ void AppView::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-void AppView::mouseReleaseEvent(QMouseEvent* e) {
+void Overlay::mouseReleaseEvent(QMouseEvent* e) {
     int x = e->x();
     int y = e->y();
 
@@ -210,7 +210,7 @@ void AppView::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-void AppView::wheelEvent(QWheelEvent* e) {
+void Overlay::wheelEvent(QWheelEvent* e) {
     if (e->delta() < 0) {
         toolbar_.setSelectedNext();
     } else {
@@ -218,7 +218,7 @@ void AppView::wheelEvent(QWheelEvent* e) {
     }
 }
 
-void AppView::keyReleaseEvent(QKeyEvent* e) {
+void Overlay::keyReleaseEvent(QKeyEvent* e) {
     int key = e->key();
 
     if (key == Qt::Key_Escape) {
@@ -235,7 +235,7 @@ void AppView::keyReleaseEvent(QKeyEvent* e) {
 }
 
 #ifdef Q_OS_WIN32
-bool AppView::nativeEvent(const QByteArray& eventType, void* message, long* result) {
+bool Overlay::nativeEvent(const QByteArray& eventType, void* message, long* result) {
     MSG* msg = reinterpret_cast<MSG*>(message);
 
     if (msg->message == WM_HOTKEY){

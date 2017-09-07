@@ -19,12 +19,12 @@
 
 class App;
 
-class AppView : public QGraphicsView {
+class Overlay : public QGraphicsView {
     Q_OBJECT
 
 public:
-    explicit AppView(App&);
-    ~AppView();
+    explicit Overlay(App&);
+    ~Overlay();
 
     App& app() const;
     QGraphicsScene& scene();

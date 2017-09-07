@@ -1,12 +1,12 @@
-#include "../AppView.h"
+#include "src/Overlay.h"
 #include "TextMode.h"
 
-TextMode::TextMode(QGraphicsScene& scene, AppView& appView)
+TextMode::TextMode(QGraphicsScene& scene, Overlay& overlay)
     : AbstractMode(scene),
       initialized_(false),
-      appView_(appView),
+      overlay_(overlay),
       textArea_(0) {
-    connect(&appView_, SIGNAL(toolChanged(ToolbarMode)),
+    connect(&overlay_, SIGNAL(toolChanged(ToolbarMode)),
             this, SLOT(clearFocus()));
 }
 
