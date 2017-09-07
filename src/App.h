@@ -68,6 +68,12 @@ private:
     int connectionChecks_;
     bool connected_;
     QString lastUrl_;
+    void initShortcut();
+#if defined(Q_OS_LINUX)
+    QxtGlobalShortcut shortcut_;
+#elif defined(Q_OS_WIN32)
+    bool nativeEvent(const QByteArray& eventType, void* message, long* result);
+#endif
 };
 
 #endif // SCREENSHOTGUN_APP_H

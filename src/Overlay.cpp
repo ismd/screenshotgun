@@ -126,17 +126,6 @@ void Overlay::reinitVisibleArea() {
     toolbar_.select(ToolbarMode::VISIBLE_AREA);
 }
 
-void Overlay::initShortcut() {
-#if defined(Q_OS_LINUX)
-    shortcut_.setShortcut(QKeySequence(tr("Alt+Print")));
-
-    connect(&shortcut_, SIGNAL(activated()),
-            this, SLOT(makeScreenshot()));
-#elif defined(Q_OS_WIN32)
-    RegisterHotKey((HWND)winId(), 100, MOD_ALT, VK_SNAPSHOT);
-#endif
-}
-
 Toolbar& Overlay::toolbar() {
     return toolbar_;
 }
@@ -233,18 +222,3 @@ void Overlay::keyReleaseEvent(QKeyEvent* e) {
 
     QGraphicsView::keyReleaseEvent(e);
 }
-
-#ifdef Q_OS_WIN32
-bool Overlay::nativeEvent(const QByteArray& eventType, void* message, long* result) {
-    MSG* msg = reinterpret_cast<MSG*>(message);
-
-    if (msg->message == WM_HOTKEY){
-        if (msg->wParam == 100){
-            makeScreenshot();
-            return true;
-        }
-    }
-
-    return false;
-}
-#endif

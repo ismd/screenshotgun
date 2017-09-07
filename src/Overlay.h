@@ -31,7 +31,6 @@ public:
     VisibleAreaMode& visibleAreaMode() const;
     void setMode(const ToolbarMode);
     void reinitVisibleArea();
-    void initShortcut();
     Toolbar& toolbar();
 
 signals:
@@ -61,12 +60,6 @@ private:
     EllipseMode ellipseMode_;
     TextMode textMode_;
     bool usingMode_;
-
-#if defined(Q_OS_LINUX)
-    QxtGlobalShortcut shortcut_;
-#elif defined(Q_OS_WIN32)
-    bool nativeEvent(const QByteArray& eventType, void* message, long* result);
-#endif
 };
 
 #endif //SCREENSHOTGUN_APPVIEW_H

@@ -41,7 +41,7 @@ App::App()
     connect(&google_, SIGNAL(uploadError(QString)),
             this, SLOT(uploadError(QString)));
 
-    overlay_.initShortcut();
+    initShortcut();
     connect(&trayIcon_, SIGNAL(makeScreenshot()),
             this, SLOT(makeScreenshot()));
 
@@ -196,3 +196,29 @@ void App::updateAvailable(const QString& version) {
 void App::openUrl() {
     QDesktopServices::openUrl(QUrl(lastUrl_));
 }
+
+void App::initShortcut() {
+#if defined(Q_OS_LINUX)
+    shortcut_.setShortcut(QKeySequence(tr("Alt+Print")));
+
+    connect(&shortcut_, SIGNAL(activated()),
+            &overlay_, SLOT(makeScreenshot()));
+#elif defined(Q_OS_WIN32)
+    RegisterHotKey((HWND)overlay_.winId(), 100, MOD_ALT, VK_SNAPSHOT);
+#endif
+}
+
+#ifdef Q_OS_WIN32
+bool Overlay::nativeEvent(const QByteArray& eventType, void* message, long* result) {
+    MSG* msg = reinterpret_cast<MSG*>(message);
+
+    if (msg->message == WM_HOTKEY){
+        if (msg->wParam == 100){
+            overlay_.makeScreenshot();
+            return true;
+        }
+    }
+
+    return false;
+}
+#endif
