@@ -16,6 +16,6 @@ Download binaries for Windows, Linux and macOS from official site [screenshotgun
 ### macOS
 1. brew install cmake qt
 2. git clone https://github.com/ismd/screenshotgun.git
-3. mkdir build && cd build
-4. CMAKE_PREFIX_PATH=/usr/local/opt/qt cmake -G Xcode ../screenshotgun
+3. cd screenshotgun && mkdir build && cd build
+4. cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt -G Xcode ..
 5. Open and build project in Xcode
