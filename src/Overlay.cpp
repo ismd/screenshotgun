@@ -72,10 +72,6 @@ Toolbar& Overlay::toolbar() {
     return toolbar_;
 }
 
-void Overlay::showEvent(QShowEvent* e) {
-    setWindowState(Qt::WindowFullScreen);
-}
-
 void Overlay::hideEvent(QHideEvent* e) {
     toolbar_.hide();
 }

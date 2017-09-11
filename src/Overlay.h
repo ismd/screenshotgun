@@ -32,7 +32,6 @@ public slots:
     void makeScreenshot();
 
 protected:
-    void showEvent(QShowEvent*);
     void hideEvent(QHideEvent*);
 
 private:
