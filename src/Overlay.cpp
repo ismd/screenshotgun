@@ -9,11 +9,13 @@ Overlay::Overlay(App& app)
       overlayView_(this, *this),
       toolbar_(this, *this) {
 
-    setWindowFlags(Qt::Widget | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint | Qt::BypassWindowManagerHint | Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint | Qt::WindowOverridesSystemGestures);
-    //setWindowFlags(windowFlags() | Qt::Tool | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    //setFocusPolicy(Qt::StrongFocus);
-    //setMouseTracking(true);
+    setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint | Qt::BypassWindowManagerHint | Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint | Qt::WindowOverridesSystemGestures);
+    setFocusPolicy(Qt::StrongFocus);
     setCursor(Qt::BlankCursor);
+    
+#ifdef Q_OS_MACOS
+    setAttribute(Qt::WA_MacAlwaysShowToolWindow);
+#endif
 }
 
 App& Overlay::app() const {
