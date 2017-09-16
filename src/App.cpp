@@ -209,7 +209,7 @@ void App::initShortcut() {
 }
 
 #ifdef Q_OS_WIN32
-bool Overlay::nativeEvent(const QByteArray& eventType, void* message, long* result) {
+bool App::nativeEvent(const QByteArray& eventType, void* message, long* result) {
     MSG* msg = reinterpret_cast<MSG*>(message);
 
     if (msg->message == WM_HOTKEY) {
