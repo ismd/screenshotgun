@@ -1,12 +1,13 @@
 # Screenshotgun
 Open cross-platform screenshoter with cloud support and server part.  
-With this application you can make screenshots, draw different figures or write text on them and then upload to:  
+With this application you can make screenshots, draw figures or write text and then upload to:  
 * [screenshotgun.com](http://screenshotgun.com)
 * Dropbox
 * Google Drive
 * Yandex.Disk
+* Your own server
 
-Also you can get open source server part and deploy it by yourself [github.com/ismd/screenshotgun-server](https://github.com/ismd/screenshotgun-server)
+You can get open source server part and deploy it by yourself [github.com/ismd/screenshotgun-server](https://github.com/ismd/screenshotgun-server)
   
 Download binaries for Windows, Linux and macOS from official site [screenshotgun.com](http://screenshotgun.com)   
 
