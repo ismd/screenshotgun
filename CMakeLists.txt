@@ -59,7 +59,7 @@ set(SOURCE_FILES
     src/services/ServiceHelper.cpp
     src/services/ServiceHelper.h
     src/OverlayView.cpp
-    src/OverlayView.h)
+    src/OverlayView.h src/modes/items/AbstractItem.cpp src/modes/items/AbstractItem.h)
 
 find_package(Qt5 COMPONENTS Gui Network Widgets REQUIRED)
 

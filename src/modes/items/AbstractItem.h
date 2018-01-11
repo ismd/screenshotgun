@@ -1,13 +1,15 @@
-#ifndef SCREENSHOTGUN_LINEITEM_H
-#define SCREENSHOTGUN_LINEITEM_H
+#ifndef SCREENSHOTGUN_ABSTRACTITEM_H
+#define SCREENSHOTGUN_ABSTRACTITEM_H
 
-#include <QGraphicsLineItem>
-#include "AbstractItem.h"
+#include <QGraphicsItem>
 
-class LineItem : public QGraphicsLineItem, public AbstractItem {
+class Overlay;
+
+class AbstractItem : public QObject {
+    Q_OBJECT
 
 public:
-    LineItem(Overlay&, qreal x, qreal y);
+    explicit AbstractItem(Overlay&, QGraphicsItem*);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent*);
@@ -16,6 +18,8 @@ protected:
 
     void hoverEnterEvent(QGraphicsSceneHoverEvent*);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent*);
+
+    Overlay& overlay_;
 };
 
-#endif //SCREENSHOTGUN_LINEITEM_H
+#endif //SCREENSHOTGUN_ABSTRACTITEM_H

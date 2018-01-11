@@ -1,45 +1,31 @@
 #include <QCursor>
-#include <QGraphicsSceneMouseEvent>
-#include "../../Overlay.h"
+#include "LineItem.h"
 
 LineItem::LineItem(Overlay& overlay, qreal x, qreal y)
-    : QGraphicsLineItem(x, y, x, y),
-      overlay_(overlay) {
-    setFlag(QGraphicsItem::ItemIsMovable);
-    setFlag(QGraphicsItem::ItemClipsToShape);
-    setAcceptHoverEvents(true);
+    : QGraphicsLineItem(x, y, x, y), AbstractItem(overlay, this) {
 }
 
 void LineItem::mousePressEvent(QGraphicsSceneMouseEvent* e) {
-    overlay_.overlayView().setMovingItem(true);
-
-    overlay_.setCursorLocked(false);
-    overlay_.setCursor(Qt::ClosedHandCursor);
-
+    AbstractItem::mousePressEvent(e);
     QGraphicsItem::mousePressEvent(e);
 }
 
 void LineItem::mouseMoveEvent(QGraphicsSceneMouseEvent* e) {
+    AbstractItem::mouseMoveEvent(e);
     QGraphicsItem::mouseMoveEvent(e);
 }
 
 void LineItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* e) {
-    overlay_.overlayView().setMovingItem(false);
-    overlay_.setCursor(Qt::CrossCursor);
-
+    AbstractItem::mouseReleaseEvent(e);
     QGraphicsItem::mouseReleaseEvent(e);
 }
 
 void LineItem::hoverEnterEvent(QGraphicsSceneHoverEvent* e) {
-    if (!overlay_.overlayView().movingItem()) {
-        overlay_.setCursor(Qt::OpenHandCursor);
-        overlay_.setCursorLocked(true);
-    }
-
-    Q_UNUSED(e);
+    AbstractItem::hoverEnterEvent(e);
+    QGraphicsItem::hoverEnterEvent(e);
 }
 
 void LineItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* e) {
-    overlay_.setCursorLocked(false);
-    Q_UNUSED(e);
+    AbstractItem::hoverLeaveEvent(e);
+    QGraphicsItem::hoverLeaveEvent(e);
 }
