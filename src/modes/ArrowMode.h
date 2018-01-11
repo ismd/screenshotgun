@@ -1,9 +1,9 @@
 #ifndef SCREENSHOTGUN_ARROWMODE_H
 #define SCREENSHOTGUN_ARROWMODE_H
 
-#include <QGraphicsLineItem>
-#include <QGraphicsPathItem>
-#include "LineMode.h"
+#include "AbstractMode.h"
+#include "items/LineItem.h"
+#include "items/PathItem.h"
 
 class ArrowMode : public AbstractMode {
 
@@ -15,8 +15,8 @@ public:
     void stop(int x, int y);
 
 protected:
-    QGraphicsLineItem* line_;
-    QGraphicsPathItem* path_;
+    LineItem* line_;
+    PathItem* path_;
 };
 
 #endif // SCREENSHOTGUN_ARROWMODE_H

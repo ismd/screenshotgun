@@ -27,8 +27,12 @@ set(SOURCE_FILES
     src/modes/VisibleAreaMode.h
     src/modes/TextArea.cpp
     src/modes/TextArea.h
+    src/modes/items/AbstractItem.cpp
+    src/modes/items/AbstractItem.h
     src/modes/items/LineItem.cpp
     src/modes/items/LineItem.h
+    src/modes/items/PathItem.cpp
+    src/modes/items/PathItem.h
     src/Autostartup.cpp
     src/Autostartup.h
     src/Toolbar.cpp
@@ -59,7 +63,7 @@ set(SOURCE_FILES
     src/services/ServiceHelper.cpp
     src/services/ServiceHelper.h
     src/OverlayView.cpp
-    src/OverlayView.h src/modes/items/AbstractItem.cpp src/modes/items/AbstractItem.h)
+    src/OverlayView.h)
 
 find_package(Qt5 COMPONENTS Gui Network Widgets REQUIRED)
 

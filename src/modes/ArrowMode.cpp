@@ -5,15 +5,18 @@ ArrowMode::ArrowMode(Overlay& overlay) : AbstractMode(overlay) {
 }
 
 void ArrowMode::init(int x, int y) {
-    line_ = new QGraphicsLineItem(x, y, x, y);
+    line_ = new LineItem(overlay_, x, y);
     line_->setPen(pen);
 
-    path_ = new QGraphicsPathItem();
+    path_ = new PathItem(overlay_);
     QPen pathPen = QPen(pen);
     pathPen.setWidth(1);
 
     path_->setPen(pathPen);
     path_->setBrush(QBrush(pen.brush()));
+
+    line_->addLinkedItem(path_);
+    path_->addLinkedItem(line_);
 
     overlay_.scene().addItem(line_);
     overlay_.scene().addItem(path_);

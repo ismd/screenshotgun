@@ -10,6 +10,7 @@ class AbstractItem : public QObject {
 
 public:
     explicit AbstractItem(Overlay&, QGraphicsItem*);
+    void addLinkedItem(QGraphicsItem*);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent*);
@@ -20,6 +21,7 @@ protected:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent*);
 
     Overlay& overlay_;
+    QList<QGraphicsItem*> linkedItems_;
 };
 
 #endif //SCREENSHOTGUN_ABSTRACTITEM_H
