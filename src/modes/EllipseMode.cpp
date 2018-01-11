@@ -1,7 +1,7 @@
 #include <QGraphicsEllipseItem>
-#include "EllipseMode.h"
+#include "../Overlay.h"
 
-EllipseMode::EllipseMode(QGraphicsScene& scene) : AbstractMode(scene) {
+EllipseMode::EllipseMode(Overlay& overlay) : AbstractMode(overlay) {
 }
 
 void EllipseMode::init(int x, int y) {
@@ -14,7 +14,7 @@ void EllipseMode::init(int x, int y) {
     ellipse_->setPen(pen);
     ellipse_->setBrush(brush);
 
-    scene_.addItem(ellipse_);
+    overlay_.scene().addItem(ellipse_);
 }
 
 void EllipseMode::move(int x, int y) {

@@ -27,6 +27,8 @@ set(SOURCE_FILES
     src/modes/VisibleAreaMode.h
     src/modes/TextArea.cpp
     src/modes/TextArea.h
+    src/modes/items/LineItem.cpp
+    src/modes/items/LineItem.h
     src/Autostartup.cpp
     src/Autostartup.h
     src/Toolbar.cpp

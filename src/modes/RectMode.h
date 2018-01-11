@@ -6,7 +6,7 @@
 class RectMode : public AbstractMode {
 
 public:
-    RectMode(QGraphicsScene&);
+    RectMode(Overlay&);
 
     void init(int x, int y);
     void move(int x, int y);

@@ -1,7 +1,7 @@
 #include <QGraphicsRectItem>
-#include "RectMode.h"
+#include "../Overlay.h"
 
-RectMode::RectMode(QGraphicsScene& scene) : AbstractMode(scene) {
+RectMode::RectMode(Overlay& overlay) : AbstractMode(overlay) {
 }
 
 void RectMode::init(int x, int y) {
@@ -14,7 +14,7 @@ void RectMode::init(int x, int y) {
     rect_->setPen(pen);
     rect_->setBrush(brush);
 
-    scene_.addItem(rect_);
+    overlay_.scene().addItem(rect_);
 }
 
 void RectMode::move(int x, int y) {

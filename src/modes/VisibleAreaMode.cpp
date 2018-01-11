@@ -5,9 +5,8 @@
 #include "../Toolbar.h"
 #include "../App.h"
 
-VisibleAreaMode::VisibleAreaMode(QGraphicsScene& scene, Toolbar& toolbar, int maxWidth, int maxHeight)
-    : AbstractMode(scene),
-      toolbar_(toolbar),
+VisibleAreaMode::VisibleAreaMode(Overlay& overlay, int maxWidth, int maxHeight)
+    : AbstractMode(overlay),
       maxWidth_(maxWidth),
       maxHeight_(maxHeight),
       initialized_(false),
@@ -37,12 +36,12 @@ VisibleAreaMode::VisibleAreaMode(QGraphicsScene& scene, Toolbar& toolbar, int ma
     rectRight_.setZValue(1);
 
     // First rectangle fullscreen
-    rectTop_.setRect(0, 0, scene.width(), scene.height());
+    rectTop_.setRect(0, 0, overlay_.scene().width(), overlay_.scene().height());
 
-    scene.addItem(&rectTop_);
-    scene.addItem(&rectBottom_);
-    scene.addItem(&rectLeft_);
-    scene.addItem(&rectRight_);
+    overlay_.scene().addItem(&rectTop_);
+    overlay_.scene().addItem(&rectBottom_);
+    overlay_.scene().addItem(&rectLeft_);
+    overlay_.scene().addItem(&rectRight_);
 
     QPen linePen;
     linePen.setWidthF(.2);
@@ -58,15 +57,15 @@ VisibleAreaMode::VisibleAreaMode(QGraphicsScene& scene, Toolbar& toolbar, int ma
     lineLeft_.setZValue(1);
     lineRight_.setZValue(1);
 
-    scene.addItem(&lineTop_);
-    scene.addItem(&lineBottom_);
-    scene.addItem(&lineLeft_);
-    scene.addItem(&lineRight_);
+    overlay_.scene().addItem(&lineTop_);
+    overlay_.scene().addItem(&lineBottom_);
+    overlay_.scene().addItem(&lineLeft_);
+    overlay_.scene().addItem(&lineRight_);
 }
 
 void VisibleAreaMode::init(int x, int y) {
     initialized_ = true;
-    toolbar_.hide();
+    overlay_.toolbar().hide();
     setArea(x, y, 0, 0);
 }
 
@@ -95,12 +94,12 @@ void VisibleAreaMode::move(int x, int y) {
 void VisibleAreaMode::stop(int x, int y) {
     move(x, y);
     updateToolbarPosition();
-    toolbar_.show();
+    overlay_.toolbar().show();
 }
 
 void VisibleAreaMode::resizeInit(int x, int y) {
     resizing_ = true;
-    toolbar_.hide();
+    overlay_.toolbar().hide();
 
     resizeInfo_.x = x;
     resizeInfo_.y = y;
@@ -155,7 +154,7 @@ void VisibleAreaMode::resizeStop(int x, int y) {
     resizeMove(x, y);
     resizing_ = false;
     updateToolbarPosition();
-    toolbar_.show();
+    overlay_.toolbar().show();
 }
 
 void VisibleAreaMode::updateSize() {
@@ -172,8 +171,8 @@ void VisibleAreaMode::updateSize() {
     int width = area.width;
     int height = area.height;
 
-    int sceneWidth = scene_.width();
-    int sceneHeight = scene_.height();
+    int sceneWidth = overlay_.scene().width();
+    int sceneHeight = overlay_.scene().height();
 
     rectTop_.setRect(0, 0, sceneWidth, y);
     rectBottom_.setRect(0, y + height, sceneWidth, sceneHeight - y - height);
@@ -220,14 +219,14 @@ void VisibleAreaMode::updateToolbarPosition() {
     // Width
     int toolbarX = area.x + area.width + 28;
     int screenWidth = geo.width();
-    int toolbarWidth = toolbar_.width();
+    int toolbarWidth = overlay_.toolbar().width();
 
     if (toolbarX + toolbarWidth + padding > screenWidth) {
         toolbarX = screenWidth - toolbarWidth - padding;
     }
 
     // Height
-    int toolbarHeight = toolbar_.height();
+    int toolbarHeight = overlay_.toolbar().height();
     int toolbarY = area.y + area.height / 2 - toolbarHeight / 2;
     int screenHeight = geo.height();
 
@@ -237,7 +236,7 @@ void VisibleAreaMode::updateToolbarPosition() {
         toolbarY = screenHeight - toolbarHeight - padding;
     }
 
-    toolbar_.setGeometry(toolbarX, toolbarY, toolbarWidth, toolbarHeight);
+    overlay_.toolbar().setGeometry(toolbarX, toolbarY, toolbarWidth, toolbarHeight);
 }
 
 bool VisibleAreaMode::isResizablePosition(int x, int y) {

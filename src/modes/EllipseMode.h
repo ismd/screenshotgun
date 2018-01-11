@@ -6,7 +6,7 @@
 class EllipseMode : public AbstractMode {
 
 public:
-    EllipseMode(QGraphicsScene&);
+    EllipseMode(Overlay&);
 
     void init(int x, int y);
     void move(int x, int y);

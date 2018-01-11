@@ -1,13 +1,13 @@
-#include "LineMode.h"
+#include "../Overlay.h"
 
-LineMode::LineMode(QGraphicsScene& scene) : AbstractMode(scene) {
+LineMode::LineMode(Overlay& overlay) : AbstractMode(overlay) {
 }
 
 void LineMode::init(int x, int y) {
-    line_ = new QGraphicsLineItem(x, y, x, y);
+    line_ = new LineItem(overlay_, x, y);
     line_->setPen(pen);
 
-    scene_.addItem(line_);
+    overlay_.scene().addItem(line_);
 }
 
 void LineMode::move(int x, int y) {

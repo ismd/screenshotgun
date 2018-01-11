@@ -8,7 +8,7 @@
 class ArrowMode : public AbstractMode {
 
 public:
-    ArrowMode(QGraphicsScene&);
+    ArrowMode(Overlay&);
 
     void init(int x, int y);
     void move(int x, int y);

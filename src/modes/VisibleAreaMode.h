@@ -21,7 +21,7 @@ enum class ResizeDirection {
 class VisibleAreaMode : public AbstractMode {
 
 public:
-    VisibleAreaMode(QGraphicsScene&, Toolbar&, int, int);
+    VisibleAreaMode(Overlay&, int, int);
 
     void init(int x, int y);
     void move(int x, int y);
@@ -58,7 +58,6 @@ private:
     QGraphicsLineItem lineLeft_;
     QGraphicsLineItem lineRight_;
 
-    Toolbar& toolbar_;
     bool initialized_;
     bool resizing_;
 

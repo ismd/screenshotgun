@@ -1,21 +1,22 @@
 #ifndef SCREENSHOTGUN_ABSTRACTMODE_H
 #define SCREENSHOTGUN_ABSTRACTMODE_H
 
-#include <QGraphicsScene>
-#include <QKeyEvent>
+#include <QPen>
+
+class Overlay;
 
 class AbstractMode : public QObject {
     Q_OBJECT
 
 public:
-    AbstractMode(QGraphicsScene&);
+    AbstractMode(Overlay&);
 
     virtual void init(int x, int y) = 0;
     virtual void move(int x, int y) = 0;
     virtual void stop(int x, int y) = 0;
 
 protected:
-    QGraphicsScene& scene_;
+    Overlay& overlay_;
     QPen pen;
 };
 

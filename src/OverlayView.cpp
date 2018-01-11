@@ -7,19 +7,22 @@ OverlayView::OverlayView(QWidget* parent, Overlay& overlay)
     : QGraphicsView(parent),
       overlay_(overlay),
       visibleAreaMode_(nullptr),
-      lineMode_(scene_),
-      arrowMode_(scene_),
-      rectMode_(scene_),
-      ellipseMode_(scene_),
-      textMode_(scene_, overlay),
-      usingMode_(false) {
+      lineMode_(overlay_),
+      arrowMode_(overlay_),
+      rectMode_(overlay_),
+      ellipseMode_(overlay_),
+      textMode_(overlay_),
+      usingMode_(false),
+      movingItem_(false) {
     setFrameShape(QFrame::NoFrame);
     setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    scene_.setItemIndexMethod(QGraphicsScene::NoIndex);
     setScene(&scene_);
+
     setMouseTracking(true);
 }
 
@@ -74,9 +77,17 @@ void OverlayView::reinitVisibleArea() {
     QDesktopWidget* desktop = QApplication::desktop();
     QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
 
-    visibleAreaMode_ = new VisibleAreaMode(scene_, overlay_.toolbar(), geo.width(), geo.height());
+    visibleAreaMode_ = new VisibleAreaMode(overlay_, geo.width(), geo.height());
     currentMode_ = visibleAreaMode_;
     overlay_.toolbar().select(ToolbarMode::VISIBLE_AREA);
+}
+
+bool OverlayView::movingItem() const {
+    return movingItem_;
+}
+
+void OverlayView::setMovingItem(bool value) {
+    movingItem_ = value;
 }
 
 void OverlayView::setCursor(const QCursor& cursor) {
@@ -93,6 +104,12 @@ void OverlayView::showEvent(QShowEvent* e) {
 }
 
 void OverlayView::mousePressEvent(QMouseEvent* e) {
+    QGraphicsView::mousePressEvent(e);
+
+    if (movingItem_) {
+        return;
+    }
+
     int x = e->x();
     int y = e->y();
 
@@ -109,6 +126,12 @@ void OverlayView::mousePressEvent(QMouseEvent* e) {
 }
 
 void OverlayView::mouseMoveEvent(QMouseEvent* e) {
+    QGraphicsView::mouseMoveEvent(e);
+
+    if (movingItem_) {
+        return;
+    }
+
     int x = e->x();
     int y = e->y();
 
@@ -146,6 +169,11 @@ void OverlayView::mouseMoveEvent(QMouseEvent* e) {
 }
 
 void OverlayView::mouseReleaseEvent(QMouseEvent* e) {
+    if (movingItem_) {
+        QGraphicsView::mouseReleaseEvent(e);
+        return;
+    }
+
     int x = e->x();
     int y = e->y();
 

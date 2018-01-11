@@ -1,6 +1,6 @@
 #include "AbstractMode.h"
 
-AbstractMode::AbstractMode(QGraphicsScene& scene) : scene_(scene) {
+AbstractMode::AbstractMode(Overlay& overlay) : overlay_(overlay) {
     pen.setColor(Qt::red);
     pen.setWidth(3);
 }

@@ -1,7 +1,7 @@
 #include <QtCore/qmath.h>
-#include "ArrowMode.h"
+#include "../Overlay.h"
 
-ArrowMode::ArrowMode(QGraphicsScene& scene) : AbstractMode(scene) {
+ArrowMode::ArrowMode(Overlay& overlay) : AbstractMode(overlay) {
 }
 
 void ArrowMode::init(int x, int y) {
@@ -15,8 +15,8 @@ void ArrowMode::init(int x, int y) {
     path_->setPen(pathPen);
     path_->setBrush(QBrush(pen.brush()));
 
-    scene_.addItem(line_);
-    scene_.addItem(path_);
+    overlay_.scene().addItem(line_);
+    overlay_.scene().addItem(path_);
 }
 
 void ArrowMode::move(int x, int y) {

@@ -10,7 +10,7 @@ class TextMode : public AbstractMode {
     Q_OBJECT
 
 public:
-    TextMode(QGraphicsScene&, Overlay&);
+    TextMode(Overlay&);
     TextArea* textArea();
 
     void init(int x, int y);
@@ -23,7 +23,6 @@ private slots:
 private:
     TextArea* textArea_;
     bool initialized_;
-    Overlay& overlay_;
 };
 
 #endif // SCREENSHOTGUN_TEXTMODE_H

@@ -23,9 +23,11 @@ public:
     VisibleAreaMode& visibleAreaMode() const;
     void setMode(const ToolbarMode);
     void reinitVisibleArea();
+    bool movingItem() const;
+    void setMovingItem(bool);
+    void setCursor(const QCursor&);
 
 protected:
-    void setCursor(const QCursor&);
     void showEvent(QShowEvent*);
     void mousePressEvent(QMouseEvent*);
     void mouseMoveEvent(QMouseEvent*);
@@ -46,6 +48,7 @@ private:
 
     AbstractMode* currentMode_;
     bool usingMode_;
+    bool movingItem_;
 };
 
 #endif //SCREENSHOTGUN_OVERLAYVIEW_H

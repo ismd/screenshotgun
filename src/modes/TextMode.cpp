@@ -1,10 +1,8 @@
-#include "src/Overlay.h"
-#include "TextMode.h"
+#include "../Overlay.h"
 
-TextMode::TextMode(QGraphicsScene& scene, Overlay& overlay)
-    : AbstractMode(scene),
+TextMode::TextMode(Overlay& overlay)
+    : AbstractMode(overlay),
       initialized_(false),
-      overlay_(overlay),
       textArea_(0) {
     connect(&overlay_, SIGNAL(toolChanged(ToolbarMode)),
             this, SLOT(clearFocus()));
@@ -31,7 +29,7 @@ void TextMode::move(int x, int y) {
 void TextMode::stop(int x, int y) {
     move(x, y);
     initialized_ = true;
-    scene_.addWidget(textArea_);
+    overlay_.scene().addWidget(textArea_);
     textArea_->setFocus();
 }
 

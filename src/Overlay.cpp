@@ -7,9 +7,11 @@
 Overlay::Overlay(App& app)
     : app_(app),
       overlayView_(this, *this),
-      toolbar_(this, *this) {
+      toolbar_(this, *this),
+      cursorLocked_(false) {
 
     setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint | Qt::BypassWindowManagerHint | Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint | Qt::WindowOverridesSystemGestures);
+    setWindowModality(Qt::ApplicationModal);
     setFocusPolicy(Qt::StrongFocus);
     setCursor(Qt::BlankCursor);
     
@@ -20,6 +22,10 @@ Overlay::Overlay(App& app)
 
 App& Overlay::app() const {
     return app_;
+}
+
+OverlayView& Overlay::overlayView() {
+    return overlayView_;
 }
 
 void Overlay::makeScreenshot() {
@@ -72,6 +78,16 @@ void Overlay::reinitVisibleArea() {
 
 Toolbar& Overlay::toolbar() {
     return toolbar_;
+}
+
+void Overlay::setCursor(const QCursor& cursor) {
+    if (!cursorLocked_) {
+        QWidget::setCursor(cursor);
+    }
+}
+
+void Overlay::setCursorLocked(bool value) {
+    cursorLocked_ = value;
 }
 
 void Overlay::hideEvent(QHideEvent* e) {

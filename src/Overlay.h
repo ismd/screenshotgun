@@ -19,11 +19,14 @@ public:
     explicit Overlay(App&);
 
     App& app() const;
+    OverlayView& overlayView();
     QGraphicsScene& scene();
     VisibleAreaMode& visibleAreaMode() const;
     void setMode(const ToolbarMode);
     void reinitVisibleArea();
     Toolbar& toolbar();
+    void setCursor(const QCursor&);
+    void setCursorLocked(bool);
 
 signals:
     void toolChanged(ToolbarMode);
@@ -39,6 +42,7 @@ private:
     OverlayView overlayView_;
     Toolbar toolbar_;
     QPixmap screenshot_;
+    bool cursorLocked_;
 };
 
 #endif //SCREENSHOTGUN_OVERLAY_H
