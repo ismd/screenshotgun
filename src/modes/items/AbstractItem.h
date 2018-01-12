@@ -1,6 +1,7 @@
 #ifndef SCREENSHOTGUN_ABSTRACTITEM_H
 #define SCREENSHOTGUN_ABSTRACTITEM_H
 
+#include <QVector>
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 
@@ -22,11 +23,11 @@ public:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent*);
 
     void addGraphicItem(QGraphicsItem*);
-    QList<QGraphicsItem*> graphicItems();
+    QVector<QGraphicsItem*>& graphicItems();
 
 protected:
     Overlay& overlay_;
-    QList<QGraphicsItem*> graphicItems_;
+    QVector<QGraphicsItem*> graphicItems_;
 };
 
 #endif //SCREENSHOTGUN_ABSTRACTITEM_H
