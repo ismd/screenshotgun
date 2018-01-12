@@ -4,10 +4,10 @@ project(screenshotgun)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
+#set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_AUTOUIC_SEARCH_PATHS "${PROJECT_SOURCE_DIR}/ui")
+#set(CMAKE_AUTOUIC_SEARCH_PATHS "${PROJECT_SOURCE_DIR}/ui")
 
 set(SOURCE_FILES
     resources/res.qrc
@@ -80,6 +80,12 @@ set(SOURCE_FILES
     src/OverlayView.h)
 
 find_package(Qt5 COMPONENTS Gui Network Widgets REQUIRED)
+
+qt5_wrap_ui(SOURCE_FILES
+    ui/OAuth.ui
+    ui/Settings.ui
+    ui/Toolbar.ui
+    ui/Update.ui)
 
 # For CLion
 include_directories(cmake-build-debug)
