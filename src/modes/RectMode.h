@@ -2,6 +2,7 @@
 #define SCREENSHOTGUN_RECTMODE_H
 
 #include "AbstractMode.h"
+#include "items/RectItem.h"
 
 class RectMode : public AbstractMode {
 
@@ -13,7 +14,7 @@ public:
     void stop(int x, int y);
 
 private:
-    QGraphicsRectItem* rect_;
+    RectItem* rect_;
 
     struct {
         int x;

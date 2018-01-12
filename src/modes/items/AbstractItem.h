@@ -12,6 +12,8 @@ class AbstractItem : public QObject {
 public:
     explicit AbstractItem(Overlay&);
 
+    virtual void setPen(const QPen& pen)=0;
+
     void mousePressEvent(QGraphicsSceneMouseEvent*);
     void mouseMoveEvent(QGraphicsSceneMouseEvent*);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent*);

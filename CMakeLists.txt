@@ -33,12 +33,16 @@ set(SOURCE_FILES
     src/modes/items/ArrowItem.h
     src/modes/items/LineItem.cpp
     src/modes/items/LineItem.h
+    src/modes/items/RectItem.cpp
+    src/modes/items/RectItem.h
     src/modes/items/graphicitems/AbstractGraphicItem.cpp
     src/modes/items/graphicitems/AbstractGraphicItem.h
     src/modes/items/graphicitems/LineGraphicItem.cpp
     src/modes/items/graphicitems/LineGraphicItem.h
     src/modes/items/graphicitems/PathGraphicItem.cpp
     src/modes/items/graphicitems/PathGraphicItem.h
+    src/modes/items/graphicitems/RectGraphicItem.cpp
+    src/modes/items/graphicitems/RectGraphicItem.h
     src/Autostartup.cpp
     src/Autostartup.h
     src/Toolbar.cpp

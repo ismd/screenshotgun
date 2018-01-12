@@ -7,7 +7,7 @@ LineGraphicItem::LineGraphicItem(AbstractItem* parent, qreal x, qreal y)
 
 void LineGraphicItem::mousePressEvent(QGraphicsSceneMouseEvent* e) {
     AbstractGraphicItem::mousePressEvent(e);
-    QGraphicsItem::mousePressEvent(e);
+    QGraphicsLineItem::mousePressEvent(e);
 }
 
 void LineGraphicItem::mouseMoveEvent(QGraphicsSceneMouseEvent* e) {
@@ -16,15 +16,15 @@ void LineGraphicItem::mouseMoveEvent(QGraphicsSceneMouseEvent* e) {
 
 void LineGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* e) {
     AbstractGraphicItem::mouseReleaseEvent(e);
-    QGraphicsItem::mouseReleaseEvent(e);
+    QGraphicsLineItem::mouseReleaseEvent(e);
 }
 
 void LineGraphicItem::hoverEnterEvent(QGraphicsSceneHoverEvent* e) {
     AbstractGraphicItem::hoverEnterEvent(e);
-    QGraphicsItem::hoverEnterEvent(e);
+    QGraphicsLineItem::hoverEnterEvent(e);
 }
 
 void LineGraphicItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* e) {
     AbstractGraphicItem::hoverLeaveEvent(e);
-    QGraphicsItem::hoverLeaveEvent(e);
+    QGraphicsLineItem::hoverLeaveEvent(e);
 }
