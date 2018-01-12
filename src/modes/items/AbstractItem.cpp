@@ -51,6 +51,6 @@ void AbstractItem::addGraphicItem(QGraphicsItem* item) {
     graphicItems_.append(item);
 }
 
-QVector<QGraphicsItem*>& AbstractItem::graphicItems() {
+const QVector<QGraphicsItem*>& AbstractItem::graphicItems() const {
     return graphicItems_;
 }

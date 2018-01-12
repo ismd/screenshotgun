@@ -23,7 +23,7 @@ public:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent*);
 
     void addGraphicItem(QGraphicsItem*);
-    QVector<QGraphicsItem*>& graphicItems();
+    const QVector<QGraphicsItem*>& graphicItems() const;
 
 protected:
     Overlay& overlay_;
