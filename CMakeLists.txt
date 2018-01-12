@@ -29,10 +29,14 @@ set(SOURCE_FILES
     src/modes/TextArea.h
     src/modes/items/AbstractItem.cpp
     src/modes/items/AbstractItem.h
+    src/modes/items/ArrowItem.cpp
+    src/modes/items/ArrowItem.h
     src/modes/items/LineItem.cpp
     src/modes/items/LineItem.h
-    src/modes/items/PathItem.cpp
-    src/modes/items/PathItem.h
+    src/modes/items/graphicitems/AbstractGraphicItem.cpp
+    src/modes/items/graphicitems/AbstractGraphicItem.h
+    src/modes/items/graphicitems/LineGraphicItem.cpp
+    src/modes/items/graphicitems/LineGraphicItem.h
     src/Autostartup.cpp
     src/Autostartup.h
     src/Toolbar.cpp
@@ -63,7 +67,7 @@ set(SOURCE_FILES
     src/services/ServiceHelper.cpp
     src/services/ServiceHelper.h
     src/OverlayView.cpp
-    src/OverlayView.h)
+    src/OverlayView.h src/modes/items/graphicitems/PathGraphicItem.cpp src/modes/items/graphicitems/PathGraphicItem.h)
 
 find_package(Qt5 COMPONENTS Gui Network Widgets REQUIRED)
 

@@ -1,13 +1,6 @@
 #include "../../Overlay.h"
 
-AbstractItem::AbstractItem(Overlay& overlay, QGraphicsItem* item) : overlay_(overlay) {
-    item->setFlag(QGraphicsItem::ItemIsMovable);
-    item->setFlag(QGraphicsItem::ItemClipsToShape);
-    item->setAcceptHoverEvents(true);
-}
-
-void AbstractItem::addLinkedItem(QGraphicsItem* item) {
-    linkedItems_.append(item);
+AbstractItem::AbstractItem(Overlay& overlay) : overlay_(overlay) {
 }
 
 void AbstractItem::mousePressEvent(QGraphicsSceneMouseEvent* e) {
@@ -15,6 +8,7 @@ void AbstractItem::mousePressEvent(QGraphicsSceneMouseEvent* e) {
 
     overlay_.setCursorLocked(false);
     overlay_.setCursor(Qt::ClosedHandCursor);
+    Q_UNUSED(e);
 }
 
 void AbstractItem::mouseMoveEvent(QGraphicsSceneMouseEvent* e) {
@@ -24,7 +18,7 @@ void AbstractItem::mouseMoveEvent(QGraphicsSceneMouseEvent* e) {
     qreal diffX = pos.x() - lastPos.x();
     qreal diffY = pos.y() - lastPos.y();
 
-    for (auto item : linkedItems_) {
+    for (auto item : graphicItems()) {
         item->moveBy(diffX, diffY);
     }
 }
@@ -32,6 +26,7 @@ void AbstractItem::mouseMoveEvent(QGraphicsSceneMouseEvent* e) {
 void AbstractItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* e) {
     overlay_.overlayView().setMovingItem(false);
     overlay_.setCursor(Qt::CrossCursor);
+    Q_UNUSED(e);
 }
 
 void AbstractItem::hoverEnterEvent(QGraphicsSceneHoverEvent* e) {
@@ -46,4 +41,16 @@ void AbstractItem::hoverEnterEvent(QGraphicsSceneHoverEvent* e) {
 void AbstractItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* e) {
     overlay_.setCursorLocked(false);
     Q_UNUSED(e);
+}
+
+void AbstractItem::addGraphicItem(QGraphicsItem* item) {
+    item->setFlag(QGraphicsItem::ItemIsMovable);
+    item->setFlag(QGraphicsItem::ItemClipsToShape);
+    item->setAcceptHoverEvents(true);
+
+    graphicItems_.append(item);
+}
+
+QList<QGraphicsItem*> AbstractItem::graphicItems() {
+    return graphicItems_;
 }

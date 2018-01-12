@@ -1,14 +1,13 @@
-#ifndef SCREENSHOTGUN_PATHITEM_H
-#define SCREENSHOTGUN_PATHITEM_H
+#ifndef SCREENSHOTGUN_PATHGRAPHICITEM_H
+#define SCREENSHOTGUN_PATHGRAPHICITEM_H
 
 #include <QGraphicsPathItem>
-#include <QGraphicsSceneMouseEvent>
-#include "AbstractItem.h"
+#include "AbstractGraphicItem.h"
 
-class PathItem : public QGraphicsPathItem, public AbstractItem {
+class PathGraphicItem : public AbstractGraphicItem, public QGraphicsPathItem {
 
 public:
-    PathItem(Overlay&);
+    PathGraphicItem(AbstractItem* parent);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent*);
@@ -19,4 +18,4 @@ protected:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent*);
 };
 
-#endif //SCREENSHOTGUN_PATHITEM_H
+#endif //SCREENSHOTGUN_PATHGRAPHICITEM_H

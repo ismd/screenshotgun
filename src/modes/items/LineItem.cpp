@@ -2,30 +2,11 @@
 #include "LineItem.h"
 
 LineItem::LineItem(Overlay& overlay, qreal x, qreal y)
-    : QGraphicsLineItem(x, y, x, y), AbstractItem(overlay, this) {
+    : AbstractItem(overlay),
+      lineGraphicItem_(this, x, y) {
+    addGraphicItem(&lineGraphicItem_);
 }
 
-void LineItem::mousePressEvent(QGraphicsSceneMouseEvent* e) {
-    AbstractItem::mousePressEvent(e);
-    QGraphicsItem::mousePressEvent(e);
-}
-
-void LineItem::mouseMoveEvent(QGraphicsSceneMouseEvent* e) {
-    AbstractItem::mouseMoveEvent(e);
-    QGraphicsItem::mouseMoveEvent(e);
-}
-
-void LineItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* e) {
-    AbstractItem::mouseReleaseEvent(e);
-    QGraphicsItem::mouseReleaseEvent(e);
-}
-
-void LineItem::hoverEnterEvent(QGraphicsSceneHoverEvent* e) {
-    AbstractItem::hoverEnterEvent(e);
-    QGraphicsItem::hoverEnterEvent(e);
-}
-
-void LineItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* e) {
-    AbstractItem::hoverLeaveEvent(e);
-    QGraphicsItem::hoverLeaveEvent(e);
+void LineItem::setPen(const QPen& pen) {
+    lineGraphicItem_.setPen(pen);
 }

@@ -2,8 +2,7 @@
 #define SCREENSHOTGUN_ARROWMODE_H
 
 #include "AbstractMode.h"
-#include "items/LineItem.h"
-#include "items/PathItem.h"
+#include "items/ArrowItem.h"
 
 class ArrowMode : public AbstractMode {
 
@@ -15,8 +14,7 @@ public:
     void stop(int x, int y);
 
 protected:
-    LineItem* line_;
-    PathItem* path_;
+    ArrowItem* arrow_;
 };
 
 #endif // SCREENSHOTGUN_ARROWMODE_H

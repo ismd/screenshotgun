@@ -2,6 +2,7 @@
 #define SCREENSHOTGUN_ABSTRACTITEM_H
 
 #include <QGraphicsItem>
+#include <QGraphicsSceneMouseEvent>
 
 class Overlay;
 
@@ -9,10 +10,8 @@ class AbstractItem : public QObject {
     Q_OBJECT
 
 public:
-    explicit AbstractItem(Overlay&, QGraphicsItem*);
-    void addLinkedItem(QGraphicsItem*);
+    explicit AbstractItem(Overlay&);
 
-protected:
     void mousePressEvent(QGraphicsSceneMouseEvent*);
     void mouseMoveEvent(QGraphicsSceneMouseEvent*);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent*);
@@ -20,8 +19,12 @@ protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent*);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent*);
 
+    void addGraphicItem(QGraphicsItem*);
+    QList<QGraphicsItem*> graphicItems();
+
+protected:
     Overlay& overlay_;
-    QList<QGraphicsItem*> linkedItems_;
+    QList<QGraphicsItem*> graphicItems_;
 };
 
 #endif //SCREENSHOTGUN_ABSTRACTITEM_H

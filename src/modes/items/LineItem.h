@@ -1,21 +1,18 @@
 #ifndef SCREENSHOTGUN_LINEITEM_H
 #define SCREENSHOTGUN_LINEITEM_H
 
-#include <QGraphicsLineItem>
 #include "AbstractItem.h"
+#include "graphicitems/LineGraphicItem.h"
 
-class LineItem : public QGraphicsLineItem, public AbstractItem {
+class LineItem : public AbstractItem {
 
 public:
     LineItem(Overlay&, qreal x, qreal y);
 
-protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent*);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent*);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent*);
+    void setPen(const QPen& pen);
 
-    void hoverEnterEvent(QGraphicsSceneHoverEvent*);
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent*);
+protected:
+    LineGraphicItem lineGraphicItem_;
 };
 
 #endif //SCREENSHOTGUN_LINEITEM_H

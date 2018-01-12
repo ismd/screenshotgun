@@ -5,25 +5,17 @@ ArrowMode::ArrowMode(Overlay& overlay) : AbstractMode(overlay) {
 }
 
 void ArrowMode::init(int x, int y) {
-    line_ = new LineItem(overlay_, x, y);
-    line_->setPen(pen);
+    arrow_ = new ArrowItem(overlay_, x, y);
+    arrow_->setPen(pen);
 
-    path_ = new PathItem(overlay_);
-    QPen pathPen = QPen(pen);
-    pathPen.setWidth(1);
-
-    path_->setPen(pathPen);
-    path_->setBrush(QBrush(pen.brush()));
-
-    line_->addLinkedItem(path_);
-    path_->addLinkedItem(line_);
-
-    overlay_.scene().addItem(line_);
-    overlay_.scene().addItem(path_);
+    for (auto& item : arrow_->graphicItems()) {
+        overlay_.scene().addItem(item);
+    }
 }
 
 void ArrowMode::move(int x, int y) {
-    QLineF l = line_->line();
+    auto line = static_cast<QGraphicsLineItem*>(arrow_->graphicItems().at(0));
+    QLineF l = line->line();
     l.setP2(QPointF(x, y));
 
     // Angle
@@ -45,8 +37,10 @@ void ArrowMode::move(int x, int y) {
     l.setP2(QPointF(x + qCos(angle) * 5 * sign,
                     y + qSin(angle) * 5 * sign));
 
-    line_->setLine(l);
-    path_->setPath(painterPath);
+    line->setLine(l);
+
+    auto path = static_cast<QGraphicsPathItem*>(arrow_->graphicItems().at(1));
+    path->setPath(painterPath);
 }
 
 void ArrowMode::stop(int x, int y) {
