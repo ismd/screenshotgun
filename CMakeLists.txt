@@ -37,6 +37,8 @@ set(SOURCE_FILES
     src/modes/items/graphicitems/AbstractGraphicItem.h
     src/modes/items/graphicitems/LineGraphicItem.cpp
     src/modes/items/graphicitems/LineGraphicItem.h
+    src/modes/items/graphicitems/PathGraphicItem.cpp
+    src/modes/items/graphicitems/PathGraphicItem.h
     src/Autostartup.cpp
     src/Autostartup.h
     src/Toolbar.cpp
@@ -67,7 +69,7 @@ set(SOURCE_FILES
     src/services/ServiceHelper.cpp
     src/services/ServiceHelper.h
     src/OverlayView.cpp
-    src/OverlayView.h src/modes/items/graphicitems/PathGraphicItem.cpp src/modes/items/graphicitems/PathGraphicItem.h)
+    src/OverlayView.h)
 
 find_package(Qt5 COMPONENTS Gui Network Widgets REQUIRED)
 
