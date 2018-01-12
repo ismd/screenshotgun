@@ -31,12 +31,16 @@ set(SOURCE_FILES
     src/modes/items/AbstractItem.h
     src/modes/items/ArrowItem.cpp
     src/modes/items/ArrowItem.h
+    src/modes/items/EllipseItem.cpp
+    src/modes/items/EllipseItem.h
     src/modes/items/LineItem.cpp
     src/modes/items/LineItem.h
     src/modes/items/RectItem.cpp
     src/modes/items/RectItem.h
     src/modes/items/graphicitems/AbstractGraphicItem.cpp
     src/modes/items/graphicitems/AbstractGraphicItem.h
+    src/modes/items/graphicitems/EllipseGraphicItem.cpp
+    src/modes/items/graphicitems/EllipseGraphicItem.h
     src/modes/items/graphicitems/LineGraphicItem.cpp
     src/modes/items/graphicitems/LineGraphicItem.h
     src/modes/items/graphicitems/PathGraphicItem.cpp

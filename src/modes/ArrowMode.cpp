@@ -1,4 +1,3 @@
-#include <QtCore/qmath.h>
 #include "../Overlay.h"
 
 ArrowMode::ArrowMode(Overlay& overlay) : AbstractMode(overlay) {

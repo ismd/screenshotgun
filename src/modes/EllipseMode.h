@@ -2,6 +2,7 @@
 #define SCREENSHOTGUN_ELLIPSEMODE_H
 
 #include "AbstractMode.h"
+#include "items/EllipseItem.h"
 
 class EllipseMode : public AbstractMode {
 
@@ -13,7 +14,7 @@ public:
     void stop(int x, int y);
 
 private:
-    QGraphicsEllipseItem* ellipse_;
+    EllipseItem* ellipse_;
 
     struct {
         int x;

@@ -1,4 +1,3 @@
-#include <QGraphicsRectItem>
 #include "../Overlay.h"
 
 RectMode::RectMode(Overlay& overlay) : AbstractMode(overlay) {

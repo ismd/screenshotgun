@@ -1,4 +1,3 @@
-#include <QGraphicsEllipseItem>
 #include "../Overlay.h"
 
 EllipseMode::EllipseMode(Overlay& overlay) : AbstractMode(overlay) {
@@ -8,13 +7,10 @@ void EllipseMode::init(int x, int y) {
     coords.x = x;
     coords.y = y;
 
-    QBrush brush(Qt::NoBrush);
-
-    ellipse_ = new QGraphicsEllipseItem();
+    ellipse_ = new EllipseItem(overlay_, x, y);
     ellipse_->setPen(pen);
-    ellipse_->setBrush(brush);
 
-    overlay_.scene().addItem(ellipse_);
+    overlay_.scene().addItem(ellipse_->graphicItems().at(0));
 }
 
 void EllipseMode::move(int x, int y) {
@@ -23,7 +19,8 @@ void EllipseMode::move(int x, int y) {
     int maxX = qMax(x, coords.x);
     int maxY = qMax(y, coords.y);
 
-    ellipse_->setRect(minX, minY, maxX - minX, maxY - minY);
+    auto ellipse = static_cast<QGraphicsEllipseItem*>(ellipse_->graphicItems().at(0));
+    ellipse->setRect(minX, minY, maxX - minX, maxY - minY);
 }
 
 void EllipseMode::stop(int x, int y) {
