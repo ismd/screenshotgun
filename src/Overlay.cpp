@@ -92,4 +92,5 @@ void Overlay::setCursorLocked(bool value) {
 
 void Overlay::hideEvent(QHideEvent* e) {
     toolbar_.hide();
+    Q_UNUSED(e);
 }
