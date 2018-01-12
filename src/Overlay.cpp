@@ -92,5 +92,12 @@ void Overlay::setCursorLocked(bool value) {
 
 void Overlay::hideEvent(QHideEvent* e) {
     toolbar_.hide();
+
+    for (auto item : scene().items()) {
+        if (dynamic_cast<AbstractGraphicItem*>(item)) {
+            scene().removeItem(item);
+        }
+    }
+
     Q_UNUSED(e);
 }
