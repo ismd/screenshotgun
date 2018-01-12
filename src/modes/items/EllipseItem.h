@@ -12,7 +12,7 @@ public:
     void setPen(const QPen& pen);
 
 protected:
-    EllipseGraphicItem ellipseGraphicItem_;
+    EllipseGraphicItem* ellipseGraphicItem_;
 };
 
 #endif //SCREENSHOTGUN_ELLIPSEITEM_H

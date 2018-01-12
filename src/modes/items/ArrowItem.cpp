@@ -3,8 +3,8 @@
 
 ArrowItem::ArrowItem(Overlay& overlay, qreal x, qreal y)
     : LineItem(overlay, x, y),
-      pathGraphicItem_(this) {
-    addGraphicItem(&pathGraphicItem_);
+      pathGraphicItem_(new PathGraphicItem(this)) {
+    addGraphicItem(pathGraphicItem_);
 }
 
 void ArrowItem::setPen(const QPen& pen) {
@@ -13,6 +13,6 @@ void ArrowItem::setPen(const QPen& pen) {
     QPen pathPen = QPen(pen);
     pathPen.setWidth(1);
 
-    pathGraphicItem_.setPen(pathPen);
-    pathGraphicItem_.setBrush(QBrush(pen.brush()));
+    pathGraphicItem_->setPen(pathPen);
+    pathGraphicItem_->setBrush(QBrush(pen.brush()));
 }

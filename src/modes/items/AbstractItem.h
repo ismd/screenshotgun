@@ -15,15 +15,15 @@ public:
 
     virtual void setPen(const QPen& pen)=0;
 
+    void addGraphicItem(QGraphicsItem*);
+    const QVector<QGraphicsItem*>& graphicItems() const;
+
     void mousePressEvent(QGraphicsSceneMouseEvent*);
     void mouseMoveEvent(QGraphicsSceneMouseEvent*);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent*);
 
     void hoverEnterEvent(QGraphicsSceneHoverEvent*);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent*);
-
-    void addGraphicItem(QGraphicsItem*);
-    const QVector<QGraphicsItem*>& graphicItems() const;
 
 protected:
     Overlay& overlay_;

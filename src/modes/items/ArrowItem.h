@@ -13,7 +13,7 @@ public:
     void setPen(const QPen& pen);
 
 protected:
-    PathGraphicItem pathGraphicItem_;
+    PathGraphicItem* pathGraphicItem_;
 };
 
 #endif //SCREENSHOTGUN_ARROWITEM_H

@@ -3,6 +3,18 @@
 AbstractItem::AbstractItem(Overlay& overlay) : overlay_(overlay) {
 }
 
+void AbstractItem::addGraphicItem(QGraphicsItem* item) {
+    item->setFlag(QGraphicsItem::ItemIsMovable);
+    item->setFlag(QGraphicsItem::ItemClipsToShape);
+    item->setAcceptHoverEvents(true);
+
+    graphicItems_.append(item);
+}
+
+const QVector<QGraphicsItem*>& AbstractItem::graphicItems() const {
+    return graphicItems_;
+}
+
 void AbstractItem::mousePressEvent(QGraphicsSceneMouseEvent* e) {
     overlay_.overlayView().setMovingItem(true);
 
@@ -41,16 +53,4 @@ void AbstractItem::hoverEnterEvent(QGraphicsSceneHoverEvent* e) {
 void AbstractItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* e) {
     overlay_.setCursorLocked(false);
     Q_UNUSED(e);
-}
-
-void AbstractItem::addGraphicItem(QGraphicsItem* item) {
-    item->setFlag(QGraphicsItem::ItemIsMovable);
-    item->setFlag(QGraphicsItem::ItemClipsToShape);
-    item->setAcceptHoverEvents(true);
-
-    graphicItems_.append(item);
-}
-
-const QVector<QGraphicsItem*>& AbstractItem::graphicItems() const {
-    return graphicItems_;
 }

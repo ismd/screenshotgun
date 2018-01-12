@@ -12,7 +12,7 @@ public:
     void setPen(const QPen& pen);
 
 protected:
-    LineGraphicItem lineGraphicItem_;
+    LineGraphicItem* lineGraphicItem_;
 };
 
 #endif //SCREENSHOTGUN_LINEITEM_H

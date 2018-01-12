@@ -12,7 +12,7 @@ public:
     void setPen(const QPen& pen);
 
 protected:
-    RectGraphicItem rectGraphicItem_;
+    RectGraphicItem* rectGraphicItem_;
 };
 
 #endif //SCREENSHOTGUN_RECTITEM_H
