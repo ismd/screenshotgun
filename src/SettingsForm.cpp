@@ -1,5 +1,6 @@
 #include "App.h"
 #include "Autostartup.h"
+#include "Changelog.h"
 #include "SettingsForm.h"
 
 SettingsForm::SettingsForm(App& app)
@@ -9,6 +10,8 @@ SettingsForm::SettingsForm(App& app)
           oauth_(app) {
     ui->setupUi(this);
     ui->errorLabel->setVisible(false);
+
+    ui->changelogTextEdit->setPlainText(changelogText);
 
     connect(ui->authDropbox, SIGNAL(clicked()),
             this, SLOT(showAuthDropbox()));

@@ -79,6 +79,10 @@ set(SOURCE_FILES
     src/OverlayView.cpp
     src/OverlayView.h)
 
+file(READ CHANGELOG.txt CHANGELOG_TEXT)
+configure_file(src/Changelog.h.in Changelog.h)
+list(APPEND SOURCE_FILES Changelog.h)
+
 find_package(Qt5 COMPONENTS Gui Network Widgets REQUIRED)
 
 qt5_wrap_ui(SOURCE_FILES
