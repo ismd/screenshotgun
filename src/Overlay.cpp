@@ -60,8 +60,8 @@ void Overlay::makeScreenshot() {
     setGeometry(0, 0, width, height);
     show();
 
-    activateWindow();
-    setFocus();
+    overlayView_.activateWindow();
+    overlayView_.setFocus();
 }
 
 QGraphicsScene& Overlay::scene() {
