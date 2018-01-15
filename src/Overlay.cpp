@@ -10,7 +10,9 @@ Overlay::Overlay(App& app)
       toolbar_(this, *this),
       cursorLocked_(false) {
 
-    setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint | Qt::BypassWindowManagerHint | Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint | Qt::WindowOverridesSystemGestures);
+    setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint | Qt::BypassWindowManagerHint |
+                   Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint | Qt::WindowOverridesSystemGestures);
+
     setWindowModality(Qt::ApplicationModal);
     setFocusPolicy(Qt::StrongFocus);
     setCursor(Qt::BlankCursor);
@@ -57,6 +59,9 @@ void Overlay::makeScreenshot() {
 
     setGeometry(0, 0, width, height);
     show();
+
+    activateWindow();
+    setFocus();
 }
 
 QGraphicsScene& Overlay::scene() {
