@@ -7,7 +7,7 @@ void LineMode::init(int x, int y) {
     line_ = new LineItem(overlay_, x, y);
     line_->setPen(pen);
 
-    overlay_.scene().addItem(line_->graphicItems().at(0));
+    overlay_.addItem(line_);
 }
 
 void LineMode::move(int x, int y) {

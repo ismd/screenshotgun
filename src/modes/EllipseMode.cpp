@@ -10,7 +10,7 @@ void EllipseMode::init(int x, int y) {
     ellipse_ = new EllipseItem(overlay_, x, y);
     ellipse_->setPen(pen);
 
-    overlay_.scene().addItem(ellipse_->graphicItems().at(0));
+    overlay_.addItem(ellipse_);
 }
 
 void EllipseMode::move(int x, int y) {

@@ -3,6 +3,12 @@
 AbstractItem::AbstractItem(Overlay& overlay) : overlay_(overlay) {
 }
 
+AbstractItem::~AbstractItem() {
+    for (auto item : graphicItems_) {
+        overlay_.scene().removeItem(item);
+    }
+}
+
 void AbstractItem::addGraphicItem(QGraphicsItem* item) {
     item->setFlag(QGraphicsItem::ItemIsMovable);
     item->setFlag(QGraphicsItem::ItemClipsToShape);

@@ -10,7 +10,7 @@ void RectMode::init(int x, int y) {
     rect_ = new RectItem(overlay_, x, y);
     rect_->setPen(pen);
 
-    overlay_.scene().addItem(rect_->graphicItems().at(0));
+    overlay_.addItem(rect_);
 }
 
 void RectMode::move(int x, int y) {

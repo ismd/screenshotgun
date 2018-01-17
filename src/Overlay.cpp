@@ -95,14 +95,22 @@ void Overlay::setCursorLocked(bool value) {
     cursorLocked_ = value;
 }
 
+void Overlay::addItem(AbstractItem* item) {
+    items_.append(item);
+
+    for (auto item : item->graphicItems()) {
+        scene().addItem(item);
+    }
+}
+
 void Overlay::hideEvent(QHideEvent* e) {
     toolbar_.hide();
 
-    for (auto item : scene().items()) {
-        if (dynamic_cast<AbstractGraphicItem*>(item)) {
-            scene().removeItem(item);
-        }
+    for (auto item : items_) {
+        delete item;
     }
+
+    items_.clear();
 
     Q_UNUSED(e);
 }

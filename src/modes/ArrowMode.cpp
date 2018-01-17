@@ -1,3 +1,4 @@
+#include <QtMath>
 #include "../Overlay.h"
 
 ArrowMode::ArrowMode(Overlay& overlay) : AbstractMode(overlay) {
@@ -7,9 +8,7 @@ void ArrowMode::init(int x, int y) {
     arrow_ = new ArrowItem(overlay_, x, y);
     arrow_->setPen(pen);
 
-    for (auto& item : arrow_->graphicItems()) {
-        overlay_.scene().addItem(item);
-    }
+    overlay_.addItem(arrow_);
 }
 
 void ArrowMode::move(int x, int y) {

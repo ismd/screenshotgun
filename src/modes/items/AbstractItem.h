@@ -12,6 +12,7 @@ class AbstractItem : public QObject {
 
 public:
     explicit AbstractItem(Overlay&);
+    ~AbstractItem();
 
     virtual void setPen(const QPen& pen)=0;
 

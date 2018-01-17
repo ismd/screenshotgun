@@ -27,6 +27,7 @@ public:
     Toolbar& toolbar();
     void setCursor(const QCursor&);
     void setCursorLocked(bool);
+    void addItem(AbstractItem*);
 
 signals:
     void toolChanged(ToolbarMode);
@@ -43,6 +44,7 @@ private:
     Toolbar toolbar_;
     QPixmap screenshot_;
     bool cursorLocked_;
+    QVector<AbstractItem*> items_;
 };
 
 #endif //SCREENSHOTGUN_OVERLAY_H
