@@ -52,12 +52,10 @@ App::App()
 
     trayIcon_.show();
 
-#if defined(Q_OS_WIN32)
     connect(&updater_, SIGNAL(updateAvailable(QString)),
             this, SLOT(updateAvailable(const QString&)));
 
     updater_.check();
-#endif
 }
 
 SettingsForm& App::settingsForm() {
@@ -96,11 +94,9 @@ TrayIcon& App::trayIcon() {
     return trayIcon_;
 }
 
-#if defined(Q_OS_WIN32)
 Updater& App::updater() {
     return updater_;
 }
-#endif
 
 void App::setUploadService(UploadService service) {
     service_ = service;
@@ -188,9 +184,7 @@ void App::uploadError(QString error) {
 }
 
 void App::updateAvailable(const QString& version) {
-#if defined(Q_OS_WIN32)
     trayIcon_.showNewVersionAvailable(version);
-#endif
 }
 
 void App::openUrl() {

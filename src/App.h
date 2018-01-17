@@ -10,10 +10,7 @@
 #include "Settings.h"
 #include "SettingsForm.h"
 #include "TrayIcon.h"
-
-#if defined(Q_OS_WIN32)
-#include "Updater_win.h"
-#endif
+#include "Updater.h"
 
 class App : public QObject {
     Q_OBJECT
@@ -29,9 +26,7 @@ public:
     Settings& settings();
     History& history();
     TrayIcon& trayIcon();
-#if defined(Q_OS_WIN32)
     Updater& updater();
-#endif
     void setUploadService(UploadService);
     void setCopyImageToClipboard(bool);
     void setConnectionChecks(int);
@@ -61,9 +56,7 @@ private:
     Yandex yandex_;
     Google google_;
     SettingsForm settingsForm_;
-#if defined(Q_OS_WIN32)
     Updater updater_;
-#endif
     bool copyImageToClipboard_;
     int connectionChecks_;
     bool connected_;

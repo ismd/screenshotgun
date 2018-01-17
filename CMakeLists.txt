@@ -77,7 +77,9 @@ set(SOURCE_FILES
     src/services/ServiceHelper.cpp
     src/services/ServiceHelper.h
     src/OverlayView.cpp
-    src/OverlayView.h)
+    src/OverlayView.h
+    src/Updater.cpp
+    src/Updater.h)
 
 file(READ CHANGELOG.txt CHANGELOG_TEXT)
 configure_file(src/Changelog.h.in Changelog.h)
@@ -95,6 +97,8 @@ qt5_wrap_ui(SOURCE_FILES
 include_directories(cmake-build-debug)
 
 if(APPLE)
+    list(APPEND SOURCE_FILES src/TrayIcon.mm)
+
     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
     add_executable(screenshotgun MACOSX_BUNDLE ${SOURCE_FILES})
@@ -144,10 +148,6 @@ elseif(UNIX)
     install(FILES "${CMAKE_SOURCE_DIR}/resources/dist/screenshotgun.png"
         DESTINATION share/pixmaps)
 elseif(WIN32)
-    list(APPEND SOURCE_FILES
-        src/Updater_win.cpp
-        src/Updater_win.h)
-
     add_executable(screenshotgun WIN32 ${SOURCE_FILES})
     target_link_libraries(screenshotgun Qt5::Widgets Qt5::Gui Qt5::Network)
 endif()

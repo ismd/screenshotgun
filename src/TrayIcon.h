@@ -7,6 +7,11 @@
 
 class App;
 
+#ifdef Q_OS_MACOS
+bool canOsXSendUserNotification();
+void sendOsXUserNotification(const QString &title, const QString &message);
+#endif
+
 class TrayIcon : public QSystemTrayIcon {
     Q_OBJECT
 
@@ -18,10 +23,7 @@ public:
                      QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::Information,
                      int msecs = 10000);
     void showError(const QString&, const QString&);
-
-#if defined(Q_OS_WIN32)
     void showNewVersionAvailable(const QString&);
-#endif
 
 signals:
     void makeScreenshot();
@@ -39,9 +41,7 @@ private:
     App& app_;
     QMenu iconMenu_;
     QAction makeScreenshotAction_;
-#if defined(Q_OS_WIN32)
     QAction updateAction_;
-#endif
     QAction settingsAction_;
     QMenu historyMenu_;
     QAction quitAction_;

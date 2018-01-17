@@ -24,6 +24,13 @@ private slots:
 private:
     Ui::Update* ui;
     QProcess process_;
+    
+#if defined(Q_OS_WIN32)
+    QString maintenancetool_ = "maintenancetool.exe";
+#elif defined(Q_OS_MACOS)
+    //QString maintenancetool_ = "../../maintenancetool.app/Contents/MacOS/maintenancetool";
+    QString maintenancetool_ = "/Applications/screenshotgun.app/maintenancetool.app/Contents/MacOS/maintenancetool";
+#endif
 };
 
 #endif //SCREENSHOTGUN_UPDATER_H

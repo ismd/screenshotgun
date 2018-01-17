@@ -7,9 +7,7 @@
 TrayIcon::TrayIcon(App& app)
     : app_(app),
       makeScreenshotAction_("Сделать скриншот", this),
-#if defined(Q_OS_WIN32)
       updateAction_("Обновить", this),
-#endif
       settingsAction_("Настройки", this),
       historyMenu_("История"),
       quitAction_("Выход", this) {
@@ -21,10 +19,8 @@ TrayIcon::TrayIcon(App& app)
     connect(&makeScreenshotAction_, SIGNAL(triggered()),
             this, SLOT(makeScreenshotSlot()));
 
-#if defined(Q_OS_WIN32)
     connect(&updateAction_, SIGNAL(triggered()),
             this, SLOT(updateSlot()));
-#endif
 
     connect(&settingsAction_, SIGNAL(triggered()),
             this, SLOT(showSettings()));
@@ -44,7 +40,7 @@ TrayIcon::TrayIcon(App& app)
     setToolTip("Screenshotgun");
 
     iconMenu_.addAction(&makeScreenshotAction_);
-#if defined(Q_OS_WIN32)
+#if defined(Q_OS_WIN32) || defined(Q_OS_MACOS)
     iconMenu_.addAction(&updateAction_);
 #endif
     iconMenu_.addAction(&settingsAction_);
@@ -66,26 +62,40 @@ void TrayIcon::show() {
 }
 
 void TrayIcon::showMessage(const QString& title, const QString& msg, MessageIcon icon, int msecs) {
-#if defined(Q_OS_WIN32)
     disconnect(this, SIGNAL(messageClicked()),
                &app_.updater(), SLOT(show()));
-#endif
 
+#if defined(Q_OS_MACOS)
+    if (canOsXSendUserNotification()) {
+        sendOsXUserNotification(title, msg);
+    }
+#else
     QSystemTrayIcon::showMessage(title, msg, icon, msecs);
+#endif
 }
 
 void TrayIcon::showError(const QString& title, const QString& msg) {
+#if defined(Q_OS_MACOS)
+    if (canOsXSendUserNotification()) {
+        sendOsXUserNotification(title, msg);
+    }
+#else
     showMessage(title, msg, QSystemTrayIcon::Critical, 10000);
+#endif
 }
 
-#if defined(Q_OS_WIN32)
 void TrayIcon::showNewVersionAvailable(const QString& version) {
     connect(this, SIGNAL(messageClicked()),
             &app_.updater(), SLOT(show()));
-
+    
+#if defined(Q_OS_MACOS)
+    if (canOsXSendUserNotification()) {
+        sendOsXUserNotification("Screenshotgun", "Доступна версия " + version);
+    }
+#else
     QSystemTrayIcon::showMessage("Screenshotgun", "Доступна версия " + version);
-}
 #endif
+}
 
 void TrayIcon::trayActivated(QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
@@ -98,18 +108,20 @@ void TrayIcon::makeScreenshotSlot() {
 }
 
 void TrayIcon::updateSlot() {
-#if defined(Q_OS_WIN32)
     disconnect(&app_.updater(), SIGNAL(noUpdate()),
             this, SLOT(noUpdate()));
     connect(&app_.updater(), SIGNAL(noUpdate()),
             this, SLOT(noUpdate()));
 
     app_.updater().check();
-#endif
 }
 
 void TrayIcon::noUpdate() {
-#if defined(Q_OS_WIN32)
+#if defined(Q_OS_MACOS)
+    if (canOsXSendUserNotification()) {
+        sendOsXUserNotification("Screenshotgun", "Нет доступных обновлений");
+    }
+#else
     showMessage("Screenshotgun",
                 "Нет доступных обновлений",
                 QSystemTrayIcon::Information,

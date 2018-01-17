@@ -1,7 +1,7 @@
 #include <QDialogButtonBox>
 #include <QMessageBox>
 #include "App.h"
-#include "Updater_win.h"
+#include "Updater.h"
 
 Updater::Updater() : ui(new Ui::Update) {
     ui->setupUi(this);
@@ -18,7 +18,9 @@ Updater::~Updater() {
 }
 
 void Updater::check() {
-    process_.start("maintenancetool.exe --checkupdates");
+#if defined(Q_OS_WIN32) || defined(Q_OS_MACOS)
+    process_.start(maintenancetool_ + " --checkupdates");
+#endif
 }
 
 void Updater::checkUpdates() {
@@ -31,6 +33,7 @@ void Updater::checkUpdates() {
         QString version = rx.cap(1);
         emit updateAvailable(version);
         ui->label->setText("Доступна версия " + version);
+        show();
     } else {
         emit noUpdate();
     }
@@ -38,7 +41,7 @@ void Updater::checkUpdates() {
 
 void Updater::accept() {
     ui->buttonBox->setEnabled(false);
-    bool result = QProcess::startDetached("maintenancetool.exe --updater");
+    bool result = QProcess::startDetached(maintenancetool_ + " --updater");
 
     if (!result) {
         QMessageBox::critical(NULL,
