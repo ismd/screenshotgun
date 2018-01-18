@@ -42,7 +42,6 @@ private slots:
     void uploadSuccess(const QString&);
     void uploadError();
     void uploadError(QString);
-    void updateAvailable(const QString&);
     void openUrl();
 
 private:

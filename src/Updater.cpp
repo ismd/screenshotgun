@@ -3,7 +3,7 @@
 #include "App.h"
 #include "Updater.h"
 
-Updater::Updater() : ui(new Ui::Update) {
+Updater::Updater(App& app) : ui(new Ui::Update), app_(app) {
     ui->setupUi(this);
 
     ui->buttonBox->button(QDialogButtonBox::Ok)->setText("Обновить");
@@ -31,11 +31,18 @@ void Updater::checkUpdates() {
 
     if (-1 != rx.indexIn(output)) {
         QString version = rx.cap(1);
-        emit updateAvailable(version);
+
+        connect(&app_.trayIcon(), SIGNAL(messageClicked()),
+                this, SLOT(show()));
+
+        app_.trayIcon().showMessage("Screenshotgun", "Доступна версия " + version);
         ui->label->setText("Доступна версия " + version);
         show();
     } else {
-        emit noUpdate();
+        app_.trayIcon().showMessage("Screenshotgun",
+                                    "Нет доступных обновлений",
+                                    QSystemTrayIcon::Information,
+                                    3000);
     }
 }
 

@@ -8,6 +8,7 @@ App::App()
       trayIcon_(*this),
       settingsForm_(*this),
       google_(*this),
+      updater_(*this),
       copyImageToClipboard_(false),
       connectionChecks_(0),
       connected_(false) {
@@ -180,11 +181,7 @@ void App::uploadError() {
 }
 
 void App::uploadError(QString error) {
-    trayIcon_.showError("Ошибка во время загрузки скриншота", error);
-}
-
-void App::updateAvailable(const QString& version) {
-    trayIcon_.showNewVersionAvailable(version);
+    trayIcon_.showMessage("Ошибка во время загрузки скриншота", error, QSystemTrayIcon::Critical, 10000);
 }
 
 void App::openUrl() {

@@ -74,29 +74,6 @@ void TrayIcon::showMessage(const QString& title, const QString& msg, MessageIcon
 #endif
 }
 
-void TrayIcon::showError(const QString& title, const QString& msg) {
-#if defined(Q_OS_MACOS)
-    if (canOsXSendUserNotification()) {
-        sendOsXUserNotification(title, msg);
-    }
-#else
-    showMessage(title, msg, QSystemTrayIcon::Critical, 10000);
-#endif
-}
-
-void TrayIcon::showNewVersionAvailable(const QString& version) {
-    connect(this, SIGNAL(messageClicked()),
-            &app_.updater(), SLOT(show()));
-    
-#if defined(Q_OS_MACOS)
-    if (canOsXSendUserNotification()) {
-        sendOsXUserNotification("Screenshotgun", "Доступна версия " + version);
-    }
-#else
-    QSystemTrayIcon::showMessage("Screenshotgun", "Доступна версия " + version);
-#endif
-}
-
 void TrayIcon::trayActivated(QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
         makeScreenshotSlot();
@@ -108,25 +85,7 @@ void TrayIcon::makeScreenshotSlot() {
 }
 
 void TrayIcon::updateSlot() {
-    disconnect(&app_.updater(), SIGNAL(noUpdate()),
-            this, SLOT(noUpdate()));
-    connect(&app_.updater(), SIGNAL(noUpdate()),
-            this, SLOT(noUpdate()));
-
     app_.updater().check();
-}
-
-void TrayIcon::noUpdate() {
-#if defined(Q_OS_MACOS)
-    if (canOsXSendUserNotification()) {
-        sendOsXUserNotification("Screenshotgun", "Нет доступных обновлений");
-    }
-#else
-    showMessage("Screenshotgun",
-                "Нет доступных обновлений",
-                QSystemTrayIcon::Information,
-                3000);
-#endif
 }
 
 void TrayIcon::showSettings() {

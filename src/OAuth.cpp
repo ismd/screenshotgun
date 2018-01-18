@@ -79,7 +79,7 @@ void OAuth::tokenReply(QNetworkReply* reply) {
 
     QJsonObject jsonObject = jsonResponse.object();
     if (QNetworkReply::NoError != reply->error()) {
-        app_.trayIcon().showError("Ошибка", jsonObject["error_description"].toString());
+        app_.trayIcon().showMessage("Ошибка", jsonObject["error_description"].toString(), QSystemTrayIcon::Critical, 10000);
         qDebug() << jsonResponse.toJson(QJsonDocument::Compact);
     } else {
         hide();

@@ -17,13 +17,12 @@ class TrayIcon : public QSystemTrayIcon {
 
 public:
     explicit TrayIcon(App&);
+
     void show();
     void showMessage(const QString& title,
                      const QString& msg,
                      QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::Information,
                      int msecs = 10000);
-    void showError(const QString&, const QString&);
-    void showNewVersionAvailable(const QString&);
 
 signals:
     void makeScreenshot();
@@ -32,7 +31,6 @@ private slots:
     void trayActivated(QSystemTrayIcon::ActivationReason);
     void makeScreenshotSlot();
     void updateSlot();
-    void noUpdate();
     void showSettings();
     void openLink();
     void linkAdded(const QString&);

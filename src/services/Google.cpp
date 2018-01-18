@@ -133,7 +133,7 @@ void Google::getFolderReply(QNetworkReply* reply) {
             emit refreshToken(UploadService::GOOGLE);
         } else {
             needReupload_ = false;
-            app_.trayIcon().showError("Ошибка", "Не удалось получить папку в Google Drive");
+            app_.trayIcon().showMessage("Ошибка", "Не удалось получить папку в Google Drive", QSystemTrayIcon::Critical, 10000);
             qDebug() << jsonResponse.toJson(QJsonDocument::Compact);
         }
     } else if (jsonObject["items"].toArray().isEmpty()) {
