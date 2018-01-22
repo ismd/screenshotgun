@@ -98,8 +98,8 @@ void Overlay::setCursorLocked(bool value) {
 void Overlay::addItem(AbstractItem* item) {
     items_.append(item);
 
-    for (auto item : item->graphicItems()) {
-        scene().addItem(item);
+    for (auto graphicItem : item->graphicItems()) {
+        scene().addItem(graphicItem);
     }
 }
 
