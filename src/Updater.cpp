@@ -1,4 +1,5 @@
 #include <QDialogButtonBox>
+#include <QFileInfo>
 #include <QMessageBox>
 #include "App.h"
 #include "Updater.h"
@@ -8,6 +9,11 @@ Updater::Updater(App& app) : ui(new Ui::Update), app_(app) {
 
     ui->buttonBox->button(QDialogButtonBox::Ok)->setText("Обновить");
     ui->buttonBox->button(QDialogButtonBox::Cancel)->setText("Отмена");
+
+#if defined(Q_OS_MACOS)
+    maintenancetool_ = QFileInfo(QCoreApplication::applicationDirPath()
+                                 + "/../../maintenancetool.app/Contents/MacOS/maintenancetool").absoluteFilePath();
+#endif
 
     connect(&process_, SIGNAL(finished(int, QProcess::ExitStatus)),
             this, SLOT(checkUpdates()));

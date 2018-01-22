@@ -2,7 +2,6 @@
 #define SCREENSHOTGUN_UPDATER_H
 
 #include <QDialog>
-#include <QFileInfo>
 #include <QProcess>
 #include "ui_Update.h"
 
@@ -29,7 +28,7 @@ private:
 #if defined(Q_OS_WIN32)
     QString maintenancetool_ = "maintenancetool.exe";
 #elif defined(Q_OS_MACOS)
-    QString maintenancetool_ = QFileInfo("../../maintenancetool.app/Contents/MacOS/maintenancetool").absoluteFilePath();
+    QString maintenancetool_;
 #else
     QString maintenancetool_ = "/bin/false";
 #endif
