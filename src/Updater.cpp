@@ -11,6 +11,9 @@ Updater::Updater(App& app) : ui(new Ui::Update), app_(app) {
 
     connect(&process_, SIGNAL(finished(int, QProcess::ExitStatus)),
             this, SLOT(checkUpdates()));
+
+    connect(&process_, SIGNAL(errorOccurred(QProcess::ProcessError)),
+            this, SLOT(errorOccurred(QProcess::ProcessError)));
 }
 
 Updater::~Updater() {
@@ -19,6 +22,7 @@ Updater::~Updater() {
 
 void Updater::check() {
 #if defined(Q_OS_WIN32) || defined(Q_OS_MACOS)
+    qInfo() << "Running:" << maintenancetool_ << "--checkupdates";
     process_.start(maintenancetool_ + " --checkupdates");
 #endif
 }
@@ -31,6 +35,7 @@ void Updater::checkUpdates() {
 
     if (-1 != rx.indexIn(output)) {
         QString version = rx.cap(1);
+        qInfo() << "Update available:" << version;
 
         connect(&app_.trayIcon(), SIGNAL(messageClicked()),
                 this, SLOT(show()));
@@ -39,6 +44,7 @@ void Updater::checkUpdates() {
         ui->label->setText("Доступна версия " + version);
         show();
     } else {
+        qInfo() << "No updates available";
         app_.trayIcon().showMessage("Screenshotgun",
                                     "Нет доступных обновлений",
                                     QSystemTrayIcon::Information,
@@ -59,4 +65,8 @@ void Updater::accept() {
     }
 
     qApp->quit();
+}
+
+void Updater::errorOccurred(QProcess::ProcessError error) {
+    qDebug() << "Can't run maintenancetool: " << error;
 }

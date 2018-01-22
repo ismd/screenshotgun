@@ -2,6 +2,7 @@
 #define SCREENSHOTGUN_UPDATER_H
 
 #include <QDialog>
+#include <QFileInfo>
 #include <QProcess>
 #include "ui_Update.h"
 
@@ -18,6 +19,7 @@ public:
 private slots:
     void checkUpdates();
     void accept();
+    void errorOccurred(QProcess::ProcessError);
 
 private:
     Ui::Update* ui;
@@ -27,7 +29,7 @@ private:
 #if defined(Q_OS_WIN32)
     QString maintenancetool_ = "maintenancetool.exe";
 #elif defined(Q_OS_MACOS)
-    QString maintenancetool_ = "../../maintenancetool.app/Contents/MacOS/maintenancetool";
+    QString maintenancetool_ = QFileInfo("../../maintenancetool.app/Contents/MacOS/maintenancetool").absoluteFilePath();
 #else
     QString maintenancetool_ = "/bin/false";
 #endif
