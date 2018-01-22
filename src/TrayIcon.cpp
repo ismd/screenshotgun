@@ -67,9 +67,7 @@ void TrayIcon::showMessage(const QString& title, const QString& msg, MessageIcon
                &app_.updater(), SLOT(show()));
 
 #if defined(Q_OS_MACOS)
-    if (canOsXSendUserNotification()) {
-        sendOsXUserNotification(title, msg);
-    }
+
 #else
     QSystemTrayIcon::showMessage(title, msg, icon, msecs);
 #endif

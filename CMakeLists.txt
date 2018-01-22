@@ -97,8 +97,6 @@ qt5_wrap_ui(SOURCE_FILES
 include_directories(cmake-build-debug)
 
 if(APPLE)
-    list(APPEND SOURCE_FILES src/TrayIcon.mm)
-
     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
     add_executable(screenshotgun MACOSX_BUNDLE ${SOURCE_FILES})
