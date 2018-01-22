@@ -52,10 +52,6 @@ App::App()
     }
 
     trayIcon_.show();
-
-    connect(&updater_, SIGNAL(updateAvailable(QString)),
-            this, SLOT(updateAvailable(const QString&)));
-
     updater_.check();
 }
 

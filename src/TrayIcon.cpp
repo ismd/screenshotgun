@@ -11,6 +11,7 @@ TrayIcon::TrayIcon(App& app)
       settingsAction_("Настройки", this),
       historyMenu_("История"),
       quitAction_("Выход", this) {
+
 #ifndef Q_OS_MACOS
     connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayActivated(QSystemTrayIcon::ActivationReason)));

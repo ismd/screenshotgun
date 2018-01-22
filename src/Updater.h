@@ -27,8 +27,7 @@ private:
 #if defined(Q_OS_WIN32)
     QString maintenancetool_ = "maintenancetool.exe";
 #elif defined(Q_OS_MACOS)
-    //QString maintenancetool_ = "../../maintenancetool.app/Contents/MacOS/maintenancetool";
-    QString maintenancetool_ = "/Applications/screenshotgun.app/maintenancetool.app/Contents/MacOS/maintenancetool";
+    QString maintenancetool_ = "../../maintenancetool.app/Contents/MacOS/maintenancetool";
 #else
     QString maintenancetool_ = "/bin/false";
 #endif
