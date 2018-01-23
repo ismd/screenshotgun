@@ -22,7 +22,7 @@ Download binaries for Windows, Linux and macOS from official site [screenshotgun
 ###### Arch Linux
 yaourt -S screenshotgun-git
 #### macOS
-Currently not supported
+[Download and drag'n'drop to Applications directory](http://screenshotgun.com/dist/Screenshotgun.dmg)
 #### Windows
 [Download and install](http://screenshotgun.com/dist/ScreenshotgunInstaller.exe)
 
