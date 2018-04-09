@@ -5,12 +5,12 @@
 #include "../Toolbar.h"
 #include "../App.h"
 
-VisibleAreaMode::VisibleAreaMode(Overlay& overlay, int maxWidth, int maxHeight)
+VisibleAreaMode::VisibleAreaMode(Overlay& overlay, int maxWidth, int maxHeight, const QPoint& position)
     : AbstractMode(overlay),
-      maxWidth_(maxWidth),
-      maxHeight_(maxHeight),
       initialized_(false),
-      resizing_(false) {
+      resizing_(false),
+      maxWidth_(maxWidth),
+      maxHeight_(maxHeight) {
 
     QPen pen(Qt::NoPen);
     QBrush brush(Qt::black);
@@ -61,6 +61,8 @@ VisibleAreaMode::VisibleAreaMode(Overlay& overlay, int maxWidth, int maxHeight)
     overlay_.scene().addItem(&lineBottom_);
     overlay_.scene().addItem(&lineLeft_);
     overlay_.scene().addItem(&lineRight_);
+
+    setArea(position.x(), position.y(), 0, 0);
 }
 
 void VisibleAreaMode::init(int x, int y) {

@@ -21,7 +21,7 @@ enum class ResizeDirection {
 class VisibleAreaMode : public AbstractMode {
 
 public:
-    VisibleAreaMode(Overlay&, int, int);
+    VisibleAreaMode(Overlay&, int maxWidth, int maxHeight, const QPoint& position);
 
     void init(int x, int y);
     void move(int x, int y);

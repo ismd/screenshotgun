@@ -75,9 +75,10 @@ void OverlayView::reinitVisibleArea() {
     delete visibleAreaMode_;
 
     QDesktopWidget* desktop = QApplication::desktop();
-    QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
+    QPoint position = QCursor::pos();
+    QRect geo = desktop->screenGeometry(desktop->screenNumber(position));
 
-    visibleAreaMode_ = new VisibleAreaMode(overlay_, geo.width(), geo.height());
+    visibleAreaMode_ = new VisibleAreaMode(overlay_, geo.width(), geo.height(), position);
     currentMode_ = visibleAreaMode_;
     overlay_.toolbar().select(ToolbarMode::VISIBLE_AREA);
 }
