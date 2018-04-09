@@ -79,7 +79,9 @@ set(SOURCE_FILES
     src/OverlayView.cpp
     src/OverlayView.h
     src/Updater.cpp
-    src/Updater.h)
+    src/Updater.h
+    src/System.cpp
+    src/System.h)
 
 file(READ CHANGELOG.txt CHANGELOG_TEXT)
 configure_file(src/Changelog.h.in Changelog.h)

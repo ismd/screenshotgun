@@ -1,8 +1,15 @@
 #include <QApplication>
 #include "App.h"
+#include "System.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
+
+    System system;
+    if (system.isLaunched()) {
+        qDebug() << "The application is already running";
+        return 1;
+    }
 
     app.setOrganizationName("Screenshotgun");
     app.setOrganizationDomain("screenshotgun.com");
