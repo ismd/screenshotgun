@@ -3,3 +3,4 @@
 /cmake-build-debug
 /build
 /compile_commands.json
+/.clang_complete
