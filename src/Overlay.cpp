@@ -16,7 +16,7 @@ Overlay::Overlay(App& app)
     setWindowModality(Qt::ApplicationModal);
     setFocusPolicy(Qt::StrongFocus);
     setCursor(Qt::BlankCursor);
-    
+
 #ifdef Q_OS_MACOS
     setAttribute(Qt::WA_MacAlwaysShowToolWindow);
 #endif
@@ -49,15 +49,13 @@ void Overlay::makeScreenshot() {
     int width = screenshot_.width(),
         height = screenshot_.height();
 
-    setGeometry(0, 0, width, height);
+    setGeometry(geo);
     overlayView_.scene().setSceneRect(0, 0, width, height);
 
     reinitVisibleArea();
 
     // Background screenshot
     overlayView_.scene().addPixmap(screenshot_);
-
-    setGeometry(0, 0, width, height);
     show();
 
     overlayView_.activateWindow();
