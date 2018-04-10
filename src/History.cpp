@@ -1,5 +1,4 @@
 #include "History.h"
-#include <QList>
 
 History::History() : settings_("screenshotgun", "history") {
 }
