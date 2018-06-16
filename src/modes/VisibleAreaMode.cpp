@@ -274,4 +274,6 @@ ResizeDirection VisibleAreaMode::resizablePosition(int x, int y) {
     } else if (x >= area.x + area.width && y >= area.y + area.height) {
         return ResizeDirection::BOTTOM_RIGHT;
     }
+
+    return ResizeDirection::NONE;
 }
