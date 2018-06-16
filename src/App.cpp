@@ -6,8 +6,8 @@
 App::App()
     : overlay_(*this),
       trayIcon_(*this),
-      settingsForm_(*this),
       google_(*this),
+      settingsForm_(*this),
       updater_(*this),
       copyImageToClipboard_(false),
       connectionChecks_(0),
