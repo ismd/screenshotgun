@@ -140,7 +140,7 @@ void OverlayView::mouseMoveEvent(QMouseEvent* e) {
 
     if (visibleAreaMode_->resizing()) {
         visibleAreaMode_->resizeMove(x, y);
-    } else if (usingMode_ || currentMode_ == visibleAreaMode_ && !visibleAreaMode_->initialized()) {
+    } else if (usingMode_ || (currentMode_ == visibleAreaMode_ && !visibleAreaMode_->initialized())) {
         currentMode_->move(x, y);
     } else if (currentMode_ != visibleAreaMode_ && visibleAreaMode_->isResizablePosition(x, y)) {
         switch (visibleAreaMode_->resizablePosition(x, y)) {
@@ -162,6 +162,9 @@ void OverlayView::mouseMoveEvent(QMouseEvent* e) {
             case ResizeDirection::TOP_RIGHT:
             case ResizeDirection::BOTTOM_LEFT:
                 setCursor(Qt::SizeBDiagCursor);
+                break;
+
+            case ResizeDirection::NONE:
                 break;
         }
     } else if (currentMode_ == &textMode_) {
