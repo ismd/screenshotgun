@@ -2,8 +2,8 @@
 
 TextMode::TextMode(Overlay& overlay)
     : AbstractMode(overlay),
-      initialized_(false),
-      textArea_(0) {
+      textArea_(0),
+      initialized_(false) {
     connect(&overlay_, SIGNAL(toolChanged(ToolbarMode)),
             this, SLOT(clearFocus()));
 }

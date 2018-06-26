@@ -48,6 +48,9 @@ void OAuth::setService(UploadService service) {
         case UploadService::GOOGLE:
             text.replace("{LINK}", "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=https://www.googleapis.com/auth/drive.file&redirect_uri=urn:ietf:wg:oauth:2.0:oob&client_id=" + GOOGLE_CLIENT_ID);
             break;
+
+        case UploadService::SERVER:
+            break;
     }
 
     ui->link->setText(text.replace("{LINK}", text));
@@ -67,6 +70,9 @@ void OAuth::accept() {
 
         case UploadService::GOOGLE:
             getToken(GOOGLE_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET);
+            break;
+
+        case UploadService::SERVER:
             break;
     }
 }
@@ -100,10 +106,12 @@ void OAuth::tokenReply(QNetworkReply* reply) {
                 app_.settings().setGoogleToken(token);
                 app_.google().setToken(token);
 
-                QString refreshToken = jsonObject["refresh_token"].toString();
-                if (refreshToken.length() > 0) {
-                    app_.settings().setGoogleRefreshToken(refreshToken);
+                if (jsonObject["refresh_token"].toString().length() > 0) {
+                    app_.settings().setGoogleRefreshToken(jsonObject["refresh_token"].toString());
                 }
+                break;
+
+            case UploadService::SERVER:
                 break;
         }
 
@@ -127,6 +135,11 @@ void OAuth::refreshToken(UploadService service) {
     switch (service) {
         case UploadService::GOOGLE:
             getToken(GOOGLE_URL, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET);
+            break;
+
+        case UploadService::SERVER:
+        case UploadService::YANDEX:
+        case UploadService::DROPBOX:
             break;
     }
 }

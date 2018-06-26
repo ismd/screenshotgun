@@ -146,6 +146,9 @@ void VisibleAreaMode::resizeMove(int x, int y) {
         case ResizeDirection::BOTTOM_RIGHT:
             setArea(area.x, area.y, area.width + diffX, area.height + diffY);
             break;
+
+        case ResizeDirection::NONE:
+            break;
     }
 
     resizeInfo_.x = x;

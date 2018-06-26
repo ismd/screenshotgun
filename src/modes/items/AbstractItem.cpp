@@ -44,6 +44,9 @@ void AbstractItem::mouseMoveEvent(QGraphicsSceneMouseEvent* e) {
 void AbstractItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* e) {
     overlay_.overlayView().setMovingItem(false);
     overlay_.setCursor(Qt::CrossCursor);
+
+    select();
+
     Q_UNUSED(e);
 }
 
@@ -59,4 +62,8 @@ void AbstractItem::hoverEnterEvent(QGraphicsSceneHoverEvent* e) {
 void AbstractItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* e) {
     overlay_.setCursorLocked(false);
     Q_UNUSED(e);
+}
+
+void AbstractItem::select() {
+
 }

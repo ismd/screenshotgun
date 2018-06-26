@@ -248,7 +248,7 @@ void Toolbar::setSelected(QPushButton* button, bool animate) {
     }
 
     int x = ui->selectedCircle->x();
-    int y = ui->selectedCircle->y();
+    // int y = ui->selectedCircle->y();
     int width = ui->selectedCircle->width();
     int height = ui->selectedCircle->height();
 

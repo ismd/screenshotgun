@@ -26,6 +26,8 @@ public:
     void hoverEnterEvent(QGraphicsSceneHoverEvent*);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent*);
 
+    virtual void select();
+
 protected:
     Overlay& overlay_;
     QVector<QGraphicsItem*> graphicItems_;

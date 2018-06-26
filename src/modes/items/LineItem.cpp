@@ -10,3 +10,7 @@ LineItem::LineItem(Overlay& overlay, qreal x, qreal y)
 void LineItem::setPen(const QPen& pen) {
     lineGraphicItem_->setPen(pen);
 }
+
+void LineItem::select() {
+
+}
