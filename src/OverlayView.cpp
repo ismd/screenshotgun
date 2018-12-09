@@ -129,6 +129,11 @@ void OverlayView::mousePressEvent(QMouseEvent* e) {
 }
 
 void OverlayView::mouseMoveEvent(QMouseEvent* e) {
+    if (overlay_.isHidden()) {
+        setMovingItem(false);
+        return;
+    }
+
     QGraphicsView::mouseMoveEvent(e);
 
     if (movingItem_) {

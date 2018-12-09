@@ -102,6 +102,8 @@ void Overlay::addItem(AbstractItem* item) {
 }
 
 void Overlay::hideEvent(QHideEvent* e) {
+    Q_UNUSED(e);
+
     toolbar_.hide();
 
     for (auto item : items_) {
@@ -109,6 +111,4 @@ void Overlay::hideEvent(QHideEvent* e) {
     }
 
     items_.clear();
-
-    Q_UNUSED(e);
 }

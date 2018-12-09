@@ -12,5 +12,4 @@ void LineItem::setPen(const QPen& pen) {
 }
 
 void LineItem::select() {
-
 }
