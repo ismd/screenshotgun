@@ -134,6 +134,9 @@ void OverlayView::mouseMoveEvent(QMouseEvent* e) {
         return;
     }
 
+    activateWindow();
+    setFocus();
+
     QGraphicsView::mouseMoveEvent(e);
 
     if (movingItem_) {
