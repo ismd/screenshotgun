@@ -4,4 +4,3 @@
 /build
 /compile_commands.json
 /.clang_complete
-/.dir-locals.el
