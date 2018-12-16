@@ -15,7 +15,7 @@ Download binaries for Windows, Linux and macOS from official site [screenshotgun
 
 ## Install
 #### Linux
-###### Ubuntu 16.04
+###### Ubuntu 18.04, Ubuntu 16.04, Linux Mint
 1. sudo add-apt-repository ppa:ismd/screenshotgun
 2. sudo apt update
 3. sudo apt install screenshotgun
