@@ -1,3 +1,5 @@
+![](https://travis-ci.org/ismd/screenshotgun.svg?branch=master)
+
 # Screenshotgun
 Open cross-platform screenshoter with cloud support and server part.  
 With this application you can make screenshots, draw figures or write text and then upload to:  
