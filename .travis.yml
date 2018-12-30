@@ -12,9 +12,10 @@ script:
 - cmake -DCMAKE_BUILD_TYPE=Release ..
 - cmake --build .
 - strip screenshotgun
+- cd $TRAVIS_BUILD_DIR
 deploy:
   provider: script
-  script: bash deploy.sh $TRAVIS_TAG
+  script: bash scripts/deploy.sh $TRAVIS_TAG
   skip_cleanup: true
   on:
     tags: true
