@@ -12,10 +12,10 @@ install:
   - sudo apt-get install qtbase5-dev qtbase5-private-dev
 
 script:
-  - mkdir build && cd build
-  - cmake -DCMAKE_BUILD_TYPE=Release ..
-  - cmake --build .
-  - strip screenshotgun
+  # - mkdir build && cd build
+  # - cmake -DCMAKE_BUILD_TYPE=Release ..
+  # - cmake --build .
+  # - strip screenshotgun
   - cd $TRAVIS_BUILD_DIR
 
 deploy:
