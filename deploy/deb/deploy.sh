@@ -2,7 +2,7 @@
 set -e
 set -o pipefail
 
-apt-get install dh-make bzr-builddeb
+sudo apt-get install dh-make bzr-builddeb
 
 DEPLOY_DIR=$HOME/deploy
 
