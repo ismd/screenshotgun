@@ -1,8 +1,5 @@
 #!/bin/bash
-VERSION=$1
-VERSION=${VERSION#"v"}
-
-docker --version
+VERSION=${1#"v"}
 
 # AUR
-docker build --build-arg VERSION=$VERSION $TRAVIS_BUILD_DIR/deploy/arch
+docker run -e VERSION=$VERSION -v $TRAVIS_BUILD_DIR/deploy/arch:/deploy base/archlinux /deploy/arch/deploy.sh
