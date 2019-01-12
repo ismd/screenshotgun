@@ -7,9 +7,9 @@ services:
 before_install:
   - sudo apt-get update
   # - openssl aes-256-cbc -K $encrypted_55f6cc107eaa_key -iv $encrypted_55f6cc107eaa_iv
-  #   -in deploy/arch/aur.enc -out deploy/arch/aur -d
+  #   -in deploy/aur/aur.enc -out deploy/aur/aur -d
   - openssl aes-256-cbc -K $encrypted_55f6cc107eaa_key -iv $encrypted_55f6cc107eaa_iv
-    -in deploy/deb/launchpad.asc.enc -out deploy/deb/launchpad.asc -d
+    -in deploy/launchpad/launchpad.asc.enc -out deploy/launchpad/launchpad.asc -d
 
 install:
   - sudo apt-get install qtbase5-dev qtbase5-private-dev

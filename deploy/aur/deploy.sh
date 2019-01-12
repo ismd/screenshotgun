@@ -14,4 +14,4 @@ echo "build ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 chown -R build $DEPLOY_DIR
 mkdir $BUILD_DIR && chown build $BUILD_DIR
 
-sudo VERSION=$VERSION -u build $DEPLOY_DIR/arch/deploy_build.sh
+sudo VERSION=$VERSION -u build $DEPLOY_DIR/aur/deploy_build.sh

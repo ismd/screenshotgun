@@ -6,7 +6,7 @@ DEPLOY_DIR=/deploy
 BUILD_DIR=/build
 
 mkdir ~/.ssh
-cp $DEPLOY_DIR/arch/aur ~/.ssh/id_rsa
+cp $DEPLOY_DIR/aur/aur ~/.ssh/id_rsa
 chmod 600 ~/.ssh/id_rsa
 ssh-keyscan -t rsa aur.archlinux.org >> ~/.ssh/known_hosts
 
@@ -17,7 +17,7 @@ cd screenshotgun-git
 git config user.email "zzismd@gmail.com"
 git config user.name "Vladimir Kosteley"
 
-cp $DEPLOY_DIR/arch/PKGBUILD PKGBUILD
+cp $DEPLOY_DIR/aur/PKGBUILD PKGBUILD
 AUR_VERSION=`echo $VERSION | sed 's/-/_/g'`
 sed -i -e "s/{AUR_VERSION}/$AUR_VERSION/g" PKGBUILD
 sed -i -e "s/{VERSION}/$VERSION/g" PKGBUILD
