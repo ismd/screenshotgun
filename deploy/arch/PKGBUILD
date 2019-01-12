@@ -18,7 +18,7 @@ backup=()
 options=()
 install=
 changelog=
-source=("$_pkgname::git+https://github.com/ismd/screenshotgun.git")
+source=("$_pkgname::git+https://github.com/ismd/screenshotgun.git#tag=v{VERSION}")
 noextract=()
 sha256sums=()
 md5sums=('SKIP')
