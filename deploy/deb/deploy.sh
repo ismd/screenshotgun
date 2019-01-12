@@ -2,10 +2,13 @@
 set -e
 set -o pipefail
 
-sudo apt-get install dh-make bzr-builddeb
-bzr whoami "Vladimir Kosteley <zzismd@gmail.com>"
-
 DEPLOY_DIR=$HOME/deploy
+
+sudo apt-get install bzr-builddeb dh-make dput pbuilder
+
+bzr whoami "Vladimir Kosteley <zzismd@gmail.com>"
+gpg --import $TRAVIS_BUILD_DIR/deploy/deb/launchpad.asc
+gpg --import $TRAVIS_BUILD_DIR/deploy/deb/launchpad_public.asc
 
 mkdir -p $DEPLOY_DIR/launchpad
 
