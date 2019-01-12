@@ -2,6 +2,8 @@
 set -e
 set -o pipefail
 
+apt-get install dh-make bzr-builddeb
+
 DEPLOY_DIR=$HOME/deploy
 
 mkdir -p $DEPLOY_DIR/launchpad
