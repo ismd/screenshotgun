@@ -4,3 +4,6 @@
 /build
 /compile_commands.json
 /.clang_complete
+
+/deploy/arch/aur
+/deploy/deb/launchpad.asc
