@@ -7,7 +7,7 @@ DEPLOY_DIR=$HOME/deploy
 sudo apt-get install bzr-builddeb dh-make dput pbuilder ubuntu-dev-tools
 
 bzr whoami "Vladimir Kosteley <zzismd@gmail.com>"
-gpg --import $TRAVIS_BUILD_DIR/deploy/launchpad/launchpad.asc
+gpg --import $TRAVIS_BUILD_DIR/deploy/data/launchpad.asc
 gpg --import $TRAVIS_BUILD_DIR/deploy/launchpad/launchpad_public.asc
 
 mkdir -p $DEPLOY_DIR/launchpad
