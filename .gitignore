@@ -5,6 +5,5 @@
 /compile_commands.json
 /.clang_complete
 
-/deploy/data/deploy.tar
-/deploy/data/aur
-/deploy/data/launchpad.asc
+/deploy/data.tar
+/deploy/keys
