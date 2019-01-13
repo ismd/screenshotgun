@@ -4,6 +4,9 @@ set -o pipefail
 
 DEPLOY_DIR=$HOME/deploy
 
+mkdir ~/.ssh
+ssh-keyscan -t rsa ppa.launchpad.net >> ~/.ssh/known_hosts
+
 sudo apt-get install bzr-builddeb dh-make dput pbuilder python-paramiko ubuntu-dev-tools
 
 bzr whoami "Vladimir Kosteley <zzismd@gmail.com>"
