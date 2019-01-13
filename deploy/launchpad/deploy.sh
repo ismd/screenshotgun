@@ -29,4 +29,6 @@ bzr builddeb -S
 cd $DEPLOY_DIR/launchpad/build-area
 pbuilder-dist bionic create
 pbuilder-dist bionic build screenshotgun_$VERSION-1.dsc
+
+ssh-keyscan -t rsa ppa.launchpad.net >> ~/.ssh/known_hosts
 dput -c $TRAVIS_BUILD_DIR/deploy/launchpad/dput.cf ppa:ismd/screenshotgun screenshotgun_$VERSION-1_source.changes
