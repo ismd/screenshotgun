@@ -1,0 +1,4 @@
+[ppa]
+fqdn = ppa.launchpad.net
+method = sftp
+login = ismd

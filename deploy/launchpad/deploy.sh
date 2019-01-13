@@ -29,4 +29,4 @@ bzr builddeb -S
 cd $DEPLOY_DIR/launchpad/build-area
 pbuilder-dist bionic create
 pbuilder-dist bionic build screenshotgun_$VERSION-1.dsc
-dput ppa:ismd/screenshotgun screenshotgun_$VERSION-1_source.changes
+dput -c $TRAVIS_BUILD_DIR/deploy/launchpad/dput.cf ppa:ismd/screenshotgun screenshotgun_$VERSION-1_source.changes
