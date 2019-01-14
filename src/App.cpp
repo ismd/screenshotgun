@@ -111,6 +111,15 @@ bool App::connected() const {
     return connected_;
 }
 
+void App::copyImageToClipboard() {
+    QApplication::clipboard()->setImage(overlay_.toolbar().image());
+
+    trayIcon_.showMessage("Изображение скопировано в буфер обмена",
+                          "",
+                          QSystemTrayIcon::Information,
+                          3000);
+}
+
 void App::timerEvent(QTimerEvent *event) {
     if (-1 != connectionChecks_) {
         server_.checkConnection();
@@ -146,24 +155,19 @@ void App::connectionError() {
 
 void App::uploadSuccess(const QString& url) {
     lastUrl_ = url;
-    QClipboard* clipboard = QApplication::clipboard();
     history_.addLink(url);
 
     if (copyImageToClipboard_) {
-        clipboard->setImage(overlay_.toolbar().image());
-
-        trayIcon_.showMessage("Изображение скопировано в буфер обмена",
-                              url,
-                              QSystemTrayIcon::Information,
-                              3000);
-    } else {
-        clipboard->setText(url);
-
-        trayIcon_.showMessage("Ссылка скопирована в буфер обмена",
-                              url,
-                              QSystemTrayIcon::Information,
-                              3000);
+        copyImageToClipboard();
+        return;
     }
+
+    QApplication::clipboard()->setText(url);
+
+    trayIcon_.showMessage("Ссылка скопирована в буфер обмена",
+                          url,
+                          QSystemTrayIcon::Information,
+                          3000);
 
     disconnect(&trayIcon_, SIGNAL(messageClicked()),
                this, SLOT(openUrl()));
@@ -181,6 +185,10 @@ void App::uploadError(QString error) {
 }
 
 void App::openUrl() {
+    if (lastUrl_.isEmpty()) {
+        return;
+    }
+
     QDesktopServices::openUrl(QUrl(lastUrl_));
 }
 

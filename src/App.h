@@ -31,6 +31,7 @@ public:
     void setCopyImageToClipboard(bool);
     void setConnectionChecks(int);
     bool connected() const;
+    void copyImageToClipboard();
 
 protected:
     void timerEvent(QTimerEvent*);

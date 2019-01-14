@@ -4,6 +4,7 @@
 #include <QUrlQuery>
 #include "App.h"
 #include "OAuth.h"
+#include "src/Settings.h"
 
 const QString DROPBOX_URL = "https://api.dropboxapi.com/1/oauth2/token";
 const QString DROPBOX_CLIENT_ID = "wmae5esncijnqie";
@@ -51,6 +52,9 @@ void OAuth::setService(UploadService service) {
 
         case UploadService::SERVER:
             break;
+
+        case UploadService::CLIPBOARD:
+            break;
     }
 
     ui->link->setText(text.replace("{LINK}", text));
@@ -73,6 +77,9 @@ void OAuth::accept() {
             break;
 
         case UploadService::SERVER:
+            break;
+
+        case UploadService::CLIPBOARD:
             break;
     }
 }
@@ -113,6 +120,9 @@ void OAuth::tokenReply(QNetworkReply* reply) {
 
             case UploadService::SERVER:
                 break;
+
+            case UploadService::CLIPBOARD:
+                break;
         }
 
         app_.settingsForm().setError("");
@@ -140,6 +150,7 @@ void OAuth::refreshToken(UploadService service) {
         case UploadService::SERVER:
         case UploadService::YANDEX:
         case UploadService::DROPBOX:
+        case UploadService::CLIPBOARD:
             break;
     }
 }
