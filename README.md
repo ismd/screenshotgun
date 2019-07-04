@@ -22,7 +22,7 @@ Download binaries for Windows, Linux and macOS from official site [screenshotgun
 2. sudo apt update
 3. sudo apt install screenshotgun
 ###### Arch Linux
-yaourt -S screenshotgun-git
+yay -S screenshotgun-git
 #### macOS
 [Download and drag'n'drop to Applications directory](http://screenshotgun.com/dist/Screenshotgun.dmg)
 #### Windows
