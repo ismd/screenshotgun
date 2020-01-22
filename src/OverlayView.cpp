@@ -1,4 +1,5 @@
-#include <QDesktopWidget>
+#include <QtGlobal>
+#include <QScreen>
 #include "App.h"
 #include "Overlay.h"
 #include "OverlayView.h"
@@ -74,13 +75,24 @@ void OverlayView::setMode(const ToolbarMode mode) {
 void OverlayView::reinitVisibleArea() {
     delete visibleAreaMode_;
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
     QDesktopWidget* desktop = QApplication::desktop();
+#endif
     QPoint position = QCursor::pos();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    QScreen* screen = QGuiApplication::screenAt(QCursor::pos());
+    QRect geo = screen->geometry();
+#else
     int screenNumber = desktop->screenNumber(position);
     QRect geo = desktop->screenGeometry(screenNumber);
     QRect mouseScreenGeometry = qApp->desktop()->screen(screenNumber)->geometry();
+#endif
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    visibleAreaMode_ = new VisibleAreaMode(overlay_, geo.width(), geo.height(), position - geo.topLeft());
+#else
     visibleAreaMode_ = new VisibleAreaMode(overlay_, geo.width(), geo.height(), position - mouseScreenGeometry.topLeft());
+#endif
     currentMode_ = visibleAreaMode_;
     overlay_.toolbar().select(ToolbarMode::VISIBLE_AREA);
 }

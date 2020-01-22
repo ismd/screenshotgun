@@ -1,3 +1,4 @@
+#include <QtGlobal>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QScreen>
@@ -38,7 +39,12 @@ void Overlay::makeScreenshot() {
 
     // Making screenshot
     QDesktopWidget* desktop = QApplication::desktop();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    QScreen* screen = QGuiApplication::screenAt(QCursor::pos());
+    QRect geo = screen->geometry();
+#else
     QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
+#endif
 
     screenshot_ = QGuiApplication::primaryScreen()->grabWindow(desktop->winId(),
                                                                geo.left(),
