@@ -1,6 +1,6 @@
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QPainter>
+#include <QScreen>
 #include "VisibleAreaMode.h"
 #include "../Toolbar.h"
 #include "../App.h"
@@ -184,8 +184,8 @@ void VisibleAreaMode::updateSize() {
     rectLeft_.setRect(0, y, x, height);
     rectRight_.setRect(x + width, y, sceneWidth - x - width, height);
 
-    QDesktopWidget *desktop = QApplication::desktop();
-    QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
+    QScreen* screen = QGuiApplication::screenAt(QCursor::pos());
+    QRect geo = screen->geometry();
 
     int screenWidth = geo.width();
     int screenHeight = geo.height();
@@ -218,8 +218,8 @@ void VisibleAreaMode::setArea(int x, int y, int width, int height) {
 void VisibleAreaMode::updateToolbarPosition() {
     const int padding = 10;
 
-    QDesktopWidget *desktop = QApplication::desktop();
-    QRect geo = desktop->screenGeometry(desktop->screenNumber(QCursor::pos()));
+    QScreen* screen = QGuiApplication::screenAt(QCursor::pos());
+    QRect geo = screen->geometry();
 
     // Width
     int toolbarX = area.x + area.width + 28;
