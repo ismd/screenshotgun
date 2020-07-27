@@ -235,7 +235,7 @@ void OverlayView::keyReleaseEvent(QKeyEvent* e) {
 }
 
 void OverlayView::wheelEvent(QWheelEvent* e) {
-    if (e->delta() < 0) {
+    if (e->angleDelta().y() < 0) {
         overlay_.toolbar().setSelectedNext();
     } else {
         overlay_.toolbar().setSelectedPrevious();

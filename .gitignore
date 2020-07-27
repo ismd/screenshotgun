@@ -4,6 +4,7 @@
 /build
 /compile_commands.json
 /.clang_complete
+/.clangd
 
 /deploy/data.tar
 /deploy/keys

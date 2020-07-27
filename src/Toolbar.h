@@ -1,6 +1,7 @@
 #ifndef SCREENSHOTGUN_TOOLBAR_H
 #define SCREENSHOTGUN_TOOLBAR_H
 
+#include <vector>
 #include <QPushButton>
 #include <QWidget>
 #include "services/Server.h"
@@ -47,11 +48,12 @@ private slots:
     void on_okButton_clicked();
 
 private:
+    std::vector<QPushButton*>::const_iterator getSelected() const;
     void setSelected(QPushButton*, bool animate = true);
 
     Ui::Toolbar* ui;
     Overlay& overlay_;
-    QLinkedList<QPushButton*> buttons_;
+    std::vector<QPushButton*> buttons_;
     QPushButton* selected_;
     bool dragging_;
     struct {
