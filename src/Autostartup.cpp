@@ -53,16 +53,16 @@ void AutoStartup::setLinux(bool enabled) {
 
         QTextStream ts(&iniFile);
         ts.setCodec("UTF-8");
-        ts << QLatin1String("[Desktop Entry]") << endl
-           << QLatin1String("Name=") << "Screenshotgun" << endl
-//           << QLatin1String("GenericName=") << QLatin1String("File Synchronizer") << endl
-           << QLatin1String("Exec=") << QCoreApplication::applicationFilePath() << endl
-           << QLatin1String("Terminal=") << "false" << endl
-//           << QLatin1String("Icon=") << appName.toLower() << endl // always use lowercase for icons
-           << QLatin1String("Categories=") << QLatin1String("Network") << endl
-           << QLatin1String("Type=") << QLatin1String("Application") << endl
-           << QLatin1String("StartupNotify=") << "false" << endl
-           << QLatin1String("X-GNOME-Autostart-enabled=") << "true" << endl
+        ts << QLatin1String("[Desktop Entry]") << '\n'
+                << QLatin1String("Name=") << "Screenshotgun" << '\n'
+//           << QLatin1String("GenericName=") << QLatin1String("File Synchronizer") << '\n'
+                << QLatin1String("Exec=") << QCoreApplication::applicationFilePath() << '\n'
+                << QLatin1String("Terminal=") << "false" << '\n'
+//           << QLatin1String("Icon=") << appName.toLower() << '\n' // always use lowercase for icons
+                << QLatin1String("Categories=") << QLatin1String("Network") << '\n'
+                << QLatin1String("Type=") << QLatin1String("Application") << '\n'
+                << QLatin1String("StartupNotify=") << "false" << '\n'
+                << QLatin1String("X-GNOME-Autostart-enabled=") << "true" << '\n'
             ;
     } else {
         if (QFile(desktopFileLocation).exists() && !QFile::remove(desktopFileLocation)) {

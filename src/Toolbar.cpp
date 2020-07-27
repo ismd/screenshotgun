@@ -1,5 +1,7 @@
 #include <QClipboard>
 #include <QGraphicsScene>
+#include <algorithm>
+#include <qpushbutton.h>
 #include "App.h"
 #include "Toolbar.h"
 
@@ -15,12 +17,14 @@ Toolbar::Toolbar(QWidget* parent, Overlay& overlay)
     ui->selectedCircle->lower();
     setFocusPolicy(Qt::ClickFocus);
 
-    buttons_.append(ui->visibleAreaButton);
-    buttons_.append(ui->ellipseButton);
-    buttons_.append(ui->rectButton);
-    buttons_.append(ui->lineButton);
-    buttons_.append(ui->arrowButton);
-    buttons_.append(ui->textButton);
+    buttons_ = {
+      ui->visibleAreaButton,
+      ui->ellipseButton,
+      ui->rectButton,
+      ui->lineButton,
+      ui->arrowButton,
+      ui->textButton,
+    };
 
     animation_.setTargetObject(ui->selectedCircle);
     animation_.setPropertyName("geometry");
@@ -65,33 +69,23 @@ void Toolbar::select(const ToolbarMode mode, bool animate) {
 }
 
 void Toolbar::setSelectedNext() {
-    QLinkedListIterator<QPushButton*> i(buttons_);
+    const auto selected = getSelected();
 
-    while (i.next() != selected_) {
-    }
-
-    if (!i.hasNext()) {
-        //setSelected(buttons_.front());
+    if (selected == buttons_.cend()) {
         return;
     }
 
-    setSelected(i.next());
+    setSelected(*(selected + 1));
 }
 
 void Toolbar::setSelectedPrevious() {
-    QLinkedListIterator<QPushButton*> i(buttons_);
+    const auto selected = getSelected();
 
-    while (i.next() != selected_) {
-    }
-
-    i.previous();
-
-    if (!i.hasPrevious()) {
-        //setSelected(buttons_.back());
+    if (selected == buttons_.cbegin()) {
         return;
     }
 
-    setSelected(i.previous());
+    setSelected(*(selected - 1));
 }
 
 void Toolbar::mousePressEvent(QMouseEvent* event) {
@@ -212,6 +206,10 @@ void Toolbar::submit() {
 
 QImage& Toolbar::image() const {
     return *image_;
+}
+
+std::vector<QPushButton*>::const_iterator Toolbar::getSelected() const {
+    return std::find_if(buttons_.begin(), buttons_.end(), [&](const auto& item) { return item == selected_; });
 }
 
 void Toolbar::setSelected(QPushButton* button, bool animate) {

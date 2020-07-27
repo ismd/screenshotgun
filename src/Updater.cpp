@@ -60,7 +60,7 @@ void Updater::checkUpdates() {
 
 void Updater::accept() {
     ui->buttonBox->setEnabled(false);
-    bool result = QProcess::startDetached(maintenancetool_ + " --updater");
+    bool result = QProcess::startDetached(maintenancetool_, {"--updater"});
 
     if (!result) {
         QMessageBox::critical(NULL,
