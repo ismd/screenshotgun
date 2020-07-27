@@ -201,6 +201,10 @@ void Toolbar::submit() {
         case UploadService::GOOGLE:
             overlay_.app().google().upload(bytes);
             break;
+
+        case UploadService::CLIPBOARD:
+            overlay_.app().copyImageToClipboard();
+            break;
     }
 }
 

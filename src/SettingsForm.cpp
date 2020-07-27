@@ -44,6 +44,10 @@ void SettingsForm::init() {
         case UploadService::GOOGLE:
             ui->radioButtonGoogle->setChecked(true);
             break;
+
+        case UploadService::CLIPBOARD:
+            ui->radioButtonClipboard->setChecked(true);
+            break;
     }
 
     ui->autoStartupCheckBox->setChecked(settings_.autostartup());
@@ -97,6 +101,10 @@ bool SettingsForm::valid(const bool save) {
                 setError("Приложение не авторизовано");
                 ui->submitButtons->setEnabled(true);
             }
+        } else if (ui->radioButtonClipboard->isChecked()) {
+            valid = true;
+            app_.setUploadService(UploadService::CLIPBOARD);
+            hide();
         }
     } else {
         settings_.create();
@@ -163,6 +171,8 @@ void SettingsForm::saveValues() {
         settings_.setService(UploadService::YANDEX);
     } else if (ui->radioButtonGoogle->isChecked()) {
         settings_.setService(UploadService::GOOGLE);
+    } else if (ui->radioButtonClipboard->isChecked()) {
+        settings_.setService(UploadService::CLIPBOARD);
     }
 
     settings_.setAutostartup(autoStartupValue);

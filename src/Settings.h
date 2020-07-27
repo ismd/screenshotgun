@@ -7,7 +7,8 @@ enum class UploadService {
     SERVER,
     DROPBOX,
     YANDEX,
-    GOOGLE
+    GOOGLE,
+    CLIPBOARD,
 };
 
 class Settings {
