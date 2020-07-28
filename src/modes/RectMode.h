@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_RECTMODE_H
-#define SCREENSHOTGUN_RECTMODE_H
+#pragma once
 
 #include "AbstractMode.h"
 #include "items/RectItem.h"
@@ -21,5 +20,3 @@ private:
         int y;
     } coords;
 };
-
-#endif // SCREENSHOTGUN_RECTMODE_H

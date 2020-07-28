@@ -1,9 +1,10 @@
+#include "Toolbar.h"
+#include "App.h"
+
+#include <algorithm>
 #include <QClipboard>
 #include <QGraphicsScene>
-#include <algorithm>
-#include <qpushbutton.h>
-#include "App.h"
-#include "Toolbar.h"
+#include <QPushButton>
 
 Toolbar::Toolbar(QWidget* parent, Overlay& overlay)
     : QWidget(parent),

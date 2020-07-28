@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_ELLIPSEMODE_H
-#define SCREENSHOTGUN_ELLIPSEMODE_H
+#pragma once
 
 #include "AbstractMode.h"
 #include "items/EllipseItem.h"
@@ -21,5 +20,3 @@ private:
         int y;
     } coords;
 };
-
-#endif // SCREENSHOTGUN_ELLIPSEMODE_H

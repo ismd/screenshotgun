@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_ARROWITEM_H
-#define SCREENSHOTGUN_ARROWITEM_H
+#pragma once
 
 #include "AbstractItem.h"
 #include "LineItem.h"
@@ -15,5 +14,3 @@ public:
 protected:
     PathGraphicItem* pathGraphicItem_;
 };
-
-#endif //SCREENSHOTGUN_ARROWITEM_H

@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_ARROWMODE_H
-#define SCREENSHOTGUN_ARROWMODE_H
+#pragma once
 
 #include "AbstractMode.h"
 #include "items/ArrowItem.h"
@@ -16,5 +15,3 @@ public:
 protected:
     ArrowItem* arrow_;
 };
-
-#endif // SCREENSHOTGUN_ARROWMODE_H

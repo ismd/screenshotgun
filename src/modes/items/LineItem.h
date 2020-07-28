@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_LINEITEM_H
-#define SCREENSHOTGUN_LINEITEM_H
+#pragma once
 
 #include "AbstractItem.h"
 #include "graphicitems/LineGraphicItem.h"
@@ -15,5 +14,3 @@ public:
 protected:
     LineGraphicItem* lineGraphicItem_;
 };
-
-#endif //SCREENSHOTGUN_LINEITEM_H

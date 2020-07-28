@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_RECTITEM_H
-#define SCREENSHOTGUN_RECTITEM_H
+#pragma once
 
 #include "AbstractItem.h"
 #include "graphicitems/RectGraphicItem.h"
@@ -14,5 +13,3 @@ public:
 protected:
     RectGraphicItem* rectGraphicItem_;
 };
-
-#endif //SCREENSHOTGUN_RECTITEM_H

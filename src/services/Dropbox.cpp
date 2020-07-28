@@ -1,6 +1,7 @@
+#include "Dropbox.h"
+
 #include <QJsonDocument>
 #include <QJsonObject>
-#include "Dropbox.h"
 
 Dropbox::Dropbox() {
 }

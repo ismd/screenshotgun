@@ -1,11 +1,11 @@
-#ifndef SCREENSHOTGUN_TOOLBAR_H
-#define SCREENSHOTGUN_TOOLBAR_H
+#pragma once
+
+#include "services/Server.h"
+#include "ui_Toolbar.h"
 
 #include <vector>
 #include <QPushButton>
 #include <QWidget>
-#include "services/Server.h"
-#include "ui_Toolbar.h"
 
 class Overlay;
 
@@ -63,5 +63,3 @@ private:
     QPropertyAnimation animation_;
     QImage* image_;
 };
-
-#endif // SCREENSHOTGUN_TOOLBAR_H

@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_ABSTRACTITEM_H
-#define SCREENSHOTGUN_ABSTRACTITEM_H
+#pragma once
 
 #include <QVector>
 #include <QGraphicsItem>
@@ -32,5 +31,3 @@ protected:
     Overlay& overlay_;
     QVector<QGraphicsItem*> graphicItems_;
 };
-
-#endif //SCREENSHOTGUN_ABSTRACTITEM_H

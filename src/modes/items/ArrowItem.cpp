@@ -1,5 +1,6 @@
-#include <QPen>
 #include "ArrowItem.h"
+
+#include <QPen>
 
 ArrowItem::ArrowItem(Overlay& overlay, qreal x, qreal y)
     : LineItem(overlay, x, y),

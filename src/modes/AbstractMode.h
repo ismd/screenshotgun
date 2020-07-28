@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_ABSTRACTMODE_H
-#define SCREENSHOTGUN_ABSTRACTMODE_H
+#pragma once
 
 #include <QPen>
 
@@ -19,5 +18,3 @@ protected:
     Overlay& overlay_;
     QPen pen;
 };
-
-#endif // SCREENSHOTGUN_ABSTRACTMODE_H

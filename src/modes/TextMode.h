@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_TEXTMODE_H
-#define SCREENSHOTGUN_TEXTMODE_H
+#pragma once
 
 #include "AbstractMode.h"
 #include "TextArea.h"
@@ -24,5 +23,3 @@ private:
     TextArea* textArea_;
     bool initialized_;
 };
-
-#endif // SCREENSHOTGUN_TEXTMODE_H

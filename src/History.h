@@ -1,8 +1,8 @@
-#ifndef SCREENSHOTGUN_HISTORY_H
-#define SCREENSHOTGUN_HISTORY_H
+#pragma once
+
+#include "Toolbar.h"
 
 #include <QSettings>
-#include "Toolbar.h"
 
 class History : public QObject {
     Q_OBJECT
@@ -23,5 +23,3 @@ signals:
 private:
     QSettings settings_;
 };
-
-#endif // SCREENSHOTGUN_HISTORY_H

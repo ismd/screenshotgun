@@ -1,5 +1,6 @@
-#include <QPen>
 #include "EllipseGraphicItem.h"
+
+#include <QPen>
 
 EllipseGraphicItem::EllipseGraphicItem(AbstractItem* parent, qreal x, qreal y)
     : AbstractGraphicItem(parent),

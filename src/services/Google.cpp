@@ -1,9 +1,10 @@
+#include "Google.h"
+#include "../App.h"
+
 #include <QHttpMultiPart>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include "../App.h"
-#include "Google.h"
 
 Google::Google(App& app) : app_(app), needReupload_(false) {
 }

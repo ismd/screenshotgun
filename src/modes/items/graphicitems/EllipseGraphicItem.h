@@ -1,8 +1,8 @@
-#ifndef SCREENSHOTGUN_ELLIPSEGRAPHICITEM_H
-#define SCREENSHOTGUN_ELLIPSEGRAPHICITEM_H
+#pragma once
+
+#include "AbstractGraphicItem.h"
 
 #include <QGraphicsEllipseItem>
-#include "AbstractGraphicItem.h"
 
 class EllipseGraphicItem : public AbstractGraphicItem, public QGraphicsEllipseItem {
 
@@ -19,5 +19,3 @@ protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent*);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent*);
 };
-
-#endif //SCREENSHOTGUN_ELLIPSEGRAPHICITEM_H

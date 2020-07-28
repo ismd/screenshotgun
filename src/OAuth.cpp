@@ -1,10 +1,11 @@
+#include "OAuth.h"
+#include "App.h"
+#include "src/Settings.h"
+
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkRequest>
 #include <QUrlQuery>
-#include "App.h"
-#include "OAuth.h"
-#include "src/Settings.h"
 
 const QString DROPBOX_URL = "https://api.dropboxapi.com/1/oauth2/token";
 const QString DROPBOX_CLIENT_ID = "wmae5esncijnqie";

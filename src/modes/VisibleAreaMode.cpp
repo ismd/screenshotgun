@@ -1,3 +1,7 @@
+#include "VisibleAreaMode.h"
+#include "../App.h"
+#include "../Toolbar.h"
+
 #include <QtGlobal>
 #include <QApplication>
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
@@ -6,9 +10,6 @@
 #include <QDesktopWidget>
 #endif
 #include <QPainter>
-#include "VisibleAreaMode.h"
-#include "../Toolbar.h"
-#include "../App.h"
 
 VisibleAreaMode::VisibleAreaMode(Overlay& overlay, int maxWidth, int maxHeight, const QPoint& position)
     : AbstractMode(overlay),

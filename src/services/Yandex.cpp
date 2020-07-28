@@ -1,8 +1,9 @@
+#include "Yandex.h"
+
 #include <QDateTime>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkRequest>
-#include "Yandex.h"
 
 Yandex::Yandex() {
 }

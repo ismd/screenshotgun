@@ -1,5 +1,6 @@
-#include <QPen>
 #include "RectGraphicItem.h"
+
+#include <QPen>
 
 RectGraphicItem::RectGraphicItem(AbstractItem* parent, qreal x, qreal y)
     : AbstractGraphicItem(parent),

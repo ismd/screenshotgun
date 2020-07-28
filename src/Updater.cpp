@@ -1,8 +1,9 @@
+#include "Updater.h"
+#include "App.h"
+
 #include <QDialogButtonBox>
 #include <QFileInfo>
 #include <QMessageBox>
-#include "App.h"
-#include "Updater.h"
 
 Updater::Updater(App& app) : ui(new Ui::Update), app_(app) {
     ui->setupUi(this);

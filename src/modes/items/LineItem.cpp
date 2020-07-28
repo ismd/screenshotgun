@@ -1,5 +1,6 @@
-#include <QCursor>
 #include "LineItem.h"
+
+#include <QCursor>
 
 LineItem::LineItem(Overlay& overlay, qreal x, qreal y)
     : AbstractItem(overlay),

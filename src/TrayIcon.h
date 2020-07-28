@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_TRAYICON_H
-#define SCREENSHOTGUN_TRAYICON_H
+#pragma once
 
 #include <QAction>
 #include <QMenu>
@@ -44,5 +43,3 @@ private:
     QMenu historyMenu_;
     QAction quitAction_;
 };
-
-#endif // SCREENSHOTGUN_TRAYICON_H

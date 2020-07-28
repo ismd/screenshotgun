@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_LINEMODE_H
-#define SCREENSHOTGUN_LINEMODE_H
+#pragma once
 
 #include "AbstractMode.h"
 #include "items/LineItem.h"
@@ -16,5 +15,3 @@ public:
 protected:
     LineItem* line_;
 };
-
-#endif // SCREENSHOTGUN_LINEMODE_H

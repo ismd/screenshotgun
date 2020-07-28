@@ -1,9 +1,9 @@
-#ifndef SCREENSHOTGUN_YANDEX_H
-#define SCREENSHOTGUN_YANDEX_H
+#pragma once
+
+#include "ServiceHelper.h"
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include "ServiceHelper.h"
 
 class Yandex : public QObject {
     Q_OBJECT
@@ -30,5 +30,3 @@ private:
     QString filename_;
     ServiceHelper helper_;
 };
-
-#endif //SCREENSHOTGUN_YANDEX_H

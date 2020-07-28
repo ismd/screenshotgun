@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_ELLIPSEITEM_H
-#define SCREENSHOTGUN_ELLIPSEITEM_H
+#pragma once
 
 #include "AbstractItem.h"
 #include "graphicitems/EllipseGraphicItem.h"
@@ -14,5 +13,3 @@ public:
 protected:
     EllipseGraphicItem* ellipseGraphicItem_;
 };
-
-#endif //SCREENSHOTGUN_ELLIPSEITEM_H

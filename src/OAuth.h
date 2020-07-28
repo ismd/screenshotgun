@@ -1,11 +1,11 @@
-#ifndef SCREENSHOTGUN_OAUTH_H
-#define SCREENSHOTGUN_OAUTH_H
+#pragma once
+
+#include "Settings.h"
+#include "ui_OAuth.h"
 
 #include <QDialog>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include "Settings.h"
-#include "ui_OAuth.h"
 
 class App;
 
@@ -34,5 +34,3 @@ private:
     QNetworkAccessManager manager_;
     bool refreshing_;
 };
-
-#endif //SCREENSHOTGUN_OAUTH_H

@@ -1,5 +1,6 @@
-#include <QBrush>
 #include "EllipseItem.h"
+
+#include <QBrush>
 
 EllipseItem::EllipseItem(Overlay& overlay, qreal x, qreal y)
     : AbstractItem(overlay),

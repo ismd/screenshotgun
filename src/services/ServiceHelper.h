@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_SERVICEHELPER_H
-#define SCREENSHOTGUN_SERVICEHELPER_H
+#pragma once
 
 #include <QString>
 
@@ -8,5 +7,3 @@ class ServiceHelper {
 public:
     QString generateFilename();
 };
-
-#endif //SCREENSHOTGUN_SERVICEHELPER_H

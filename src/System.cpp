@@ -1,5 +1,6 @@
-#include <QDir>
 #include "System.h"
+
+#include <QDir>
 
 System::System() : lockFile_(QDir::temp().absoluteFilePath("screenshotgun.lock")) {
 }

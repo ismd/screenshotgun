@@ -1,9 +1,9 @@
-#ifndef SCREENSHOTGUN_SETTINGSFORM_H
-#define SCREENSHOTGUN_SETTINGSFORM_H
+#pragma once
 
-#include <QDialog>
 #include "OAuth.h"
 #include "ui_Settings.h"
+
+#include <QDialog>
 
 class App;
 
@@ -35,5 +35,3 @@ private:
     Settings& settings_;
     OAuth oauth_;
 };
-
-#endif // SCREENSHOTGUN_SETTINGSFORM_H

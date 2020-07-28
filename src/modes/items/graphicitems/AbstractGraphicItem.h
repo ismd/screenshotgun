@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_ABSTRACTGRAPHICITEM_H
-#define SCREENSHOTGUN_ABSTRACTGRAPHICITEM_H
+#pragma once
 
 #include "../AbstractItem.h"
 
@@ -19,5 +18,3 @@ protected:
 private:
     AbstractItem* parent_;
 };
-
-#endif //SCREENSHOTGUN_ABSTRACTGRAPHICITEM_H

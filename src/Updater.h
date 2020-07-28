@@ -1,9 +1,9 @@
-#ifndef SCREENSHOTGUN_UPDATER_H
-#define SCREENSHOTGUN_UPDATER_H
+#pragma once
+
+#include "ui_Update.h"
 
 #include <QDialog>
 #include <QProcess>
-#include "ui_Update.h"
 
 class App;
 
@@ -24,7 +24,7 @@ private:
     Ui::Update* ui;
     App& app_;
     QProcess process_;
-    
+
 #if defined(Q_OS_WIN32)
     QString maintenancetool_ = "maintenancetool.exe";
 #elif defined(Q_OS_MACOS)
@@ -33,5 +33,3 @@ private:
     QString maintenancetool_ = "/bin/false";
 #endif
 };
-
-#endif //SCREENSHOTGUN_UPDATER_H

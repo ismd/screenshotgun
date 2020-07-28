@@ -1,8 +1,9 @@
+#include "TrayIcon.h"
+#include "App.h"
+
 #include <QApplication>
 #include <QDesktopServices>
 #include <QMessageBox>
-#include "App.h"
-#include "TrayIcon.h"
 
 TrayIcon::TrayIcon(App& app)
     : app_(app),

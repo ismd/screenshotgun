@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_APP_H
-#define SCREENSHOTGUN_APP_H
+#pragma once
 
 #include "History.h"
 #include "Overlay.h"
@@ -68,5 +67,3 @@ private:
     bool nativeEvent(const QByteArray& eventType, void* message, long* result);
 #endif
 };
-
-#endif // SCREENSHOTGUN_APP_H

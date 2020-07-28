@@ -1,9 +1,10 @@
+#include "Overlay.h"
+#include "App.h"
+
 #include <QtGlobal>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QScreen>
-#include "App.h"
-#include "Overlay.h"
 
 Overlay::Overlay(App& app)
     : app_(app),

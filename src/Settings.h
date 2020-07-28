@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_SETTINGS_H
-#define SCREENSHOTGUN_SETTINGS_H
+#pragma once
 
 #include <QSettings>
 
@@ -38,5 +37,3 @@ public:
 private:
     QSettings settings_;
 };
-
-#endif // SCREENSHOTGUN_SETTINGS_H

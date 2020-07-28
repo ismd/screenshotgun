@@ -1,12 +1,13 @@
+#include "OverlayView.h"
+#include "App.h"
+#include "Overlay.h"
+
 #include <QtGlobal>
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
 #include <QScreen>
 #else
 #include <QDesktopWidget>
 #endif
-#include "App.h"
-#include "Overlay.h"
-#include "OverlayView.h"
 
 OverlayView::OverlayView(QWidget* parent, Overlay& overlay)
     : QGraphicsView(parent),

@@ -1,9 +1,9 @@
-#ifndef SCREENSHOTGUN_DROPBOX_H
-#define SCREENSHOTGUN_DROPBOX_H
+#pragma once
+
+#include "ServiceHelper.h"
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include "ServiceHelper.h"
 
 class Dropbox : public QObject {
     Q_OBJECT
@@ -27,5 +27,3 @@ private:
     QString filename_;
     ServiceHelper helper_;
 };
-
-#endif //SCREENSHOTGUN_DROPBOX_H

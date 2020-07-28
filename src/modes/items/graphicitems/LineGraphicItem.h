@@ -1,8 +1,8 @@
-#ifndef SCREENSHOTGUN_LINEGRAPHICITEM_H
-#define SCREENSHOTGUN_LINEGRAPHICITEM_H
+#pragma once
+
+#include "AbstractGraphicItem.h"
 
 #include <QGraphicsLineItem>
-#include "AbstractGraphicItem.h"
 
 class LineGraphicItem : public AbstractGraphicItem, public QGraphicsLineItem {
 
@@ -17,5 +17,3 @@ protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent*);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent*);
 };
-
-#endif //SCREENSHOTGUN_LINEGRAPHICITEM_H

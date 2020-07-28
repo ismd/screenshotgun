@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_OVERLAY_H
-#define SCREENSHOTGUN_OVERLAY_H
+#pragma once
 
 #include "OverlayView.h"
 #include "Toolbar.h"
@@ -46,5 +45,3 @@ private:
     bool cursorLocked_;
     QVector<AbstractItem*> items_;
 };
-
-#endif //SCREENSHOTGUN_OVERLAY_H

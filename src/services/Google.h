@@ -1,10 +1,10 @@
-#ifndef SCREENSHOTGUN_GOOGLE_H
-#define SCREENSHOTGUN_GOOGLE_H
+#pragma once
+
+#include "../Settings.h"
+#include "ServiceHelper.h"
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include "ServiceHelper.h"
-#include "../Settings.h"
 
 class App;
 
@@ -40,5 +40,3 @@ private:
     QByteArray image_;
     bool needReupload_;
 };
-
-#endif //SCREENSHOTGUN_GOOGLE_H

@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_SYSTEM_H
-#define SCREENSHOTGUN_SYSTEM_H
+#pragma once
 
 #include <QLockFile>
 
@@ -13,5 +12,3 @@ public:
 private:
     QLockFile lockFile_;
 };
-
-#endif // SCREENSHOTGUN_SYSTEM_H

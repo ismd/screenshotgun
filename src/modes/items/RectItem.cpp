@@ -1,5 +1,6 @@
-#include <QBrush>
 #include "RectItem.h"
+
+#include <QBrush>
 
 RectItem::RectItem(Overlay& overlay, qreal x, qreal y)
     : AbstractItem(overlay),

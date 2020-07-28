@@ -1,7 +1,8 @@
+#include "App.h"
+
 #include <QApplication>
 #include <QClipboard>
 #include <QDesktopServices>
-#include "App.h"
 
 App::App()
     : overlay_(*this),

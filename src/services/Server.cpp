@@ -1,9 +1,10 @@
+#include "Server.h"
+
 #include <QFile>
 #include <QHttpMultiPart>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkAccessManager>
-#include "Server.h"
 
 Server::Server() {
 }

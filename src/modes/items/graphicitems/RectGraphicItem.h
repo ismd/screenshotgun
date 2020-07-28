@@ -1,8 +1,8 @@
-#ifndef SCREENSHOTGUN_RECTGRAPHICITEM_H
-#define SCREENSHOTGUN_RECTGRAPHICITEM_H
+#pragma once
+
+#include "AbstractGraphicItem.h"
 
 #include <QGraphicsRectItem>
-#include "AbstractGraphicItem.h"
 
 class RectGraphicItem : public AbstractGraphicItem, public QGraphicsRectItem {
 
@@ -19,5 +19,3 @@ protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent*);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent*);
 };
-
-#endif //SCREENSHOTGUN_RECTGRAPHICITEM_H

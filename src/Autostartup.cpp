@@ -1,9 +1,10 @@
+#include "Autostartup.h"
+
 #include <QCoreApplication>
 #include <QDir>
 #include <QSettings>
 #include <QStandardPaths>
 #include <QTextStream>
-#include "Autostartup.h"
 
 static const char runPathC[] = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run";
 
@@ -17,7 +18,6 @@ void AutoStartup::set(bool enabled) {
 #endif
 }
 
-#ifdef Q_OS_WIN32
 void AutoStartup::setWindows(bool enabled) {
     QString runPath = QLatin1String(runPathC);
     QSettings settings(runPath, QSettings::NativeFormat);
@@ -28,9 +28,7 @@ void AutoStartup::setWindows(bool enabled) {
         settings.remove("Screenshotgun");
     }
 }
-#endif
 
-#ifdef Q_OS_LINUX
 void AutoStartup::setLinux(bool enabled) {
     QString autoStartPath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
                             + QLatin1String("/autostart/");
@@ -70,4 +68,3 @@ void AutoStartup::setLinux(bool enabled) {
         }
     }
 }
-#endif

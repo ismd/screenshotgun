@@ -1,7 +1,5 @@
-#ifndef SCREENSHOTGUN_OVERLAYVIEW_H
-#define SCREENSHOTGUN_OVERLAYVIEW_H
+#pragma once
 
-#include <QGraphicsView>
 #include "modes/LineMode.h"
 #include "modes/ArrowMode.h"
 #include "modes/EllipseMode.h"
@@ -9,6 +7,8 @@
 #include "modes/TextMode.h"
 #include "modes/VisibleAreaMode.h"
 #include "Toolbar.h"
+
+#include <QGraphicsView>
 
 class Overlay;
 
@@ -50,5 +50,3 @@ private:
     bool usingMode_;
     bool movingItem_;
 };
-
-#endif //SCREENSHOTGUN_OVERLAYVIEW_H

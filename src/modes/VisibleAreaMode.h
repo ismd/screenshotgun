@@ -1,9 +1,9 @@
-#ifndef SCREENSHOTGUN_VISIBLEAREAMODE_H
-#define SCREENSHOTGUN_VISIBLEAREAMODE_H
+#pragma once
+
+#include "AbstractMode.h"
 
 #include <QWidget>
 #include <QGraphicsRectItem>
-#include "AbstractMode.h"
 
 class Toolbar;
 
@@ -71,5 +71,3 @@ private:
     int maxWidth_;
     int maxHeight_;
 };
-
-#endif // SCREENSHOTGUN_VISIBLEAREAMODE_H

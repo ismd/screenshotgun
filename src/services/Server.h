@@ -1,5 +1,4 @@
-#ifndef SCREENSHOTGUN_SERVER_H
-#define SCREENSHOTGUN_SERVER_H
+#pragma once
 
 #include <QtNetwork>
 
@@ -27,5 +26,3 @@ private:
     QString url_;
     QNetworkAccessManager manager_;
 };
-
-#endif // SCREENSHOTGUN_SERVER_H
