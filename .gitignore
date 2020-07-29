@@ -5,6 +5,7 @@
 /compile_commands.json
 /.clang_complete
 /.clangd
+/.ccls-cache
 
 /deploy/data.tar
 /deploy/keys
