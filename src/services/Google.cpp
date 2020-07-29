@@ -1,36 +1,30 @@
 #include "Google.h"
-#include "../App.h"
+#include "src/Context.h"
+#include "lib/generateFilename.h"
 
 #include <QHttpMultiPart>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 
-Google::Google(App& app) : app_(app), needReupload_(false) {
-}
-
-void Google::setToken(QString token) {
-    token_ = token;
-
-    if (app_.settings().googleFolderId().length() == 0) {
-        getFolder();
-    }
+Google::Google() : needReupload_(false) {
 }
 
 void Google::upload(const QByteArray& image) {
-    image_ = image;
-    filename_ = helper_.generateFilename();
+    image_ = &image;
+
+    filename_ = generateFilename();
     QHttpMultiPart* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
     QHttpPart textPart;
     textPart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
 
-    QString json = "{\"title\": \"" + filename_ + "\", \"parents\": [{\"id\": \"" + app_.settings().googleFolderId() + "\"}]}";
+    QString json = "{\"title\": \"" + filename_ + "\", \"parents\": [{\"id\": \"" + Context::getInstance().settings.googleFolderId() + "\"}]}";
     textPart.setBody(QJsonDocument::fromJson(json.toLatin1()).toJson(QJsonDocument::Compact));
 
     QHttpPart imagePart;
     imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/png"));
-    imagePart.setBody(image_);
+    imagePart.setBody(image);
 
     multiPart->append(textPart);
     multiPart->append(imagePart);
@@ -40,9 +34,17 @@ void Google::upload(const QByteArray& image) {
     request.setRawHeader("Authorization", QString("Bearer " + token_).toLatin1());
 
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(uploadReply(QNetworkReply*)));
+            this, SLOT(onUploadReply(QNetworkReply*)));
 
-    multiPart->setParent(manager_.post(request, multiPart)); // delete the multiPart with the reply
+    multiPart->setParent(manager_.post(request, multiPart)); // Delete the multiPart with the reply
+}
+
+void Google::setToken(const QString& token) {
+    token_ = token;
+
+    if (Context::getInstance().settings.googleFolderId().length() == 0) {
+        getFolder();
+    }
 }
 
 void Google::getFolder() {
@@ -52,14 +54,14 @@ void Google::getFolder() {
     request.setRawHeader("Authorization", QString("Bearer " + token_).toLatin1());
 
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(getFolderReply(QNetworkReply*)));
+            this, SLOT(onGetFolderReply(QNetworkReply*)));
 
     manager_.get(request);
 }
 
-void Google::uploadReply(QNetworkReply* reply) {
+void Google::onUploadReply(QNetworkReply* reply) {
     disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
-               this, SLOT(uploadReply(QNetworkReply*)));
+        this, SLOT(onUploadReply(QNetworkReply*)));
 
     QByteArray result = reply->readAll();
     QJsonDocument jsonResponse = QJsonDocument::fromJson(result);
@@ -71,14 +73,14 @@ void Google::uploadReply(QNetworkReply* reply) {
         int code = jsonObject["error"].toObject()["code"].toInt();
 
         if (code == 401) {
-            connect(&app_.settingsForm().oauth(), SIGNAL(tokenRefreshed()),
-                    this, SLOT(reupload()));
-            emit refreshToken(UploadService::GOOGLE);
+            connect(&Context::getInstance().settingsForm.oauth, SIGNAL(tokenRefreshed()),
+                this, SLOT(reupload()));
+            emit onRefreshToken(UploadService::GOOGLE);
         } else if (code == 404) {
             needReupload_ = true;
             getFolder();
         } else {
-            emit uploadError(jsonObject["error"].toObject()["message"].toString());
+            emit onUploadError(jsonObject["error"].toObject()["message"].toString());
             qDebug() << jsonResponse.toJson(QJsonDocument::Compact);
         }
     } else {
@@ -93,7 +95,7 @@ void Google::uploadReply(QNetworkReply* reply) {
         json["type"] = QString("anyone");
 
         connect(&manager_, SIGNAL(finished(QNetworkReply*)),
-                this, SLOT(shareReply(QNetworkReply*)));
+                this, SLOT(onShareReply(QNetworkReply*)));
 
         manager_.post(request, QJsonDocument(json).toJson(QJsonDocument::Compact));
     }
@@ -101,9 +103,9 @@ void Google::uploadReply(QNetworkReply* reply) {
     delete reply;
 }
 
-void Google::shareReply(QNetworkReply* reply) {
+void Google::onShareReply(QNetworkReply* reply) {
     disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
-               this, SLOT(shareReply(QNetworkReply*)));
+               this, SLOT(onShareReply(QNetworkReply*)));
 
     QByteArray result = reply->readAll();
     QJsonDocument jsonResponse = QJsonDocument::fromJson(result);
@@ -111,18 +113,18 @@ void Google::shareReply(QNetworkReply* reply) {
 
     QJsonObject jsonObject = jsonResponse.object();
     if (QNetworkReply::NoError != reply->error()) {
-        emit uploadError(jsonObject["error"].toObject()["message"].toString());
+        emit onUploadError(jsonObject["error"].toObject()["message"].toString());
         qDebug() << jsonResponse.toJson(QJsonDocument::Compact);
     } else {
-        emit uploadSuccess(uploadLink_);
+        emit onUploadSuccess(uploadLink_);
     }
 
     delete reply;
 }
 
-void Google::getFolderReply(QNetworkReply* reply) {
+void Google::onGetFolderReply(QNetworkReply* reply) {
     disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
-               this, SLOT(getFolderReply(QNetworkReply*)));
+               this, SLOT(onGetFolderReply(QNetworkReply*)));
 
     QByteArray result = reply->readAll();
     QJsonDocument jsonResponse = QJsonDocument::fromJson(result);
@@ -131,16 +133,16 @@ void Google::getFolderReply(QNetworkReply* reply) {
     QJsonObject jsonObject = jsonResponse.object();
     if (QNetworkReply::NoError != reply->error()) {
         if (jsonObject["error"].toObject()["code"].toInt() == 401) {
-            emit refreshToken(UploadService::GOOGLE);
+            emit onRefreshToken(UploadService::GOOGLE);
         } else {
             needReupload_ = false;
-            app_.trayIcon().showMessage("Ошибка", "Не удалось получить папку в Google Drive", QSystemTrayIcon::Critical, 10000);
+            Context::getInstance().trayIcon.showMessage("Error", "Can't get Google Drive folder", QSystemTrayIcon::Critical, 10000);
             qDebug() << jsonResponse.toJson(QJsonDocument::Compact);
         }
     } else if (jsonObject["items"].toArray().isEmpty()) {
         createFolder();
     } else {
-        app_.settings().setGoogleFolderId(jsonObject["items"].toArray()[0].toObject()["id"].toString());
+        Context::getInstance().settings.setGoogleFolderId(jsonObject["items"].toArray()[0].toObject()["id"].toString());
 
         if (needReupload_) {
             needReupload_ = false;
@@ -151,9 +153,9 @@ void Google::getFolderReply(QNetworkReply* reply) {
     delete reply;
 }
 
-void Google::createFolderReply(QNetworkReply* reply) {
+void Google::onCreateFolderReply(QNetworkReply* reply) {
     disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
-               this, SLOT(createFolderReply(QNetworkReply*)));
+               this, SLOT(onCreateFolderReply(QNetworkReply*)));
 
     QByteArray result = reply->readAll();
     QJsonDocument jsonResponse = QJsonDocument::fromJson(result);
@@ -164,11 +166,11 @@ void Google::createFolderReply(QNetworkReply* reply) {
         qDebug() << jsonResponse.toJson(QJsonDocument::Compact);
         needReupload_ = false;
     } else {
-        app_.settings().setGoogleFolderId(jsonObject["id"].toString());
+        Context::getInstance().settings.setGoogleFolderId(jsonObject["id"].toString());
 
         if (needReupload_) {
             needReupload_ = false;
-            upload(image_);
+            upload(*image_);
         }
     }
 
@@ -176,10 +178,10 @@ void Google::createFolderReply(QNetworkReply* reply) {
 }
 
 void Google::reupload() {
-    disconnect(&app_.settingsForm().oauth(), SIGNAL(tokenRefreshed()),
+    disconnect(&Context::getInstance().settingsForm.oauth, SIGNAL(tokenRefreshed()),
                this, SLOT(reupload()));
 
-    upload(image_);
+    upload(*image_);
 }
 
 void Google::createFolder() {
@@ -202,7 +204,7 @@ void Google::createFolder() {
     json["properties"] = properties;
 
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(createFolderReply(QNetworkReply*)));
+            this, SLOT(onCreateFolderReply(QNetworkReply*)));
 
     manager_.post(request, QJsonDocument(json).toJson(QJsonDocument::Compact));
 }

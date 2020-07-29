@@ -1,4 +1,5 @@
 #include "Dropbox.h"
+#include "lib/generateFilename.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -6,12 +7,8 @@
 Dropbox::Dropbox() {
 }
 
-void Dropbox::setToken(QString token) {
-    token_ = token;
-}
-
-void Dropbox::upload(QByteArray image) {
-    filename_ = helper_.generateFilename();
+void Dropbox::upload(const QByteArray& image) {
+    filename_ = generateFilename();
     QNetworkRequest request(QUrl("https://content.dropboxapi.com/2/files/upload"));
 
     QJsonObject json;
@@ -23,14 +20,18 @@ void Dropbox::upload(QByteArray image) {
     request.setRawHeader("Dropbox-API-Arg", QJsonDocument(json).toJson(QJsonDocument::Compact));
 
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(uploadReply(QNetworkReply*)));
+            this, SLOT(onUploadReply(QNetworkReply*)));
 
     manager_.post(request, image);
 }
 
-void Dropbox::uploadReply(QNetworkReply* reply) {
+void Dropbox::setToken(const QString& token) {
+    token_ = token;
+}
+
+void Dropbox::onUploadReply(QNetworkReply* reply) {
     disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(uploadReply(QNetworkReply*)));
+            this, SLOT(onUploadReply(QNetworkReply*)));
 
     QByteArray result = reply->readAll();
     QJsonDocument jsonResponse = QJsonDocument::fromJson(result);
@@ -39,7 +40,7 @@ void Dropbox::uploadReply(QNetworkReply* reply) {
     QJsonObject jsonObject = jsonResponse.object();
 
     if (QNetworkReply::NoError != reply->error()) {
-        emit uploadError(jsonObject["error_summary"].toString());
+        emit onUploadError(jsonObject["error_summary"].toString());
         qDebug() << result;
     } else {
         QNetworkRequest request(QUrl("https://api.dropboxapi.com/2/sharing/create_shared_link"));
@@ -52,7 +53,7 @@ void Dropbox::uploadReply(QNetworkReply* reply) {
         json["short_url"] = true;
 
         connect(&manager_, SIGNAL(finished(QNetworkReply*)),
-                this, SLOT(shareReply(QNetworkReply*)));
+                this, SLOT(onShareReply(QNetworkReply*)));
 
         manager_.post(request, QJsonDocument(json).toJson(QJsonDocument::Compact));
     }
@@ -60,9 +61,9 @@ void Dropbox::uploadReply(QNetworkReply* reply) {
     delete reply;
 }
 
-void Dropbox::shareReply(QNetworkReply* reply) {
+void Dropbox::onShareReply(QNetworkReply* reply) {
     disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(shareReply(QNetworkReply*)));
+            this, SLOT(onShareReply(QNetworkReply*)));
 
     QByteArray result = reply->readAll();
     QJsonDocument jsonResponse = QJsonDocument::fromJson(result);
@@ -71,10 +72,11 @@ void Dropbox::shareReply(QNetworkReply* reply) {
     QJsonObject jsonObject = jsonResponse.object();
 
     if (QNetworkReply::NoError != reply->error()) {
-        emit uploadError(jsonObject["error_summary"].toString());
+        emit onUploadError(jsonObject["error_summary"].toString());
         qDebug() << result;
     } else {
-        emit uploadSuccess(jsonObject["url"].toString());
+        QString url = jsonObject["url"].toString();
+        emit onUploadSuccess(url);
     }
 
     delete reply;

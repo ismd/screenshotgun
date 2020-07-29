@@ -1,28 +1,53 @@
 #pragma once
 
-#include <QtNetwork>
+#include "lib/AbstractService.h"
 
-class Server : public QObject {
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+
+class Server : public AbstractService {
     Q_OBJECT
 
 public:
     Server();
+
+    void upload(const QByteArray&);
+
+    /**
+     * Url of remote server for uploading
+     */
     QString url() const;
+
+    /**
+     * Sets url of remote server for uploading
+     */
     void setUrl(const QString&);
-    void upload(QByteArray);
-    void checkConnection();
+
+    bool connected() const;
 
 signals:
-    void connectionSuccess();
-    void connectionError();
-    void uploadSuccess(QString);
-    void uploadError();
+    void onConnectionSuccess();
+
+    /**
+     * Emits on connection failed
+     */
+    void onConnectionError();
+
+    /**
+     * Emits after MAX_CONNECTION_CHECKS errors
+     */
+    void onConnectionFailed();
 
 private slots:
-    void uploadedSlot(QNetworkReply*);
-    void connectionSlot(QNetworkReply*);
+    void uploaded(QNetworkReply*);
+    void onConnected(QNetworkReply*);
 
 private:
+    void checkConnection();
+    void timerEvent(QTimerEvent*);
+
     QString url_;
     QNetworkAccessManager manager_;
+    bool connected_;
+    int connectionChecks_;
 };

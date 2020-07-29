@@ -1,35 +1,32 @@
 #pragma once
 
-#include "Settings.h"
+#include "src/utils/Settings.h"
 #include "ui_OAuth.h"
 
 #include <QDialog>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 
-class App;
-
 class OAuth : public QDialog {
     Q_OBJECT
 
 public:
-    explicit OAuth(App&);
-    ~OAuth();
+    explicit OAuth();
 
-    void setService(UploadService);
+    void setService(const UploadService);
     void accept();
 
 signals:
     void tokenRefreshed();
 
 private slots:
-    void tokenReply(QNetworkReply*);
-    void refreshToken(UploadService);
+    void onTokenReply(QNetworkReply*);
+    void refreshToken(const UploadService);
 
 private:
-    void getToken(const QString url, const QString clientId, const QString clientSecret);
-    App& app_;
-    Ui::OAuth* ui;
+    void getToken(const QString& url, const QString& clientId, const QString& clientSecret);
+
+    Ui::OAuth ui;
     UploadService service_;
     QNetworkAccessManager manager_;
     bool refreshing_;

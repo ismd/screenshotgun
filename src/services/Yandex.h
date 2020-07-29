@@ -1,32 +1,27 @@
 #pragma once
 
-#include "ServiceHelper.h"
+#include "lib/AbstractService.h"
 
-#include <QNetworkAccessManager>
 #include <QNetworkReply>
 
-class Yandex : public QObject {
+class Yandex : public AbstractService {
     Q_OBJECT
 
 public:
     Yandex();
-    void setToken(QString);
-    void upload(QByteArray);
 
-signals:
-    void uploadSuccess(QString);
-    void uploadError(QString);
+    void upload(const QByteArray&);
+    void setToken(const QString&);
 
 private slots:
-    void uploadReply(QNetworkReply*);
-    void putReply(QNetworkReply*);
-    void publishReply(QNetworkReply*);
-    void infoReply(QNetworkReply*);
+    void onUploadReply(QNetworkReply*);
+    void onPutReply(QNetworkReply*);
+    void onPublishReply(QNetworkReply*);
+    void onInfoReply(QNetworkReply*);
 
 private:
+    const QByteArray* image_;
     QString token_;
     QNetworkAccessManager manager_;
-    QByteArray image_;
     QString filename_;
-    ServiceHelper helper_;
 };

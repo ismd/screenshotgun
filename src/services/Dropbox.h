@@ -1,29 +1,24 @@
 #pragma once
 
-#include "ServiceHelper.h"
+#include "lib/AbstractService.h"
 
-#include <QNetworkAccessManager>
 #include <QNetworkReply>
 
-class Dropbox : public QObject {
+class Dropbox : public AbstractService {
     Q_OBJECT
 
 public:
     Dropbox();
-    void setToken(QString);
-    void upload(QByteArray);
 
-signals:
-    void uploadSuccess(QString);
-    void uploadError(QString);
+    void upload(const QByteArray&);
+    void setToken(const QString&);
 
 private slots:
-    void uploadReply(QNetworkReply*);
-    void shareReply(QNetworkReply*);
+    void onUploadReply(QNetworkReply*);
+    void onShareReply(QNetworkReply*);
 
 private:
     QString token_;
     QNetworkAccessManager manager_;
     QString filename_;
-    ServiceHelper helper_;
 };

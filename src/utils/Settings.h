@@ -1,37 +1,35 @@
 #pragma once
 
-#include <QSettings>
+#include "src/services/lib/UploadService.h"
 
-enum class UploadService {
-    SERVER,
-    DROPBOX,
-    YANDEX,
-    GOOGLE,
-    CLIPBOARD,
-};
+#include <QSettings>
 
 class Settings {
 public:
     Settings();
-    bool exists() const;
-    void create();
 
     bool autostartup() const;
-    UploadService service() const;
-    QString serverUrl() const;
-    QString dropboxToken() const;
-    QString yandexToken() const;
-    QString googleToken() const;
-    QString googleRefreshToken() const;
-    QString googleFolderId() const;
-
     void setAutostartup(const bool);
+
+    UploadService service() const;
     void setService(const UploadService);
+
+    QString serverUrl() const;
     void setServerUrl(const QString&);
+
+    QString dropboxToken() const;
     void setDropboxToken(const QString&);
+
+    QString yandexToken() const;
     void setYandexToken(const QString&);
+
+    QString googleToken() const;
     void setGoogleToken(const QString&);
+
+    QString googleRefreshToken() const;
     void setGoogleRefreshToken(const QString&);
+
+    QString googleFolderId() const;
     void setGoogleFolderId(const QString&);
 
 private:

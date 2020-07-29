@@ -1,10 +1,15 @@
 #include "History.h"
+#include "src/Context.h"
 
 History::History() : settings_("screenshotgun", "history") {
+    // Context& ctx = Context::getInstance();
+
+    // connect(&ctx.overlay.toolbar, SIGNAL(onToolChanged(const ToolbarMode)),
+    //         this, SLOT(onToolChanged(const ToolbarMode)));
 }
 
 void History::addLink(const QString& url) {
-    QStringList historyLinks(links());
+    QStringList historyLinks = linksFromHistory();
     std::reverse(std::begin(historyLinks), std::end(historyLinks));
 
     historyLinks.prepend(url);
@@ -12,11 +17,36 @@ void History::addLink(const QString& url) {
         historyLinks.removeLast();
     }
 
-    setLinks(historyLinks);
+    setLinksToHistory(historyLinks);
     emit linkAdded(url);
 }
 
-ToolbarMode History::tool() const {
+void History::onUploadSuccess(const QString& url) {
+    addLink(url);
+}
+
+void History::onToolChanged(const ToolbarMode mode) {
+    setLastTool(mode);
+}
+
+void History::setLastTool(const ToolbarMode& mode) {
+  settings_.setValue("last_tool", static_cast<int>(mode));
+}
+
+QStringList History::linksFromHistory() {
+  QStringList links;
+  int size = settings_.beginReadArray("links");
+
+  for (int i = 0; i < size; i++) {
+    settings_.setArrayIndex(i);
+    links.prepend(settings_.value("link").toString());
+  }
+
+  settings_.endArray();
+  return links;
+}
+
+ToolbarMode History::lastTool() const {
     int value = settings_.value("last_tool", static_cast<int>(ToolbarMode::ARROW)).toInt();
 
     switch (value) {
@@ -40,24 +70,7 @@ ToolbarMode History::tool() const {
     }
 }
 
-QStringList History::links() {
-    QStringList links;
-    int size = settings_.beginReadArray("links");
-
-    for (int i = 0; i < size; i++) {
-        settings_.setArrayIndex(i);
-        links.prepend(settings_.value("link").toString());
-    }
-
-    settings_.endArray();
-    return links;
-}
-
-void History::setLastTool(const ToolbarMode &value) {
-    settings_.setValue("last_tool", static_cast<int>(value));
-}
-
-void History::setLinks(const QStringList &value) {
+void History::setLinksToHistory(const QStringList& value) {
     settings_.beginWriteArray("links");
 
     for (int i = 0; i < value.size(); ++i) {

@@ -1,22 +1,25 @@
 #include "App.h"
-#include "System.h"
+#include "utils/System.h"
 
 #include <QApplication>
+#include <QDebug>
+#include <QFile>
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     System system;
     if (system.isLaunched()) {
-        qDebug() << "The application is already running";
+        qInfo() << "The application is already running";
         return 1;
     }
 
-    app.setOrganizationName("Screenshotgun");
-    app.setOrganizationDomain("screenshotgun.com");
-    app.setApplicationName("Screenshotgun");
+    // QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    QCoreApplication::setOrganizationName("Screenshotgun");
+    QCoreApplication::setOrganizationDomain("screenshotgun.com");
+    QCoreApplication::setApplicationName("Screenshotgun");
 
-    QFile file(":/style.qss");
+    QFile file(":/styles/style.qss");
     file.open(QFile::ReadOnly);
     QString style = QLatin1String(file.readAll());
     file.close();
