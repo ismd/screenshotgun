@@ -6,7 +6,45 @@
 #include <QGraphicsScene>
 #include <QPushButton>
 
-Toolbar::Toolbar() : dragging_(false) {
+Toolbar::Toolbar(QWidget* parent) : QWidget(parent), dragging_(false) {
+    const Context& ctx = Context::getInstance();
+
+    connect(&ctx.itemManager->visibleAreaItem, &VisibleAreaItem::inited, this, [&]() {
+        hide();
+    });
+
+    connect(&ctx.itemManager->visibleAreaItem, &VisibleAreaItem::stopped, this, [&]() {
+        const int padding = 10;
+        const QRect geo = ctx.overlayView->geometry();
+
+        // Width
+        const auto& area = ctx.itemManager->visibleAreaItem.area;
+        int toolbarX = area.x + area.width + 28;
+        int toolbarWidth = ctx.toolbar->width();
+
+        if (toolbarX + toolbarWidth + padding > geo.width()) {
+            toolbarX = geo.width() - toolbarWidth - padding;
+        }
+
+        // Height
+        int toolbarHeight = ctx.toolbar->height();
+        int toolbarY = area.y + area.height / 2 - toolbarHeight / 2;
+        int screenHeight = geo.height();
+
+        if (toolbarY < padding) {
+            toolbarY = padding;
+        } else if (toolbarY + toolbarHeight + padding > screenHeight) {
+            toolbarY = screenHeight - toolbarHeight - padding;
+        }
+
+        setGeometry(toolbarX, toolbarY, toolbarWidth, toolbarHeight);
+        show();
+    });
+
+    connect(ctx.app, &App::screenshotFinished, this, [&]() {
+        hide();
+    });
+
     hide();
     ui.setupUi(this);
     ui.selectedCircle->lower();
@@ -23,6 +61,17 @@ Toolbar::Toolbar() : dragging_(false) {
 
     animation_.setTargetObject(ui.selectedCircle);
     animation_.setPropertyName("geometry");
+
+    select(ToolbarMode::VISIBLE_AREA);
+}
+
+void Toolbar::show() {
+    select(Context::getInstance().history->lastTool());
+    QWidget::show();
+}
+
+ToolbarMode Toolbar::selected() const {
+    return selectedMode_;
 }
 
 void Toolbar::select(const ToolbarMode mode) {
@@ -77,6 +126,10 @@ void Toolbar::selectPrevious() {
     setSelectedButton(*(selected - 1));
 }
 
+const ToolbarMode Toolbar::mode() const {
+    return selectedMode_;
+}
+
 void Toolbar::mousePressEvent(QMouseEvent* event) {
     const QRect dragLabelGeometry = ui.dragLabel->geometry();
 
@@ -97,59 +150,6 @@ void Toolbar::mousePressEvent(QMouseEvent* event) {
     initDragCoords_.y = y;
     dragging_ = true;
 }
-
-// void Toolbar::submit() {
-//     hide();
-//     QApplication::clipboard()->setText("");
-
-//     QGraphicsScene& scene = context_.overlay().scene();
-
-//     VisibleAreaMode& visibleAreaMode = context_.overlay().visibleAreaMode();
-//     scene.setSceneRect(visibleAreaMode.area.x,
-//                        visibleAreaMode.area.y,
-//                        visibleAreaMode.area.width,
-//                        visibleAreaMode.area.height);
-
-//     if (image_ != 0) {
-//         delete image_;
-//     }
-
-//     image_ = new QImage(scene.sceneRect().size().toSize(), QImage::Format_ARGB32);
-//     image_->fill(Qt::transparent);
-
-//     QPainter painter(image_);
-//     painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-//     scene.render(&painter);
-
-//     QByteArray bytes;
-//     QBuffer buffer(&bytes);
-//     buffer.open(QIODevice::WriteOnly);
-//     image_->save(&buffer, "PNG");
-
-//     overlay_.hide();
-
-//     switch (overlay_.app().uploadService()) {
-//         case UploadService::SERVER:
-//             overlay_.app().server().upload(bytes);
-//             break;
-
-//         case UploadService::DROPBOX:
-//             overlay_.app().dropbox().upload(bytes);
-//             break;
-
-//         case UploadService::YANDEX:
-//             overlay_.app().yandex().upload(bytes);
-//             break;
-
-//         case UploadService::GOOGLE:
-//             overlay_.app().google().upload(bytes);
-//             break;
-
-//         case UploadService::CLIPBOARD:
-//             overlay_.app().copyImageToClipboard();
-//             break;
-//     }
-// }
 
 void Toolbar::mouseMoveEvent(QMouseEvent* event) {
     move(geometry().x() + event->x() - initDragCoords_.x,
@@ -204,19 +204,24 @@ void Toolbar::setSelectedButton(QPushButton* button, bool animate) {
     selected_ = button;
 
     if (button == ui.visibleAreaButton) {
+        selectedMode_ = ToolbarMode::VISIBLE_AREA;
         emit toolChanged(ToolbarMode::VISIBLE_AREA);
     } else if (button == ui.lineButton) {
+        selectedMode_ = ToolbarMode::LINE;
         emit toolChanged(ToolbarMode::LINE);
     } else if (button == ui.arrowButton) {
+        selectedMode_ = ToolbarMode::ARROW;
         emit toolChanged(ToolbarMode::ARROW);
     } else if (button == ui.rectButton) {
+        selectedMode_ = ToolbarMode::RECT;
         emit toolChanged(ToolbarMode::RECT);
     } else if (button == ui.ellipseButton) {
+        selectedMode_ = ToolbarMode::ELLIPSE;
         emit toolChanged(ToolbarMode::ELLIPSE);
     } else if (button == ui.textButton) {
+        selectedMode_ = ToolbarMode::TEXT;
         emit toolChanged(ToolbarMode::TEXT);
     } else {
-        qDebug() << "Bad tool";
         return;
     }
 

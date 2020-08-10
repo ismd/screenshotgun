@@ -1,7 +1,10 @@
 #pragma once
 
+#include "App.h"
+
 #include "utils/History.h"
 
+#include "services/Clipboard.h"
 #include "services/Dropbox.h"
 #include "services/Google.h"
 #include "services/Server.h"
@@ -9,9 +12,10 @@
 
 #include "services/lib/UploadService.h"
 
-// #include "ui/Overlay.h"
+#include "ui/ItemManager.h"
 #include "ui/OverlayView.h"
 #include "ui/SettingsForm.h"
+#include "ui/Toolbar.h"
 #include "ui/TrayIcon.h"
 #include "ui/Updater.h"
 
@@ -21,7 +25,7 @@
 
 /**
  * Common context
- * It contains current state of the running application
+ * Contains current state of the running application
  * Singleton
  */
 class Context : public QObject {
@@ -30,8 +34,10 @@ class Context : public QObject {
 public:
     static Context& getInstance();
 
-    // Overlay overlay;
-    OverlayView overlayView;
+    App* app;
+
+    OverlayView* overlayView;
+    // FIXME
     Updater updater;
 
     /**
@@ -42,26 +48,30 @@ public:
     /**
      * Settings
      */
-    Settings settings;
+    Settings* settings;
 
     /**
      * Ui
      */
-    TrayIcon trayIcon;
-    SettingsForm settingsForm;
+    Toolbar* toolbar;
+    TrayIcon* trayIcon;
+    SettingsForm* settingsForm;
 
     /**
      * Services
      */
-    Dropbox dropbox;
-    Google google;
-    Server server;
-    Yandex yandex;
+    Dropbox* dropbox;
+    Google* google;
+    Server* server;
+    Yandex* yandex;
+    Clipboard* clipboard;
 
     /**
      * History of screenshots
      */
-    History history;
+    History* history;
+
+    ItemManager* itemManager;
 
 private:
     Context();

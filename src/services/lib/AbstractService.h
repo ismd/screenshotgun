@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QObject>
+#include <QImage>
 
 class AbstractService : public QObject {
     Q_OBJECT
@@ -8,11 +8,11 @@ class AbstractService : public QObject {
 public:
     AbstractService();
 
-    virtual void upload(const QByteArray&) = 0;
+    virtual void upload(const QImage&) = 0;
 
 signals:
-    void onUploadSuccess(const QString&);
-    void onUploadError(const QString&);
+    void uploadSuccess(const QString&);
+    void uploadError(const QString&);
 
 protected slots:
     void onUploadSuccess(const QString&) const;

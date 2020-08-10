@@ -14,10 +14,11 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    // FIXME
     // QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-    QCoreApplication::setOrganizationName("Screenshotgun");
-    QCoreApplication::setOrganizationDomain("screenshotgun.com");
-    QCoreApplication::setApplicationName("Screenshotgun");
+    app.setOrganizationName("Screenshotgun");
+    app.setOrganizationDomain("screenshotgun.com");
+    app.setApplicationName("Screenshotgun");
 
     QFile file(":/styles/style.qss");
     file.open(QFile::ReadOnly);

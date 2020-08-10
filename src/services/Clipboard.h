@@ -8,8 +8,5 @@ class Clipboard : public AbstractService {
 public:
     Clipboard();
 
-    void upload(const QByteArray&);
-
-protected slots:
-    void onUploadSuccess(const QString&);
+    void upload(const QImage&);
 };

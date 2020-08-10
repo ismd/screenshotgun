@@ -1,11 +1,9 @@
 #pragma once
 
-#include "AbstractMode.h"
+#include "AbstractItem.h"
 
-#include <QWidget>
 #include <QGraphicsRectItem>
-
-class Toolbar;
+#include <QPen>
 
 enum class ResizeDirection {
     TOP,
@@ -16,38 +14,39 @@ enum class ResizeDirection {
     TOP_RIGHT,
     BOTTOM_LEFT,
     BOTTOM_RIGHT,
-    NONE
+    NONE,
 };
 
-class VisibleAreaMode : public AbstractMode {
+class VisibleAreaItem : public AbstractItem {
+    Q_OBJECT
 
 public:
-    VisibleAreaMode(Overlay&, int maxWidth, int maxHeight, const QPoint& position);
+    VisibleAreaItem();
 
-    void init(int x, int y);
+    void init(QMouseEvent*);
+    void move(QMouseEvent*);
     void move(int x, int y);
-    void stop(int x, int y);
+    void stop(QMouseEvent*);
 
-    void resizeInit(int x, int y);
-    void resizeMove(int x, int y);
-    void resizeStop(int x, int y);
-
-    bool isResizablePosition(int x, int y);
-    bool initialized();
-    bool resizing();
-    ResizeDirection resizablePosition(int x, int y);
+    void addToScene();
+    bool isInnerArea(int x, int y) const;
 
     struct {
-        int x;
-        int y;
-        int width;
-        int height;
+      int x;
+      int y;
+      int width;
+      int height;
     } area;
+
+signals:
+    void inited();
+    void stopped();
 
 private:
     void updateSize();
     void setArea(int x, int y, int width, int height);
-    void updateToolbarPosition();
+    ResizeDirection resizeDirection(int x, int y) const;
+    void resizeMove(int x, int y);
 
     QGraphicsRectItem rectTop_;
     QGraphicsRectItem rectBottom_;
@@ -59,7 +58,8 @@ private:
     QGraphicsLineItem lineLeft_;
     QGraphicsLineItem lineRight_;
 
-    bool initialized_;
+    bool inited_;
+    bool fixed_;
     bool resizing_;
 
     struct {
@@ -68,6 +68,7 @@ private:
         ResizeDirection direction;
     } resizeInfo_;
 
-    int maxWidth_;
-    int maxHeight_;
+    QPen linePen_;
+    QBrush brush_;
+    QPen pen_;
 };

@@ -1,19 +1,17 @@
 #include "OverlayView.h"
 #include "src/Context.h"
 
-#include <QOpenGLWidget>
 #include <QtGlobal>
 #include <QScreen>
 
-OverlayView::OverlayView()
-    : usingMode_(false),
-      movingItem_(false)
-{
+OverlayView::OverlayView() : movingItem_(false) {
     setWindowFlags(
         Qt::BypassWindowManagerHint |
         Qt::FramelessWindowHint |
+        // FIXME
         // Qt::NoDropShadowWindowHint |
         Qt::Tool |
+        // FIXME
         // Qt::WindowOverridesSystemGestures |
         Qt::WindowStaysOnTopHint |
         Qt::X11BypassWindowManagerHint
@@ -30,147 +28,71 @@ OverlayView::OverlayView()
 
     setScene(&scene);
     setMouseTracking(true);
-    setViewport(new QOpenGLWidget);
+
+    Context& ctx = Context::getInstance();
+
+    connect(ctx.app, &App::screenshotFinished, this, [&]() {
+        hide();
+    });
 }
 
-// void OverlayView::reinitVisibleArea() {
-//     delete visibleAreaMode_;
+void OverlayView::show() {
+  QGraphicsView::show();
+  emit(shown());
+}
 
-//     QPoint position = QCursor::pos();
-//     QScreen* screen = QGuiApplication::screenAt(QCursor::pos());
-//     QRect geo = screen->geometry();
+void OverlayView::hide() {
+    QGraphicsView::hide();
+    emit(hided());
+}
 
-//     visibleAreaMode_ = new VisibleAreaMode(overlay_, geo.width(), geo.height(), position - geo.topLeft());
-//     currentMode_ = visibleAreaMode_;
-//     overlay_.toolbar().select(ToolbarMode::VISIBLE_AREA);
-// }
+void OverlayView::mousePressEvent(QMouseEvent* e) {
+    Context& ctx = Context::getInstance();
 
-// bool OverlayView::movingItem() const {
-//     return movingItem_;
-// }
+    // If dragging
+    const QGraphicsItem* item = scene.itemAt(e->x(), e->y(), QGraphicsView::transform());
+    const QGraphicsItemGroup* group = item->group();
 
-// void OverlayView::setMovingItem(bool value) {
-//     movingItem_ = value;
-// }
+    if (item->flags().testFlag(QGraphicsItem::ItemIsMovable)
+        || (group && group->flags().testFlag(QGraphicsItem::ItemIsMovable))
+    ) {
+        movingItem_ = true;
+        QGraphicsView::mousePressEvent(e);
+        return;
+    }
 
-// void OverlayView::setCursor(const QCursor& cursor) {
-//     overlay_.setCursor(cursor);
-// }
+    if (ctx.itemManager->visibleAreaItem.isInnerArea(e->x(), e->y())) {
+        ctx.itemManager->init(e);
+    } else {
+        ctx.itemManager->visibleAreaItem.init(e);
+    }
+}
 
-// void OverlayView::showEvent(QShowEvent* e) {
-//     Context& ctx = Context::getInstance();
+void OverlayView::mouseMoveEvent(QMouseEvent* e) {
+    if (movingItem_) {
+        QGraphicsView::mouseMoveEvent(e);
+        return;
+    }
 
-//     setGeometry(0, 0, ctx.overlay.width(), ctx.overlay.height());
-//     raise();
-//     repaint();
-//     activateWindow();
+    Context::getInstance().itemManager->move(e);
+}
 
-//     ctx.overlay.toolbar.raise();
-// }
+void OverlayView::mouseReleaseEvent(QMouseEvent* e) {
+    if (movingItem_) {
+        movingItem_ = false;
+        QGraphicsView::mouseReleaseEvent(e);
+        return;
+    }
 
-// void OverlayView::mousePressEvent(QMouseEvent* e) {
-//     QGraphicsView::mousePressEvent(e);
-
-//     if (movingItem_) {
-//         return;
-//     }
-
-//     // int x = e->x();
-//     // int y = e->y();
-
-//     // if (currentMode_ != visibleAreaMode_
-//     //     && visibleAreaMode_->initialized()
-//     //     && visibleAreaMode_->isResizablePosition(x, y))
-//     // {
-//     //     visibleAreaMode_->resizeInit(x, y);
-//     //     return;
-//     // }
-
-//     usingMode_ = true;
-//     // currentMode_->init(x, y);
-// }
-
-// void OverlayView::mouseMoveEvent(QMouseEvent* e) {
-//     if (Context::getInstance().overlay.isHidden()) {
-//         // setMovingItem(false);
-//         return;
-//     }
-
-//     activateWindow();
-//     setFocus();
-
-//     QGraphicsView::mouseMoveEvent(e);
-
-//     if (movingItem_) {
-//         return;
-//     }
-
-//     // int x = e->x();
-//     // int y = e->y();
-
-//     // if (visibleAreaMode_->resizing()) {
-//     //     visibleAreaMode_->resizeMove(x, y);
-//     // } else if (usingMode_ || (currentMode_ == visibleAreaMode_ && !visibleAreaMode_->initialized())) {
-//     //     currentMode_->move(x, y);
-//     // } else if (currentMode_ != visibleAreaMode_ && visibleAreaMode_->isResizablePosition(x, y)) {
-//     //     switch (visibleAreaMode_->resizablePosition(x, y)) {
-//     //         case ResizeDirection::TOP:
-//     //         case ResizeDirection::BOTTOM:
-//     //             setCursor(Qt::SizeVerCursor);
-//     //             break;
-
-//     //         case ResizeDirection::LEFT:
-//     //         case ResizeDirection::RIGHT:
-//     //             setCursor(Qt::SizeHorCursor);
-//     //             break;
-
-//     //         case ResizeDirection::TOP_LEFT:
-//     //         case ResizeDirection::BOTTOM_RIGHT:
-//     //             setCursor(Qt::SizeFDiagCursor);
-//     //             break;
-
-//     //         case ResizeDirection::TOP_RIGHT:
-//     //         case ResizeDirection::BOTTOM_LEFT:
-//     //             setCursor(Qt::SizeBDiagCursor);
-//     //             break;
-
-//     //         case ResizeDirection::NONE:
-//     //             break;
-//     //     }
-//     // } else if (currentMode_ == &textMode_) {
-//     //     setCursor(Qt::IBeamCursor);
-//     // } else {
-//     //     setCursor(Qt::CrossCursor);
-//     // }
-// }
-
-// void OverlayView::mouseReleaseEvent(QMouseEvent* e) {
-//     if (movingItem_) {
-//         QGraphicsView::mouseReleaseEvent(e);
-//         return;
-//     }
-
-//     // int x = e->x();
-//     // int y = e->y();
-
-//     // if (visibleAreaMode_->resizing()) {
-//     //     visibleAreaMode_->resizeStop(x, y);
-//     //     return;
-//     // }
-
-//     // currentMode_->stop(x, y);
-
-//     // if (currentMode_ != visibleAreaMode_) {
-//     //     usingMode_ = false;
-//     // }
-// }
+    Context::getInstance().itemManager->stop(e);
+}
 
 void OverlayView::keyReleaseEvent(QKeyEvent* e) {
     int key = e->key();
 
     switch (key) {
         case Qt::Key_Escape:
-            hide();
+            emit escapeClicked();
             break;
 
         case Qt::Key_Return:
@@ -181,12 +103,12 @@ void OverlayView::keyReleaseEvent(QKeyEvent* e) {
     QWidget::keyReleaseEvent(e);
 }
 
-// void OverlayView::wheelEvent(QWheelEvent* e) {
-//     Context& ctx = Context::getInstance();
+void OverlayView::wheelEvent(QWheelEvent* e) {
+    Context& ctx = Context::getInstance();
 
-//     if (e->angleDelta().y() < 0) {
-//         ctx.overlay.toolbar.selectNext();
-//     } else {
-//         ctx.overlay.toolbar.selectPrevious();
-//     }
-// }
+    if (e->angleDelta().y() < 0) {
+        ctx.toolbar->selectNext();
+    } else {
+        ctx.toolbar->selectPrevious();
+    }
+}

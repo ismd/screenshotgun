@@ -20,13 +20,18 @@ class Toolbar : public QWidget {
     Q_OBJECT
 
 public:
-    explicit Toolbar();
+    explicit Toolbar(QWidget* parent);
+
+    void show();
+    ToolbarMode selected() const;
 
     void select(const ToolbarMode);
     void select(const ToolbarMode, bool withAnimation);
 
     void selectNext();
     void selectPrevious();
+
+    const ToolbarMode mode() const;
 
 signals:
     void screenshotButtonClicked();
@@ -53,6 +58,7 @@ private:
     Ui::Toolbar ui;
     std::vector<QPushButton*> buttons_;
     QPushButton* selected_;
+    ToolbarMode selectedMode_;
     bool dragging_;
     struct {
         int x;

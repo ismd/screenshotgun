@@ -2,10 +2,27 @@
 #include "src/Context.h"
 
 History::History() : settings_("screenshotgun", "history") {
-    // Context& ctx = Context::getInstance();
+    Context& ctx = Context::getInstance();
 
-    // connect(&ctx.overlay.toolbar, SIGNAL(onToolChanged(const ToolbarMode)),
-    //         this, SLOT(onToolChanged(const ToolbarMode)));
+    connect(ctx.toolbar, &Toolbar::toolChanged, this, [&](const ToolbarMode mode) {
+        setLastTool(mode);
+    });
+
+    connect(ctx.server, &Server::uploadSuccess, this, [&](const QString& url) {
+        addLink(url);
+    });
+
+    connect(ctx.dropbox, &Dropbox::uploadSuccess, this, [&](const QString& url) {
+        addLink(url);
+    });
+
+    connect(ctx.google, &Google::uploadSuccess, this, [&](const QString& url) {
+        addLink(url);
+    });
+
+    connect(ctx.yandex, &Yandex::uploadSuccess, this, [&](const QString& url) {
+        addLink(url);
+    });
 }
 
 void History::addLink(const QString& url) {
@@ -19,14 +36,6 @@ void History::addLink(const QString& url) {
 
     setLinksToHistory(historyLinks);
     emit linkAdded(url);
-}
-
-void History::onUploadSuccess(const QString& url) {
-    addLink(url);
-}
-
-void History::onToolChanged(const ToolbarMode mode) {
-    setLastTool(mode);
 }
 
 void History::setLastTool(const ToolbarMode& mode) {

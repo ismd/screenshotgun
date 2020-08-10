@@ -1,5 +1,7 @@
 #include "Settings.h"
 
+#include <QKeySequence>
+
 Settings::Settings() : settings_("screenshotgun", "main") {
     // If settings file not exists
     if (!settings_.contains("common/autostartup")) {
@@ -69,4 +71,12 @@ QString Settings::googleFolderId() const {
 
 void Settings::setGoogleFolderId(const QString& value) {
     settings_.setValue("google/folder_id", value);
+}
+
+QKeySequence Settings::hotkey() const {
+    return static_cast<QKeySequence>(settings_.value("common/hotkey", QKeySequence(Qt::ALT + Qt::Key_Print)).toString());
+}
+
+void Settings::setHotkey(const QKeySequence seq) {
+    settings_.setValue("common/hotkey", seq);
 }

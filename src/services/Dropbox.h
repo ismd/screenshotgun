@@ -10,7 +10,7 @@ class Dropbox : public AbstractService {
 public:
     Dropbox();
 
-    void upload(const QByteArray&);
+    void upload(const QImage&);
     void setToken(const QString&);
 
 private slots:

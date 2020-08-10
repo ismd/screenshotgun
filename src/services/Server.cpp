@@ -1,6 +1,7 @@
 #include "Server.h"
 #include "src/Context.h"
 
+#include <QBuffer>
 #include <QHttpMultiPart>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -31,7 +32,17 @@ bool Server::connected() const {
     return connected_;
 }
 
-void Server::upload(const QByteArray& bytes) {
+void Server::upload(const QImage& image) {
+    if (!connected_) {
+        emit onConnectionFailed();
+        return;
+    }
+
+    QByteArray bytes;
+    QBuffer buffer(&bytes);
+    buffer.open(QIODevice::WriteOnly);
+    image.save(&buffer, "PNG");
+
     QHttpMultiPart* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
     QHttpPart imagePart;
@@ -46,7 +57,7 @@ void Server::upload(const QByteArray& bytes) {
     request.setRawHeader("User-Agent", "Screenshotgun client");
 
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(uploadedSlot(QNetworkReply*)));
+        this, SLOT(uploaded(QNetworkReply*)));
 
     QNetworkReply* reply = manager_.post(request, multiPart);
     multiPart->setParent(reply); // Delete the multiPart with the reply
@@ -54,10 +65,10 @@ void Server::upload(const QByteArray& bytes) {
 
 void Server::uploaded(QNetworkReply* reply) {
     disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
-               this, SLOT(uploadedSlot(QNetworkReply*)));
+        this, SLOT(uploaded(QNetworkReply*)));
 
     if (reply->error() != QNetworkReply::NoError) {
-        emit onUploadError("Error while uploading screenshot");
+        emit uploadError("Error while uploading screenshot");
     } else {
         QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
         reply->close();
@@ -66,9 +77,9 @@ void Server::uploaded(QNetworkReply* reply) {
 
         if (jsonObject["status"].toString().compare("ok") == 0) {
             QString url = jsonObject["url"].toString();
-            emit onUploadSuccess(url);
+            emit uploadSuccess(url);
         } else {
-            emit onUploadError("Error at server side while uploading screenshot");
+            emit uploadError("Error at server side while uploading screenshot");
         }
     }
 
@@ -77,19 +88,21 @@ void Server::uploaded(QNetworkReply* reply) {
 
 void Server::onConnected(QNetworkReply* reply) {
     disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
-               this, SLOT(onConnected(QNetworkReply*)));
+        this, SLOT(onConnected(QNetworkReply*)));
 
     if (reply->error() != QNetworkReply::NoError) {
-        qDebug() << "Can't connect to" << url_ << "Attempt #" << connectionChecks_;
+        qInfo() << "Can't connect to" << url_ << "Attempt #" << connectionChecks_;
 
-        if (connectionChecks_ == 0) {
+        if (connectionChecks_ < MAX_CONNECTION_CHECKS) {
             startTimer(20000);
+        } else {
+            emit onConnectionFailed();
+            return;
         }
 
-        connectionChecks_++;
         emit onConnectionError();
     } else {
-        qDebug() << "Connection established to" << url_;
+        qInfo() << "Connection established to" << url_;
 
         connected_ = true;
         emit onConnectionSuccess();
@@ -105,7 +118,7 @@ void Server::checkConnection() {
     request.setRawHeader("User-Agent", "Screenshotgun client");
 
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(onConnected(QNetworkReply*)));
+        this, SLOT(onConnected(QNetworkReply*)));
 
     manager_.get(request);
 }
@@ -118,7 +131,6 @@ void Server::timerEvent(QTimerEvent* event) {
 
     if (connectionChecks_ == MAX_CONNECTION_CHECKS) {
         killTimer(event->timerId());
-        emit onConnectionFailed();
         return;
     }
 

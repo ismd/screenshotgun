@@ -14,8 +14,13 @@ public:
     void show();
     bool check();
     void saveValues();
+    void setHotkey(const QKeySequence);
 
     OAuth oauth;
+
+
+signals:
+    void hotkeyChanged(const QKeySequence);
 
 public slots:
     void setError(const QString&);

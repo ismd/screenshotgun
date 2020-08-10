@@ -21,6 +21,7 @@ const QString GOOGLE_CLIENT_SECRET = "_QjArq04n7dFs3TgyyB5w3D-";
 OAuth::OAuth() : refreshing_(false) {
     ui.setupUi(this);
 
+    // FIXME
     // connect(&manager_, SIGNAL(finished(QNetworkReply*)),
     //         this, SLOT(onTokenReply(QNetworkReply*)));
 
@@ -90,29 +91,29 @@ void OAuth::onTokenReply(QNetworkReply* reply) {
 
     QJsonObject jsonObject = jsonResponse.object();
     if (reply->error() != QNetworkReply::NoError) {
-        ctx.trayIcon.showMessage("Error", jsonObject["error_description"].toString(), QSystemTrayIcon::Critical, 10000);
-        qDebug() << jsonResponse.toJson(QJsonDocument::Compact);
+        ctx.trayIcon->showMessage("Error", jsonObject["error_description"].toString(), QSystemTrayIcon::Critical, 10000);
+        qInfo() << jsonResponse.toJson(QJsonDocument::Compact);
     } else {
         hide();
 
         QString token = jsonObject["access_token"].toString();
         switch (service_) {
             case UploadService::DROPBOX:
-                ctx.settings.setDropboxToken(token);
-                ctx.dropbox.setToken(token);
+                ctx.settings->setDropboxToken(token);
+                ctx.dropbox->setToken(token);
                 break;
 
             case UploadService::YANDEX:
-                ctx.settings.setYandexToken(token);
-                ctx.yandex.setToken(token);
+                ctx.settings->setYandexToken(token);
+                ctx.yandex->setToken(token);
                 break;
 
             case UploadService::GOOGLE:
-                ctx.settings.setGoogleToken(token);
-                ctx.google.setToken(token);
+                ctx.settings->setGoogleToken(token);
+                ctx.google->setToken(token);
 
                 if (jsonObject["refresh_token"].toString().length() > 0) {
-                    ctx.settings.setGoogleRefreshToken(jsonObject["refresh_token"].toString());
+                    ctx.settings->setGoogleRefreshToken(jsonObject["refresh_token"].toString());
                 }
                 break;
 
@@ -123,10 +124,10 @@ void OAuth::onTokenReply(QNetworkReply* reply) {
                 break;
         }
 
-        ctx.settingsForm.setError("");
+        ctx.settingsForm->setError("");
 
         if (!refreshing_) {
-            ctx.settingsForm.show();
+            ctx.settingsForm->show();
         }
 
         emit tokenRefreshed();
@@ -136,7 +137,7 @@ void OAuth::onTokenReply(QNetworkReply* reply) {
 }
 
 void OAuth::refreshToken(const UploadService service) {
-    qDebug() << "Refreshing token";
+    qInfo() << "Refreshing token";
     service_ = service;
     refreshing_ = true;
 
@@ -170,7 +171,7 @@ void OAuth::getToken(const QString& url, const QString& clientId, const QString&
         }
     } else {
         query.addQueryItem("grant_type", "refresh_token");
-        query.addQueryItem("refresh_token", Context::getInstance().settings.googleRefreshToken());
+        query.addQueryItem("refresh_token", Context::getInstance().settings->googleRefreshToken());
     }
 
     manager_.post(request, query.toString().toLatin1());

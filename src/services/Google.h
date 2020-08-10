@@ -12,7 +12,7 @@ class Google : public AbstractService {
 public:
     explicit Google();
 
-    void upload(const QByteArray&);
+    void upload(const QImage&);
     void setToken(const QString&);
     void getFolder();
 
@@ -33,6 +33,6 @@ private:
     QNetworkAccessManager manager_;
     QString filename_;
     QString uploadLink_;
-    const QByteArray* image_;
+    const QImage* image_;
     bool needReupload_;
 };

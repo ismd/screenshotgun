@@ -25,10 +25,6 @@ public:
 signals:
     void linkAdded(const QString&);
 
-private slots:
-    void onUploadSuccess(const QString&);
-    void onToolChanged(const ToolbarMode);
-
 private:
     void setLastTool(const ToolbarMode&);
 

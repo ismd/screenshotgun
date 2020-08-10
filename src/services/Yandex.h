@@ -10,7 +10,7 @@ class Yandex : public AbstractService {
 public:
     Yandex();
 
-    void upload(const QByteArray&);
+    void upload(const QImage&);
     void setToken(const QString&);
 
 private slots:
@@ -20,7 +20,7 @@ private slots:
     void onInfoReply(QNetworkReply*);
 
 private:
-    const QByteArray* image_;
+    const QImage* image_;
     QString token_;
     QNetworkAccessManager manager_;
     QString filename_;

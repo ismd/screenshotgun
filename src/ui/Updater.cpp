@@ -5,6 +5,7 @@
 #include <QFileInfo>
 #include <QMessageBox>
 
+// FIXME
 Updater::Updater() {
     ui.setupUi(this);
 
@@ -24,7 +25,7 @@ Updater::Updater() {
 void Updater::check() {
 #if defined(Q_OS_WIN32) || defined(Q_OS_MACOS)
     qInfo() << "Running:" << maintenancetool_ << "--checkupdates";
-    process_.start(maintenancetool_ + " --checkupdates");
+    process_.start(maintenancetool_, {" --checkupdates"});
 #endif
 }
 
@@ -39,12 +40,12 @@ void Updater::onCheckUpdates() {
         QString version = rx.cap(1);
         qInfo() << "Update available:" << version;
 
-        ctx.trayIcon.showMessage("Screenshotgun", "Version available " + version);
+        ctx.trayIcon->showMessage("Screenshotgun", "Version available " + version);
         ui.label->setText("New version available " + version);
         show();
     } else {
         qInfo() << "No updates available";
-        ctx.trayIcon.showMessage("Screenshotgun",
+        ctx.trayIcon->showMessage("Screenshotgun",
             "No updates",
             QSystemTrayIcon::Information,
             3000);
@@ -70,5 +71,5 @@ void Updater::accept() {
 }
 
 void Updater::onErrorOccurred(QProcess::ProcessError error) {
-    qDebug() << "Can't run maintenancetool: " << error;
+    qInfo() << "Can't run maintenancetool: " << error;
 }

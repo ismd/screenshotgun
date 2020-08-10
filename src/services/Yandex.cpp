@@ -1,6 +1,7 @@
 #include "Yandex.h"
 #include "lib/generateFilename.h"
 
+#include <QBuffer>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkRequest>
@@ -8,7 +9,7 @@
 Yandex::Yandex() {
 }
 
-void Yandex::upload(const QByteArray& image) {
+void Yandex::upload(const QImage& image) {
     image_ = &image;
 
     filename_ = generateFilename();
@@ -35,15 +36,20 @@ void Yandex::onUploadReply(QNetworkReply* reply) {
     QJsonObject jsonObject = jsonResponse.object();
 
     if (QNetworkReply::NoError != reply->error()) {
-        emit onUploadError(jsonObject["message"].toString());
-        qDebug() << QString(jsonResponse.toJson(QJsonDocument::Compact));
+        emit uploadError(jsonObject["message"].toString());
+        qInfo() << QString(jsonResponse.toJson(QJsonDocument::Compact));
     } else {
         QNetworkRequest request(jsonObject["href"].toString());
 
         connect(&manager_, SIGNAL(finished(QNetworkReply*)),
                 this, SLOT(onPutReply(QNetworkReply*)));
 
-        manager_.put(request, *image_);
+        QByteArray bytes;
+        QBuffer buffer(&bytes);
+        buffer.open(QIODevice::WriteOnly);
+        image_->save(&buffer, "PNG");
+
+        manager_.put(request, bytes);
     }
 
     delete reply;
@@ -56,7 +62,7 @@ void Yandex::onPutReply(QNetworkReply* reply) {
     reply->close();
 
     if (QNetworkReply::NoError != reply->error()) {
-        emit onUploadError("Unknown error");
+        emit uploadError("Unknown error");
     } else {
         QNetworkRequest request("https://cloud-api.yandex.net/v1/disk/resources/publish?path=app:%2F" + filename_);
         request.setRawHeader("Authorization", QString("OAuth " + token_).toLatin1());
@@ -80,8 +86,8 @@ void Yandex::onPublishReply(QNetworkReply* reply) {
     QJsonObject jsonObject = jsonResponse.object();
 
     if (QNetworkReply::NoError != reply->error()) {
-        emit onUploadError(jsonObject["message"].toString());
-        qDebug() << QString(jsonResponse.toJson(QJsonDocument::Compact));
+        emit uploadError(jsonObject["message"].toString());
+        qInfo() << QString(jsonResponse.toJson(QJsonDocument::Compact));
     } else {
         QNetworkRequest request(jsonObject["href"].toString());
         request.setRawHeader("Authorization", QString("OAuth " + token_).toLatin1());
@@ -105,11 +111,11 @@ void Yandex::onInfoReply(QNetworkReply* reply) {
     QJsonObject jsonObject = jsonResponse.object();
 
     if (QNetworkReply::NoError != reply->error()) {
-        emit onUploadError(jsonObject["message"].toString());
-        qDebug() << QString(jsonResponse.toJson(QJsonDocument::Compact));
+        emit uploadError(jsonObject["message"].toString());
+        qInfo() << QString(jsonResponse.toJson(QJsonDocument::Compact));
     } else {
         QString url = jsonObject["public_url"].toString();
-        emit onUploadSuccess(url);
+        emit uploadSuccess(url);
     }
 
     delete reply;

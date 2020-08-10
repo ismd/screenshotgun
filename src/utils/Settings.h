@@ -32,6 +32,9 @@ public:
     QString googleFolderId() const;
     void setGoogleFolderId(const QString&);
 
+    QKeySequence hotkey() const;
+    void setHotkey(const QKeySequence);
+
 private:
     QSettings settings_;
 };

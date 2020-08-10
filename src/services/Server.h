@@ -11,7 +11,7 @@ class Server : public AbstractService {
 public:
     Server();
 
-    void upload(const QByteArray&);
+    void upload(const QImage&);
 
     /**
      * Url of remote server for uploading

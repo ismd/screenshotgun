@@ -6,13 +6,12 @@
 Clipboard::Clipboard() {
 }
 
-void Clipboard::upload(const QByteArray& image) {
-    QApplication::clipboard()->setImage(QImage(image));
-    emit onUploadSuccess("");
-}
+void Clipboard::upload(const QImage& image) {
+    QApplication::clipboard()->setImage(image);
 
-void Clipboard::onUploadSuccess(const QString& url) {
-  Context::getInstance().trayIcon.showMessage(
-      "Screenshot is copied to the clipboard", "",
-      QSystemTrayIcon::Information, 3000);
+    Context::getInstance().trayIcon->showMessage(
+        "Screenshot is copied to the clipboard", "",
+        QSystemTrayIcon::Information, 3000);
+
+    emit uploadSuccess("");
 }

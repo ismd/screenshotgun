@@ -4,7 +4,7 @@ project(screenshotgun)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Werror")
 set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_AUTOUIC_SEARCH_PATHS "ui")
+set(CMAKE_AUTOUIC_SEARCH_PATHS "${PROJECT_SOURCE_DIR}/ui")
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -16,8 +16,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Qt5 COMPONENTS Gui Network Widgets REQUIRED)
 
-#set(CMAKE_AUTOUIC_SEARCH_PATHS "${PROJECT_SOURCE_DIR}/ui")
-
 set(SOURCE_FILES
     resources/res.qrc
     src/main.cpp
@@ -27,47 +25,23 @@ set(SOURCE_FILES
     src/Context.cpp
     src/Context.h
 
-    # Modes
-    # src/modes/AbstractMode.cpp
-    # src/modes/AbstractMode.h
-    # src/modes/ArrowMode.cpp
-    # src/modes/ArrowMode.h
-    # src/modes/LineMode.cpp
-    # src/modes/LineMode.h
-    # src/modes/RectMode.cpp
-    # src/modes/RectMode.h
-    # src/modes/EllipseMode.cpp
-    # src/modes/EllipseMode.h
-    # src/modes/TextMode.cpp
-    # src/modes/TextMode.h
-    # src/modes/VisibleAreaMode.cpp
-    # src/modes/VisibleAreaMode.h
-    # src/modes/TextArea.cpp
-    # src/modes/TextArea.h
-    # src/modes/items/AbstractItem.cpp
-    # src/modes/items/AbstractItem.h
-    # src/modes/items/ArrowItem.cpp
-    # src/modes/items/ArrowItem.h
-    # src/modes/items/EllipseItem.cpp
-    # src/modes/items/EllipseItem.h
-    # src/modes/items/LineItem.cpp
-    # src/modes/items/LineItem.h
-    # src/modes/items/RectItem.cpp
-    # src/modes/items/RectItem.h
-    # src/modes/items/graphicitems/AbstractGraphicItem.cpp
-    # src/modes/items/graphicitems/AbstractGraphicItem.h
-    # src/modes/items/graphicitems/EllipseGraphicItem.cpp
-    # src/modes/items/graphicitems/EllipseGraphicItem.h
-    # src/modes/items/graphicitems/LineGraphicItem.cpp
-    # src/modes/items/graphicitems/LineGraphicItem.h
-    # src/modes/items/graphicitems/PathGraphicItem.cpp
-    # src/modes/items/graphicitems/PathGraphicItem.h
-    # src/modes/items/graphicitems/RectGraphicItem.cpp
-    # src/modes/items/graphicitems/RectGraphicItem.h
+    # Items
+    src/items/AbstractItem.cpp
+    src/items/AbstractItem.h
+    src/items/ArrowItem.cpp
+    src/items/ArrowItem.h
+    src/items/LineItem.cpp
+    src/items/LineItem.h
+    src/items/RectItem.cpp
+    src/items/RectItem.h
+    src/items/EllipseItem.cpp
+    src/items/EllipseItem.h
+    src/items/VisibleAreaItem.cpp
+    src/items/VisibleAreaItem.h
 
     # Services
-    # src/services/Clipboard.cpp
-    # src/services/Clipboard.h
+    src/services/Clipboard.cpp
+    src/services/Clipboard.h
     src/services/Dropbox.cpp
     src/services/Dropbox.h
     src/services/Google.cpp
@@ -84,10 +58,10 @@ set(SOURCE_FILES
     src/services/lib/UploadService.h
 
     # Ui
+    src/ui/ItemManager.cpp
+    src/ui/ItemManager.h
     src/ui/OAuth.cpp
     src/ui/OAuth.h
-    src/ui/Overlay.cpp
-    src/ui/Overlay.h
     src/ui/OverlayView.cpp
     src/ui/OverlayView.h
     src/ui/SettingsForm.cpp
@@ -114,20 +88,17 @@ file(READ CHANGELOG.txt CHANGELOG_TEXT)
 configure_file(src/utils/Changelog.h.in src/utils/Changelog.h)
 list(APPEND SOURCE_FILES src/utils/Changelog.h)
 
-# qt5_wrap_ui(SOURCE_FILES
-#     ui/OAuth.ui
-#     ui/Settings.ui
-#     ui/Toolbar.ui
-#     ui/Update.ui)
-
 # For CLion
 include_directories(cmake-build-debug)
 
+# macOS
 if(APPLE)
     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
     add_executable(screenshotgun MACOSX_BUNDLE ${SOURCE_FILES})
     target_link_libraries(screenshotgun Qt5::Widgets Qt5::Gui Qt5::Network)
+
+# Linux
 elseif(UNIX)
     find_package(X11 REQUIRED)
 
@@ -172,6 +143,8 @@ elseif(UNIX)
         DESTINATION share/applications)
     install(FILES "${CMAKE_SOURCE_DIR}/resources/dist/screenshotgun.png"
         DESTINATION share/pixmaps)
+
+# Windows
 elseif(WIN32)
     add_executable(screenshotgun WIN32 ${SOURCE_FILES})
     target_link_libraries(screenshotgun Qt5::Widgets Qt5::Gui Qt5::Network)
