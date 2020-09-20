@@ -86,9 +86,7 @@ void App::makeScreenshot() {
     pixmap = ctx.overlayView->scene.addPixmap(screenshot);
     ctx.itemManager->visibleAreaItem.move(pos.x() - geo.x(), pos.y() - geo.y());
 
-    ctx.overlayView->activateWindow();
-    ctx.overlayView->setFocus();
-    ctx.overlayView->showFullScreen();
+    ctx.overlayView->show();
 }
 
 void App::processScreenshot() {

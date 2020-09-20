@@ -6,28 +6,34 @@
 
 OverlayView::OverlayView() : movingItem_(false) {
     setWindowFlags(
+        Qt::ToolTip |
         Qt::BypassWindowManagerHint |
-        Qt::FramelessWindowHint |
-        // FIXME
-        // Qt::NoDropShadowWindowHint |
-        Qt::Tool |
-        // FIXME
-        // Qt::WindowOverridesSystemGestures |
+        Qt::CustomizeWindowHint |
+        Qt::BypassGraphicsProxyWidget |
         Qt::WindowStaysOnTopHint |
-        Qt::X11BypassWindowManagerHint
+        Qt::X11BypassWindowManagerHint |
+        Qt::WindowOverridesSystemGestures |
+        Qt::MaximizeUsingFullscreenGeometryHint
     );
 
-    setWindowModality(Qt::ApplicationModal);
-    setFocusPolicy(Qt::StrongFocus);
+    setAttribute(Qt::WA_MouseTracking);
+    setAttribute(Qt::WA_NoMousePropagation);
+    setAttribute(Qt::WA_NoSystemBackground);
+
+    setFocusPolicy(Qt::WheelFocus);
+    setMouseTracking(true);
 
     setFrameShape(QFrame::NoFrame);
-    setRenderHints(QPainter::Antialiasing | QPainter::LosslessImageRendering | QPainter::TextAntialiasing);
+    setRenderHints(
+        QPainter::Antialiasing |
+        QPainter::LosslessImageRendering |
+        QPainter::TextAntialiasing
+    );
 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     setScene(&scene);
-    setMouseTracking(true);
 
     Context& ctx = Context::getInstance();
 
@@ -37,11 +43,24 @@ OverlayView::OverlayView() : movingItem_(false) {
 }
 
 void OverlayView::show() {
-  QGraphicsView::show();
-  emit(shown());
+#if defined(Q_OS_MAC)
+    Context::getInstance().trayIcon->hide();
+#endif
+
+    QGraphicsView::show();
+
+    activateWindow();
+    raise();
+    setFocus(Qt::MouseFocusReason);
+
+    emit(shown());
 }
 
 void OverlayView::hide() {
+#if defined(Q_OS_MAC)
+    Context::getInstance().trayIcon->show();
+#endif
+
     QGraphicsView::hide();
     emit(hided());
 }
