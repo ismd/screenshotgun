@@ -67,6 +67,8 @@ void App::makeScreenshot() {
     // Making screenshot
     const QDesktopWidget* desktop = QApplication::desktop();
     const QPoint pos = QCursor::pos();
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     QScreen* screen = QGuiApplication::screenAt(pos);
     const QRect geo = screen->geometry();
 
@@ -75,6 +77,17 @@ void App::makeScreenshot() {
         geo.top(),
         geo.width(),
         geo.height());
+#else
+    QScreen* screen = QGuiApplication::primaryScreen();
+    const QRect geo = screen->geometry();
+
+    const QPixmap screenshot = QGuiApplication::primaryScreen()->grabWindow(
+        desktop->winId(),
+        geo.left(),
+        geo.top(),
+        geo.width(),
+        geo.height());
+#endif
 
     const int width = screenshot.width(),
         height = screenshot.height();

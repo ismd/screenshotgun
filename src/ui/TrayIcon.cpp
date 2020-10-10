@@ -6,11 +6,11 @@
 #include <QMessageBox>
 
 TrayIcon::TrayIcon()
-    : makeScreenshotAction_("Make screenshot"),
-      updateAction_("Update"),
-      settingsAction_("Settings"),
+    : makeScreenshotAction_("Make screenshot", this),
+      updateAction_("Update", this),
+      settingsAction_("Settings", this),
       historyMenu_("History"),
-      quitAction_("Quit")
+      quitAction_("Quit", this)
 {
 #if defined(Q_OS_LINUX)
     setIcon(QIcon(":/icons/icon-22.png"));
@@ -62,7 +62,7 @@ TrayIcon::TrayIcon()
 }
 
 void TrayIcon::addLinkToHistory(const QString& link) {
-    QAction* action = new QAction(link);
+    QAction* action = new QAction(link, this);
     action->setData(link);
 
     connect(action, &QAction::triggered, this, [&]() {

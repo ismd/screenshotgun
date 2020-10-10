@@ -26,7 +26,6 @@ OverlayView::OverlayView() : movingItem_(false) {
     setFrameShape(QFrame::NoFrame);
     setRenderHints(
         QPainter::Antialiasing |
-        QPainter::LosslessImageRendering |
         QPainter::TextAntialiasing
     );
 

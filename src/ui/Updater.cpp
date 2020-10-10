@@ -19,7 +19,8 @@ Updater::Updater() {
 
     connect(&process_, SIGNAL(finished(int, QProcess::ExitStatus)),
         this, SLOT(onCheckUpdates()));
-    connect(&process_, &QProcess::errorOccurred, this, &Updater::onErrorOccurred);
+    connect(&process_, SIGNAL(errorOccurred(QProcess::ProcessError)),
+        this, SLOT(onErrorOccurred(QProcess::ProcessError)));
 }
 
 void Updater::check() {
