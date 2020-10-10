@@ -47,8 +47,8 @@ You can simply use CLion with Qt5 libs under any operating system. Or you can bu
 1. brew install cmake qt
 2. git clone https://github.com/ismd/screenshotgun.git
 3. cd screenshotgun && mkdir build && cd build
-4. cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt -G Xcode ..
-5. Open and build project in Xcode
+4. cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/qt ..
+5. cmake --build .
 #### Windows
 ###### MXE (cross compile for Windows under Linux)
 1. Install [MXE](http://mxe.cc/) (need _cmake_ and _qtbase_ packages)
