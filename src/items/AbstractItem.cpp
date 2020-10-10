@@ -7,7 +7,9 @@ AbstractItem::AbstractItem() {
 void AbstractItem::init(QMouseEvent* e) {
     Q_UNUSED(e);
 
-    Context::getInstance().overlayView->scene.addItem(this);
+    const Context& ctx = Context::getInstance();
+    ctx.overlayView->scene.addItem(this);
+    ctx.overlayView->setCursor(Qt::BlankCursor);
 }
 
 void AbstractItem::move(QMouseEvent* e) {
