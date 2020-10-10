@@ -6,7 +6,7 @@ DEPLOY_DIR=/deploy
 BUILD_DIR=/build
 
 mkdir ~/.ssh
-cp $DEPLOY_DIR/keys/aur ~/.ssh/id_rsa
+cp $DEPLOY_DIR/data/aur ~/.ssh/id_rsa
 chmod 600 ~/.ssh/id_rsa
 ssh-keyscan -t rsa aur.archlinux.org >> ~/.ssh/known_hosts
 

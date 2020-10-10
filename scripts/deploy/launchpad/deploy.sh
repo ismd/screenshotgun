@@ -9,11 +9,11 @@ sudo apt-get install bzr-builddeb dh-make dput pbuilder python-paramiko ubuntu-d
 bzr whoami "Vladimir Kosteley <zzismd@gmail.com>"
 
 eval "$(ssh-agent -s)"
-chmod 600 $TRAVIS_BUILD_DIR/scripts/deploy/keys/launchpad
-ssh-add $TRAVIS_BUILD_DIR/scripts/deploy/keys/launchpad
+chmod 600 $TRAVIS_BUILD_DIR/scripts/deploy/data/launchpad
+ssh-add $TRAVIS_BUILD_DIR/scripts/deploy/data/launchpad
 
-gpg --import $TRAVIS_BUILD_DIR/scripts/deploy/keys/launchpad.asc
-gpg --import $TRAVIS_BUILD_DIR/scripts/deploy/keys/launchpad_public.asc
+gpg --import $TRAVIS_BUILD_DIR/scripts/deploy/data/launchpad.asc
+gpg --import $TRAVIS_BUILD_DIR/scripts/deploy/data/launchpad_public.asc
 
 mkdir -p $DEPLOY_DIR/launchpad
 
