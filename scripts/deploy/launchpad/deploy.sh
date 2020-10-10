@@ -9,11 +9,11 @@ sudo apt-get install bzr-builddeb dh-make dput pbuilder python-paramiko ubuntu-d
 bzr whoami "Vladimir Kosteley <zzismd@gmail.com>"
 
 eval "$(ssh-agent -s)"
-chmod 600 $TRAVIS_BUILD_DIR/deploy/keys/launchpad
-ssh-add $TRAVIS_BUILD_DIR/deploy/keys/launchpad
+chmod 600 $TRAVIS_BUILD_DIR/scripts/deploy/keys/launchpad
+ssh-add $TRAVIS_BUILD_DIR/scripts/deploy/keys/launchpad
 
-gpg --import $TRAVIS_BUILD_DIR/deploy/keys/launchpad.asc
-gpg --import $TRAVIS_BUILD_DIR/deploy/keys/launchpad_public.asc
+gpg --import $TRAVIS_BUILD_DIR/scripts/deploy/keys/launchpad.asc
+gpg --import $TRAVIS_BUILD_DIR/scripts/deploy/keys/launchpad_public.asc
 
 mkdir -p $DEPLOY_DIR/launchpad
 
@@ -23,7 +23,7 @@ bzr dh-make --bzr-only screenshotgun $VERSION $TRAVIS_BUILD_DIR
 cd $DEPLOY_DIR/launchpad/screenshotgun
 dh_make -y -s -p screenshotgun_$VERSION
 rm -rf debian
-cp -r $TRAVIS_BUILD_DIR/deploy/launchpad/debian debian
+cp -r $TRAVIS_BUILD_DIR/scripts/deploy/launchpad/debian debian
 sed -i -e "s/{version}/$VERSION/g" debian/changelog
 sed -i -e "s/{date}/`date +'%a, %d %b %Y %H:%M:%S +0300'`/g" debian/changelog
 sed -i -e "s/{distribution}/bionic/g" debian/changelog
@@ -36,4 +36,4 @@ pbuilder-dist bionic create
 pbuilder-dist bionic build screenshotgun_$VERSION-1.dsc
 
 ssh-keyscan -t rsa ppa.launchpad.net >> ~/.ssh/known_hosts
-dput -c $TRAVIS_BUILD_DIR/deploy/launchpad/dput.cf ppa:ismd/screenshotgun screenshotgun_$VERSION-1_source.changes
+dput -c $TRAVIS_BUILD_DIR/scripts/deploy/launchpad/dput.cf ppa:ismd/screenshotgun screenshotgun_$VERSION-1_source.changes
