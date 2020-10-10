@@ -30,6 +30,7 @@ public:
 
     void addToScene();
     bool isInnerArea(int x, int y) const;
+    ResizeDirection resizeDirection(int x, int y) const;
 
     struct {
       int x;
@@ -45,7 +46,6 @@ signals:
 private:
     void updateSize();
     void setArea(int x, int y, int width, int height);
-    ResizeDirection resizeDirection(int x, int y) const;
     void resizeMove(int x, int y);
 
     QGraphicsRectItem rectTop_;

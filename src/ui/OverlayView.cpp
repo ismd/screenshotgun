@@ -32,6 +32,7 @@ OverlayView::OverlayView() : movingItem_(false) {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    setCursor(Qt::BlankCursor);
     setScene(&scene);
 
     Context& ctx = Context::getInstance();
@@ -76,6 +77,7 @@ void OverlayView::mousePressEvent(QMouseEvent* e) {
     ) {
         movingItem_ = true;
         QGraphicsView::mousePressEvent(e);
+        ctx.overlayView->setCursor(Qt::BlankCursor);
         return;
     }
 
@@ -92,7 +94,16 @@ void OverlayView::mouseMoveEvent(QMouseEvent* e) {
         return;
     }
 
-    Context::getInstance().itemManager->move(e);
+    const Context& ctx = Context::getInstance();
+
+    const QGraphicsItem* item = scene.itemAt(e->x(), e->y(), QGraphicsView::transform());
+    const QGraphicsItemGroup* group = item->group();
+
+    if (item->flags().testFlag(QGraphicsItem::ItemIsMovable) || (group && group->flags().testFlag(QGraphicsItem::ItemIsMovable))) {
+        ctx.overlayView->setCursor(Qt::OpenHandCursor);
+    } else {
+        ctx.itemManager->move(e);
+    }
 }
 
 void OverlayView::mouseReleaseEvent(QMouseEvent* e) {

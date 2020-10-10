@@ -96,6 +96,37 @@ void VisibleAreaItem::move(QMouseEvent* e) {
 
 void VisibleAreaItem::move(int x, int y) {
     if (fixed_) {
+        const Context& ctx = Context::getInstance();
+
+        if (isInnerArea(x, y) || ctx.toolbar->mode() == ToolbarMode::VISIBLE_AREA) {
+            ctx.overlayView->setCursor(Qt::CrossCursor);
+        } else {
+            switch (resizeDirection(x, y)) {
+                case ResizeDirection::TOP:
+                case ResizeDirection::BOTTOM:
+                    ctx.overlayView->setCursor(Qt::SizeVerCursor);
+                    break;
+
+                case ResizeDirection::LEFT:
+                case ResizeDirection::RIGHT:
+                    ctx.overlayView->setCursor(Qt::SizeHorCursor);
+                    break;
+
+                case ResizeDirection::TOP_LEFT:
+                case ResizeDirection::BOTTOM_RIGHT:
+                    ctx.overlayView->setCursor(Qt::SizeFDiagCursor);
+                    break;
+
+                case ResizeDirection::TOP_RIGHT:
+                case ResizeDirection::BOTTOM_LEFT:
+                    ctx.overlayView->setCursor(Qt::SizeBDiagCursor);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         return;
     }
 
