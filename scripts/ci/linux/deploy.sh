@@ -5,7 +5,7 @@ set -o pipefail
 export VERSION=${1#"v"}
 
 # LAUNCHPAD
-$TRAVIS_BUILD_DIR/deploy/launchpad/deploy.sh
+$TRAVIS_BUILD_DIR/scripts/deploy/launchpad/deploy.sh
 
 # AUR
-docker run -e VERSION=$VERSION -v $TRAVIS_BUILD_DIR/deploy:/deploy --privileged archlinux/base /deploy/aur/deploy.sh
+docker run -e VERSION=$VERSION -v $TRAVIS_BUILD_DIR/scripts/deploy:/deploy --privileged archlinux/base /deploy/aur/deploy.sh
