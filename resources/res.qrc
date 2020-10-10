@@ -1,6 +1,7 @@
-<RCC>
+<!DOCTYPE RCC>
+<RCC version="1.0">
     <qresource prefix="/">
-        <file>style.qss</file>
+        <file>styles/style.qss</file>
         <file>icons/icon-16.png</file>
         <file>icons/icon-22.png</file>
         <file>toolbar/arrow.png</file>

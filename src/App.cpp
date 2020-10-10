@@ -1,215 +1,180 @@
-#include <QApplication>
-#include <QClipboard>
-#include <QDesktopServices>
 #include "App.h"
+#include "Context.h"
 
-App::App()
-    : overlay_(*this),
-      trayIcon_(*this),
-      google_(*this),
-      settingsForm_(*this),
-      updater_(*this),
-      copyImageToClipboard_(false),
-      connectionChecks_(0),
-      connected_(false) {
-    connect(&server_, SIGNAL(connectionSuccess()),
-            this, SLOT(connectionSuccess()));
+#include <QDesktopWidget>
+#include <QScreen>
 
-    connect(&server_, SIGNAL(connectionError()),
-            this, SLOT(connectionError()));
+App::App() {
+    Context& ctx = Context::getInstance();
 
-    connect(&server_, SIGNAL(uploadSuccess(QString)),
-            this, SLOT(uploadSuccess(QString)));
+    ctx.app = this;
+    ctx.overlayView = new OverlayView();
+    ctx.itemManager = new ItemManager();
+    ctx.toolbar = new Toolbar(ctx.overlayView);
+    ctx.settings = new Settings();
+    ctx.settingsForm = new SettingsForm();
+    ctx.dropbox = new Dropbox();
+    ctx.google = new Google();
+    ctx.server = new Server();
+    ctx.yandex = new Yandex();
+    ctx.clipboard = new Clipboard();
+    ctx.history = new History();
+    ctx.trayIcon = new TrayIcon();
 
-    connect(&server_, SIGNAL(uploadError()),
-            this, SLOT(uploadError()));
+    connect(ctx.trayIcon, &TrayIcon::screenshotActionTriggered, this, &App::makeScreenshot);
+    connect(ctx.toolbar, &Toolbar::screenshotButtonClicked, this, &App::processScreenshot);
+    connect(ctx.overlayView, &OverlayView::enterClicked, this, &App::processScreenshot);
+    connect(ctx.overlayView, &OverlayView::escapeClicked, this, &App::cancelScreenshot);
+    connect(this, &App::screenshotFinished, this, [&]() {
+        delete pixmap;
+    });
+    connect(ctx.settingsForm, &SettingsForm::hotkeyChanged, this, [&](const QKeySequence seq) {
+        initShortcut(seq);
+        ctx.settings->setHotkey(seq);
+    });
 
-    connect(&dropbox_, SIGNAL(uploadSuccess(QString)),
-            this, SLOT(uploadSuccess(QString)));
+    ctx.itemManager->visibleAreaItem.addToScene();
 
-    connect(&dropbox_, SIGNAL(uploadError(QString)),
-            this, SLOT(uploadError(QString)));
+    // Hotkey
+    const QKeySequence seq = ctx.settings->hotkey();
+    initShortcut(seq);
+    ctx.settingsForm->setHotkey(seq);
 
-    connect(&yandex_, SIGNAL(uploadSuccess(QString)),
-            this, SLOT(uploadSuccess(QString)));
+#if defined(Q_OS_LINUX)
+    connect(&shortcut_, &QxtGlobalShortcut::activated, this, &App::makeScreenshot);
+#endif
 
-    connect(&yandex_, SIGNAL(uploadError(QString)),
-            this, SLOT(uploadError(QString)));
-
-    connect(&google_, SIGNAL(uploadSuccess(QString)),
-            this, SLOT(uploadSuccess(QString)));
-
-    connect(&google_, SIGNAL(uploadError(QString)),
-            this, SLOT(uploadError(QString)));
-
-    initShortcut();
-    connect(&trayIcon_, SIGNAL(makeScreenshot()),
-            this, SLOT(makeScreenshot()));
-
-    settingsForm_.init();
-    if (!settingsForm_.valid(false)) {
-        settingsForm_.show();
+    if (ctx.settingsForm->check()) {
+        ctx.settingsForm->saveValues();
+    } else {
+        ctx.settingsForm->show();
     }
 
-    trayIcon_.show();
-    updater_.check();
-}
-
-SettingsForm& App::settingsForm() {
-    return settingsForm_;
-}
-
-UploadService App::uploadService() const {
-    return service_;
-}
-
-Server& App::server() {
-    return server_;
-}
-
-Dropbox& App::dropbox() {
-    return dropbox_;
-}
-
-Yandex& App::yandex() {
-    return yandex_;
-}
-
-Google& App::google() {
-    return google_;
-}
-
-Settings& App::settings() {
-    return settings_;
-}
-
-History& App::history() {
-    return history_;
-}
-
-TrayIcon& App::trayIcon() {
-    return trayIcon_;
-}
-
-Updater& App::updater() {
-    return updater_;
-}
-
-void App::setUploadService(UploadService service) {
-    service_ = service;
-}
-
-void App::setCopyImageToClipboard(bool value) {
-    copyImageToClipboard_ = value;
-}
-
-void App::setConnectionChecks(int value) {
-    connectionChecks_ = value;
-}
-
-bool App::connected() const {
-    return connected_;
-}
-
-void App::copyImageToClipboard() {
-    QApplication::clipboard()->setImage(overlay_.toolbar().image());
-
-    trayIcon_.showMessage("Изображение скопировано в буфер обмена",
-                          "",
-                          QSystemTrayIcon::Information,
-                          3000);
-}
-
-void App::timerEvent(QTimerEvent *event) {
-    if (-1 != connectionChecks_) {
-        server_.checkConnection();
-    }
-
-    if (-1 == connectionChecks_ || ++connectionChecks_ > 2) {
-        killTimer(event->timerId());
-        connectionChecks_ = -1;
-    }
+    ctx.trayIcon->show();
+    // FIXME
+    // ctx.updater.check();
 }
 
 void App::makeScreenshot() {
-    overlay_.makeScreenshot();
-}
+    Context& ctx = Context::getInstance();
 
-void App::connectionSuccess() {
-    qDebug() << "Connection established to" << server_.url();
-
-    connected_ = true;
-    connectionChecks_ = -1;
-    settingsForm_.hide();
-}
-
-void App::connectionError() {
-    qDebug() << "Can't connect to" << server_.url() << "Attempt #" << connectionChecks_;
-
-    if (0 == connectionChecks_) {
-        startTimer(20000);
-    } else if (-1 == connectionChecks_) {
-        settingsForm_.showCantConnect();
-    }
-}
-
-void App::uploadSuccess(const QString& url) {
-    lastUrl_ = url;
-    history_.addLink(url);
-
-    if (copyImageToClipboard_) {
-        copyImageToClipboard();
+    if (ctx.settings->service() == UploadService::SERVER && !ctx.server->connected()) {
+        ctx.settingsForm->setError("Can't connect to server");
+        ctx.settingsForm->show();
         return;
     }
 
-    QApplication::clipboard()->setText(url);
+    // Making screenshot
+    const QDesktopWidget* desktop = QApplication::desktop();
+    const QPoint pos = QCursor::pos();
 
-    trayIcon_.showMessage("Ссылка скопирована в буфер обмена",
-                          url,
-                          QSystemTrayIcon::Information,
-                          3000);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QScreen* screen = QGuiApplication::screenAt(pos);
+    const QRect geo = screen->geometry();
 
-    disconnect(&trayIcon_, SIGNAL(messageClicked()),
-               this, SLOT(openUrl()));
+    const QPixmap screenshot = screen->grabWindow(desktop->winId(),
+        geo.left(),
+        geo.top(),
+        geo.width(),
+        geo.height());
+#else
+    QScreen* screen = QGuiApplication::primaryScreen();
+    const QRect geo = screen->geometry();
 
-    connect(&trayIcon_, SIGNAL(messageClicked()),
-            this, SLOT(openUrl()));
+    const QPixmap screenshot = QGuiApplication::primaryScreen()->grabWindow(
+        desktop->winId(),
+        geo.left(),
+        geo.top(),
+        geo.width(),
+        geo.height());
+#endif
+
+    const int width = screenshot.width(),
+        height = screenshot.height();
+
+    ctx.overlayView->setGeometry(geo);
+    ctx.overlayView->scene.setSceneRect(0, 0, width, height);
+
+    // Background screenshot
+    pixmap = ctx.overlayView->scene.addPixmap(screenshot);
+    ctx.itemManager->visibleAreaItem.move(pos.x() - geo.x(), pos.y() - geo.y());
+
+    ctx.overlayView->show();
 }
 
-void App::uploadError() {
-    uploadError("Проверьте логи на сервере");
-}
+void App::processScreenshot() {
+    Context& ctx = Context::getInstance();
+    const VisibleAreaItem& visibleAreaItem = ctx.itemManager->visibleAreaItem;
 
-void App::uploadError(QString error) {
-    trayIcon_.showMessage("Ошибка во время загрузки скриншота", error, QSystemTrayIcon::Critical, 10000);
-}
+    ctx.overlayView->scene.setSceneRect(visibleAreaItem.area.x,
+        visibleAreaItem.area.y,
+        visibleAreaItem.area.width,
+        visibleAreaItem.area.height);
 
-void App::openUrl() {
-    if (lastUrl_.isEmpty()) {
-        return;
+    QImage image(ctx.overlayView->scene.sceneRect().size().toSize(), QImage::Format_ARGB32);
+    image.fill(Qt::transparent);
+
+    QPainter painter(&image);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    ctx.overlayView->scene.render(&painter);
+
+    switch (ctx.settings->service()) {
+        case UploadService::SERVER:
+            ctx.server->upload(image);
+            break;
+
+        case UploadService::DROPBOX:
+            ctx.dropbox->upload(image);
+            break;
+
+        case UploadService::YANDEX:
+            ctx.yandex->upload(image);
+            break;
+
+        case UploadService::GOOGLE:
+            ctx.google->upload(image);
+            break;
+
+        case UploadService::CLIPBOARD:
+            ctx.clipboard->upload(image);
+            break;
     }
 
-    QDesktopServices::openUrl(QUrl(lastUrl_));
+    emit screenshotFinished(true);
 }
 
-void App::initShortcut() {
+void App::cancelScreenshot() {
+    emit screenshotFinished(false);
+}
+
+void App::initShortcut(const QKeySequence seq) {
 #if defined(Q_OS_LINUX)
-    shortcut_.setShortcut(QKeySequence(tr("Alt+Print")));
+    initShortcutLinux(seq);
+#endif
 
-    connect(&shortcut_, SIGNAL(activated()),
-            &overlay_, SLOT(makeScreenshot()));
-#elif defined(Q_OS_WIN32)
-    RegisterHotKey((HWND)overlay_.winId(), 100, MOD_ALT, VK_SNAPSHOT);
+#if defined(Q_OS_WIN32)
+    // FIXME
+    // initShortcutWindows();
 #endif
 }
 
-#ifdef Q_OS_WIN32
+#if defined(Q_OS_LINUX)
+void App::initShortcutLinux(const QKeySequence seq) {
+    shortcut_.setShortcut(seq);
+}
+#endif
+
+#if defined(Q_OS_WIN32)
+void App::initShortcutWindows() {
+    RegisterHotKey((HWND)overlay_.winId(), 100, MOD_ALT, VK_SNAPSHOT);
+}
+
 bool App::nativeEvent(const QByteArray& eventType, void* message, long* result) {
     MSG* msg = reinterpret_cast<MSG*>(message);
 
     if (msg->message == WM_HOTKEY) {
         if (msg->wParam == 100) {
-            overlay_.makeScreenshot();
+            makeScreenshot();
             return true;
         }
     }

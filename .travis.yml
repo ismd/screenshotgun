@@ -1,27 +1,32 @@
 language: cpp
-os: linux
-dist: xenial
-services:
-  - docker
+
+matrix:
+  include:
+    - os: linux
+      dist: xenial
+      services:
+        - docker
+    - os: osx
+      addons:
+        homebrew:
+          packages:
+          - qt
+          update: true
+      cache:
+        directories:
+        - $HOME/Library/Caches/Homebrew
+      before_cache:
+        - brew cleanup
 
 before_install:
-  - sudo apt-get update
-  - openssl aes-256-cbc -K $encrypted_55f6cc107eaa_key -iv $encrypted_55f6cc107eaa_iv
-    -in deploy/data.tar.enc -out deploy/data.tar -d
-  - tar xvf deploy/data.tar
-
+  - bash $TRAVIS_BUILD_DIR/scripts/ci/$TRAVIS_OS_NAME/before_install.sh
 install:
-  - sudo apt-get install qtbase5-dev qtbase5-private-dev
-
+  - bash $TRAVIS_BUILD_DIR/scripts/ci/$TRAVIS_OS_NAME/install.sh
 script:
-  - mkdir build && cd build
-  - cmake -DCMAKE_BUILD_TYPE=Release ..
-  - cmake --build .
-  - strip screenshotgun
-
+  - bash $TRAVIS_BUILD_DIR/scripts/ci/$TRAVIS_OS_NAME/script.sh
 deploy:
   provider: script
-  script: bash $TRAVIS_BUILD_DIR/scripts/deploy.sh $TRAVIS_TAG
+  script: bash $TRAVIS_BUILD_DIR/scripts/ci/$TRAVIS_OS_NAME/deploy.sh $TRAVIS_TAG
   skip_cleanup: true
   on:
     tags: true

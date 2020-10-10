@@ -1,34 +1,27 @@
-#ifndef SCREENSHOTGUN_YANDEX_H
-#define SCREENSHOTGUN_YANDEX_H
+#pragma once
 
-#include <QNetworkAccessManager>
+#include "lib/AbstractService.h"
+
 #include <QNetworkReply>
-#include "ServiceHelper.h"
 
-class Yandex : public QObject {
+class Yandex : public AbstractService {
     Q_OBJECT
 
 public:
     Yandex();
-    void setToken(QString);
-    void upload(QByteArray);
 
-signals:
-    void uploadSuccess(QString);
-    void uploadError(QString);
+    void upload(const QImage&);
+    void setToken(const QString&);
 
 private slots:
-    void uploadReply(QNetworkReply*);
-    void putReply(QNetworkReply*);
-    void publishReply(QNetworkReply*);
-    void infoReply(QNetworkReply*);
+    void onUploadReply(QNetworkReply*);
+    void onPutReply(QNetworkReply*);
+    void onPublishReply(QNetworkReply*);
+    void onInfoReply(QNetworkReply*);
 
 private:
+    const QImage* image_;
     QString token_;
     QNetworkAccessManager manager_;
-    QByteArray image_;
     QString filename_;
-    ServiceHelper helper_;
 };
-
-#endif //SCREENSHOTGUN_YANDEX_H

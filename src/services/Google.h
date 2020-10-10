@@ -1,44 +1,38 @@
-#ifndef SCREENSHOTGUN_GOOGLE_H
-#define SCREENSHOTGUN_GOOGLE_H
+#pragma once
+
+#include "lib/AbstractService.h"
+#include "lib/UploadService.h"
 
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include "ServiceHelper.h"
-#include "../Settings.h"
 
-class App;
-
-class Google : public QObject {
+class Google : public AbstractService {
     Q_OBJECT
 
 public:
-    explicit Google(App&);
-    void setToken(QString);
-    void upload(const QByteArray&);
+    explicit Google();
+
+    void upload(const QImage&);
+    void setToken(const QString&);
     void getFolder();
 
 signals:
-    void uploadSuccess(QString);
-    void uploadError(QString);
-    void refreshToken(UploadService);
+    void onRefreshToken(const UploadService);
 
 private slots:
-    void uploadReply(QNetworkReply*);
-    void shareReply(QNetworkReply*);
-    void getFolderReply(QNetworkReply*);
-    void createFolderReply(QNetworkReply*);
+    void onUploadReply(QNetworkReply*);
+    void onShareReply(QNetworkReply*);
+    void onGetFolderReply(QNetworkReply*);
+    void onCreateFolderReply(QNetworkReply*);
     void reupload();
 
 private:
     void createFolder();
-    App& app_;
+
     QString token_;
     QNetworkAccessManager manager_;
     QString filename_;
-    ServiceHelper helper_;
     QString uploadLink_;
-    QByteArray image_;
+    const QImage* image_;
     bool needReupload_;
 };
-
-#endif //SCREENSHOTGUN_GOOGLE_H

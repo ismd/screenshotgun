@@ -1,31 +1,24 @@
-#ifndef SCREENSHOTGUN_DROPBOX_H
-#define SCREENSHOTGUN_DROPBOX_H
+#pragma once
 
-#include <QNetworkAccessManager>
+#include "lib/AbstractService.h"
+
 #include <QNetworkReply>
-#include "ServiceHelper.h"
 
-class Dropbox : public QObject {
+class Dropbox : public AbstractService {
     Q_OBJECT
 
 public:
     Dropbox();
-    void setToken(QString);
-    void upload(QByteArray);
 
-signals:
-    void uploadSuccess(QString);
-    void uploadError(QString);
+    void upload(const QImage&);
+    void setToken(const QString&);
 
 private slots:
-    void uploadReply(QNetworkReply*);
-    void shareReply(QNetworkReply*);
+    void onUploadReply(QNetworkReply*);
+    void onShareReply(QNetworkReply*);
 
 private:
     QString token_;
     QNetworkAccessManager manager_;
     QString filename_;
-    ServiceHelper helper_;
 };
-
-#endif //SCREENSHOTGUN_DROPBOX_H

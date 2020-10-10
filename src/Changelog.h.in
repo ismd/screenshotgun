@@ -1,6 +1,0 @@
-#ifndef SCREENSHOTGUN_CHANGELOG_H
-#define SCREENSHOTGUN_CHANGELOG_H
-
-const char* changelogText = R"(${CHANGELOG_TEXT})";
-
-#endif //SCREENSHOTGUN_CHANGELOG_H
