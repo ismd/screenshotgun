@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+    <DisplayName>Libraries</DisplayName>
+    <Version>0.12</Version>
+    <ReleaseDate>2015-11-24</ReleaseDate>
+    <SortingPriority>1</SortingPriority>
+    <Default>true</Default>
+    <ForcedInstallation>true</ForcedInstallation>
+</Package>

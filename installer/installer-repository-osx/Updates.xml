@@ -1,0 +1,18 @@
+<Updates>
+ <ApplicationName>{AnyApplication}</ApplicationName>
+ <ApplicationVersion>1.0.0</ApplicationVersion>
+ <Checksum>true</Checksum>
+ <PackageUpdate>
+  <Name>screenshotgun</Name>
+  <DisplayName>Screenshotgun</DisplayName>
+  <Description>Open cross-platform screenshoter with cloud support and server part</Description>
+  <Version>0.17-20180122-4</Version>
+  <ReleaseDate>2018-01-22</ReleaseDate>
+  <Script>installscript.qs</Script>
+  <Default>true</Default>
+  <ForcedInstallation>true</ForcedInstallation>
+  <UpdateFile UncompressedSize="22554390" CompressedSize="7037054" OS="Any"/>
+  <DownloadableArchives>screenshotgun.app.7z</DownloadableArchives>
+  <SHA1>89c861c17ce83ede4ea893a04473272c4014309d</SHA1>
+ </PackageUpdate>
+</Updates>
