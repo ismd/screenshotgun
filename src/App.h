@@ -36,6 +36,7 @@ private:
 #if defined(Q_OS_LINUX)
     QxtGlobalShortcut shortcut_;
 #elif defined(Q_OS_WIN32)
-    bool nativeEvent(const QByteArray& eventType, void* message, long* result);
+    // FIXME
+    // bool nativeEvent(const QByteArray& eventType, void* message, long* result);
 #endif
 };

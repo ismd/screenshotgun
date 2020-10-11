@@ -17,7 +17,7 @@
 #include "ui/SettingsForm.h"
 #include "ui/Toolbar.h"
 #include "ui/TrayIcon.h"
-#include "ui/Updater.h"
+// #include "ui/Updater.h"
 
 #include "utils/Settings.h"
 
@@ -38,7 +38,7 @@ public:
 
     OverlayView* overlayView;
     // FIXME
-    Updater updater;
+    // Updater updater;
 
     /**
      * Current selected service for uploading screenshots
