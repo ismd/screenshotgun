@@ -1,7 +1,12 @@
 cmake_minimum_required(VERSION 3.5.1)
 project(screenshotgun)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Werror")
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Werror")
+endif()
+
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS "${PROJECT_SOURCE_DIR}/ui")
@@ -70,8 +75,8 @@ set(SOURCE_FILES
     src/ui/Toolbar.h
     src/ui/TrayIcon.cpp
     src/ui/TrayIcon.h
-    src/ui/Updater.cpp
-    src/ui/Updater.h
+    # src/ui/Updater.cpp
+    # src/ui/Updater.h
 
     # Utils
     src/utils/AutoStartup.cpp

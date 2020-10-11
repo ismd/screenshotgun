@@ -166,19 +166,19 @@ void App::initShortcutLinux(const QKeySequence seq) {
 
 #if defined(Q_OS_WIN32)
 void App::initShortcutWindows() {
-    RegisterHotKey((HWND)overlay_.winId(), 100, MOD_ALT, VK_SNAPSHOT);
+    // RegisterHotKey((HWND)Context::getInstance().overlayView->winId(), 100, MOD_ALT, VK_SNAPSHOT);
 }
 
-bool App::nativeEvent(const QByteArray& eventType, void* message, long* result) {
-    MSG* msg = reinterpret_cast<MSG*>(message);
+// bool App::nativeEvent(const QByteArray& eventType, void* message, long* result) {
+//     MSG* msg = reinterpret_cast<MSG*>(message);
 
-    if (msg->message == WM_HOTKEY) {
-        if (msg->wParam == 100) {
-            makeScreenshot();
-            return true;
-        }
-    }
+//     if (msg->message == WM_HOTKEY) {
+//         if (msg->wParam == 100) {
+//             makeScreenshot();
+//             return true;
+//         }
+//     }
 
-    return false;
-}
+//     return false;
+// }
 #endif

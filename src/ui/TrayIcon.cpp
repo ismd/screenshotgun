@@ -40,9 +40,10 @@ TrayIcon::TrayIcon()
         emit screenshotActionTriggered();
     });
 
-    connect(&updateAction_, &QAction::triggered, this, [&]() {
-        Context::getInstance().updater.check();
-    });
+    // FIXME
+    // connect(&updateAction_, &QAction::triggered, this, [&]() {
+    //     Context::getInstance().updater.check();
+    // });
 
     connect(&settingsAction_, &QAction::triggered, this, [&]() {
         Context::getInstance().settingsForm->show();

@@ -17,6 +17,10 @@ matrix:
         - $HOME/Library/Caches/Homebrew
       before_cache:
         - brew cleanup
+    - os: windows
+      cache:
+        directories:
+        - $HOME/Qt
 
 before_install:
   - bash $TRAVIS_BUILD_DIR/scripts/ci/$TRAVIS_OS_NAME/before_install.sh
