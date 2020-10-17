@@ -40,9 +40,8 @@ deploy:
   - provider: releases
     api_key:
       secure: fJeBVylUmL+C/S3QOHMUtBct1Gqulqxzmnb1ccN6eD1Tq3COObu0Pb4zJeYjw2vIDFAXu73Mh+/TLqjGg6miFRaTQbcC2opiSkYzjwLBwQYSFTSqciR/W8Dq28zLScXpjDyMG9l5jGlO5R704aU/WP6y9xevgOBaFsFdTup/Diw/qhxrv9dpszZOalRb0N6v8FGtf9NTL0mE+jCpIpKV+YzqUWVziBHZfLsrA6luRPo4ZdDH6F2ygqqF2/1kP4dqpDLx6nfxf4wDf/tcTWAGoXjZkagGnjw1RTKhWXJGZ97UCYFC8R6aIpNnzyF/JepsEXXx8XaAfFtEWPcfYLskWCIEiFi6uS5hT6BIXEuMiIKpquO1yxFYnbg+aQ8yFwzAO0mN1p5NcxORi4WOTV13ZfJm+evT/7/zRNeHcsRY/erUTnG6/FhrptSgMOPppWv0nNE/kleraGhjK0OBDUd/hQ6mbYZk+pKO4Fb/NCzPHcNt4HhOkslpXKrF33zj92Mywfyqc1PHV7tnWE9bBMEZ7o9FPOwM0qCnpm0G2nnG4+VJwEIVYVTzDmhBBdAnyOoOv9w+XWEmPrd1FD0cQFR+3GGKUiet5U37ZDIDPeWF6q+6ed9QYBMPXiza4uLKYkR3xM5ZycVignGgy8VQOupv6J0qoP0cGz073t0RWYp64Yw=
-    file: $HOME/release/github/$TRAVIS_OS_NAME/*
+    file: $HOME/release/$TRAVIS_OS_NAME/*
     file_glob: true
     skip_cleanup: true
     on:
-      condition: "$TRAVIS_OS_NAME == linux"
       tags: true
