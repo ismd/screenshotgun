@@ -21,14 +21,14 @@ Controller.prototype.IntroductionPageCallback = function() {
 
 Controller.prototype.TargetDirectoryPageCallback = function()
 {
-    gui.currentPageWidget().TargetDirectoryLineEdit.setText("C:/Qt");
+    gui.currentPageWidget().TargetDirectoryLineEdit.setText("C:\\Qt");
     gui.clickButton(buttons.NextButton);
 }
 
 Controller.prototype.ComponentSelectionPageCallback = function() {
     var widget = gui.currentPageWidget();
     widget.deselectAll();
-    widget.selectComponent("qt.qt5.5132.win32_msvc2017");
+    widget.selectComponent("qt.qt5.5132.win64_mingw73");
 
     gui.clickButton(buttons.NextButton);
 }
