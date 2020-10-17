@@ -38,6 +38,6 @@ deploy:
       tags: true
   - provider: releases
     token: fYsqmBsm6pkFuHoWuwSt/yMumohECA/CaS5M8y2uwKDOfP8nJJxLFg5Pg/ljmiAUkQtKNbGDx48g4ys7GuUlE1jWqQo0PHKJwMvpZ1Ym4SrTTYYAZFKte8wiOK4JKla/NjqlD4WO/Lx11XJvk6VtIuGlIAKSC8YFVZ9EdehCNCPDz/f8E7S9YLA1qM3f1LVitQvNgDq9UCF0qXYRYMNBcP7c0zH5Xl69u0Lqz6y1+UXVbjMptOXSZUuZqc+ayXBUqa9f8vac/46W5v+U8pv8GNlhhSQUOUNqJgeX+POnRIR77+yVB9QP5PodQPEEF3OxmfEshGxHp/dPBBLX6wwojBzn1Jjm26V79APf8XGbRHjOGbHYkIR5KoS6cFAvfCdoieGXaLYh8kV7oNXKN96z2CDtCyeaZ7ji8K/aVRjeHsk/EHIdJKxGS84vWCJquRtUNi5yf2sS98SOX7Ml1vzVZMBiKygK3OclO1JvJImdp7mSbahHUj+MULy2NfDaFLCuNliAeYqkwOOI1Tvkby+qJ2tJyeul682YjxhiimaEMSXBRXNIYVxG4I/JQvZbdy8aPl3HWZSwSMszKaCbaQaH3wrsxfMz4VEE7wQHVJxJFbGXBvCneUTltRyTtM/NedgOPHpbBDmdxwX5wAJqEyIy8JeB1bj/At3csgaJT6/rh7o=
-    file: /release/github/linux/*
+    file: $HOME/release/github/linux/*
     on:
       tags: true
