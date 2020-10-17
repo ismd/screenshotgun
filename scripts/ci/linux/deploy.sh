@@ -2,7 +2,7 @@
 set -e
 set -o pipefail
 
-export VERSION=${1#"v"}
+VERSION=${1#"v"}
 
 # LAUNCHPAD
 $TRAVIS_BUILD_DIR/scripts/deploy/launchpad/deploy.sh
