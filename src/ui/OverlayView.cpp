@@ -32,7 +32,6 @@ OverlayView::OverlayView() : movingItem_(false) {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    setCursor(Qt::BlankCursor);
     setScene(&scene);
 
     Context& ctx = Context::getInstance();
@@ -47,6 +46,7 @@ void OverlayView::show() {
     Context::getInstance().trayIcon->hide();
 #endif
 
+    setCursor(Qt::BlankCursor);
     QGraphicsView::show();
 
     activateWindow();
