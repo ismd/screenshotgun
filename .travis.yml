@@ -43,5 +43,6 @@ deploy:
     file: $HOME/release/$TRAVIS_OS_NAME/*
     file_glob: true
     skip_cleanup: true
+    name: Release for $TRAVIS_OS_NAME
     on:
       tags: true
