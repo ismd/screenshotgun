@@ -1,3 +1,5 @@
 #!/bin/bash
 
-binarycreator -n -v -c config-win/config.xml -p packages-win ScreenshotgunInstaller
+OUTPUT_FILE=$1
+
+binarycreator -n -v -c $TRAVIS_BUILD_DIR/installer/config-win/config.xml -p $TRAVIS_BUILD_DIR/installer/packages-win $OUTPUT_FILE
