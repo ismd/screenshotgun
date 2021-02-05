@@ -6,6 +6,12 @@
 /.clang_complete
 /.clangd
 /.ccls-cache
+/CMakeCache.txt
+/CMakeFiles
+/Makefile
+/cmake_install.cmake
+
+src/utils/Changelog.h
 
 /deploy/data.tar
 /deploy/keys
