@@ -173,7 +173,7 @@
                </size>
               </property>
               <property name="text">
-               <string>screenshotgun.com</string>
+               <string>api.screenshotgun.com</string>
               </property>
               <property name="placeholderText">
                <string>Адрес сервера</string>

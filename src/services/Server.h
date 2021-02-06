@@ -12,6 +12,7 @@ public:
     Server();
 
     void upload(const QImage&);
+    void uploadLegacy(const QImage&, const QByteArray&);
 
     /**
      * Url of remote server for uploading
