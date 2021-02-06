@@ -43,6 +43,26 @@ void Server::upload(const QImage& image) {
     buffer.open(QIODevice::WriteOnly);
     image.save(&buffer, "PNG");
 
+    // TODO: Remove old api
+    if (url_ == "http://screenshotgun.com") {
+        return uploadLegacy(image, bytes);
+    }
+
+    QJsonObject data({{"image", QJsonValue(QString(bytes.toBase64()))}});
+    QJsonDocument doc(data);
+
+    QNetworkRequest request;
+    request.setUrl(url_ + "/_/upload");
+    request.setHeader(QNetworkRequest::UserAgentHeader, "Screenshotgun client");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    connect(&manager_, SIGNAL(finished(QNetworkReply*)),
+        this, SLOT(uploaded(QNetworkReply*)));
+
+    manager_.post(request, doc.toJson());
+}
+
+void Server::uploadLegacy(const QImage& image, const QByteArray& bytes) {
     QHttpMultiPart* multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
     QHttpPart imagePart;
@@ -54,6 +74,7 @@ void Server::upload(const QImage& image) {
 
     QNetworkRequest request;
     request.setUrl(url_ + "/screen/upload");
+
     request.setRawHeader("User-Agent", "Screenshotgun client");
 
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),
@@ -90,7 +111,7 @@ void Server::onConnected(QNetworkReply* reply) {
     disconnect(&manager_, SIGNAL(finished(QNetworkReply*)),
         this, SLOT(onConnected(QNetworkReply*)));
 
-    if (reply->error() != QNetworkReply::NoError) {
+    if (reply->error() != QNetworkReply::NoError || reply->readAll() != "ok") {
         qInfo() << "Can't connect to" << url_ << "Attempt #" << connectionChecks_;
 
         if (connectionChecks_ < MAX_CONNECTION_CHECKS) {
@@ -114,7 +135,8 @@ void Server::onConnected(QNetworkReply* reply) {
 void Server::checkConnection() {
     connectionChecks_++;
 
-    QNetworkRequest request(url_);
+    // TODO: Remove old api
+    QNetworkRequest request(url_ != "http://screenshotgun.com" ? url_ + "/_/ping" : url_);
     request.setRawHeader("User-Agent", "Screenshotgun client");
 
     connect(&manager_, SIGNAL(finished(QNetworkReply*)),

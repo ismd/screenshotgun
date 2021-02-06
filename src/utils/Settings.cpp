@@ -26,7 +26,7 @@ void Settings::setService(const UploadService value) {
 }
 
 QString Settings::serverUrl() const {
-    return settings_.value("server/url", "screenshotgun.com").toString();
+    return settings_.value("server/url", "api.screenshotgun.com").toString();
 }
 
 void Settings::setServerUrl(const QString &value) {
