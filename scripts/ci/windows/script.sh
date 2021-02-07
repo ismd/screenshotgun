@@ -7,5 +7,11 @@ cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/c/Qt/
 cmake --build . --config Release
 
 # Installer
-sed -i s/{VERSION}/${TRAVIS_TAG}/g $TRAVIS_BUILD_DIR/installer/config-win/config.xml
+if [ -z "$TRAVIS_TAG" ]; then
+    VERSION="unknown"
+else
+    VERSION=$TRAVIS_TAG
+fi
+
+sed -i s/{VERSION}/${VERSION}/g $TRAVIS_BUILD_DIR/installer/config-win/config.xml
 $TRAVIS_BUILD_DIR/installer/create-installer-win.sh $HOME/release/ScreenshotgunInstaller.exe
