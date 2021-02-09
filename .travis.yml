@@ -22,11 +22,6 @@ matrix:
           packages:
           - qt
           update: true
-      cache:
-        directories:
-        - $HOME/Library/Caches/Homebrew
-      before_cache:
-        - brew cleanup
       deploy:
           - provider: releases
             token:
@@ -40,7 +35,7 @@ matrix:
     - os: windows
       cache:
         directories:
-        - /c/Qt
+        - $HOME/Qt
       deploy:
           - provider: releases
             token:
