@@ -1,0 +1,45 @@
+image:
+- Ubuntu2004
+- macOs
+- Visual Studio 2019
+
+configuration: Release
+platform: x64
+clone_depth: 1
+
+for:
+-
+  matrix:
+    only:
+      - image: Ubuntu2004
+  environment:
+    CMAKE_PREFIX_PATH: /home/appveyor/Qt/5.15/gcc_64
+  install:
+    - sudo apt -qq update
+    - sudo apt install -y mesa-common-dev libglu1-mesa-dev
+  after_build:
+  - strip screenshotgun
+-
+  matrix:
+    only:
+      - image: macOs
+  environment:
+    CMAKE_PREFIX_PATH: /Users/appveyor/Qt/5.15/clang_64
+  after_build:
+  - strip screenshotgun.app/Contents/MacOS/screenshotgun
+-
+  matrix:
+    only:
+      - image: Visual Studio 2019
+  environment:
+    CMAKE_PREFIX_PATH: C:\Qt\5.15.2\msvc2019_64
+
+build_script:
+- cmake -DCMAKE_BUILD_TYPE=Release .
+- cmake --build . --config Release
+
+# deploy:
+# - provider: Environment
+#   name: production
+#   on:
+#     APPVEYOR_REPO_TAG: true
