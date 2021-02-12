@@ -10,6 +10,7 @@
 /CMakeFiles
 /Makefile
 /cmake_install.cmake
+/.cmake/
 
 src/utils/Changelog.h
 
