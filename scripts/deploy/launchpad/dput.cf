@@ -1,5 +1,0 @@
-[ppa]
-fqdn = ppa.launchpad.net
-method = sftp
-incoming = ~ismd/ubuntu/screenshotgun/
-login = ismd
