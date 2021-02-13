@@ -40,8 +40,8 @@ for:
   environment:
     CMAKE_PREFIX_PATH: C:\Qt\5.15.2\msvc2019_64
   before_deploy:
-  - mkdir $HOME/release
-  - 7z a -tzip $HOME/release/screenshotgun_windows.zip screenshotgun.exe
+  - mkdir C:\Users\appveyor\release
+  - 7z a -tzip C:\Users\appveyor\release\screenshotgun_windows.zip screenshotgun.exe
 
 build_script:
 - cmake -DCMAKE_BUILD_TYPE=Release .
