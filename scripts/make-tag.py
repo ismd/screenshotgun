@@ -16,7 +16,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '-v',
         '--version',
-        default='v%s' % latest_version,
+        default=latest_version,
         help='Screenshotgun version',
     )
 
@@ -24,9 +24,9 @@ if __name__ == '__main__':
     date = datetime.date.today().strftime('%Y%m%d')
 
     if latest_version == version and latest_date == date:
-        tag = '%s-%s-%d' % (version, date, int(latest_patch) + 1)
+        tag = 'v%s-%s-%d' % (version, date, int(latest_patch) + 1)
     else:
-        tag = '%s-%s-%d' % (version, date, 1)
+        tag = 'v%s-%s-%d' % (version, date, 1)
 
-    os.system('git tag -a v%s -m "Version: %s"' % (tag, tag))
-    os.system('git push origin v%s' % tag)
+    os.system('git tag -a %s -m "Version: %s"' % (tag, tag))
+    os.system('git push origin %s' % tag)
