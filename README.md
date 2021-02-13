@@ -1,4 +1,4 @@
-![](https://travis-ci.org/ismd/screenshotgun.svg?branch=master)
+![](https://ci.appveyor.com/api/projects/status/github/ismd/screenshotgun?branch=master&svg=true)
 
 # Screenshotgun
 Open cross-platform screenshoter with cloud support and server part.  
