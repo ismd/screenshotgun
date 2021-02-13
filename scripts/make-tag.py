@@ -6,6 +6,7 @@ import subprocess
 
 if __name__ == '__main__':
     os.system('git fetch')
+    os.system('git checkout master')
 
     latest_tag = subprocess.check_output('git describe --tags $(git rev-list --tags --max-count=1)', shell=True).decode('utf-8').strip()
     latest_version, latest_date, latest_patch = latest_tag.split('-')
@@ -16,7 +17,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '-v',
         '--version',
-        default='v%s' % latest_version,
+        default=latest_version,
         help='Screenshotgun version',
     )
 
@@ -24,9 +25,11 @@ if __name__ == '__main__':
     date = datetime.date.today().strftime('%Y%m%d')
 
     if latest_version == version and latest_date == date:
-        tag = '%s-%s-%d' % (version, date, int(latest_patch) + 1)
+        tag = 'v%s-%s-%d' % (version, date, int(latest_patch) + 1)
     else:
-        tag = '%s-%s-%d' % (version, date, 1)
+        tag = 'v%s-%s-%d' % (version, date, 1)
 
-    os.system('git tag -a v%s -m "Version: %s"' % (tag, tag))
-    os.system('git push origin v%s' % tag)
+    answer = input("Really create tag %s? Type `yes': " % tag)
+    if answer == 'yes':
+        os.system('git tag -a %s -m "Version: %s"' % (tag, tag))
+        os.system('git push origin %s' % tag)
