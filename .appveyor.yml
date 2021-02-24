@@ -20,8 +20,8 @@ for:
   after_build:
   - strip screenshotgun
   before_deploy:
-  - mkdir $HOME/release
-  - zip $HOME/release/screenshotgun_linux.zip screenshotgun
+  - mkdir release
+  - zip release/screenshotgun_linux.zip screenshotgun
 -
   matrix:
     only:
@@ -31,8 +31,8 @@ for:
   after_build:
   - strip screenshotgun.app/Contents/MacOS/screenshotgun
   before_deploy:
-  - mkdir $HOME/release
-  - zip -r $HOME/release/screenshotgun_macos.zip screenshotgun.app
+  - mkdir release
+  - zip -r release/screenshotgun_macos.zip screenshotgun.app
 -
   matrix:
     only:
@@ -40,8 +40,8 @@ for:
   environment:
     CMAKE_PREFIX_PATH: C:\Qt\5.15.2\msvc2019_64
   before_deploy:
-  - mkdir C:\Users\appveyor\release
-  - 7z a -tzip C:\Users\appveyor\release\screenshotgun_windows.zip Release\screenshotgun.exe
+  - mkdir release
+  - 7z a -tzip release\screenshotgun_windows.zip Release\screenshotgun.exe
 
 build_script:
 - cmake -DCMAKE_BUILD_TYPE=Release .
@@ -51,6 +51,6 @@ deploy:
 - provider: GitHub
   auth_token:
     secure: 0GaldFB6iA6/Op54kN+749ZPJ09jc458c74JxmaUm5vVsu7v56J4JZRmwSwqrmff
-  artifact: $HOME/release/*
+  artifact: release/*.zip
   on:
     APPVEYOR_REPO_TAG: true
