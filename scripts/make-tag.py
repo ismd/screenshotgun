@@ -29,7 +29,7 @@ if __name__ == '__main__':
     else:
         tag = 'v%s-%s-%d' % (version, date, 1)
 
-    answer = input("Really create tag %s? Type `yes': " % tag)
+    answer = input("Create tag %s? Type yes: " % tag)
     if answer == 'yes':
         os.system('git tag -a %s -m "Version: %s"' % (tag, tag))
         os.system('git push origin %s' % tag)
