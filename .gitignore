@@ -11,6 +11,7 @@
 /Makefile
 /cmake_install.cmake
 /.cmake/
+/.cache/
 
 src/utils/Changelog.h
 
