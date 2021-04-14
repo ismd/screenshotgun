@@ -14,6 +14,8 @@
 /.cache/
 /screenshotgun.cbp
 /Testing/
+/screenshotgun_autogen/
+/screenshotgun
 
 src/utils/Changelog.h
 
