@@ -2,7 +2,7 @@
 
 # Screenshotgun
 Open cross-platform screenshoter with cloud support and server part.  
-With this application you can make screenshots, draw figures or write text and then upload to:  
+With this application you can make screenshots, draw figures or write text and then copy them to clipboard or upload to:  
 * [screenshotgun.com](http://screenshotgun.com)
 * Dropbox
 * Google Drive
