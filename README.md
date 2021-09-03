@@ -17,10 +17,10 @@ Download binaries for Windows, Linux and macOS from official site [screenshotgun
 
 ## Install
 #### Linux
-###### Ubuntu 18.04, Ubuntu 16.04, Linux Mint
+###### Ubuntu 20.04, Linux Mint
 1. sudo add-apt-repository ppa:ismd/screenshotgun
-2. sudo apt update
-3. sudo apt install screenshotgun
+2. sudo apt-get update
+3. sudo apt-get install screenshotgun
 ###### Arch Linux
 yay -S screenshotgun-git
 #### macOS
@@ -31,8 +31,8 @@ yay -S screenshotgun-git
 ## Build
 You can simply use CLion with Qt5 libs under any operating system. Or you can build manually:
 #### Linux
-###### Ubuntu 16.04
-1. sudo apt install build-essential git cmake qtbase5-dev qtbase5-private-dev
+###### Ubuntu 20.04
+1. sudo apt-get install build-essential git cmake qtbase5-dev qtbase5-private-dev
 2. git clone https://github.com/ismd/screenshotgun.git
 3. cd screenshotgun && mkdir build && cd build
 4. cmake ..
